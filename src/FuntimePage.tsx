@@ -1,8 +1,8 @@
-import { Container } from "@mui/material";
+import { Container } from "@chakra-ui/react";
 import { ReactNode } from "react";
 
 const FuntimePage: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <Container>{children}</Container>;
+  return <>{children}</>;
 };
 
 export default FuntimePage;

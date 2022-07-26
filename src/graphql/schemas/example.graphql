@@ -1,6 +1,0 @@
-query FindPicks {
-  findManyPicks(where: { season: { equals: 2021 } }) {
-    pickid
-    uid
-  }
-}

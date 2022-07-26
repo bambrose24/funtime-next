@@ -1,5 +1,5 @@
 overwrite: true
-schema: "https://funtime-api.fly.dev/graphql"
+schema: "http://localhost:3001/graphql"
 documents: "src/**/*.graphql"
 generates:
   src/generated/graphql.tsx:

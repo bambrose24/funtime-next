@@ -1,0 +1,19 @@
+mutation Register($username: String!, $email: String!, $previousUserId: Int) {
+  register(
+    username: $username
+    email: $email
+    previousUserId: $previousUserId
+  ) {
+    success
+    user {
+      username
+      uid
+    }
+    membership {
+      league_id
+      Leagues {
+        name
+      }
+    }
+  }
+}

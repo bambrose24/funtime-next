@@ -1720,6 +1720,7 @@ export type Mutation = {
   deleteOneSuperbowl?: Maybe<Superbowl>;
   deleteOneSuperbowlSquares?: Maybe<SuperbowlSquares>;
   deleteOneTeams?: Maybe<Teams>;
+  register: RegisterResponse;
   updateManyGames: AffectedRowsOutput;
   updateManyLeagueMembers: AffectedRowsOutput;
   updateManyLeagues: AffectedRowsOutput;
@@ -1912,6 +1913,13 @@ export type MutationDeleteOneSuperbowlSquaresArgs = {
 
 export type MutationDeleteOneTeamsArgs = {
   where: TeamsWhereUniqueInput;
+};
+
+
+export type MutationRegisterArgs = {
+  email: Scalars['String'];
+  previousUserId?: InputMaybe<Scalars['Int']>;
+  username: Scalars['String'];
 };
 
 
@@ -3725,6 +3733,13 @@ export type QuerySuperbowlsArgs = {
   where?: InputMaybe<SuperbowlWhereInput>;
 };
 
+export type RegisterResponse = {
+  __typename?: 'RegisterResponse';
+  membership: LeagueMembers;
+  success: Scalars['Boolean'];
+  user: People;
+};
+
 export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
@@ -4553,44 +4568,106 @@ export type TeamsWhereUniqueInput = {
   teamid?: InputMaybe<Scalars['Int']>;
 };
 
-export type FindPicksQueryVariables = Exact<{ [key: string]: never; }>;
+export type FindLeagueMembersQueryVariables = Exact<{
+  league_id: Scalars['Int'];
+}>;
 
 
-export type FindPicksQuery = { __typename?: 'Query', findManyPicks: Array<{ __typename?: 'Picks', pickid: number, uid: number }> };
+export type FindLeagueMembersQuery = { __typename?: 'Query', findManyLeagueMembers: Array<{ __typename?: 'LeagueMembers', People: { __typename?: 'People', uid: number, username: string }, Leagues: { __typename?: 'Leagues', name: string } }> };
+
+export type RegisterMutationVariables = Exact<{
+  username: Scalars['String'];
+  email: Scalars['String'];
+  previousUserId?: InputMaybe<Scalars['Int']>;
+}>;
 
 
-export const FindPicksDocument = gql`
-    query FindPicks {
-  findManyPicks(where: {season: {equals: 2021}}) {
-    pickid
-    uid
+export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'RegisterResponse', success: boolean, user: { __typename?: 'People', username: string, uid: number }, membership: { __typename?: 'LeagueMembers', league_id: number, Leagues: { __typename?: 'Leagues', name: string } } } };
+
+
+export const FindLeagueMembersDocument = gql`
+    query FindLeagueMembers($league_id: Int!) {
+  findManyLeagueMembers(where: {league_id: {equals: $league_id}}) {
+    People {
+      uid
+      username
+    }
+    Leagues {
+      name
+    }
   }
 }
     `;
 
 /**
- * __useFindPicksQuery__
+ * __useFindLeagueMembersQuery__
  *
- * To run a query within a React component, call `useFindPicksQuery` and pass it any options that fit your needs.
- * When your component renders, `useFindPicksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFindLeagueMembersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindLeagueMembersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useFindPicksQuery({
+ * const { data, loading, error } = useFindLeagueMembersQuery({
  *   variables: {
+ *      league_id: // value for 'league_id'
  *   },
  * });
  */
-export function useFindPicksQuery(baseOptions?: Apollo.QueryHookOptions<FindPicksQuery, FindPicksQueryVariables>) {
+export function useFindLeagueMembersQuery(baseOptions: Apollo.QueryHookOptions<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindPicksQuery, FindPicksQueryVariables>(FindPicksDocument, options);
+        return Apollo.useQuery<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>(FindLeagueMembersDocument, options);
       }
-export function useFindPicksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindPicksQuery, FindPicksQueryVariables>) {
+export function useFindLeagueMembersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindPicksQuery, FindPicksQueryVariables>(FindPicksDocument, options);
+          return Apollo.useLazyQuery<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>(FindLeagueMembersDocument, options);
         }
-export type FindPicksQueryHookResult = ReturnType<typeof useFindPicksQuery>;
-export type FindPicksLazyQueryHookResult = ReturnType<typeof useFindPicksLazyQuery>;
-export type FindPicksQueryResult = Apollo.QueryResult<FindPicksQuery, FindPicksQueryVariables>;
+export type FindLeagueMembersQueryHookResult = ReturnType<typeof useFindLeagueMembersQuery>;
+export type FindLeagueMembersLazyQueryHookResult = ReturnType<typeof useFindLeagueMembersLazyQuery>;
+export type FindLeagueMembersQueryResult = Apollo.QueryResult<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>;
+export const RegisterDocument = gql`
+    mutation Register($username: String!, $email: String!, $previousUserId: Int) {
+  register(username: $username, email: $email, previousUserId: $previousUserId) {
+    success
+    user {
+      username
+      uid
+    }
+    membership {
+      league_id
+      Leagues {
+        name
+      }
+    }
+  }
+}
+    `;
+export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+
+/**
+ * __useRegisterMutation__
+ *
+ * To run a mutation, you first call `useRegisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [registerMutation, { data, loading, error }] = useRegisterMutation({
+ *   variables: {
+ *      username: // value for 'username'
+ *      email: // value for 'email'
+ *      previousUserId: // value for 'previousUserId'
+ *   },
+ * });
+ */
+export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+      }
+export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
+export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;

@@ -1,0 +1,11 @@
+query FindLeagueMembers($league_id: Int!) {
+  findManyLeagueMembers(where: { league_id: { equals: $league_id } }) {
+    People {
+      uid
+      username
+    }
+    Leagues {
+      name
+    }
+  }
+}

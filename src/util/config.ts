@@ -6,7 +6,7 @@ export type Config = {
 
 const configMap: Record<Env, Config> = {
   development: {
-    graphqlEndpoint: "https://localhost:3000/graphql",
+    graphqlEndpoint: "http://localhost:3001/graphql",
   },
   preview: {
     graphqlEndpoint: "https://funtime-api.fly.dev/graphql",

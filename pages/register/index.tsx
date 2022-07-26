@@ -100,7 +100,11 @@ const RegistrationForm: React.FC = () => {
               >
                 <option value={undefined}></option>
                 {previousUsers.map(({ People: { uid, username } }) => {
-                  return <option value={uid}>{username}</option>;
+                  return (
+                    <option key={uid} value={uid}>
+                      {username}
+                    </option>
+                  );
                 })}
               </Select>
             </FormLabel>

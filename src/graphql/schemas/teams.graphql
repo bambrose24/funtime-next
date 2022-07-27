@@ -1,0 +1,9 @@
+query AllTeams {
+  findManyTeams(where: { teamid: { gt: 0 } }) {
+    teamid
+    abbrev
+    loc
+    name
+    conference
+  }
+}

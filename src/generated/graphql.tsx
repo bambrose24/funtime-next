@@ -4584,6 +4584,11 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'RegisterResponse', success: boolean, user: { __typename?: 'People', username: string, uid: number }, membership: { __typename?: 'LeagueMembers', league_id: number, Leagues: { __typename?: 'Leagues', name: string } } } };
 
+export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AllTeamsQuery = { __typename?: 'Query', findManyTeams: Array<{ __typename?: 'Teams', teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
+
 
 export const FindLeagueMembersDocument = gql`
     query FindLeagueMembers($league_id: Int!) {
@@ -4671,3 +4676,41 @@ export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<Reg
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export const AllTeamsDocument = gql`
+    query AllTeams {
+  findManyTeams(where: {teamid: {gt: 0}}) {
+    teamid
+    abbrev
+    loc
+    name
+    conference
+  }
+}
+    `;
+
+/**
+ * __useAllTeamsQuery__
+ *
+ * To run a query within a React component, call `useAllTeamsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAllTeamsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAllTeamsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAllTeamsQuery(baseOptions?: Apollo.QueryHookOptions<AllTeamsQuery, AllTeamsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AllTeamsQuery, AllTeamsQueryVariables>(AllTeamsDocument, options);
+      }
+export function useAllTeamsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllTeamsQuery, AllTeamsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AllTeamsQuery, AllTeamsQueryVariables>(AllTeamsDocument, options);
+        }
+export type AllTeamsQueryHookResult = ReturnType<typeof useAllTeamsQuery>;
+export type AllTeamsLazyQueryHookResult = ReturnType<typeof useAllTeamsLazyQuery>;
+export type AllTeamsQueryResult = Apollo.QueryResult<AllTeamsQuery, AllTeamsQueryVariables>;

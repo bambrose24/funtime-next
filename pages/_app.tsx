@@ -1,18 +1,11 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { ReactNode } from "react";
+import { client } from "../src/graphql";
 import MetaTags from "../src/meta/MetaTags";
 
-import config from "../src/util/config";
 import theme from "../src/util/theme";
-
-const { graphqlEndpoint } = config;
-
-const client = new ApolloClient({
-  uri: graphqlEndpoint,
-  cache: new InMemoryCache(),
-});
 
 const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (

@@ -111,7 +111,7 @@ const RegistrationForm: ReactFCC<{ data: FindLeagueMembersQuery }> = ({
     let val = [...(data?.findManyLeagueMembers ?? [])];
     val.sort((a, b) => a.People.username.localeCompare(b.People.username));
     return val;
-  }, data?.findManyLeagueMembers);
+  }, [data?.findManyLeagueMembers]);
 
   return (
     <>

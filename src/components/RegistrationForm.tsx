@@ -44,8 +44,8 @@ const RegistrationResponseModal: ReactFCC<{
         <ModalBody>
           {!error ? (
             <Typography.H4>
-              You're registered for 2022! Stay tuned for an email when Week 1
-              Picks open up.
+              You're registered for 2022! Stay tuned for more updates. You'll
+              hear from us before the season starts.
             </Typography.H4>
           ) : (
             <Typography.H4>

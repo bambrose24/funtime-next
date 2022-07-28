@@ -17,6 +17,7 @@ import { useScreenSize } from "../../util/responsive";
 import Section from "../Section";
 import { Typography } from "../Typography";
 import { navOptions, useSelectedNavOption } from "./types";
+import Link from "next/link";
 
 export const MobileNav: React.FC = () => {
   // const screenSize = useScreenSize();
@@ -81,22 +82,24 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           {navOptions.map(({ href, name, display }) => {
             const selected = name === selectedNavOption;
             return (
-              <Box
-                m={2}
-                p={4}
-                key={name}
-                rounded="lg"
-                border={selected ? undefined : "1px solid"}
-                borderColor={selected ? undefined : "gray.300"}
-                bgColor={selected ? "blue.300" : undefined}
-                _hover={{
-                  cursor: "pointer",
-                  backgroundColor: selected ? undefined : "blue.100",
-                }}
-                onClick={() => router.push(href)}
-              >
-                <Typography.H4>{display}</Typography.H4>
-              </Box>
+              <Link href={href} key={name}>
+                <a>
+                  <Box
+                    m={2}
+                    p={4}
+                    rounded="lg"
+                    border={selected ? undefined : "1px solid"}
+                    borderColor={selected ? undefined : "gray.300"}
+                    bgColor={selected ? "blue.300" : undefined}
+                    _hover={{
+                      cursor: "pointer",
+                      backgroundColor: selected ? undefined : "blue.100",
+                    }}
+                  >
+                    <Typography.H4>{display}</Typography.H4>
+                  </Box>
+                </a>
+              </Link>
             );
           })}
         </Box>

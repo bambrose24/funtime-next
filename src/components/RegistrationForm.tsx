@@ -173,6 +173,7 @@ const RegistrationForm: ReactFCC<{
                       name="previousUserId"
                       onChange={formik.handleChange}
                       value={formik.values.previousUserId}
+                      bgColor="gray.100"
                     >
                       <option value={undefined} />
                       {previousUsers.map(({ People: { uid, username } }) => {

@@ -45,8 +45,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }),
   ]);
 
-  console.log(Object.keys(previousMembers.data));
-
   const props: RegisterPageProps = {
     previousMembers: previousMembers.data,
     teams: teams.data,

@@ -1,14 +1,12 @@
 import { Flex } from "@chakra-ui/react";
-import { GetServerSideProps, NextPage } from "next";
+import { GetStaticProps, NextPage } from "next";
 import RegistrationForm from "../../src/components/RegistrationForm";
 import FuntimePage from "../../src/FuntimePage";
 import {
   AllTeamsDocument,
   AllTeamsQuery,
-  AllTeamsQueryResult,
   FindLeagueMembersDocument,
   FindLeagueMembersQuery,
-  FindLeagueMembersQueryResult,
 } from "../../src/generated/graphql";
 import { client } from "../../src/graphql";
 
@@ -32,7 +30,7 @@ const RegisterPage: NextPage<RegisterPageProps> = ({
 
 const PREVIOUS_LEAGUE_ID = 6;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const [previousMembers, teams] = await Promise.all([
     client.query<FindLeagueMembersQuery>({
       query: FindLeagueMembersDocument,

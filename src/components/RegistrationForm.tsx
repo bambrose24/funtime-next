@@ -91,13 +91,13 @@ const RegistrationForm: ReactFCC<{
     return val;
   }, [previousMembers.findManyLeagueMembers]);
 
-  const teamsMap = useMemo(() => {
-    const map = new Map<number, Team>();
-    teams.findManyTeams.forEach((team) => {
-      map.set(team.teamid, team);
-    });
-    return map;
-  }, [teams.findManyTeams]);
+  // const teamsMap = useMemo(() => {
+  //   const map = new Map<number, Team>();
+  //   teams.findManyTeams.forEach((team) => {
+  //     map.set(team.teamid, team);
+  //   });
+  //   return map;
+  // }, [teams.findManyTeams]);
 
   return (
     <>
@@ -142,6 +142,7 @@ const RegistrationForm: ReactFCC<{
                     name="email"
                     type="email"
                     variant="filled"
+                    bgColor="gray.100"
                     onChange={formik.handleChange}
                     value={formik.values.email}
                   />
@@ -156,6 +157,7 @@ const RegistrationForm: ReactFCC<{
                     name="username"
                     type="username"
                     variant="filled"
+                    bgColor="gray.100"
                     onChange={formik.handleChange}
                     value={formik.values.username}
                   />

@@ -6,14 +6,6 @@ const themeConfig: ThemeConfig = {
 };
 const theme = extendTheme({
   config: themeConfig,
-  layerStyles: {
-    light: {
-      color: "white",
-    },
-    dark: {
-      color: "white",
-    },
-  },
 });
 
 export default theme;

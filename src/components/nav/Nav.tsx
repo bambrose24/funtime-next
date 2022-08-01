@@ -38,8 +38,9 @@ export const DesktopNav: React.FC = () => {
           <Box>
             <HStack spacing={4}>
               <IconButton
+                onClick={() => setIsOpen(true)}
                 bgColor="blue.300"
-                icon={<MenuIcon onClick={() => setIsOpen(true)} />}
+                icon={<MenuIcon />}
                 aria-label={"Open menu"}
               />
               <Box>

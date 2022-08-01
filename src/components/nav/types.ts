@@ -17,6 +17,7 @@ const pageNames = [
 type PageName = typeof pageNames[number];
 
 export const navOptions: Array<Page> = [
+  { name: "home", display: "Home", href: "/" },
   { name: "register", display: "Register", href: "/register" },
   { name: "make_picks", display: "Make Your Picks", href: "/pick" },
   { name: "weekly_picks", display: "Weekly Picks", href: "/week" },
@@ -30,5 +31,10 @@ export const navOptions: Array<Page> = [
 
 export const useSelectedNavOption = (): PageName | undefined => {
   const router = useRouter();
-  return navOptions.find(({ href }) => router.pathname.startsWith(href))?.name;
+  if (router.pathname === "/") {
+    return "home";
+  }
+  return navOptions
+    .filter(({ href }) => href !== "/")
+    .find(({ href }) => router.pathname.startsWith(href))?.name;
 };

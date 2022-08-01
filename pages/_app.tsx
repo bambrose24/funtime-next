@@ -1,5 +1,5 @@
 import { ApolloProvider } from "@apollo/client";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { ReactNode } from "react";
 import { client } from "../src/graphql";
@@ -10,7 +10,10 @@ import theme from "../src/util/theme";
 const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <ApolloProvider client={client}>
-      <ChakraProvider theme={theme}>{children}</ChakraProvider>
+      <ChakraProvider theme={theme}>
+        <ColorModeScript initialColorMode="light" />
+        {children}
+      </ChakraProvider>
     </ApolloProvider>
   );
 };

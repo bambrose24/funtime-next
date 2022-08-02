@@ -1,0 +1,18 @@
+query GamesBySeason($season: Int!) {
+  findManyGames(where: { season: { equals: $season } }) {
+    gid
+    awayscore
+    homescore
+    ts
+    done
+    winner
+    Teams_Games_awayToTeams {
+      teamid
+      abbrev
+    }
+    Teams_Games_homeToTeams {
+      teamid
+      abbrev
+    }
+  }
+}

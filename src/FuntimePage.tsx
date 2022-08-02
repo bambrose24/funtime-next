@@ -8,7 +8,9 @@ const FuntimePage: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <Box bgColor="gray.100">
       <Nav />
-      <Box minHeight="100vh">{children}</Box>
+      <Box minHeight="100vh" py={4}>
+        {children}
+      </Box>
     </Box>
   );
 };

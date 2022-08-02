@@ -4568,6 +4568,21 @@ export type TeamsWhereUniqueInput = {
   teamid?: InputMaybe<Scalars['Int']>;
 };
 
+export type GamesBySeasonQueryVariables = Exact<{
+  season: Scalars['Int'];
+}>;
+
+
+export type GamesBySeasonQuery = { __typename?: 'Query', findManyGames: Array<{ __typename?: 'Games', gid: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, winner?: number | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> };
+
+export type GamesByWeekQueryVariables = Exact<{
+  season: Scalars['Int'];
+  week: Scalars['Int'];
+}>;
+
+
+export type GamesByWeekQuery = { __typename?: 'Query', findManyGames: Array<{ __typename?: 'Games', gid: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, winner?: number | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> };
+
 export type FindLeagueMembersQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
@@ -4590,6 +4605,103 @@ export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 export type AllTeamsQuery = { __typename?: 'Query', findManyTeams: Array<{ __typename?: 'Teams', teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
 
 
+export const GamesBySeasonDocument = gql`
+    query GamesBySeason($season: Int!) {
+  findManyGames(where: {season: {equals: $season}}) {
+    gid
+    awayscore
+    homescore
+    ts
+    done
+    winner
+    Teams_Games_awayToTeams {
+      teamid
+      abbrev
+    }
+    Teams_Games_homeToTeams {
+      teamid
+      abbrev
+    }
+  }
+}
+    `;
+
+/**
+ * __useGamesBySeasonQuery__
+ *
+ * To run a query within a React component, call `useGamesBySeasonQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGamesBySeasonQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGamesBySeasonQuery({
+ *   variables: {
+ *      season: // value for 'season'
+ *   },
+ * });
+ */
+export function useGamesBySeasonQuery(baseOptions: Apollo.QueryHookOptions<GamesBySeasonQuery, GamesBySeasonQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GamesBySeasonQuery, GamesBySeasonQueryVariables>(GamesBySeasonDocument, options);
+      }
+export function useGamesBySeasonLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GamesBySeasonQuery, GamesBySeasonQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GamesBySeasonQuery, GamesBySeasonQueryVariables>(GamesBySeasonDocument, options);
+        }
+export type GamesBySeasonQueryHookResult = ReturnType<typeof useGamesBySeasonQuery>;
+export type GamesBySeasonLazyQueryHookResult = ReturnType<typeof useGamesBySeasonLazyQuery>;
+export type GamesBySeasonQueryResult = Apollo.QueryResult<GamesBySeasonQuery, GamesBySeasonQueryVariables>;
+export const GamesByWeekDocument = gql`
+    query GamesByWeek($season: Int!, $week: Int!) {
+  findManyGames(where: {season: {equals: $season}, week: {equals: $week}}) {
+    gid
+    awayscore
+    homescore
+    ts
+    done
+    winner
+    Teams_Games_awayToTeams {
+      teamid
+      abbrev
+    }
+    Teams_Games_homeToTeams {
+      teamid
+      abbrev
+    }
+  }
+}
+    `;
+
+/**
+ * __useGamesByWeekQuery__
+ *
+ * To run a query within a React component, call `useGamesByWeekQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGamesByWeekQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGamesByWeekQuery({
+ *   variables: {
+ *      season: // value for 'season'
+ *      week: // value for 'week'
+ *   },
+ * });
+ */
+export function useGamesByWeekQuery(baseOptions: Apollo.QueryHookOptions<GamesByWeekQuery, GamesByWeekQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GamesByWeekQuery, GamesByWeekQueryVariables>(GamesByWeekDocument, options);
+      }
+export function useGamesByWeekLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GamesByWeekQuery, GamesByWeekQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GamesByWeekQuery, GamesByWeekQueryVariables>(GamesByWeekDocument, options);
+        }
+export type GamesByWeekQueryHookResult = ReturnType<typeof useGamesByWeekQuery>;
+export type GamesByWeekLazyQueryHookResult = ReturnType<typeof useGamesByWeekLazyQuery>;
+export type GamesByWeekQueryResult = Apollo.QueryResult<GamesByWeekQuery, GamesByWeekQueryVariables>;
 export const FindLeagueMembersDocument = gql`
     query FindLeagueMembers($league_id: Int!) {
   findManyLeagueMembers(where: {league_id: {equals: $league_id}}) {

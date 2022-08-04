@@ -7,6 +7,8 @@ query GamesByWeek($season: Int!, $week: Int!) {
     homescore
     ts
     done
+    homerecord
+    awayrecord
     winner
     Teams_Games_awayToTeams {
       teamid

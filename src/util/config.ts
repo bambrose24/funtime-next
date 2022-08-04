@@ -1,3 +1,6 @@
+export const SEASON = 2022;
+export const LEAGUE_ID = 7;
+
 type Env = "development" | "preview" | "production";
 
 export type Config = {

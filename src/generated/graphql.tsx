@@ -212,11 +212,13 @@ export type Games = {
   Teams_Games_homeToTeams: Teams;
   _count?: Maybe<GamesCount>;
   away: Scalars['Int'];
+  awayrecord?: Maybe<Scalars['String']>;
   awayscore?: Maybe<Scalars['Int']>;
   current_record?: Maybe<Scalars['String']>;
   done?: Maybe<Scalars['Boolean']>;
   gid: Scalars['Int'];
   home: Scalars['Int'];
+  homerecord?: Maybe<Scalars['String']>;
   homescore?: Maybe<Scalars['Int']>;
   international?: Maybe<Scalars['Boolean']>;
   is_tiebreaker?: Maybe<Scalars['Boolean']>;
@@ -271,11 +273,13 @@ export type GamesCountAggregate = {
   __typename?: 'GamesCountAggregate';
   _all: Scalars['Int'];
   away: Scalars['Int'];
+  awayrecord: Scalars['Int'];
   awayscore: Scalars['Int'];
   current_record: Scalars['Int'];
   done: Scalars['Int'];
   gid: Scalars['Int'];
   home: Scalars['Int'];
+  homerecord: Scalars['Int'];
   homescore: Scalars['Int'];
   international: Scalars['Int'];
   is_tiebreaker: Scalars['Int'];
@@ -288,11 +292,13 @@ export type GamesCountAggregate = {
 
 export type GamesCountOrderByAggregateInput = {
   away?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrder>;
   awayscore?: InputMaybe<SortOrder>;
   current_record?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrder>;
   homescore?: InputMaybe<SortOrder>;
   international?: InputMaybe<SortOrder>;
   is_tiebreaker?: InputMaybe<SortOrder>;
@@ -307,9 +313,11 @@ export type GamesCreateInput = {
   Picks?: InputMaybe<PicksCreateNestedManyWithoutGamesInput>;
   Teams_Games_awayToTeams: TeamsCreateNestedOneWithoutGames_Games_AwayToTeamsInput;
   Teams_Games_homeToTeams: TeamsCreateNestedOneWithoutGames_Games_HomeToTeamsInput;
+  awayrecord?: InputMaybe<Scalars['String']>;
   awayscore?: InputMaybe<Scalars['Int']>;
   current_record?: InputMaybe<Scalars['String']>;
   done?: InputMaybe<Scalars['Boolean']>;
+  homerecord?: InputMaybe<Scalars['String']>;
   homescore?: InputMaybe<Scalars['Int']>;
   international?: InputMaybe<Scalars['Boolean']>;
   is_tiebreaker?: InputMaybe<Scalars['Boolean']>;
@@ -322,11 +330,13 @@ export type GamesCreateInput = {
 
 export type GamesCreateManyInput = {
   away: Scalars['Int'];
+  awayrecord?: InputMaybe<Scalars['String']>;
   awayscore?: InputMaybe<Scalars['Int']>;
   current_record?: InputMaybe<Scalars['String']>;
   done?: InputMaybe<Scalars['Boolean']>;
   gid?: InputMaybe<Scalars['Int']>;
   home: Scalars['Int'];
+  homerecord?: InputMaybe<Scalars['String']>;
   homescore?: InputMaybe<Scalars['Int']>;
   international?: InputMaybe<Scalars['Boolean']>;
   is_tiebreaker?: InputMaybe<Scalars['Boolean']>;
@@ -338,11 +348,13 @@ export type GamesCreateManyInput = {
 };
 
 export type GamesCreateManyTeams_Games_AwayToTeamsInput = {
+  awayrecord?: InputMaybe<Scalars['String']>;
   awayscore?: InputMaybe<Scalars['Int']>;
   current_record?: InputMaybe<Scalars['String']>;
   done?: InputMaybe<Scalars['Boolean']>;
   gid?: InputMaybe<Scalars['Int']>;
   home: Scalars['Int'];
+  homerecord?: InputMaybe<Scalars['String']>;
   homescore?: InputMaybe<Scalars['Int']>;
   international?: InputMaybe<Scalars['Boolean']>;
   is_tiebreaker?: InputMaybe<Scalars['Boolean']>;
@@ -360,10 +372,12 @@ export type GamesCreateManyTeams_Games_AwayToTeamsInputEnvelope = {
 
 export type GamesCreateManyTeams_Games_HomeToTeamsInput = {
   away: Scalars['Int'];
+  awayrecord?: InputMaybe<Scalars['String']>;
   awayscore?: InputMaybe<Scalars['Int']>;
   current_record?: InputMaybe<Scalars['String']>;
   done?: InputMaybe<Scalars['Boolean']>;
   gid?: InputMaybe<Scalars['Int']>;
+  homerecord?: InputMaybe<Scalars['String']>;
   homescore?: InputMaybe<Scalars['Int']>;
   international?: InputMaybe<Scalars['Boolean']>;
   is_tiebreaker?: InputMaybe<Scalars['Boolean']>;
@@ -417,9 +431,11 @@ export type GamesCreateOrConnectWithoutTeams_Games_HomeToTeamsInput = {
 export type GamesCreateWithoutPicksInput = {
   Teams_Games_awayToTeams: TeamsCreateNestedOneWithoutGames_Games_AwayToTeamsInput;
   Teams_Games_homeToTeams: TeamsCreateNestedOneWithoutGames_Games_HomeToTeamsInput;
+  awayrecord?: InputMaybe<Scalars['String']>;
   awayscore?: InputMaybe<Scalars['Int']>;
   current_record?: InputMaybe<Scalars['String']>;
   done?: InputMaybe<Scalars['Boolean']>;
+  homerecord?: InputMaybe<Scalars['String']>;
   homescore?: InputMaybe<Scalars['Int']>;
   international?: InputMaybe<Scalars['Boolean']>;
   is_tiebreaker?: InputMaybe<Scalars['Boolean']>;
@@ -433,9 +449,11 @@ export type GamesCreateWithoutPicksInput = {
 export type GamesCreateWithoutTeams_Games_AwayToTeamsInput = {
   Picks?: InputMaybe<PicksCreateNestedManyWithoutGamesInput>;
   Teams_Games_homeToTeams: TeamsCreateNestedOneWithoutGames_Games_HomeToTeamsInput;
+  awayrecord?: InputMaybe<Scalars['String']>;
   awayscore?: InputMaybe<Scalars['Int']>;
   current_record?: InputMaybe<Scalars['String']>;
   done?: InputMaybe<Scalars['Boolean']>;
+  homerecord?: InputMaybe<Scalars['String']>;
   homescore?: InputMaybe<Scalars['Int']>;
   international?: InputMaybe<Scalars['Boolean']>;
   is_tiebreaker?: InputMaybe<Scalars['Boolean']>;
@@ -449,9 +467,11 @@ export type GamesCreateWithoutTeams_Games_AwayToTeamsInput = {
 export type GamesCreateWithoutTeams_Games_HomeToTeamsInput = {
   Picks?: InputMaybe<PicksCreateNestedManyWithoutGamesInput>;
   Teams_Games_awayToTeams: TeamsCreateNestedOneWithoutGames_Games_AwayToTeamsInput;
+  awayrecord?: InputMaybe<Scalars['String']>;
   awayscore?: InputMaybe<Scalars['Int']>;
   current_record?: InputMaybe<Scalars['String']>;
   done?: InputMaybe<Scalars['Boolean']>;
+  homerecord?: InputMaybe<Scalars['String']>;
   homescore?: InputMaybe<Scalars['Int']>;
   international?: InputMaybe<Scalars['Boolean']>;
   is_tiebreaker?: InputMaybe<Scalars['Boolean']>;
@@ -470,11 +490,13 @@ export type GamesGroupBy = {
   _min?: Maybe<GamesMinAggregate>;
   _sum?: Maybe<GamesSumAggregate>;
   away: Scalars['Int'];
+  awayrecord?: Maybe<Scalars['String']>;
   awayscore?: Maybe<Scalars['Int']>;
   current_record?: Maybe<Scalars['String']>;
   done?: Maybe<Scalars['Boolean']>;
   gid: Scalars['Int'];
   home: Scalars['Int'];
+  homerecord?: Maybe<Scalars['String']>;
   homescore?: Maybe<Scalars['Int']>;
   international?: Maybe<Scalars['Boolean']>;
   is_tiebreaker?: Maybe<Scalars['Boolean']>;
@@ -494,11 +516,13 @@ export type GamesListRelationFilter = {
 export type GamesMaxAggregate = {
   __typename?: 'GamesMaxAggregate';
   away?: Maybe<Scalars['Int']>;
+  awayrecord?: Maybe<Scalars['String']>;
   awayscore?: Maybe<Scalars['Int']>;
   current_record?: Maybe<Scalars['String']>;
   done?: Maybe<Scalars['Boolean']>;
   gid?: Maybe<Scalars['Int']>;
   home?: Maybe<Scalars['Int']>;
+  homerecord?: Maybe<Scalars['String']>;
   homescore?: Maybe<Scalars['Int']>;
   international?: Maybe<Scalars['Boolean']>;
   is_tiebreaker?: Maybe<Scalars['Boolean']>;
@@ -511,11 +535,13 @@ export type GamesMaxAggregate = {
 
 export type GamesMaxOrderByAggregateInput = {
   away?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrder>;
   awayscore?: InputMaybe<SortOrder>;
   current_record?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrder>;
   homescore?: InputMaybe<SortOrder>;
   international?: InputMaybe<SortOrder>;
   is_tiebreaker?: InputMaybe<SortOrder>;
@@ -529,11 +555,13 @@ export type GamesMaxOrderByAggregateInput = {
 export type GamesMinAggregate = {
   __typename?: 'GamesMinAggregate';
   away?: Maybe<Scalars['Int']>;
+  awayrecord?: Maybe<Scalars['String']>;
   awayscore?: Maybe<Scalars['Int']>;
   current_record?: Maybe<Scalars['String']>;
   done?: Maybe<Scalars['Boolean']>;
   gid?: Maybe<Scalars['Int']>;
   home?: Maybe<Scalars['Int']>;
+  homerecord?: Maybe<Scalars['String']>;
   homescore?: Maybe<Scalars['Int']>;
   international?: Maybe<Scalars['Boolean']>;
   is_tiebreaker?: Maybe<Scalars['Boolean']>;
@@ -546,11 +574,13 @@ export type GamesMinAggregate = {
 
 export type GamesMinOrderByAggregateInput = {
   away?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrder>;
   awayscore?: InputMaybe<SortOrder>;
   current_record?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrder>;
   homescore?: InputMaybe<SortOrder>;
   international?: InputMaybe<SortOrder>;
   is_tiebreaker?: InputMaybe<SortOrder>;
@@ -572,11 +602,13 @@ export type GamesOrderByWithAggregationInput = {
   _min?: InputMaybe<GamesMinOrderByAggregateInput>;
   _sum?: InputMaybe<GamesSumOrderByAggregateInput>;
   away?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrder>;
   awayscore?: InputMaybe<SortOrder>;
   current_record?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrder>;
   homescore?: InputMaybe<SortOrder>;
   international?: InputMaybe<SortOrder>;
   is_tiebreaker?: InputMaybe<SortOrder>;
@@ -592,11 +624,13 @@ export type GamesOrderByWithRelationInput = {
   Teams_Games_awayToTeams?: InputMaybe<TeamsOrderByWithRelationInput>;
   Teams_Games_homeToTeams?: InputMaybe<TeamsOrderByWithRelationInput>;
   away?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrder>;
   awayscore?: InputMaybe<SortOrder>;
   current_record?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrder>;
   homescore?: InputMaybe<SortOrder>;
   international?: InputMaybe<SortOrder>;
   is_tiebreaker?: InputMaybe<SortOrder>;
@@ -614,11 +648,13 @@ export type GamesRelationFilter = {
 
 export enum GamesScalarFieldEnum {
   Away = 'away',
+  Awayrecord = 'awayrecord',
   Awayscore = 'awayscore',
   CurrentRecord = 'current_record',
   Done = 'done',
   Gid = 'gid',
   Home = 'home',
+  Homerecord = 'homerecord',
   Homescore = 'homescore',
   International = 'international',
   IsTiebreaker = 'is_tiebreaker',
@@ -634,11 +670,13 @@ export type GamesScalarWhereInput = {
   NOT?: InputMaybe<Array<GamesScalarWhereInput>>;
   OR?: InputMaybe<Array<GamesScalarWhereInput>>;
   away?: InputMaybe<IntFilter>;
+  awayrecord?: InputMaybe<StringNullableFilter>;
   awayscore?: InputMaybe<IntNullableFilter>;
   current_record?: InputMaybe<StringNullableFilter>;
   done?: InputMaybe<BoolNullableFilter>;
   gid?: InputMaybe<IntFilter>;
   home?: InputMaybe<IntFilter>;
+  homerecord?: InputMaybe<StringNullableFilter>;
   homescore?: InputMaybe<IntNullableFilter>;
   international?: InputMaybe<BoolNullableFilter>;
   is_tiebreaker?: InputMaybe<BoolNullableFilter>;
@@ -654,11 +692,13 @@ export type GamesScalarWhereWithAggregatesInput = {
   NOT?: InputMaybe<Array<GamesScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<GamesScalarWhereWithAggregatesInput>>;
   away?: InputMaybe<IntWithAggregatesFilter>;
+  awayrecord?: InputMaybe<StringNullableWithAggregatesFilter>;
   awayscore?: InputMaybe<IntNullableWithAggregatesFilter>;
   current_record?: InputMaybe<StringNullableWithAggregatesFilter>;
   done?: InputMaybe<BoolNullableWithAggregatesFilter>;
   gid?: InputMaybe<IntWithAggregatesFilter>;
   home?: InputMaybe<IntWithAggregatesFilter>;
+  homerecord?: InputMaybe<StringNullableWithAggregatesFilter>;
   homescore?: InputMaybe<IntNullableWithAggregatesFilter>;
   international?: InputMaybe<BoolNullableWithAggregatesFilter>;
   is_tiebreaker?: InputMaybe<BoolNullableWithAggregatesFilter>;
@@ -698,9 +738,11 @@ export type GamesUpdateInput = {
   Picks?: InputMaybe<PicksUpdateManyWithoutGamesNestedInput>;
   Teams_Games_awayToTeams?: InputMaybe<TeamsUpdateOneRequiredWithoutGames_Games_AwayToTeamsNestedInput>;
   Teams_Games_homeToTeams?: InputMaybe<TeamsUpdateOneRequiredWithoutGames_Games_HomeToTeamsNestedInput>;
+  awayrecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   awayscore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   current_record?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  homerecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   homescore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   international?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   is_tiebreaker?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -712,9 +754,11 @@ export type GamesUpdateInput = {
 };
 
 export type GamesUpdateManyMutationInput = {
+  awayrecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   awayscore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   current_record?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  homerecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   homescore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   international?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   is_tiebreaker?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -784,9 +828,11 @@ export type GamesUpdateWithWhereUniqueWithoutTeams_Games_HomeToTeamsInput = {
 export type GamesUpdateWithoutPicksInput = {
   Teams_Games_awayToTeams?: InputMaybe<TeamsUpdateOneRequiredWithoutGames_Games_AwayToTeamsNestedInput>;
   Teams_Games_homeToTeams?: InputMaybe<TeamsUpdateOneRequiredWithoutGames_Games_HomeToTeamsNestedInput>;
+  awayrecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   awayscore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   current_record?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  homerecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   homescore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   international?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   is_tiebreaker?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -800,9 +846,11 @@ export type GamesUpdateWithoutPicksInput = {
 export type GamesUpdateWithoutTeams_Games_AwayToTeamsInput = {
   Picks?: InputMaybe<PicksUpdateManyWithoutGamesNestedInput>;
   Teams_Games_homeToTeams?: InputMaybe<TeamsUpdateOneRequiredWithoutGames_Games_HomeToTeamsNestedInput>;
+  awayrecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   awayscore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   current_record?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  homerecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   homescore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   international?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   is_tiebreaker?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -816,9 +864,11 @@ export type GamesUpdateWithoutTeams_Games_AwayToTeamsInput = {
 export type GamesUpdateWithoutTeams_Games_HomeToTeamsInput = {
   Picks?: InputMaybe<PicksUpdateManyWithoutGamesNestedInput>;
   Teams_Games_awayToTeams?: InputMaybe<TeamsUpdateOneRequiredWithoutGames_Games_AwayToTeamsNestedInput>;
+  awayrecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   awayscore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   current_record?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  homerecord?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   homescore?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   international?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   is_tiebreaker?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -854,11 +904,13 @@ export type GamesWhereInput = {
   Teams_Games_awayToTeams?: InputMaybe<TeamsRelationFilter>;
   Teams_Games_homeToTeams?: InputMaybe<TeamsRelationFilter>;
   away?: InputMaybe<IntFilter>;
+  awayrecord?: InputMaybe<StringNullableFilter>;
   awayscore?: InputMaybe<IntNullableFilter>;
   current_record?: InputMaybe<StringNullableFilter>;
   done?: InputMaybe<BoolNullableFilter>;
   gid?: InputMaybe<IntFilter>;
   home?: InputMaybe<IntFilter>;
+  homerecord?: InputMaybe<StringNullableFilter>;
   homescore?: InputMaybe<IntNullableFilter>;
   international?: InputMaybe<BoolNullableFilter>;
   is_tiebreaker?: InputMaybe<BoolNullableFilter>;
@@ -2830,6 +2882,7 @@ export type Picks = {
   correct?: Maybe<Scalars['Int']>;
   done?: Maybe<Scalars['Int']>;
   gid: Scalars['Int'];
+  is_random?: Maybe<Scalars['Boolean']>;
   loser?: Maybe<Scalars['Int']>;
   pickid: Scalars['Int'];
   score?: Maybe<Scalars['Int']>;
@@ -2873,6 +2926,7 @@ export type PicksCountAggregate = {
   correct: Scalars['Int'];
   done: Scalars['Int'];
   gid: Scalars['Int'];
+  is_random: Scalars['Int'];
   loser: Scalars['Int'];
   pickid: Scalars['Int'];
   score: Scalars['Int'];
@@ -2887,6 +2941,7 @@ export type PicksCountOrderByAggregateInput = {
   correct?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrder>;
   loser?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
@@ -2902,6 +2957,7 @@ export type PicksCreateInput = {
   People: PeopleCreateNestedOneWithoutPicksInput;
   correct?: InputMaybe<Scalars['Int']>;
   done?: InputMaybe<Scalars['Int']>;
+  is_random?: InputMaybe<Scalars['Boolean']>;
   loser?: InputMaybe<Scalars['Int']>;
   score?: InputMaybe<Scalars['Int']>;
   season: Scalars['Int'];
@@ -2913,6 +2969,7 @@ export type PicksCreateInput = {
 export type PicksCreateManyGamesInput = {
   correct?: InputMaybe<Scalars['Int']>;
   done?: InputMaybe<Scalars['Int']>;
+  is_random?: InputMaybe<Scalars['Boolean']>;
   loser?: InputMaybe<Scalars['Int']>;
   pickid?: InputMaybe<Scalars['Int']>;
   score?: InputMaybe<Scalars['Int']>;
@@ -2932,6 +2989,7 @@ export type PicksCreateManyInput = {
   correct?: InputMaybe<Scalars['Int']>;
   done?: InputMaybe<Scalars['Int']>;
   gid: Scalars['Int'];
+  is_random?: InputMaybe<Scalars['Boolean']>;
   loser?: InputMaybe<Scalars['Int']>;
   pickid?: InputMaybe<Scalars['Int']>;
   score?: InputMaybe<Scalars['Int']>;
@@ -2946,6 +3004,7 @@ export type PicksCreateManyPeopleInput = {
   correct?: InputMaybe<Scalars['Int']>;
   done?: InputMaybe<Scalars['Int']>;
   gid: Scalars['Int'];
+  is_random?: InputMaybe<Scalars['Boolean']>;
   loser?: InputMaybe<Scalars['Int']>;
   pickid?: InputMaybe<Scalars['Int']>;
   score?: InputMaybe<Scalars['Int']>;
@@ -2988,6 +3047,7 @@ export type PicksCreateWithoutGamesInput = {
   People: PeopleCreateNestedOneWithoutPicksInput;
   correct?: InputMaybe<Scalars['Int']>;
   done?: InputMaybe<Scalars['Int']>;
+  is_random?: InputMaybe<Scalars['Boolean']>;
   loser?: InputMaybe<Scalars['Int']>;
   score?: InputMaybe<Scalars['Int']>;
   season: Scalars['Int'];
@@ -3000,6 +3060,7 @@ export type PicksCreateWithoutPeopleInput = {
   Games: GamesCreateNestedOneWithoutPicksInput;
   correct?: InputMaybe<Scalars['Int']>;
   done?: InputMaybe<Scalars['Int']>;
+  is_random?: InputMaybe<Scalars['Boolean']>;
   loser?: InputMaybe<Scalars['Int']>;
   score?: InputMaybe<Scalars['Int']>;
   season: Scalars['Int'];
@@ -3018,6 +3079,7 @@ export type PicksGroupBy = {
   correct?: Maybe<Scalars['Int']>;
   done?: Maybe<Scalars['Int']>;
   gid: Scalars['Int'];
+  is_random?: Maybe<Scalars['Boolean']>;
   loser?: Maybe<Scalars['Int']>;
   pickid: Scalars['Int'];
   score?: Maybe<Scalars['Int']>;
@@ -3039,6 +3101,7 @@ export type PicksMaxAggregate = {
   correct?: Maybe<Scalars['Int']>;
   done?: Maybe<Scalars['Int']>;
   gid?: Maybe<Scalars['Int']>;
+  is_random?: Maybe<Scalars['Boolean']>;
   loser?: Maybe<Scalars['Int']>;
   pickid?: Maybe<Scalars['Int']>;
   score?: Maybe<Scalars['Int']>;
@@ -3053,6 +3116,7 @@ export type PicksMaxOrderByAggregateInput = {
   correct?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrder>;
   loser?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
@@ -3068,6 +3132,7 @@ export type PicksMinAggregate = {
   correct?: Maybe<Scalars['Int']>;
   done?: Maybe<Scalars['Int']>;
   gid?: Maybe<Scalars['Int']>;
+  is_random?: Maybe<Scalars['Boolean']>;
   loser?: Maybe<Scalars['Int']>;
   pickid?: Maybe<Scalars['Int']>;
   score?: Maybe<Scalars['Int']>;
@@ -3082,6 +3147,7 @@ export type PicksMinOrderByAggregateInput = {
   correct?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrder>;
   loser?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
@@ -3105,6 +3171,7 @@ export type PicksOrderByWithAggregationInput = {
   correct?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrder>;
   loser?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
@@ -3121,6 +3188,7 @@ export type PicksOrderByWithRelationInput = {
   correct?: InputMaybe<SortOrder>;
   done?: InputMaybe<SortOrder>;
   gid?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrder>;
   loser?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
@@ -3135,6 +3203,7 @@ export enum PicksScalarFieldEnum {
   Correct = 'correct',
   Done = 'done',
   Gid = 'gid',
+  IsRandom = 'is_random',
   Loser = 'loser',
   Pickid = 'pickid',
   Score = 'score',
@@ -3152,6 +3221,7 @@ export type PicksScalarWhereInput = {
   correct?: InputMaybe<IntNullableFilter>;
   done?: InputMaybe<IntNullableFilter>;
   gid?: InputMaybe<IntFilter>;
+  is_random?: InputMaybe<BoolNullableFilter>;
   loser?: InputMaybe<IntNullableFilter>;
   pickid?: InputMaybe<IntFilter>;
   score?: InputMaybe<IntNullableFilter>;
@@ -3169,6 +3239,7 @@ export type PicksScalarWhereWithAggregatesInput = {
   correct?: InputMaybe<IntNullableWithAggregatesFilter>;
   done?: InputMaybe<IntNullableWithAggregatesFilter>;
   gid?: InputMaybe<IntWithAggregatesFilter>;
+  is_random?: InputMaybe<BoolNullableWithAggregatesFilter>;
   loser?: InputMaybe<IntNullableWithAggregatesFilter>;
   pickid?: InputMaybe<IntWithAggregatesFilter>;
   score?: InputMaybe<IntNullableWithAggregatesFilter>;
@@ -3211,6 +3282,7 @@ export type PicksUpdateInput = {
   People?: InputMaybe<PeopleUpdateOneRequiredWithoutPicksNestedInput>;
   correct?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  is_random?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   loser?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   score?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -3222,6 +3294,7 @@ export type PicksUpdateInput = {
 export type PicksUpdateManyMutationInput = {
   correct?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  is_random?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   loser?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   score?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -3282,6 +3355,7 @@ export type PicksUpdateWithoutGamesInput = {
   People?: InputMaybe<PeopleUpdateOneRequiredWithoutPicksNestedInput>;
   correct?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  is_random?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   loser?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   score?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -3294,6 +3368,7 @@ export type PicksUpdateWithoutPeopleInput = {
   Games?: InputMaybe<GamesUpdateOneRequiredWithoutPicksNestedInput>;
   correct?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   done?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  is_random?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   loser?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   score?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -3323,6 +3398,7 @@ export type PicksWhereInput = {
   correct?: InputMaybe<IntNullableFilter>;
   done?: InputMaybe<IntNullableFilter>;
   gid?: InputMaybe<IntFilter>;
+  is_random?: InputMaybe<BoolNullableFilter>;
   loser?: InputMaybe<IntNullableFilter>;
   pickid?: InputMaybe<IntFilter>;
   score?: InputMaybe<IntNullableFilter>;
@@ -4581,7 +4657,7 @@ export type GamesByWeekQueryVariables = Exact<{
 }>;
 
 
-export type GamesByWeekQuery = { __typename?: 'Query', findManyGames: Array<{ __typename?: 'Games', gid: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, winner?: number | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> };
+export type GamesByWeekQuery = { __typename?: 'Query', findManyGames: Array<{ __typename?: 'Games', gid: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> };
 
 export type FindLeagueMembersQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -4661,6 +4737,8 @@ export const GamesByWeekDocument = gql`
     homescore
     ts
     done
+    homerecord
+    awayrecord
     winner
     Teams_Games_awayToTeams {
       teamid

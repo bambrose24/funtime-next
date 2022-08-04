@@ -16,7 +16,7 @@ import {
   Tooltip,
   VStack,
 } from "@chakra-ui/react";
-import { ErrorMessage, Form, Formik, useFormik, yupToFormErrors } from "formik";
+import { Form, Formik } from "formik";
 import { useMemo, useState } from "react";
 import { Typography } from "../../src/components/Typography";
 import {
@@ -25,7 +25,6 @@ import {
   RegisterMutation,
   useRegisterMutation,
 } from "../../src/generated/graphql";
-import { Team } from "../types/teams";
 import * as Yup from "yup";
 
 const RegistrationResponseModal: ReactFCC<{

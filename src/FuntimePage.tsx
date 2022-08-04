@@ -3,8 +3,6 @@ import { ReactNode } from "react";
 import { Nav } from "./components/nav/Nav";
 
 const FuntimePage: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const { colorMode } = useColorMode();
-  console.log("color mode", colorMode);
   return (
     <Box bgColor="gray.100">
       <Nav />

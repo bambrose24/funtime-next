@@ -18,13 +18,13 @@ import {
 } from "@chakra-ui/react";
 import { Form, Formik } from "formik";
 import { useMemo, useState } from "react";
-import { Typography } from "../../src/components/Typography";
+import { Typography } from "@src/components/Typography";
 import {
   AllTeamsQuery,
   FindLeagueMembersQuery,
   RegisterMutation,
   useRegisterMutation,
-} from "../../src/generated/graphql";
+} from "@src/generated/graphql";
 import * as Yup from "yup";
 
 const RegistrationResponseModal: ReactFCC<{

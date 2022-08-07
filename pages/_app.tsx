@@ -2,10 +2,10 @@ import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import { ReactNode } from "react";
-import { client } from "../src/graphql";
-import MetaTags from "../src/meta/MetaTags";
+import { client } from "@src/graphql";
+import MetaTags from "@src/meta/MetaTags";
 
-import theme from "../src/util/theme";
+import theme from "@src/util/theme";
 
 const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (

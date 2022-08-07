@@ -1,68 +1,26 @@
-import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
-import { PicksForm } from "../../src/components/pick/PicksForm";
-import { Typography } from "../../src/components/Typography";
-import FuntimePage from "../../src/FuntimePage";
+import FuntimePage from "@src/FuntimePage";
 import {
-  useFindLeagueMembersQuery,
-  useGamesByWeekQuery,
-} from "../../src/generated/graphql";
-import { LEAGUE_ID, SEASON } from "../../src/util/config";
+  FindLeagueMembersDocument,
+  FindLeagueMembersQuery,
+  GamesByWeekDocument,
+  GamesByWeekQuery,
+} from "@src/generated/graphql";
+import { LEAGUE_ID, SEASON } from "@src/util/config";
+import { PicksContent } from "@src/components/pick/PicksContent";
+import { client } from "@src/graphql";
 
-interface PickPageProps {
+export interface PickPageProps {
+  games: GamesByWeekQuery;
+  people: FindLeagueMembersQuery;
   week: number;
   season: number;
 }
 
-const PickPage: React.FC<PickPageProps> = ({ week, season }) => {
-  const {
-    data: gamesData,
-    loading: gamesLoading,
-    error: gamesError,
-  } = useGamesByWeekQuery({
-    variables: { week, season },
-  });
-  const {
-    data: usersData,
-    loading: usersLoading,
-    error: usersError,
-  } = useFindLeagueMembersQuery({ variables: { league_id: LEAGUE_ID } });
-
-  if (usersLoading || gamesLoading) {
-    return (
-      <Box w="100%" flex={1} justifyContent="center" mx={8} my={8}>
-        <Spinner />
-      </Box>
-    );
-  }
-
-  if (!usersData || !gamesData) {
-    return (
-      <Box w="100%">
-        <Typography.H2>
-          There was an error. Please refresh the page.
-        </Typography.H2>
-      </Box>
-    );
-  }
-
+const PickPage: React.FC<PickPageProps> = ({ people, games, week, season }) => {
   return (
     <FuntimePage>
-      <Flex justify="center">
-        <Box maxWidth="800px" bgColor="white" p={4}>
-          <Box textAlign="center">
-            <Typography.H2>
-              Make Your Picks for Week {week}, {season}
-            </Typography.H2>
-            <Flex w="100%" justify="center" bgColor="white" py={8} px={4}>
-              <PicksForm
-                games={gamesData?.findManyGames}
-                users={usersData.findManyLeagueMembers}
-              />
-            </Flex>
-          </Box>
-        </Box>
-      </Flex>
+      <PicksContent people={people} games={games} week={week} season={season} />
     </FuntimePage>
   );
 };
@@ -70,7 +28,34 @@ const PickPage: React.FC<PickPageProps> = ({ week, season }) => {
 export const getServerSideProps: GetServerSideProps<
   PickPageProps
 > = async () => {
-  return { props: { week: 1, season: SEASON } };
+  const week = 1;
+  const season = SEASON;
+  const [games, people] = await Promise.all([
+    client.query<GamesByWeekQuery>({
+      query: GamesByWeekDocument,
+      variables: {
+        week,
+        season,
+      },
+    }),
+    client.query<FindLeagueMembersQuery>({
+      query: FindLeagueMembersDocument,
+      variables: {
+        league_id: LEAGUE_ID,
+      },
+    }),
+  ]);
+
+  const props: PickPageProps = {
+    games: games.data,
+    people: people.data,
+    week,
+    season,
+  };
+
+  return {
+    props,
+  };
 };
 
 export default PickPage;

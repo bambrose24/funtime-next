@@ -117,7 +117,6 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                   height="90px"
                   border="1px solid"
                   borderColor="gray.300"
-                  w="500px"
                   px={4}
                   py={4}
                   borderRadius={4}
@@ -140,7 +139,10 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                           }}
                         >
                           <Grid templateColumns="repeat(12, 1fr)">
-                            <GridItem colStart={4} colSpan={4}>
+                            <GridItem
+                              colStart={{ base: 1, lg: 4 }}
+                              colSpan={{ base: 4, lg: 4 }}
+                            >
                               <Flex
                                 height="100%"
                                 align="center"
@@ -154,7 +156,10 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                               </Flex>
                             </GridItem>
 
-                            <GridItem colStart={8} colSpan={2}>
+                            <GridItem
+                              colStart={{ base: 6, lg: 8 }}
+                              colSpan={{ base: 3, lg: 2 }}
+                            >
                               <Flex
                                 height="100%"
                                 align="center"
@@ -169,7 +174,10 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                                 />
                               </Flex>
                             </GridItem>
-                            <GridItem colStart={10} colSpan={2}>
+                            <GridItem
+                              colStart={{ base: 9, lg: 10 }}
+                              colSpan={{ base: 3, lg: 2 }}
+                            >
                               <Flex
                                 height="100%"
                                 align="center"
@@ -200,7 +208,11 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                           }}
                         >
                           <Grid templateColumns="repeat(12, 1fr)">
-                            <GridItem colSpan={2} colStart={2} height="100%">
+                            <GridItem
+                              colSpan={{ base: 3, lg: 2 }}
+                              colStart={{ base: 2, lg: 2 }}
+                              height="100%"
+                            >
                               <Flex
                                 height="100%"
                                 align="center"
@@ -212,7 +224,10 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                                 </Typography.Body1>
                               </Flex>
                             </GridItem>
-                            <GridItem colStart={4} colSpan={2}>
+                            <GridItem
+                              colStart={{ base: 5, lg: 4 }}
+                              colSpan={{ base: 3, lg: 2 }}
+                            >
                               <Flex
                                 height="100%"
                                 align="center"
@@ -227,7 +242,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                                 />
                               </Flex>
                             </GridItem>
-                            <GridItem colStart={6} colSpan={4}>
+                            <GridItem colStart={{ base: 9, lg: 6 }} colSpan={4}>
                               <Flex
                                 height="100%"
                                 align="center"
@@ -243,7 +258,11 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                           </Grid>
                         </Box>
                       </GridItem>
-                      <GridItem colStart={3} colSpan={1} rowStart={2}>
+                      <GridItem
+                        colStart={{ base: 1, lg: 3 }}
+                        colSpan={{ base: 2, lg: 1 }}
+                        rowStart={2}
+                      >
                         <Flex
                           height="100%"
                           align="center"
@@ -255,7 +274,11 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                           </Typography.Subtitle2>
                         </Flex>
                       </GridItem>
-                      <GridItem colStart={10} colSpan={1} rowStart={2}>
+                      <GridItem
+                        colStart={{ base: 11, lg: 10 }}
+                        colSpan={{ base: 2, lg: 1 }}
+                        rowStart={2}
+                      >
                         <Flex
                           height="100%"
                           align="center"
@@ -267,7 +290,11 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                           </Typography.Subtitle2>
                         </Flex>
                       </GridItem>
-                      <GridItem colStart={5} colSpan={4} rowStart={2}>
+                      <GridItem
+                        colStart={{ base: 3, lg: 5 }}
+                        colSpan={{ base: 8, lg: 4 }}
+                        rowStart={2}
+                      >
                         <Typography.Subtitle2>
                           {moment(game.ts)
                             .tz("America/New_York")

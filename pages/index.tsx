@@ -1,8 +1,8 @@
 import { Flex, VStack } from "@chakra-ui/react";
 import type { NextPage } from "next";
-import Section from "../src/components/Section";
-import { Typography } from "../src/components/Typography";
-import FuntimePage from "../src/FuntimePage";
+import Section from "@src/components/Section";
+import { Typography } from "@src/components/Typography";
+import FuntimePage from "@src/FuntimePage";
 
 const Home: NextPage = () => {
   return (

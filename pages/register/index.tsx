@@ -1,14 +1,14 @@
 import { Flex } from "@chakra-ui/react";
 import { GetStaticProps, NextPage } from "next";
-import RegistrationForm from "../../src/components/RegistrationForm";
-import FuntimePage from "../../src/FuntimePage";
+import RegistrationForm from "@src/components/RegistrationForm";
+import FuntimePage from "@src/FuntimePage";
 import {
   AllTeamsDocument,
   AllTeamsQuery,
   FindLeagueMembersDocument,
   FindLeagueMembersQuery,
-} from "../../src/generated/graphql";
-import { client } from "../../src/graphql";
+} from "@src/generated/graphql";
+import { client } from "@src/graphql";
 
 interface RegisterPageProps {
   previousMembers: FindLeagueMembersQuery;

@@ -1,13 +1,6 @@
-import { Box, Flex, Spinner } from "@chakra-ui/react";
-import { GetServerSideProps } from "next";
+import { Box, Flex } from "@chakra-ui/react";
 import { PicksForm } from "@src/components/pick/PicksForm";
 import { Typography } from "@src/components/Typography";
-import FuntimePage from "@src/FuntimePage";
-import {
-  useFindLeagueMembersQuery,
-  useGamesByWeekQuery,
-} from "@src/generated/graphql";
-import { SEASON } from "@src/util/config";
 import { PickPageProps } from "pages/pick";
 
 export const PicksContent: React.FC<PickPageProps> = ({

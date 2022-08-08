@@ -18,6 +18,8 @@ export const PicksContent: React.FC<PickPageProps> = ({
           </Typography.H2>
           <Flex w="100%" justify="center" bgColor="white" py={8} px={4}>
             <PicksForm
+              week={week}
+              season={season}
               games={games.findManyGames}
               users={people.findManyLeagueMembers}
             />

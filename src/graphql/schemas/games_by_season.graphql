@@ -6,6 +6,7 @@ query GamesBySeason($season: Int!) {
     ts
     done
     winner
+    is_tiebreaker
     Teams_Games_awayToTeams {
       teamid
       abbrev

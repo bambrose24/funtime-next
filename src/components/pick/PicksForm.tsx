@@ -1,7 +1,9 @@
 import { Form, Formik } from "formik";
 import {
   FindLeagueMembersQuery,
+  GamePick,
   GamesByWeekQuery,
+  useMakePicksMutation,
 } from "../../generated/graphql";
 import * as Yup from "yup";
 import {
@@ -12,6 +14,7 @@ import {
   FormLabel,
   Grid,
   GridItem,
+  Input,
   Radio,
   Select,
   VStack,
@@ -32,10 +35,12 @@ interface GameEntry {
 }
 
 export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
+  const [submitPicks, { data, error, loading }] = useMakePicksMutation();
+
   const validationSchema = Yup.object().shape({
     user1: Yup.string()
       .oneOf(
-        users.map((u) => u.People.uid.toString()),
+        users.map((u) => u.membership_id.toString()),
         "Please choose your username"
       )
       .required(),
@@ -51,19 +56,55 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
         })
       )
       .length(games.length, "Please select a winner for every game"),
+    score: Yup.number()
+      .required()
+      .integer()
+      .lessThan(100, "Please enter a number below 100"),
   });
+
+  const tiebreakerGame = games.find((g) => g.is_tiebreaker)!;
   return (
     <Formik
       initialValues={{
-        user1: undefined,
-        user2: undefined,
+        user1: "",
+        user2: "",
         games: games.map((g): GameEntry => {
-          return { gameId: g.gid, random: false, winner: undefined };
+          return {
+            gameId: g.gid,
+            random: false,
+            winner: undefined,
+          };
         }),
+        scoreGameId: tiebreakerGame.gid,
+        score: "",
       }}
       validationSchema={validationSchema}
       onSubmit={async (values, { resetForm }) => {
-        console.log("values from submit?", values);
+        const memberId = values.user1;
+        const picks = values.games.map((g) => {
+          const res: GamePick = {
+            game_id: g.gameId,
+            winner: g.winner!,
+            is_random: g.random,
+            score:
+              values.scoreGameId === g.gameId
+                ? parseInt(values.score)
+                : undefined,
+          };
+          return res;
+        });
+        console.log("data to submitPicks", {
+          picks,
+          member_id: parseInt(memberId),
+        });
+        try {
+          const res = await submitPicks({
+            variables: { picks, member_id: parseInt(memberId) },
+          });
+          console.log("submit picks res", res);
+        } catch (e) {
+          console.log("error submitting", e);
+        }
       }}
     >
       {(formik) => (
@@ -79,9 +120,9 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                 bgColor="gray.100"
               >
                 <option value={undefined} />
-                {users.map(({ People: { uid, username } }) => {
+                {users.map(({ membership_id, People: { username } }) => {
                   return (
-                    <option key={uid} value={uid}>
+                    <option key={membership_id} value={membership_id}>
                       {username}
                     </option>
                   );
@@ -316,9 +357,9 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
                 bgColor="gray.100"
               >
                 <option value={undefined} />
-                {users.map(({ People: { uid, username } }) => {
+                {users.map(({ membership_id, People: { username } }) => {
                   return (
-                    <option key={uid} value={uid}>
+                    <option key={membership_id} value={membership_id}>
                       {username}
                     </option>
                   );
@@ -327,6 +368,24 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
               {formik.errors.user2 && formik.values.user2 && (
                 <Typography.Subtitle2 color="red">
                   {formik.errors.user2}
+                </Typography.Subtitle2>
+              )}
+            </FormControl>
+            <FormControl>
+              <FormLabel>
+                Total Score of {tiebreakerGame.Teams_Games_homeToTeams.abbrev} @{" "}
+                {tiebreakerGame.Teams_Games_awayToTeams.abbrev}
+              </FormLabel>
+              <Input
+                id="score"
+                name="score"
+                bgColor="gray.100"
+                value={formik.values.score}
+                onChange={formik.handleChange}
+              />
+              {formik.errors.score && formik.values.score && (
+                <Typography.Subtitle2 color="red">
+                  {formik.errors.score}
                 </Typography.Subtitle2>
               )}
             </FormControl>
@@ -342,7 +401,11 @@ export const PicksForm: React.FC<PicksFormProps> = ({ games, users }) => {
               color="white"
               bgColor={formik.isValid ? undefined : "red"}
             >
-              {formik.isValid ? `Submit Picks` : `Finish Your Picks`}
+              {formik.isValid
+                ? `Submit Picks`
+                : formik.errors
+                ? `Fix Your Picks`
+                : `Finish Your Picks`}
             </Button>
           </VStack>
         </Form>

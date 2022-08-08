@@ -1,0 +1,8 @@
+mutation MakePicks($picks: [GamePick!]!, $member_id: Int!) {
+  makePicks(picks: $picks, member_id: $member_id) {
+    user {
+      username
+      email
+    }
+  }
+}

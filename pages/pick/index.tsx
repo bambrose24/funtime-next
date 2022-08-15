@@ -25,9 +25,12 @@ const PickPage: React.FC<PickPageProps> = ({ people, games, week, season }) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps<
-  PickPageProps
-> = async () => {
+export const getServerSideProps: GetServerSideProps<PickPageProps> = async (
+  context
+) => {
+  const { res } = context;
+  res.setHeader("Cache-Control", `s-maxage=60, stale-while-revalidate`);
+
   const week = 1;
   const season = SEASON;
   const [games, people] = await Promise.all([

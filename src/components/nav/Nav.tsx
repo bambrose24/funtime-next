@@ -47,7 +47,7 @@ export const DesktopNav: React.FC = () => {
               <Link href="/">
                 <Image
                   cursor="pointer"
-                  src="/funtime_full_logo.png"
+                  src="/logo/funtime_full_logo.png"
                   alt="FunTime Logo"
                   height={30} 
                   placeholder = "blur"
@@ -76,7 +76,7 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           <Flex justify="space-between">
             <Box mt={2}>
               <Image
-                src="/funtime_full_logo.png"
+                src="/logo/funtime_full_logo.png"
                 alt="FunTime Logo"
                 height={30} 
                 placeholder = "blur"

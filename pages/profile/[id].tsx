@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import React, {useState} from 'react';
 import { Typography } from "../../src/components/Typography";
 import ProfilePicture from '../../src/components/profile/ProfilePicture';
-import EditProfileModal from '../../src/components/profile/EditProfileModal';
 import { useUserProfileQuery } from "../../src/generated/graphql";
 import { SEASON } from "../../src/util/config";
 import {
@@ -102,7 +101,6 @@ export default function Profile(){
           </TableContainer>
         </Box>
       </Flex>
-      <EditProfileModal/>
     </FuntimePage>
   )
 }

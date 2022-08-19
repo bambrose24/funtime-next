@@ -4,11 +4,11 @@ import {Flex, Spinner} from "@chakra-ui/react";
 
 
 const ProfilePicture = (props: { id: number; size: string; }) => {
-  const [src, setSrc] = useState("/" + props.id + ".jpeg");
+  const [src, setSrc] = useState("/profile/" + props.id + ".jpeg");
 
   React.useEffect(() => {
     if (props.id) {
-      setSrc("/" + props.id + ".jpeg")
+      setSrc("/profile/" + props.id + ".jpeg")
     }
   }, [props.id]);
 
@@ -50,8 +50,8 @@ const ProfilePicture = (props: { id: number; size: string; }) => {
         width={100}
         height={100} 
         placeholder = "blur"
-        blurDataURL = '/default_profile_pic.jpeg'
-        onError={() => setSrc('/default_profile_pic.jpeg')}
+        blurDataURL = '/profile/default_profile_pic.jpeg'
+        onError={() => setSrc('/profile/default_profile_pic.jpeg')}
         />
     </div>
   );

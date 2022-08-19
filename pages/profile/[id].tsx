@@ -23,7 +23,7 @@ export default function Profile(){
     if (router.isReady && router.query.id) {
       updateId(router.query.id)
     }
-  }, [router.pathname]);
+  }, [router.isReady]);
 
   const {
     data: userData,
@@ -65,13 +65,14 @@ export default function Profile(){
       <Flex justify="center">
         <Box bg='white' px={10} py={5} mt={5} borderRadius="25px" textAlign="center" borderTop="5px solid" borderColor="green.600">
           <Center>
-            <ProfilePicture id={(id)} size="lg"></ProfilePicture>
+            <ProfilePicture id={(parseInt(id!))} size="lg"></ProfilePicture>
           </Center>
+          {/* commented out query map and personalization features like edit profile and bio */}
           {/* {userData.findManyPeople.map(({People: { username, fname, lname }, Picks: { correct } }) => { */}
           <Typography.H4 mt={2}> Bobby A. </Typography.H4>
           {/* })} */}
-          <Typography.Body2 maxWidth="300px" color="gray" mb={2}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Typography.Body2>
-          <Button size="sm" onClick={() => {onOpen()}}>Edit Profile</Button>
+          {/* <Typography.Body2 maxWidth="300px" color="gray" mb={2}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Typography.Body2> */}
+          {/* <Button size="sm">Edit Profile</Button> */}
 
           <TableContainer>
             <Table>

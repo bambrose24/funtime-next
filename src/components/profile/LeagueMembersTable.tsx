@@ -1,16 +1,13 @@
 import React from "react";
-import { Box, Button, Flex, Spinner, Center } from "@chakra-ui/react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { Typography } from "../Typography";
 import { useFindLeagueMembersQuery } from "../../generated/graphql";
 import { LEAGUE_ID } from "../../util/config";
 import {
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  TableContainer,
+  Table, Tbody, Tr, Td, Th, Thead,
+  TableContainer, Stat, StatArrow, Center
 } from '@chakra-ui/react'
-import ProfilePicture from "./ProfilePicture";
+import UserTag from "./UserTag";
 
 
 export const LeagueMembersTable = () => {  
@@ -42,36 +39,25 @@ export const LeagueMembersTable = () => {
   return(
     <TableContainer overflowY="auto" overflowX="auto">
       <Table size='md' variant="simple" fontSize={[14, 16]}>
+        <Thead>
+          <Tr>
+            <Th pl={10} pr={0}>Rank</Th>
+            <Th pr={2} pl={0}>User</Th>
+            <Th pl={0} color="gray" cursor="default">Picks Correct</Th>
+            <Th pl={0} color="gray" cursor="default">Wins</Th>
+          </Tr>
+        </Thead>
         <Tbody>
           {usersData.findManyLeagueMembers.map(({ People: { uid, username } }) => {
-            let profile_url = "/profile/" + uid
             return (
               <>
-              <Tr key={uid} _hover={{bgColor: "gray.100"}}>
-                <Td pr={2} mr={0}><a style={{}} href={profile_url}><ProfilePicture id={uid} size="default"/></a></Td>
-                <Td pl={0}><a href={profile_url}><Button size="sm" bg="gray.200" outline="1px solid white" px={4} py={0} borderRadius="25px" color="black">{username}</Button></a></Td>
-                <Td pl={0} color="gray" cursor="default">"Your mom's a ho"</Td>
+              <Tr key={uid} _hover={{bgColor: "gray.50"}}>
+                <Td pl={10} pr={0} py={0}><Stat color="green">1 <StatArrow type='increase' pb={1} /></Stat></Td>
+                <Td pl={0} pr={2} py={2} ><UserTag user_id={uid} username={username}></UserTag></Td>
+                <Td pl={0} py={0}  color="gray" cursor="default">0</Td>
+                <Td pl={0} py={0}  color="gray" cursor="default">0</Td>
               </Tr>
-              <Tr key={uid} _hover={{bgColor: "gray.100"}}>
-                <Td pr={2}><a style={{}} href={profile_url}><ProfilePicture id={uid} size="default"/></a></Td>
-                <Td pl={0}><a href={profile_url}><Button size="sm" bg="gray.200" outline="1px solid white" px={4} py={0} borderRadius="25px" color="black">{username}</Button></a></Td>
-                <Td pl={0} color="gray" cursor="default">"This is gonna be my week"</Td>
-              </Tr>
-              <Tr key={uid} _hover={{bgColor: "gray.100"}}>
-                <Td pr={2}><a style={{}} href={profile_url}><ProfilePicture id={uid} size="default"/></a></Td>
-                <Td pl={0}><a href={profile_url}><Button size="sm" bg="gray.200" outline="1px solid white" px={4} py={0} borderRadius="25px" color="black">{username}</Button></a></Td>
-                <Td pl={0} color="gray" cursor="default">"It's time for bed"</Td>
-              </Tr>
-              <Tr key={uid} _hover={{bgColor: "gray.100"}}>
-                <Td pr={2}><a style={{}} href={profile_url}><ProfilePicture id={uid} size="default"/></a></Td>
-                <Td pl={0}><a href={profile_url}><Button size="sm" bg="gray.200" outline="1px solid white" px={4} py={0} borderRadius="25px" color="black">{username}</Button></a></Td>
-                <Td pl={0} color="gray" cursor="default">"Bout to pocket $100"</Td>
-              </Tr>
-              <Tr key={uid} _hover={{bgColor: "gray.100"}}>
-                <Td pr={2}><a style={{}} href={profile_url}><ProfilePicture id={uid} size="default"/></a></Td>
-                <Td pl={0}><a href={profile_url}><Button size="sm" bg="gray.200" outline="1px solid white" px={4} py={0} borderRadius="25px" color="black">{username}</Button></a></Td>
-                <Td pl={0} color="gray" cursor="default">"Check yourselves"</Td>
-              </Tr></>               
+              </>
             );
           })}
         </Tbody>

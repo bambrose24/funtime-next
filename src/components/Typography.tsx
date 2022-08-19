@@ -32,6 +32,15 @@ const H4: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
+const H5: ReactFCC<TextProps> = ({ children, ...rest }) => {
+  return (
+    <Text fontSize="md" {...rest}>
+      {children}
+    </Text>
+  );
+};
+
+
 export const Body1: ReactFCC<TextProps> = ({ children, ...rest }) => {
   return (
     <Text fontSize="lg" {...rest}>
@@ -64,11 +73,13 @@ const Subtitle2: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
+
 export const Typography = {
   H1,
   H2,
   H3,
   H4,
+  H5,
   Body1,
   Body2,
   Subtitle1,

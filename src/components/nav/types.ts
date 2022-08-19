@@ -23,7 +23,7 @@ export const navOptions: Array<Page> = [
   { name: "make_picks", display: "Make Your Picks", href: "/pick" },
   { name: "weekly_picks", display: "Weekly Picks", href: "/week" },
   { name: "season", display: "Season Standings", href: "/season" },
-  { name: "profile", display: "Profile", href: "/profile/263", },
+  // { name: "profile", display: "Profile", href: "/profile/263", },
   { name: "league", display: "League", href: "/league", },
 ];
 

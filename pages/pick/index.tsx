@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { Box, Flex, Spinner, Center } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import { PicksForm } from "../../src/components/pick/PicksForm";
 import { Typography } from "../../src/components/Typography";
@@ -30,9 +30,11 @@ const PickPage: React.FC<PickPageProps> = ({ week, season }) => {
 
   if (usersLoading || gamesLoading) {
     return (
-      <Box w="100%" flex={1} justifyContent="center" mx={8} my={8}>
-        <Spinner />
-      </Box>
+      <FuntimePage>
+        <Center mt={5}>
+          <Spinner />
+        </Center>
+      </FuntimePage>
     );
   }
 

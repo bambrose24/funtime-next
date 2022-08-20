@@ -15,6 +15,7 @@ export type Scalars = {
   Float: number;
   BigInt: any;
   DateTime: any;
+  DateTimeBetterSerialization: any;
 };
 
 export type AffectedRowsOutput = {
@@ -231,7 +232,7 @@ export type Games = {
   is_tiebreaker?: Maybe<Scalars['Boolean']>;
   season: Scalars['Int'];
   seconds?: Maybe<Scalars['BigInt']>;
-  ts: Scalars['DateTime'];
+  ts: Scalars['DateTimeBetterSerialization'];
   week: Scalars['Int'];
   winner?: Maybe<Scalars['Int']>;
 };
@@ -1003,7 +1004,7 @@ export type LeagueMembers = {
   league_id: Scalars['Int'];
   membership_id: Scalars['Int'];
   role: Scalars['String'];
-  ts: Scalars['DateTime'];
+  ts: Scalars['DateTimeBetterSerialization'];
   user_id: Scalars['Int'];
 };
 
@@ -1412,7 +1413,7 @@ export type Leagues = {
   People: People;
   _count?: Maybe<LeaguesCount>;
   created_by_user_id: Scalars['Int'];
-  created_time: Scalars['DateTime'];
+  created_time: Scalars['DateTimeBetterSerialization'];
   late_policy?: Maybe<Scalars['String']>;
   league_id: Scalars['Int'];
   name: Scalars['String'];
@@ -2061,6 +2062,9 @@ export type MutationMakePicksArgs = {
 export type MutationRegisterArgs = {
   email: Scalars['String'];
   previousUserId?: InputMaybe<Scalars['Int']>;
+  superbowlLoser: Scalars['Int'];
+  superbowlScore: Scalars['Int'];
+  superbowlWinner: Scalars['Int'];
   username: Scalars['String'];
 };
 
@@ -2979,7 +2983,7 @@ export type Picks = {
   pickid: Scalars['Int'];
   score?: Maybe<Scalars['Int']>;
   season: Scalars['Int'];
-  ts: Scalars['DateTime'];
+  ts: Scalars['DateTimeBetterSerialization'];
   uid: Scalars['Int'];
   week: Scalars['Int'];
   winner?: Maybe<Scalars['Int']>;
@@ -4103,7 +4107,7 @@ export type Superbowl = {
   pickid: Scalars['Int'];
   score: Scalars['Int'];
   season?: Maybe<Scalars['Int']>;
-  ts?: Maybe<Scalars['DateTime']>;
+  ts: Scalars['DateTimeBetterSerialization'];
   uid: Scalars['Int'];
   winner: Scalars['Int'];
 };
@@ -4281,7 +4285,7 @@ export type SuperbowlSquares = {
   league_id: Scalars['Int'];
   nfc_score_index: Scalars['Int'];
   square_id: Scalars['Int'];
-  ts: Scalars['DateTime'];
+  ts: Scalars['DateTimeBetterSerialization'];
   uid: Scalars['Int'];
 };
 
@@ -4888,6 +4892,9 @@ export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
   email: Scalars['String'];
   previousUserId?: InputMaybe<Scalars['Int']>;
+  superbowlWinner: Scalars['Int'];
+  superbowlLoser: Scalars['Int'];
+  superbowlScore: Scalars['Int'];
 }>;
 
 
@@ -5080,8 +5087,15 @@ export type MakePicksMutationHookResult = ReturnType<typeof useMakePicksMutation
 export type MakePicksMutationResult = Apollo.MutationResult<MakePicksMutation>;
 export type MakePicksMutationOptions = Apollo.BaseMutationOptions<MakePicksMutation, MakePicksMutationVariables>;
 export const RegisterDocument = gql`
-    mutation Register($username: String!, $email: String!, $previousUserId: Int) {
-  register(username: $username, email: $email, previousUserId: $previousUserId) {
+    mutation Register($username: String!, $email: String!, $previousUserId: Int, $superbowlWinner: Int!, $superbowlLoser: Int!, $superbowlScore: Int!) {
+  register(
+    username: $username
+    email: $email
+    previousUserId: $previousUserId
+    superbowlWinner: $superbowlWinner
+    superbowlLoser: $superbowlLoser
+    superbowlScore: $superbowlScore
+  ) {
     success
     user {
       username
@@ -5114,6 +5128,9 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  *      username: // value for 'username'
  *      email: // value for 'email'
  *      previousUserId: // value for 'previousUserId'
+ *      superbowlWinner: // value for 'superbowlWinner'
+ *      superbowlLoser: // value for 'superbowlLoser'
+ *      superbowlScore: // value for 'superbowlScore'
  *   },
  * });
  */

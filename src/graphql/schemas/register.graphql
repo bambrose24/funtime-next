@@ -1,8 +1,18 @@
-mutation Register($username: String!, $email: String!, $previousUserId: Int) {
+mutation Register(
+  $username: String!
+  $email: String!
+  $previousUserId: Int
+  $superbowlWinner: Int!
+  $superbowlLoser: Int!
+  $superbowlScore: Int!
+) {
   register(
     username: $username
     email: $email
     previousUserId: $previousUserId
+    superbowlWinner: $superbowlWinner
+    superbowlLoser: $superbowlLoser
+    superbowlScore: $superbowlScore
   ) {
     success
     user {

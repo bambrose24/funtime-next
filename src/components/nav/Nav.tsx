@@ -7,10 +7,13 @@ import {
   Flex,
   HStack,
   IconButton,
-  Image,
+  Image, Stack
 } from "@chakra-ui/react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
+import PersonIcon from "@mui/icons-material/Person";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useScreenSize } from "../../util/responsive";
@@ -55,6 +58,27 @@ export const DesktopNav: React.FC = () => {
               </Link>
             </HStack>
           </Box>
+          {/* <Stack
+            flex={{ base: 1, md: 0 }}
+            justify={'flex-end'}
+            direction={'row'}
+            spacing={2}
+            marginRight={2}>
+              <IconButton
+                bgColor="blue.600"
+                color="white"
+                icon={<PersonIcon />}
+                aria-label={"User Profile"}
+                _hover={{bgColor: "blue.500",}}
+              />
+              <IconButton
+                bgColor="blue.600"
+                color="white"
+                icon={<SettingsIcon />}
+                aria-label={"User Settings"}
+                _hover={{bgColor: "blue.500",}}
+              />
+          </Stack> */}
         </Flex>
       </Section>
       <DesktopNavDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />
@@ -99,16 +123,18 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               <Link href={href} key={name}>
                 <a>
                   <Box
+                    role={'group'}
                     m={2}
                     p={4}
                     rounded="lg"
+                    transition={'all .3s ease'}
                     bgColor={selected ? "blue.600" : undefined}
                     color = {selected ? "white" : undefined}
                     _hover={{
                       cursor: "pointer",
                       backgroundColor: selected ? undefined : "gray.300",
-                    }}
-                  >
+                    }}>
+                    <HStack>
                       <Image
                         cursor="pointer"
                         src={"/nav_icons/" + name + (selected ? "_icon_white.png" :"_icon_black.png")}
@@ -119,7 +145,18 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                         display="inline-block"
                         verticalAlign="middle"
                       />
-                    <Typography.H5 display="inline-block" fontWeight={selected ? "bold" : undefined}>{display}</Typography.H5>
+                      <Typography.H5 display="inline-block" fontWeight={selected ? "bold" : undefined}>{display}</Typography.H5>
+                      <Flex
+                        transition={'all .3s ease'}
+                        transform={'translateX(-10px)'}
+                        opacity={0}
+                        _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
+                        justify={'flex-end'}
+                        align={'center'}
+                        flex={1}>
+                        {selected ? undefined : <ChevronRightIcon />}
+                      </Flex>
+                    </HStack>
                   </Box>
                 </a>
               </Link>

@@ -51,7 +51,7 @@ export const LeagueMembersTable = () => {
           {usersData.findManyLeagueMembers.map(({ People: { uid, username } }) => {
             return (
               <>
-              <Tr key={uid} _hover={{bgColor: "gray.50"}}>
+              <Tr key={uid} transition={'all .3s ease'} _hover={{bgColor: "gray.50"}}>
                 <Td pl={10} pr={0} py={0}><Stat color="green">1 <StatArrow type='increase' pb={1} /></Stat></Td>
                 <Td pl={0} pr={2} py={2} ><UserTag user_id={uid} username={username}></UserTag></Td>
                 <Td pl={0} py={0}  color="gray" cursor="default">0</Td>

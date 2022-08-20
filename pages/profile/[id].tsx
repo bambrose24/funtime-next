@@ -3,14 +3,13 @@ import { useRouter } from "next/router";
 import React, {useState} from 'react';
 import { Typography } from "../../src/components/Typography";
 import ProfilePicture from '../../src/components/profile/ProfilePicture';
-import { useUserProfileQuery } from "../../src/generated/graphql";
-import { SEASON } from "../../src/util/config";
+import { useFindLeagueMembersQuery } from "../../src/generated/graphql";
+import { LEAGUE_ID } from "../../src/util/config";
 import {
   Box, Flex, Button, Center, Spinner,
   Stat, StatArrow,
   Table,Tbody,Tr,Td,TableContainer,
 } from '@chakra-ui/react'
-
 
 export default function Profile(){
   //Set up for querying the router for the user_id
@@ -28,15 +27,7 @@ export default function Profile(){
     data: userData,
     loading: userLoading,
     error: userError,
-  } = useUserProfileQuery({ variables: { season: 2022, user_id: 263 } });
-
-  // const { userData, userLoading, userError } = useUserProfileQuery({
-  //   variables: {
-  //     user_id: 263,
-  //     season: 2021 // value for 'season'
-  //   },
-  // });
-
+  } = useFindLeagueMembersQuery({ variables: { league_id: LEAGUE_ID } });
 
   if (userLoading) {
     return (
@@ -57,7 +48,9 @@ export default function Profile(){
       </Box>
     );
   }
-  console.log("here", userData, userLoading, userError);
+
+  //find the user from the league members query
+  const user = userData.findManyLeagueMembers.find(user => user.People.uid === parseInt(id!))
 
   return (
     <FuntimePage>
@@ -68,7 +61,7 @@ export default function Profile(){
           </Center>
           {/* commented out query map and personalization features like edit profile and bio */}
           {/* {userData.findManyPeople.map(({People: { username, fname, lname }, Picks: { correct } }) => { */}
-          <Typography.H4 mt={2}> Bobby A. </Typography.H4>
+          <Typography.H4 mt={2}> {user!.People.username} </Typography.H4>
           {/* })} */}
           {/* <Typography.Body2 maxWidth="300px" color="gray" mb={2}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Typography.Body2> */}
           {/* <Button size="sm">Edit Profile</Button> */}

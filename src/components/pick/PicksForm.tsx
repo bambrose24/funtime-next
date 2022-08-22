@@ -75,7 +75,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
     score: Yup.number()
       .required()
       .integer()
-      .lessThan(200, "Please enter a number below 100"),
+      .lessThan(200, "Please enter a number below 150"),
   });
 
   const tiebreakerGame = games.find((g) => g.is_tiebreaker)!;

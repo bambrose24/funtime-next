@@ -93,7 +93,7 @@ const RegistrationForm: ReactFCC<{
     superbowlScore: Yup.number()
       .required()
       .integer()
-      .lessThan(100, "Please enter a number below 100"),
+      .lessThan(150, "Please enter a number below 100"),
   });
 
   const [register, { data: registerData, loading, error }] =
@@ -279,7 +279,6 @@ const RegistrationForm: ReactFCC<{
                       <option value={undefined} />
                       <option value={undefined}>-- NFC --</option>
                       {teams.findManyTeams
-
                         .filter((t) => t.conference === "NFC")
                         .map((t) => {
                           return (

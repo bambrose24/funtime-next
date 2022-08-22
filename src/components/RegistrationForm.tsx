@@ -93,7 +93,7 @@ const RegistrationForm: ReactFCC<{
     superbowlScore: Yup.number()
       .required()
       .integer()
-      .lessThan(150, "Please enter a number below 100"),
+      .lessThan(150, "Please enter a number below 150"),
   });
 
   const [register, { data: registerData, loading, error }] =

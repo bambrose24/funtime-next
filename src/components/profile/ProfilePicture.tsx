@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import { Box } from "@chakra-ui/react";
+
+type ProfilePictureSize = "sm" | "md" | "lg";
+
+const sizes: Record<ProfilePictureSize, { h: string; w: string }> = {
+  sm: { h: "25px", w: "25px" },
+  md: { h: "50px", w: "50px" },
+  lg: { h: "100px", w: "100px" },
+} as const;
 
 const ProfilePicture = ({
   id,
   size,
 }: {
   id: number | undefined;
-  size: string;
+  size: ProfilePictureSize | undefined;
 }) => {
   const [src, setSrc] = useState("/profile/" + id + ".jpeg");
 
@@ -18,36 +27,13 @@ const ProfilePicture = ({
 
   let h = "35px";
   let w = "35px";
-  //set size
-  switch (size) {
-    case "sm":
-      h = "25px";
-      w = "25px";
-      break;
-    case "md":
-      h = "50px";
-      w = "50px";
-      break;
-    case "lg":
-      h = "100px";
-      w = "100px";
-      break;
-    default:
-      h = "35px";
-      w = "35px";
-      break;
+  if (size && size in sizes) {
+    h = sizes[size].h;
+    w = sizes[size].w;
   }
 
-  // if (!props.id) {
-  //   return (
-  //     <Flex justify="center" m={8}>
-  //       <Spinner />
-  //     </Flex>
-  //   );
-  // }
-
   return (
-    <div
+    <Box
       style={{
         borderRadius: "50%",
         overflow: "hidden",
@@ -65,7 +51,7 @@ const ProfilePicture = ({
         blurDataURL="/profile/default_profile_pic.jpeg"
         onError={() => setSrc("/profile/default_profile_pic.jpeg")}
       />
-    </div>
+    </Box>
   );
 };
 export default ProfilePicture;

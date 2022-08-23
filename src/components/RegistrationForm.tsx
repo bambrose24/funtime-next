@@ -322,9 +322,7 @@ const RegistrationForm: ReactFCC<{
                 </FormControl>
                 <Button
                   type="submit"
-                  bg={formik.isValid ? "primary" : "red.600"}
-                  color="white"
-                  _hover={{ backgroundColor: "blue.500" }}
+                  variant={formik.isValid ? "funtime-primary" : "funtime-error"}
                   width="full"
                   isLoading={loading}
                   disabled={!formik.isValid}

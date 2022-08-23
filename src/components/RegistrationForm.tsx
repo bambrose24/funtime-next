@@ -124,7 +124,18 @@ const RegistrationForm: ReactFCC<{
         loading={loading}
         error={error}
       />
-      <Box my={8} bg="white" width="480px" p={4}>
+      <Box
+        my={8}
+        bg="white"
+        width="480px"
+        color="gray.700"
+        p={4}
+        py={5}
+        rounded="lg"
+      >
+        <Typography.H3>Register for 2022</Typography.H3>
+        <hr />
+        <br />
         <Formik
           initialValues={{
             email: "",
@@ -158,7 +169,9 @@ const RegistrationForm: ReactFCC<{
             <Form onSubmit={formik.handleSubmit}>
               <VStack spacing={4} align="flex-start">
                 <FormControl>
-                  <FormLabel htmlFor="email">Email</FormLabel>
+                  <FormLabel pl={2} htmlFor="email">
+                    Email
+                  </FormLabel>
                   <Input
                     id="email"
                     name="email"
@@ -173,7 +186,9 @@ const RegistrationForm: ReactFCC<{
                   ) : null}
                 </FormControl>
                 <FormControl>
-                  <FormLabel htmlFor="username">2022 Username</FormLabel>
+                  <FormLabel pl={2} htmlFor="username">
+                    2022 Username
+                  </FormLabel>
                   <Input
                     id="username"
                     name="username"
@@ -307,7 +322,7 @@ const RegistrationForm: ReactFCC<{
                 </FormControl>
                 <Button
                   type="submit"
-                  bg={formik.isValid ? "blue.300" : "red.300"}
+                  bg={formik.isValid ? "blue.600" : "red.600"}
                   _hover={{ backgroundColor: "blue.500" }}
                   width="full"
                   isLoading={loading}

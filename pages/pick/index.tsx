@@ -1,3 +1,4 @@
+import { Box, Flex, Spinner, Center } from "@chakra-ui/react";
 import { GetServerSideProps } from "next";
 import FuntimePage from "@src/FuntimePage";
 import {

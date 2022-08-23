@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-const ProfilePicture = (props: { id: number; size: string }) => {
-  const [src, setSrc] = useState("/profile/" + props.id + ".jpeg");
+const ProfilePicture = ({
+  id,
+  size,
+}: {
+  id: number | undefined;
+  size: string;
+}) => {
+  const [src, setSrc] = useState("/profile/" + id + ".jpeg");
 
   React.useEffect(() => {
-    if (props.id) {
-      setSrc("/profile/" + props.id + ".jpeg");
+    if (id) {
+      setSrc("/profile/" + id + ".jpeg");
     }
-  }, [props.id]);
+  }, [id]);
 
   let h = "35px";
   let w = "35px";
   //set size
-  switch (props.size) {
+  switch (size) {
     case "sm":
       h = "25px";
       w = "25px";

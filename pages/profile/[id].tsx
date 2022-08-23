@@ -30,6 +30,7 @@ export default function Profile() {
 
   //update user ID once we have access to the router query
   useEffect(() => {
+    console.log("router ready and query", router.isReady, router.query.id);
     if (router.isReady && router.query.id) {
       setUserId(
         typeof router.query.id === "string"
@@ -37,23 +38,20 @@ export default function Profile() {
           : undefined
       );
     }
-  }, [router.isReady]);
-
-  useEffect(() => {
-    if (router.isReady && !userId) {
+    if (router.isReady && !router.query.id) {
       router.back();
     }
   }, [router.isReady]);
-
-  if (!userId) {
-    return null;
-  }
 
   const {
     data: userData,
     loading: userLoading,
     error: userError,
   } = useFindLeagueMembersQuery({ variables: { league_id: LEAGUE_ID } });
+
+  if (!userId) {
+    return null;
+  }
 
   if (userLoading) {
     return (

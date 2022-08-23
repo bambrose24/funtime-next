@@ -187,10 +187,8 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                 </Select>
               </FormControl>
               <Button
-                bg="blue.300"
-                _hover={{ backgroundColor: "blue.500" }}
                 width="full"
-                color="white"
+                variant="funtime-primary"
                 onClick={() => {
                   const gamePicks: Array<GameEntry> = games.map((g) => {
                     const winner =
@@ -455,15 +453,10 @@ export const PicksForm: React.FC<PicksFormProps> = ({
               </FormControl>
               <Button
                 type="submit"
-                bg="blue.300"
-                _hover={{
-                  backgroundColor: formik.isValid ? "blue.400" : "red.400",
-                }}
                 width="full"
+                variant={formik.isValid ? "funtime-primary" : "funtime-error"}
                 disabled={!formik.isValid}
                 isLoading={formik.isSubmitting}
-                color="white"
-                bgColor={formik.isValid ? undefined : "red"}
               >
                 {formik.isValid
                   ? `Submit Picks`

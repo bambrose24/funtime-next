@@ -7,13 +7,14 @@ import {
   Flex,
   HStack,
   IconButton,
-  Image, Stack
+  Image,
+  Stack,
 } from "@chakra-ui/react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import PersonIcon from "@mui/icons-material/Person";
 import SettingsIcon from "@mui/icons-material/Settings";
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useScreenSize } from "../../util/responsive";
@@ -35,14 +36,14 @@ export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
     <>
-      <Section bgColor="blue.600">
+      <Section bgColor="primary">
         <Flex justify="space-between">
           <Box>
             <HStack spacing={4}>
               <IconButton
-                _hover={{bgColor: "blue.500",}}
+                _hover={{ bgColor: "blue.500" }}
                 onClick={() => setIsOpen(true)}
-                bgColor="blue.600"
+                bgColor="primary"
                 color="orange.50"
                 icon={<MenuIcon />}
                 aria-label={"Open menu"}
@@ -52,8 +53,8 @@ export const DesktopNav: React.FC = () => {
                   cursor="pointer"
                   src="/logo/funtime_full_logo.png"
                   alt="FunTime Logo"
-                  height={30} 
-                  placeholder = "blur"
+                  height={30}
+                  placeholder="blur"
                 />
               </Link>
             </HStack>
@@ -65,14 +66,14 @@ export const DesktopNav: React.FC = () => {
             spacing={2}
             marginRight={2}>
               <IconButton
-                bgColor="blue.600"
+                bgColor="primary"
                 color="white"
                 icon={<PersonIcon />}
                 aria-label={"User Profile"}
                 _hover={{bgColor: "blue.500",}}
               />
               <IconButton
-                bgColor="blue.600"
+                bgColor="primary"
                 color="white"
                 icon={<SettingsIcon />}
                 aria-label={"User Settings"}
@@ -96,22 +97,22 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
     <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay />
       <DrawerContent bgColor="gray.100">
-        <DrawerHeader borderBottomWidth="1px" bgColor="blue.600">
+        <DrawerHeader borderBottomWidth="1px" bgColor="primary">
           <Flex justify="space-between">
             <Box mt={2}>
               <Image
                 src="/logo/funtime_full_logo.png"
                 alt="FunTime Logo"
-                height={30} 
-                placeholder = "blur"
+                height={30}
+                placeholder="blur"
               />
             </Box>
             <IconButton
-              bgColor="blue.600"
+              bgColor="primary"
               color="white"
               icon={<CloseIcon />}
               aria-label={"Close menu"}
-              _hover={{bgColor: "blue.500",}}
+              _hover={{ bgColor: "blue.500" }}
               onClick={onClose}
             />
           </Flex>
@@ -123,37 +124,51 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               <Link href={href} key={name}>
                 <a>
                   <Box
-                    role={'group'}
+                    role={"group"}
                     m={2}
                     p={4}
                     rounded="lg"
-                    transition={'all .3s ease'}
-                    bgColor={selected ? "blue.600" : undefined}
-                    color = {selected ? "white" : undefined}
+                    transition={"all .3s ease"}
+                    bgColor={selected ? "primary" : undefined}
+                    color={selected ? "white" : undefined}
                     _hover={{
                       cursor: "pointer",
                       backgroundColor: selected ? undefined : "gray.300",
-                    }}>
+                    }}
+                  >
                     <HStack>
                       <Image
                         cursor="pointer"
-                        src={"/nav_icons/" + name + (selected ? "_icon_white.png" :"_icon_black.png")}
+                        src={
+                          "/nav_icons/" +
+                          name +
+                          (selected ? "_icon_white.png" : "_icon_black.png")
+                        }
                         height={5}
-                        placeholder = "blur"
+                        placeholder="blur"
                         pr={2}
                         mb={1}
                         display="inline-block"
                         verticalAlign="middle"
                       />
-                      <Typography.H5 display="inline-block" fontWeight={selected ? "bold" : undefined}>{display}</Typography.H5>
+                      <Typography.H5
+                        display="inline-block"
+                        fontWeight={selected ? "bold" : undefined}
+                      >
+                        {display}
+                      </Typography.H5>
                       <Flex
-                        transition={'all .3s ease'}
-                        transform={'translateX(-10px)'}
+                        transition={"all .3s ease"}
+                        transform={"translateX(-10px)"}
                         opacity={0}
-                        _groupHover={{ opacity: '100%', transform: 'translateX(0)' }}
-                        justify={'flex-end'}
-                        align={'center'}
-                        flex={1}>
+                        _groupHover={{
+                          opacity: "100%",
+                          transform: "translateX(0)",
+                        }}
+                        justify={"flex-end"}
+                        align={"center"}
+                        flex={1}
+                      >
                         {selected ? undefined : <ChevronRightIcon />}
                       </Flex>
                     </HStack>

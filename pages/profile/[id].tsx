@@ -39,8 +39,13 @@ export default function Profile() {
     }
   }, [router.isReady]);
 
+  useEffect(() => {
+    if (router.isReady && !userId) {
+      router.back();
+    }
+  }, [router.isReady]);
+
   if (!userId) {
-    router.back();
     return null;
   }
 

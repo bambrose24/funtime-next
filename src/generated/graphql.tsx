@@ -3018,6 +3018,15 @@ export type PicksAvgOrderByAggregateInput = {
   winner?: InputMaybe<SortOrder>;
 };
 
+export type PicksByWeekResponse = {
+  __typename?: 'PicksByWeekResponse';
+  canView: Scalars['Boolean'];
+  games: Array<Games>;
+  picks: Array<Picks>;
+  season?: Maybe<Scalars['Int']>;
+  week?: Maybe<Scalars['Int']>;
+};
+
 export type PicksCountAggregate = {
   __typename?: 'PicksCountAggregate';
   _all: Scalars['Int'];
@@ -3667,6 +3676,7 @@ export type Query = {
   groupBySuperbowl: Array<SuperbowlGroupBy>;
   groupBySuperbowlSquares: Array<SuperbowlSquaresGroupBy>;
   groupByTeams: Array<TeamsGroupBy>;
+  picksByWeek: PicksByWeekResponse;
   superbowl?: Maybe<Superbowl>;
   superbowls: Array<Superbowl>;
 };
@@ -4009,6 +4019,13 @@ export type QueryGroupByTeamsArgs = {
 };
 
 
+export type QueryPicksByWeekArgs = {
+  leagueId: Scalars['Int'];
+  override?: InputMaybe<Scalars['Boolean']>;
+  week?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QuerySuperbowlArgs = {
   where: SuperbowlWhereUniqueInput;
 };
@@ -4104,6 +4121,7 @@ export type StringWithAggregatesFilter = {
 export type Superbowl = {
   __typename?: 'Superbowl';
   loser: Scalars['Int'];
+  member_id?: Maybe<Scalars['Int']>;
   pickid: Scalars['Int'];
   score: Scalars['Int'];
   season?: Maybe<Scalars['Int']>;
@@ -4115,6 +4133,7 @@ export type Superbowl = {
 export type SuperbowlAvgAggregate = {
   __typename?: 'SuperbowlAvgAggregate';
   loser?: Maybe<Scalars['Float']>;
+  member_id?: Maybe<Scalars['Float']>;
   pickid?: Maybe<Scalars['Float']>;
   score?: Maybe<Scalars['Float']>;
   season?: Maybe<Scalars['Float']>;
@@ -4124,6 +4143,7 @@ export type SuperbowlAvgAggregate = {
 
 export type SuperbowlAvgOrderByAggregateInput = {
   loser?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -4135,6 +4155,7 @@ export type SuperbowlCountAggregate = {
   __typename?: 'SuperbowlCountAggregate';
   _all: Scalars['Int'];
   loser: Scalars['Int'];
+  member_id: Scalars['Int'];
   pickid: Scalars['Int'];
   score: Scalars['Int'];
   season: Scalars['Int'];
@@ -4145,6 +4166,7 @@ export type SuperbowlCountAggregate = {
 
 export type SuperbowlCountOrderByAggregateInput = {
   loser?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -4155,6 +4177,7 @@ export type SuperbowlCountOrderByAggregateInput = {
 
 export type SuperbowlCreateInput = {
   loser: Scalars['Int'];
+  member_id?: InputMaybe<Scalars['Int']>;
   score: Scalars['Int'];
   season?: InputMaybe<Scalars['Int']>;
   ts?: InputMaybe<Scalars['DateTime']>;
@@ -4164,6 +4187,7 @@ export type SuperbowlCreateInput = {
 
 export type SuperbowlCreateManyInput = {
   loser: Scalars['Int'];
+  member_id?: InputMaybe<Scalars['Int']>;
   pickid?: InputMaybe<Scalars['Int']>;
   score: Scalars['Int'];
   season?: InputMaybe<Scalars['Int']>;
@@ -4180,6 +4204,7 @@ export type SuperbowlGroupBy = {
   _min?: Maybe<SuperbowlMinAggregate>;
   _sum?: Maybe<SuperbowlSumAggregate>;
   loser: Scalars['Int'];
+  member_id?: Maybe<Scalars['Int']>;
   pickid: Scalars['Int'];
   score: Scalars['Int'];
   season?: Maybe<Scalars['Int']>;
@@ -4191,6 +4216,7 @@ export type SuperbowlGroupBy = {
 export type SuperbowlMaxAggregate = {
   __typename?: 'SuperbowlMaxAggregate';
   loser?: Maybe<Scalars['Int']>;
+  member_id?: Maybe<Scalars['Int']>;
   pickid?: Maybe<Scalars['Int']>;
   score?: Maybe<Scalars['Int']>;
   season?: Maybe<Scalars['Int']>;
@@ -4201,6 +4227,7 @@ export type SuperbowlMaxAggregate = {
 
 export type SuperbowlMaxOrderByAggregateInput = {
   loser?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -4212,6 +4239,7 @@ export type SuperbowlMaxOrderByAggregateInput = {
 export type SuperbowlMinAggregate = {
   __typename?: 'SuperbowlMinAggregate';
   loser?: Maybe<Scalars['Int']>;
+  member_id?: Maybe<Scalars['Int']>;
   pickid?: Maybe<Scalars['Int']>;
   score?: Maybe<Scalars['Int']>;
   season?: Maybe<Scalars['Int']>;
@@ -4222,6 +4250,7 @@ export type SuperbowlMinAggregate = {
 
 export type SuperbowlMinOrderByAggregateInput = {
   loser?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -4237,6 +4266,7 @@ export type SuperbowlOrderByWithAggregationInput = {
   _min?: InputMaybe<SuperbowlMinOrderByAggregateInput>;
   _sum?: InputMaybe<SuperbowlSumOrderByAggregateInput>;
   loser?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -4247,6 +4277,7 @@ export type SuperbowlOrderByWithAggregationInput = {
 
 export type SuperbowlOrderByWithRelationInput = {
   loser?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -4257,6 +4288,7 @@ export type SuperbowlOrderByWithRelationInput = {
 
 export enum SuperbowlScalarFieldEnum {
   Loser = 'loser',
+  MemberId = 'member_id',
   Pickid = 'pickid',
   Score = 'score',
   Season = 'season',
@@ -4270,6 +4302,7 @@ export type SuperbowlScalarWhereWithAggregatesInput = {
   NOT?: InputMaybe<Array<SuperbowlScalarWhereWithAggregatesInput>>;
   OR?: InputMaybe<Array<SuperbowlScalarWhereWithAggregatesInput>>;
   loser?: InputMaybe<IntWithAggregatesFilter>;
+  member_id?: InputMaybe<IntNullableWithAggregatesFilter>;
   pickid?: InputMaybe<IntWithAggregatesFilter>;
   score?: InputMaybe<IntWithAggregatesFilter>;
   season?: InputMaybe<IntNullableWithAggregatesFilter>;
@@ -4508,6 +4541,7 @@ export type SuperbowlSquaresWhereUniqueInput = {
 export type SuperbowlSumAggregate = {
   __typename?: 'SuperbowlSumAggregate';
   loser?: Maybe<Scalars['Int']>;
+  member_id?: Maybe<Scalars['Int']>;
   pickid?: Maybe<Scalars['Int']>;
   score?: Maybe<Scalars['Int']>;
   season?: Maybe<Scalars['Int']>;
@@ -4517,6 +4551,7 @@ export type SuperbowlSumAggregate = {
 
 export type SuperbowlSumOrderByAggregateInput = {
   loser?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -4526,6 +4561,7 @@ export type SuperbowlSumOrderByAggregateInput = {
 
 export type SuperbowlUpdateInput = {
   loser?: InputMaybe<IntFieldUpdateOperationsInput>;
+  member_id?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   score?: InputMaybe<IntFieldUpdateOperationsInput>;
   season?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ts?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -4535,6 +4571,7 @@ export type SuperbowlUpdateInput = {
 
 export type SuperbowlUpdateManyMutationInput = {
   loser?: InputMaybe<IntFieldUpdateOperationsInput>;
+  member_id?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   score?: InputMaybe<IntFieldUpdateOperationsInput>;
   season?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
   ts?: InputMaybe<NullableDateTimeFieldUpdateOperationsInput>;
@@ -4547,6 +4584,7 @@ export type SuperbowlWhereInput = {
   NOT?: InputMaybe<Array<SuperbowlWhereInput>>;
   OR?: InputMaybe<Array<SuperbowlWhereInput>>;
   loser?: InputMaybe<IntFilter>;
+  member_id?: InputMaybe<IntNullableFilter>;
   pickid?: InputMaybe<IntFilter>;
   score?: InputMaybe<IntFilter>;
   season?: InputMaybe<IntNullableFilter>;
@@ -5009,7 +5047,10 @@ export type GamesByWeekLazyQueryHookResult = ReturnType<typeof useGamesByWeekLaz
 export type GamesByWeekQueryResult = Apollo.QueryResult<GamesByWeekQuery, GamesByWeekQueryVariables>;
 export const FindLeagueMembersDocument = gql`
     query FindLeagueMembers($league_id: Int!) {
-  findManyLeagueMembers(where: {league_id: {equals: $league_id}}) {
+  findManyLeagueMembers(
+    where: {league_id: {equals: $league_id}}
+    orderBy: {People: {username: asc}}
+  ) {
     membership_id
     People {
       uid

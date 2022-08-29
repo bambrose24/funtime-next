@@ -3,7 +3,7 @@ import { PicksForm } from "@src/components/pick/PicksForm";
 import { Typography } from "@src/components/Typography";
 import {
   useFindLeagueMembersQuery,
-  useGamesByWeekQuery,
+  useFirstNotStartedWeekQuery,
 } from "@src/generated/graphql";
 import { LEAGUE_ID, SEASON } from "@src/util/config";
 import { FuntimeError } from "../shared/FuntimeError";
@@ -14,12 +14,7 @@ export const PicksContent: React.FC = () => {
     data: games,
     loading: gamesLoading,
     error: gamesError,
-  } = useGamesByWeekQuery({
-    variables: {
-      season: SEASON,
-      week: 1,
-    },
-  });
+  } = useFirstNotStartedWeekQuery();
 
   const {
     data: people,
@@ -37,8 +32,8 @@ export const PicksContent: React.FC = () => {
   if (!games || !people || gamesError || peopleError) {
     return <FuntimeError />;
   }
-  const week = games.findManyGames[0].week;
-  const season = games.findManyGames[0].season;
+  const week = games.firstNotStartedWeek.games[0].week;
+  const season = games.firstNotStartedWeek.games[0].season;
   return (
     <Flex justify="center">
       <Box maxWidth="min(100%, 800px)" bgColor="white" p={4}>
@@ -50,7 +45,7 @@ export const PicksContent: React.FC = () => {
             <PicksForm
               week={week}
               season={season}
-              games={games.findManyGames}
+              games={games.firstNotStartedWeek.games}
               users={people.findManyLeagueMembers}
             />
           </Flex>

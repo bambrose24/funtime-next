@@ -1,5 +1,8 @@
 query FindLeagueMembers($league_id: Int!) {
-  findManyLeagueMembers(where: { league_id: { equals: $league_id } }) {
+  findManyLeagueMembers(
+    where: { league_id: { equals: $league_id } }
+    orderBy: { People: { username: asc } }
+  ) {
     membership_id
     People {
       uid

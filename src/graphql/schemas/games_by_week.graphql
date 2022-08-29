@@ -3,6 +3,8 @@ query GamesByWeek($season: Int!, $week: Int!) {
     where: { season: { equals: $season }, week: { equals: $week } }
   ) {
     gid
+    week
+    season
     awayscore
     homescore
     ts

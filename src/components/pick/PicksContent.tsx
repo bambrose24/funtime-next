@@ -1,14 +1,39 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { PicksForm } from "@src/components/pick/PicksForm";
 import { Typography } from "@src/components/Typography";
-import { PickPageProps } from "pages/pick";
+import {
+  useFindLeagueMembersQuery,
+  useFirstNotStartedWeekQuery,
+} from "@src/generated/graphql";
+import { LEAGUE_ID, SEASON } from "@src/util/config";
+import { FuntimeError } from "../shared/FuntimeError";
+import { FuntimeLoading } from "../shared/FuntimeLoading";
 
-export const PicksContent: React.FC<PickPageProps> = ({
-  games,
-  people,
-  week,
-  season,
-}) => {
+export const PicksContent: React.FC = () => {
+  const {
+    data: games,
+    loading: gamesLoading,
+    error: gamesError,
+  } = useFirstNotStartedWeekQuery();
+
+  const {
+    data: people,
+    loading: peopleLoading,
+    error: peopleError,
+  } = useFindLeagueMembersQuery({
+    variables: {
+      league_id: LEAGUE_ID,
+    },
+  });
+
+  if (gamesLoading || peopleLoading) {
+    return <FuntimeLoading />;
+  }
+  if (!games || !people || gamesError || peopleError) {
+    return <FuntimeError />;
+  }
+  const week = games.firstNotStartedWeek.games[0].week;
+  const season = games.firstNotStartedWeek.games[0].season;
   return (
     <Flex justify="center">
       <Box maxWidth="min(100%, 800px)" bgColor="white" p={4}>
@@ -20,7 +45,7 @@ export const PicksContent: React.FC<PickPageProps> = ({
             <PicksForm
               week={week}
               season={season}
-              games={games.findManyGames}
+              games={games.firstNotStartedWeek.games}
               users={people.findManyLeagueMembers}
             />
           </Flex>

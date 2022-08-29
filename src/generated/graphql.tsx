@@ -206,6 +206,13 @@ export type DateTimeWithAggregatesFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
+export type FirstNotStartedWeekResponse = {
+  __typename?: 'FirstNotStartedWeekResponse';
+  games: Array<Games>;
+  season?: Maybe<Scalars['Int']>;
+  week?: Maybe<Scalars['Int']>;
+};
+
 export type GamePick = {
   game_id: Scalars['Int'];
   is_random: Scalars['Boolean'];
@@ -1820,6 +1827,14 @@ export type MakePicksResponse = {
   __typename?: 'MakePicksResponse';
   success: Scalars['Boolean'];
   user: People;
+};
+
+export type MostRecentStartedWeekResponse = {
+  __typename?: 'MostRecentStartedWeekResponse';
+  games: Array<Games>;
+  picks: Array<Picks>;
+  season?: Maybe<Scalars['Int']>;
+  week?: Maybe<Scalars['Int']>;
 };
 
 export type Mutation = {
@@ -3668,6 +3683,7 @@ export type Query = {
   findUniquePicks?: Maybe<Picks>;
   findUniqueSuperbowlSquares?: Maybe<SuperbowlSquares>;
   findUniqueTeams?: Maybe<Teams>;
+  firstNotStartedWeek: FirstNotStartedWeekResponse;
   groupByGames: Array<GamesGroupBy>;
   groupByLeagueMembers: Array<LeagueMembersGroupBy>;
   groupByLeagues: Array<LeaguesGroupBy>;
@@ -3676,6 +3692,7 @@ export type Query = {
   groupBySuperbowl: Array<SuperbowlGroupBy>;
   groupBySuperbowlSquares: Array<SuperbowlSquaresGroupBy>;
   groupByTeams: Array<TeamsGroupBy>;
+  mostRecentStartedWeek: MostRecentStartedWeekResponse;
   picksByWeek: PicksByWeekResponse;
   superbowl?: Maybe<Superbowl>;
   superbowls: Array<Superbowl>;
@@ -4016,6 +4033,11 @@ export type QueryGroupByTeamsArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<TeamsWhereInput>;
+};
+
+
+export type QueryMostRecentStartedWeekArgs = {
+  leagueId: Scalars['Int'];
 };
 
 
@@ -4896,6 +4918,11 @@ export type TeamsWhereUniqueInput = {
   teamid?: InputMaybe<Scalars['Int']>;
 };
 
+export type FirstNotStartedWeekQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type FirstNotStartedWeekQuery = { __typename?: 'Query', firstNotStartedWeek: { __typename?: 'FirstNotStartedWeekResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Games', gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> } };
+
 export type GamesBySeasonQueryVariables = Exact<{
   season: Scalars['Int'];
 }>;
@@ -4909,7 +4936,7 @@ export type GamesByWeekQueryVariables = Exact<{
 }>;
 
 
-export type GamesByWeekQuery = { __typename?: 'Query', findManyGames: Array<{ __typename?: 'Games', gid: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> };
+export type GamesByWeekQuery = { __typename?: 'Query', findManyGames: Array<{ __typename?: 'Games', gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> };
 
 export type FindLeagueMembersQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -4949,6 +4976,62 @@ export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 export type AllTeamsQuery = { __typename?: 'Query', findManyTeams: Array<{ __typename?: 'Teams', teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
 
 
+export const FirstNotStartedWeekDocument = gql`
+    query FirstNotStartedWeek {
+  firstNotStartedWeek {
+    week
+    season
+    games {
+      gid
+      week
+      season
+      awayscore
+      homescore
+      ts
+      done
+      homerecord
+      awayrecord
+      winner
+      is_tiebreaker
+      Teams_Games_awayToTeams {
+        teamid
+        abbrev
+      }
+      Teams_Games_homeToTeams {
+        teamid
+        abbrev
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useFirstNotStartedWeekQuery__
+ *
+ * To run a query within a React component, call `useFirstNotStartedWeekQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFirstNotStartedWeekQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFirstNotStartedWeekQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useFirstNotStartedWeekQuery(baseOptions?: Apollo.QueryHookOptions<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>(FirstNotStartedWeekDocument, options);
+      }
+export function useFirstNotStartedWeekLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>(FirstNotStartedWeekDocument, options);
+        }
+export type FirstNotStartedWeekQueryHookResult = ReturnType<typeof useFirstNotStartedWeekQuery>;
+export type FirstNotStartedWeekLazyQueryHookResult = ReturnType<typeof useFirstNotStartedWeekLazyQuery>;
+export type FirstNotStartedWeekQueryResult = Apollo.QueryResult<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>;
 export const GamesBySeasonDocument = gql`
     query GamesBySeason($season: Int!) {
   findManyGames(where: {season: {equals: $season}}) {
@@ -5002,6 +5085,8 @@ export const GamesByWeekDocument = gql`
     query GamesByWeek($season: Int!, $week: Int!) {
   findManyGames(where: {season: {equals: $season}, week: {equals: $week}}) {
     gid
+    week
+    season
     awayscore
     homescore
     ts
@@ -5052,7 +5137,10 @@ export type GamesByWeekLazyQueryHookResult = ReturnType<typeof useGamesByWeekLaz
 export type GamesByWeekQueryResult = Apollo.QueryResult<GamesByWeekQuery, GamesByWeekQueryVariables>;
 export const FindLeagueMembersDocument = gql`
     query FindLeagueMembers($league_id: Int!) {
-  findManyLeagueMembers(where: {league_id: {equals: $league_id}}) {
+  findManyLeagueMembers(
+    where: {league_id: {equals: $league_id}}
+    orderBy: {People: {username: asc}}
+  ) {
     membership_id
     People {
       uid

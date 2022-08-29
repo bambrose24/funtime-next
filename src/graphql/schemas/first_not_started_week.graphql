@@ -1,0 +1,27 @@
+query FirstNotStartedWeek {
+  firstNotStartedWeek {
+    week
+    season
+    games {
+      gid
+      week
+      season
+      awayscore
+      homescore
+      ts
+      done
+      homerecord
+      awayrecord
+      winner
+      is_tiebreaker
+      Teams_Games_awayToTeams {
+        teamid
+        abbrev
+      }
+      Teams_Games_homeToTeams {
+        teamid
+        abbrev
+      }
+    }
+  }
+}

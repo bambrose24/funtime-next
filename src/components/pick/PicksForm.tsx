@@ -49,9 +49,9 @@ export const PicksForm: React.FC<PicksFormProps> = ({
   games,
   users,
 }) => {
-  const [submitPicks, { data, error, loading }] = useMakePicksMutation();
-  const [modalMessage, setModalMessage] = useState<string>("");
+  const [submitPicks, { data, error }] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
 
   const validationSchema = Yup.object().shape({
     user1: Yup.string()
@@ -81,7 +81,12 @@ export const PicksForm: React.FC<PicksFormProps> = ({
   const tiebreakerGame = games.find((g) => g.is_tiebreaker)!;
   return (
     <>
-      <Modal isOpen={isModalOpen} onClose={() => {}}>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -93,22 +98,94 @@ export const PicksForm: React.FC<PicksFormProps> = ({
               )}
             </Flex>
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={() => setIsModalOpen(false)} />
           <ModalBody>
             {!error && data ? (
               <>
                 <Typography.H4>
                   Congrats, {data.makePicks.user.username}!
                 </Typography.H4>
-                <Typography.H4 mt={8}>
+                <Typography.H4 mt={8} mb="8px">
                   Your picks are in for week {week}, {season}. You should have
                   receieved an email with your picks, but if not, here's the
                   summary:
                 </Typography.H4>
-                <Flex align="center">
-                  {
-                    // TODO: get the picks in the response and render them here
-                  }
+                <Flex align="center" w="100%">
+                  <VStack spacing={3} w="100%">
+                    {modalPicks.map((p) => {
+                      const game = games.find((g) => g.gid === p.game_id)!;
+
+                      const away = game.Teams_Games_awayToTeams.abbrev;
+                      const home = game.Teams_Games_homeToTeams.abbrev;
+                      const choseAway =
+                        p.winner === game.Teams_Games_awayToTeams.teamid;
+
+                      return (
+                        <Grid
+                          templateColumns="repeat(12, 1fr)"
+                          gap="4px"
+                          w="100%"
+                        >
+                          <GridItem colStart={4} colSpan={2}>
+                            <Flex
+                              justify="center"
+                              align="center"
+                              p="4px"
+                              borderRadius="8px"
+                              border={choseAway ? "3px solid" : undefined}
+                              borderColor={choseAway ? "green.400" : undefined}
+                            >
+                              <Typography.H4>{away}</Typography.H4>
+                            </Flex>
+                          </GridItem>
+                          <GridItem colStart={6} colSpan={2}>
+                            <Flex align="center" justify="center">
+                              <Typography.H4>@</Typography.H4>
+                            </Flex>
+                          </GridItem>
+                          <GridItem colStart={8} colSpan={2}>
+                            <Flex
+                              justify="center"
+                              align="center"
+                              p="4px"
+                              borderRadius="8px"
+                              border={choseAway ? undefined : "3px solid"}
+                              borderColor={choseAway ? undefined : "green.400"}
+                            >
+                              <Typography.H4>{home}</Typography.H4>
+                            </Flex>
+                          </GridItem>
+                        </Grid>
+                      );
+                    })}
+                    {modalPicks
+                      ?.filter((p) => p.score !== undefined)
+                      ?.map((p) => {
+                        const game = games.find((g) => g.gid === p.game_id)!;
+
+                        const away = game.Teams_Games_awayToTeams.abbrev;
+                        const home = game.Teams_Games_homeToTeams.abbrev;
+                        const choseAway =
+                          p.winner === game.Teams_Games_awayToTeams.teamid;
+                        const score = p.score;
+                        return (
+                          <Grid
+                            templateColumns="repeat(12, 1fr)"
+                            gap="4px"
+                            w="100%"
+                          >
+                            <GridItem colStart={3} colSpan={8}>
+                              <Flex justify="center" align="center">
+                                <Typography.H5>
+                                  {home} @ {away} Total Score:{" "}
+                                  <strong>{score}</strong>
+                                </Typography.H5>
+                              </Flex>
+                            </GridItem>
+                          </Grid>
+                        );
+                      })}
+                  </VStack>
                 </Flex>
               </>
             ) : (
@@ -149,18 +226,11 @@ export const PicksForm: React.FC<PicksFormProps> = ({
             };
             return res;
           });
-          console.log("data to submitPicks", {
-            picks,
-            member_id: parseInt(memberId),
+          const res = await submitPicks({
+            variables: { picks, member_id: parseInt(memberId) },
           });
-          try {
-            const res = await submitPicks({
-              variables: { picks, member_id: parseInt(memberId) },
-            });
-            console.log("submit picks res", res);
-          } catch (e) {
-            console.log("error submitting", e);
-          }
+          setModalPicks(picks);
+          resetForm();
           setIsModalOpen(true);
         }}
       >
@@ -210,6 +280,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                 const formikVal = formik.values.games[index];
                 return (
                   <Box
+                    key={game.gid}
                     height="90px"
                     border="1px solid"
                     borderColor="gray.300"

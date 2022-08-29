@@ -105,13 +105,13 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                 <Typography.H4>
                   Congrats, {data.makePicks.user.username}!
                 </Typography.H4>
-                <Typography.H4 mt={8}>
+                <Typography.H4 mt={8} mb="8px">
                   Your picks are in for week {week}, {season}. You should have
                   receieved an email with your picks, but if not, here's the
                   summary:
                 </Typography.H4>
-                <Flex align="center">
-                  <VStack spacing={3}>
+                <Flex align="center" w="100%">
+                  <VStack spacing={3} w="100%">
                     {modalPicks.map((p) => {
                       const game = games.find((g) => g.gid === p.game_id)!;
 
@@ -121,20 +121,70 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                         p.winner === game.Teams_Games_awayToTeams.teamid;
 
                       return (
-                        <Flex justify="space-between">
-                          <Typography.H4
-                            bgColor={choseAway ? "green.400" : undefined}
-                          >
-                            {away}
-                          </Typography.H4>
-                          <Typography.H4
-                            bgColor={choseAway ? undefined : "green.400"}
-                          >
-                            {home}
-                          </Typography.H4>
-                        </Flex>
+                        <Grid
+                          templateColumns="repeat(12, 1fr)"
+                          gap="4px"
+                          w="100%"
+                        >
+                          <GridItem colStart={4} colSpan={2}>
+                            <Flex
+                              justify="center"
+                              align="center"
+                              p="4px"
+                              borderRadius="8px"
+                              border={choseAway ? "3px solid" : undefined}
+                              borderColor={choseAway ? "green.400" : undefined}
+                            >
+                              <Typography.H4>{away}</Typography.H4>
+                            </Flex>
+                          </GridItem>
+                          <GridItem colStart={6} colSpan={2}>
+                            <Flex align="center" justify="center">
+                              <Typography.H4>@</Typography.H4>
+                            </Flex>
+                          </GridItem>
+                          <GridItem colStart={8} colSpan={2}>
+                            <Flex
+                              justify="center"
+                              align="center"
+                              p="4px"
+                              borderRadius="8px"
+                              border={choseAway ? undefined : "3px solid"}
+                              borderColor={choseAway ? undefined : "green.400"}
+                            >
+                              <Typography.H4>{home}</Typography.H4>
+                            </Flex>
+                          </GridItem>
+                        </Grid>
                       );
                     })}
+                    {modalPicks
+                      ?.filter((p) => p.score !== undefined)
+                      ?.map((p) => {
+                        const game = games.find((g) => g.gid === p.game_id)!;
+
+                        const away = game.Teams_Games_awayToTeams.abbrev;
+                        const home = game.Teams_Games_homeToTeams.abbrev;
+                        const choseAway =
+                          p.winner === game.Teams_Games_awayToTeams.teamid;
+                        const score = p.score;
+                        return (
+                          <Grid
+                            templateColumns="repeat(12, 1fr)"
+                            gap="4px"
+                            w="100%"
+                          >
+                            <GridItem colStart={3} colSpan={8}>
+                              <Flex justify="center" align="center">
+                                <Typography.H5>
+                                  {home} @ {away} Total Score:{" "}
+                                  <strong>{score}</strong>
+                                </Typography.H5>
+                              </Flex>
+                            </GridItem>
+                          </Grid>
+                        );
+                      })}
                   </VStack>
                 </Flex>
               </>

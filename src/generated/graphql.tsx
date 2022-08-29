@@ -4909,7 +4909,7 @@ export type GamesByWeekQueryVariables = Exact<{
 }>;
 
 
-export type GamesByWeekQuery = { __typename?: 'Query', findManyGames: Array<{ __typename?: 'Games', gid: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> };
+export type GamesByWeekQuery = { __typename?: 'Query', findManyGames: Array<{ __typename?: 'Games', gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, Teams_Games_awayToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null }, Teams_Games_homeToTeams: { __typename?: 'Teams', teamid: number, abbrev?: string | null } }> };
 
 export type FindLeagueMembersQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -4997,6 +4997,8 @@ export const GamesByWeekDocument = gql`
     query GamesByWeek($season: Int!, $week: Int!) {
   findManyGames(where: {season: {equals: $season}, week: {equals: $week}}) {
     gid
+    week
+    season
     awayscore
     homescore
     ts

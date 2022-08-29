@@ -108,30 +108,27 @@ export default function Profile() {
                   <Td>League Rank</Td>
                   <Td>
                     <Stat color="green">
-                      5 <StatArrow type="increase" pb={1} />
+                      1 <StatArrow type="increase" pb={1} />
                     </Stat>
                   </Td>
                 </Tr>
                 <Tr>
                   <Td>Win/Loss Ratio:</Td>
                   <Td>
-                    <Stat color="red">
-                      {" "}
-                      3.35 <StatArrow type="decrease" pb={1} />
-                    </Stat>
+                      0
                   </Td>
                 </Tr>
                 <Tr>
                   <Td>Games Picked:</Td>
-                  <Td>100</Td>
+                  <Td>0</Td>
                 </Tr>
                 <Tr>
                   <Td>Picks Won:</Td>
-                  <Td>77</Td>
+                  <Td>0</Td>
                 </Tr>
                 <Tr>
                   <Td>Picks Lost:</Td>
-                  <Td>23</Td>
+                  <Td>0</Td>
                 </Tr>
               </Tbody>
             </Table>

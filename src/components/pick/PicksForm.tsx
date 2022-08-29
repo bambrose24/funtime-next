@@ -110,7 +110,33 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                   receieved an email with your picks, but if not, here's the
                   summary:
                 </Typography.H4>
-                <Flex align="center"></Flex>
+                <Flex align="center">
+                  <VStack spacing={3}>
+                    {modalPicks.map((p) => {
+                      const game = games.find((g) => g.gid === p.game_id)!;
+
+                      const away = game.Teams_Games_awayToTeams.abbrev;
+                      const home = game.Teams_Games_homeToTeams.abbrev;
+                      const choseAway =
+                        p.winner === game.Teams_Games_awayToTeams.teamid;
+
+                      return (
+                        <Flex justify="space-between">
+                          <Typography.H4
+                            bgColor={choseAway ? "green.400" : undefined}
+                          >
+                            {away}
+                          </Typography.H4>
+                          <Typography.H4
+                            bgColor={choseAway ? undefined : "green.400"}
+                          >
+                            {home}
+                          </Typography.H4>
+                        </Flex>
+                      );
+                    })}
+                  </VStack>
+                </Flex>
               </>
             ) : (
               <Typography.H4>

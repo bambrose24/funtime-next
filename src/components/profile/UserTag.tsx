@@ -8,7 +8,7 @@ const UserTag = (props: { user_id: number, username: string }) => {
 
   return(
     <a href={profile_url}>
-      <Button size="sm" borderRadius="25px" border="2px solid" borderColor="gray.200" px={2}>
+      <Button size="sm" borderRadius="25px" border="2px solid" borderColor="gray.200" px={2} zIndex="20" bg="white">
         <HStack>
           <ProfilePicture id={props.user_id} size="sm"/>
           <Typography.Subtitle1 pl={0} color="black">{props.username}</Typography.Subtitle1>

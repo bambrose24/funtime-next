@@ -1,0 +1,13 @@
+query PicksByWeek {
+ picksByWeek(leagueId: 7, week: 1, override: true) {
+   week
+   season
+   canView
+   games {
+     gid
+   }
+   picks {
+     pickid
+   }
+ } 
+}

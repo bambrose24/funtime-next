@@ -49,9 +49,9 @@ export const PicksForm: React.FC<PicksFormProps> = ({
   games,
   users,
 }) => {
-  const [submitPicks, { data, error, loading }] = useMakePicksMutation();
-  const [modalMessage, setModalMessage] = useState<string>("");
+  const [submitPicks, { data, error }] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
 
   const validationSchema = Yup.object().shape({
     user1: Yup.string()
@@ -81,7 +81,12 @@ export const PicksForm: React.FC<PicksFormProps> = ({
   const tiebreakerGame = games.find((g) => g.is_tiebreaker)!;
   return (
     <>
-      <Modal isOpen={isModalOpen} onClose={() => {}}>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+      >
         <ModalOverlay />
         <ModalContent>
           <ModalHeader>
@@ -93,7 +98,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
               )}
             </Flex>
           </ModalHeader>
-          <ModalCloseButton />
+          <ModalCloseButton onClick={() => setIsModalOpen(false)} />
           <ModalBody>
             {!error && data ? (
               <>
@@ -105,11 +110,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                   receieved an email with your picks, but if not, here's the
                   summary:
                 </Typography.H4>
-                <Flex align="center">
-                  {
-                    // TODO: get the picks in the response and render them here
-                  }
-                </Flex>
+                <Flex align="center"></Flex>
               </>
             ) : (
               <Typography.H4>
@@ -149,18 +150,11 @@ export const PicksForm: React.FC<PicksFormProps> = ({
             };
             return res;
           });
-          console.log("data to submitPicks", {
-            picks,
-            member_id: parseInt(memberId),
+          const res = await submitPicks({
+            variables: { picks, member_id: parseInt(memberId) },
           });
-          try {
-            const res = await submitPicks({
-              variables: { picks, member_id: parseInt(memberId) },
-            });
-            console.log("submit picks res", res);
-          } catch (e) {
-            console.log("error submitting", e);
-          }
+          setModalPicks(picks);
+          resetForm();
           setIsModalOpen(true);
         }}
       >
@@ -210,6 +204,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                 const formikVal = formik.values.games[index];
                 return (
                   <Box
+                    key={game.gid}
                     height="90px"
                     border="1px solid"
                     borderColor="gray.300"

@@ -177,7 +177,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                             <GridItem colStart={3} colSpan={8}>
                               <Flex justify="center" align="center">
                                 <Typography.H5>
-                                  {home} @ {away} Total Score:{" "}
+                                  {away} @ {home} Total Score:{" "}
                                   <strong>{score}</strong>
                                 </Typography.H5>
                               </Flex>

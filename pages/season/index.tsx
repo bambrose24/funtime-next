@@ -7,9 +7,7 @@ const SeasonPage: React.FC = () => {
     <FuntimePage>
       <Flex w="100%" align="center">
         <Flex w="100%" maxWidth="1000px" align="center" justify="center">
-          <Typography.H2>
-            All weekly picks will be available here once the first week starts.
-          </Typography.H2>
+          <Typography.H2>Coming soon!</Typography.H2>
         </Flex>
       </Flex>
     </FuntimePage>

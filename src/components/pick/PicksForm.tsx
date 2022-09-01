@@ -49,7 +49,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
   games,
   users,
 }) => {
-  const [submitPicks, { data, error }] = useMakePicksMutation();
+  const [submitPicks, { data, error, client }] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
 
@@ -231,6 +231,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
           });
           setModalPicks(picks);
           resetForm();
+          client.resetStore();
           setIsModalOpen(true);
         }}
       >

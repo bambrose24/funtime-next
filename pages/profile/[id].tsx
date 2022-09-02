@@ -92,7 +92,7 @@ export default function Profile() {
           borderColor="green.600"
         >
           <Center>
-            <ProfilePicture id={userId} size="lg"></ProfilePicture>
+            <ProfilePicture id={userId} username={user!.People.username} size="xl"></ProfilePicture>
           </Center>
           {/* commented out query map and personalization features like edit profile and bio */}
           {/* {userData.findManyPeople.map(({People: { username, fname, lname }, Picks: { correct } }) => { */}

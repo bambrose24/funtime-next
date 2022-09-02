@@ -1,21 +1,25 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import { Box } from "@chakra-ui/react";
+import { Box, Avatar } from "@chakra-ui/react";
 
-type ProfilePictureSize = "sm" | "md" | "lg";
+type ProfilePictureSize = "xs" | "sm" | "md" | "lg" | "xl";
 
 const sizes: Record<ProfilePictureSize, { h: string; w: string }> = {
-  sm: { h: "25px", w: "25px" },
+  xs: { h: "25px", w: "25px"},
+  sm: { h: "35px", w: "35px" },
   md: { h: "50px", w: "50px" },
-  lg: { h: "100px", w: "100px" },
+  lg: { h: "75px", w: "75px" },
+  xl: { h: "100px", w: "100px"}
 } as const;
 
 const ProfilePicture = ({
   id,
   size,
+  username
 }: {
   id: number | undefined;
   size: ProfilePictureSize | undefined;
+  username: string | undefined;
 }) => {
   const [src, setSrc] = useState("/profile/" + id + ".jpeg");
 
@@ -32,26 +36,33 @@ const ProfilePicture = ({
     w = sizes[size].w;
   }
 
-  return (
-    <Box
-      style={{
-        borderRadius: "50%",
-        overflow: "hidden",
-        height: h,
-        width: w,
-        margin: 0,
-      }}
-    >
-      <Image
-        src={src}
-        alt="Profile Picture"
-        width={100}
-        height={100}
-        placeholder="blur"
-        blurDataURL="/profile/default_profile_pic.jpeg"
-        onError={() => setSrc("/profile/default_profile_pic.jpeg")}
-      />
-    </Box>
-  );
+  //If in the future we want to return to the next.js image implementation
+  if (false){
+    return (
+      <Box
+        style={{
+          borderRadius: "50%",
+          overflow: "hidden",
+          height: h,
+          width: w,
+          margin: 0,
+        }}
+      >
+        <Image
+          src={src}
+          alt="Profile Picture"
+          width={100}
+          height={100}
+          placeholder="blur"
+          blurDataURL="/profile/default_profile_pic.jpeg"
+          onError={() => setSrc("/profile/default_profile_pic.jpeg")}
+        />
+      </Box>
+    );
+  }else{
+    return(
+      <Avatar size={size} name={username} src={src}/>
+    )
+  }
 };
 export default ProfilePicture;

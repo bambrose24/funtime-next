@@ -213,6 +213,13 @@ export type FirstNotStartedWeekResponse = {
   week?: Maybe<Scalars['Int']>;
 };
 
+export type GameLive = {
+  __typename?: 'GameLive';
+  currentQuarter?: Maybe<Scalars['Int']>;
+  currentQuarterSecondsRemaining?: Maybe<Scalars['Int']>;
+  playedStatus?: Maybe<MsfGamePlayedStatus>;
+};
+
 export type GamePick = {
   game_id: Scalars['Int'];
   is_random: Scalars['Boolean'];
@@ -237,6 +244,7 @@ export type Games = {
   homescore?: Maybe<Scalars['Int']>;
   international?: Maybe<Scalars['Boolean']>;
   is_tiebreaker?: Maybe<Scalars['Boolean']>;
+  liveStatus?: Maybe<GameLive>;
   season: Scalars['Int'];
   seconds?: Maybe<Scalars['BigInt']>;
   ts: Scalars['DateTimeBetterSerialization'];
@@ -1822,6 +1830,14 @@ export type LeaguesWhereInput = {
 export type LeaguesWhereUniqueInput = {
   league_id?: InputMaybe<Scalars['Int']>;
 };
+
+/** Status of the game */
+export enum MsfGamePlayedStatus {
+  Completed = 'COMPLETED',
+  CompletedPendingReview = 'COMPLETED_PENDING_REVIEW',
+  Live = 'LIVE',
+  Unplayed = 'UNPLAYED'
+}
 
 export type MakePicksResponse = {
   __typename?: 'MakePicksResponse';
@@ -4037,7 +4053,7 @@ export type QueryGroupByTeamsArgs = {
 
 
 export type QueryMostRecentStartedWeekArgs = {
-  leagueId: Scalars['Int'];
+  league_id: Scalars['Int'];
 };
 
 

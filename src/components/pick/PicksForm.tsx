@@ -507,8 +507,8 @@ export const PicksForm: React.FC<PicksFormProps> = ({
               </FormControl>
               <FormControl>
                 <FormLabel>
-                  Total Score of {tiebreakerGame.Teams_Games_homeToTeams.abbrev}{" "}
-                  @ {tiebreakerGame.Teams_Games_awayToTeams.abbrev}
+                  Total Score of {tiebreakerGame.Teams_Games_awayToTeams.abbrev}{" "}
+                  @ {tiebreakerGame.Teams_Games_homeToTeams.abbrev}
                 </FormLabel>
                 <Input
                   id="score"

@@ -283,6 +283,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                   <Box
                     key={game.gid}
                     height="90px"
+                    width={"100%"}
                     border="1px solid"
                     borderColor="gray.300"
                     px={4}

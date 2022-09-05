@@ -115,6 +115,15 @@ const RegistrationForm: ReactFCC<{
     return map;
   }, [teams.teams]);
 
+  const dropdownLabelStyles: React.CSSProperties = {
+    marginRight: "0",
+  }
+
+  const textboxLabelStyles: React.CSSProperties = {
+    margin: "0",
+    padding: "0"
+  }
+
   return (
     <>
       <RegistrationResponseModal
@@ -170,7 +179,7 @@ const RegistrationForm: ReactFCC<{
             <Form onSubmit={formik.handleSubmit}>
               <VStack spacing={4} align="flex-start">
                 <FormControl>
-                  <FormLabel pl={2} htmlFor="email">
+                  <FormLabel style={textboxLabelStyles} pl={2} htmlFor="email">
                     Email
                   </FormLabel>
                   <Input
@@ -187,7 +196,7 @@ const RegistrationForm: ReactFCC<{
                   ) : null}
                 </FormControl>
                 <FormControl>
-                  <FormLabel pl={2} htmlFor="username">
+                  <FormLabel style={textboxLabelStyles} pl={2} htmlFor="username">
                     2022 Username
                   </FormLabel>
                   <Input
@@ -204,7 +213,7 @@ const RegistrationForm: ReactFCC<{
                   ) : null}
                 </FormControl>
                 <FormControl>
-                  <FormLabel>
+                  <FormLabel style={dropdownLabelStyles}>
                     <Tooltip label="If you played last year, pick your username. This will connect your user to the one from last year.">
                       If you played in 2021, your Username from last year
                     </Tooltip>
@@ -228,7 +237,7 @@ const RegistrationForm: ReactFCC<{
                 </FormControl>
                 <Divider my={4} borderColor="gray.400" />
                 <FormControl>
-                  <FormLabel>
+                  <FormLabel style={dropdownLabelStyles}>
                     <Tooltip label="Be sure to pick a winner and loser from both the AFC and NFC.">
                       <>
                         Who will be the Super Bowl <strong>winner</strong>?
@@ -267,7 +276,7 @@ const RegistrationForm: ReactFCC<{
                   </FormLabel>
                 </FormControl>
                 <FormControl>
-                  <FormLabel>
+                  <FormLabel style={dropdownLabelStyles}>
                     <Tooltip label="Be sure to pick a winner and loser from both the AFC and NFC.">
                       <>
                         Who will be the Super Bowl <strong>loser</strong>?
@@ -306,7 +315,7 @@ const RegistrationForm: ReactFCC<{
                   </FormLabel>
                 </FormControl>
                 <FormControl>
-                  <FormLabel>
+                  <FormLabel style={dropdownLabelStyles}>
                     <Tooltip label="Pick a total score for the game. This will be used for the tiebreaker, should there be multiple people who are correct">
                       What will the total score of the Super Bowl be
                     </Tooltip>

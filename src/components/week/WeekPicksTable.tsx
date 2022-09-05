@@ -26,7 +26,7 @@ export const WeekPicksTable: React.FC = () => {
 
   const { data: picksData, loading: picksLoading } = usePicksByWeekQuery({
     variables: { league_id: LEAGUE_ID, week: 1 },
-    pollInterval: 60,
+    pollInterval: 60, // does this work? need to test somehow
     fetchPolicy: "cache-and-network",
   });
 
@@ -125,6 +125,7 @@ export const WeekPicksTable: React.FC = () => {
                       z-index="10"
                       opacity=".9"
                       bg="white"
+                      key={game.gid}
                     >
                       {game.teams_games_awayToteams.abbrev} @{" "}
                       {game.teams_games_homeToteams.abbrev}
@@ -141,44 +142,45 @@ export const WeekPicksTable: React.FC = () => {
 
                 const member = memberIdToMember[memberId!];
                 return (
-                  <>
-                    <Tr
-                      key={memberId}
-                      transition={"all .1s linear"}
-                      _hover={{ bgColor: "gray.100" }}
-                      onClick={() => selectRow(memberId)}
-                      borderY={
-                        memberId === selectedRow ? "2px solid white" : ""
-                      }
-                      bgColor={memberId === selectedRow ? "white" : ""}
-                      boxShadow={
-                        memberId === selectedRow ? "2px 2px 10px gray" : ""
-                      }
-                    >
-                      <Td py={1}>
-                        <UserTag
-                          user_id={member.people.uid}
-                          username={member.people.username}
-                        />
-                      </Td>
-                      {memberPicks.map((pick) => {
-                        const { correct, winner } = pick;
-                        const winnerTeam = teamIdToTeam[winner!];
-                        const game = gameIdToGame[pick.gid];
+                  <Tr
+                    key={`${memberId}_picks`}
+                    transition={"all .1s linear"}
+                    _hover={{ bgColor: "gray.100" }}
+                    onClick={() => selectRow(memberId)}
+                    borderY={memberId === selectedRow ? "2px solid white" : ""}
+                    bgColor={memberId === selectedRow ? "white" : ""}
+                    boxShadow={
+                      memberId === selectedRow ? "2px 2px 10px gray" : ""
+                    }
+                  >
+                    <Td py={1}>
+                      <UserTag
+                        user_id={member.people.uid}
+                        username={member.people.username}
+                      />
+                    </Td>
+                    {memberPicks.map((pick) => {
+                      const { correct, winner } = pick;
+                      const winnerTeam = teamIdToTeam[winner!];
+                      const game = gameIdToGame[pick.gid];
 
-                        const bg = !game.done
-                          ? undefined
-                          : correct
-                          ? "pickCorrect"
-                          : "pickWrong";
-                        return (
-                          <Td cursor="default" bg={bg}>
-                            {winnerTeam.abbrev}
-                          </Td>
-                        );
-                      })}
-                    </Tr>
-                  </>
+                      const bg = !game.done
+                        ? undefined
+                        : correct
+                        ? "pickCorrect"
+                        : "pickWrong";
+
+                      return (
+                        <Td
+                          cursor="default"
+                          bg={bg}
+                          key={`${member.membership_id}_${game.gid}_pick`}
+                        >
+                          {winnerTeam.abbrev}
+                        </Td>
+                      );
+                    })}
+                  </Tr>
                 );
               })}
             </Tbody>

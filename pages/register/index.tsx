@@ -31,7 +31,6 @@ const RegisterPage: NextPage<RegisterPageProps> = ({
 const PREVIOUS_LEAGUE_ID = 6;
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  console.log("going to query");
   const [previousMembers, teams] = await Promise.all([
     client.query<FindLeagueMembersQuery>({
       query: FindLeagueMembersDocument,
@@ -43,7 +42,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       query: AllTeamsDocument,
     }),
   ]);
-  console.log("previousMembers", previousMembers);
 
   const props: RegisterPageProps = {
     previousMembers: previousMembers.data,

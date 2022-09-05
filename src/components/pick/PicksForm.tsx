@@ -33,8 +33,8 @@ import { useState } from "react";
 interface PicksFormProps {
   week: number;
   season: number;
-  games: GamesByWeekQuery["findManyGames"];
-  users: FindLeagueMembersQuery["findManyLeagueMembers"];
+  games: GamesByWeekQuery["games"];
+  users: FindLeagueMembersQuery["leagueMembers"];
 }
 
 interface GameEntry {
@@ -49,7 +49,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
   games,
   users,
 }) => {
-  const [submitPicks, { data, error }] = useMakePicksMutation();
+  const [submitPicks, { data, error, client }] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
 
@@ -115,10 +115,10 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                     {modalPicks.map((p) => {
                       const game = games.find((g) => g.gid === p.game_id)!;
 
-                      const away = game.Teams_Games_awayToTeams.abbrev;
-                      const home = game.Teams_Games_homeToTeams.abbrev;
+                      const away = game.teams_games_awayToteams.abbrev;
+                      const home = game.teams_games_homeToteams.abbrev;
                       const choseAway =
-                        p.winner === game.Teams_Games_awayToTeams.teamid;
+                        p.winner === game.teams_games_awayToteams.teamid;
 
                       return (
                         <Grid
@@ -163,10 +163,10 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                       ?.map((p) => {
                         const game = games.find((g) => g.gid === p.game_id)!;
 
-                        const away = game.Teams_Games_awayToTeams.abbrev;
-                        const home = game.Teams_Games_homeToTeams.abbrev;
+                        const away = game.teams_games_awayToteams.abbrev;
+                        const home = game.teams_games_homeToteams.abbrev;
                         const choseAway =
-                          p.winner === game.Teams_Games_awayToTeams.teamid;
+                          p.winner === game.teams_games_awayToteams.teamid;
                         const score = p.score;
                         return (
                           <Grid
@@ -177,7 +177,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                             <GridItem colStart={3} colSpan={8}>
                               <Flex justify="center" align="center">
                                 <Typography.H5>
-                                  {home} @ {away} Total Score:{" "}
+                                  {away} @ {home} Total Score:{" "}
                                   <strong>{score}</strong>
                                 </Typography.H5>
                               </Flex>
@@ -231,6 +231,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
           });
           setModalPicks(picks);
           resetForm();
+          client.resetStore();
           setIsModalOpen(true);
         }}
       >
@@ -247,7 +248,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                   bgColor="gray.100"
                 >
                   <option value={undefined} />
-                  {users.map(({ membership_id, People: { username } }) => {
+                  {users.map(({ membership_id, people: { username } }) => {
                     return (
                       <option key={membership_id} value={membership_id}>
                         {username}
@@ -263,8 +264,8 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                   const gamePicks: Array<GameEntry> = games.map((g) => {
                     const winner =
                       Math.random() < 0.5
-                        ? g.Teams_Games_awayToTeams.teamid
-                        : g.Teams_Games_homeToTeams.teamid;
+                        ? g.teams_games_awayToteams.teamid
+                        : g.teams_games_homeToteams.teamid;
                     return {
                       gameId: g.gid,
                       winner,
@@ -297,7 +298,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                             }}
                             onClick={() => {
                               formikVal.winner =
-                                game.Teams_Games_awayToTeams.teamid;
+                                game.teams_games_awayToteams.teamid;
                               formikVal.random = false;
                               formik.values.games[index] = formikVal;
                               formik.setFieldValue("games", [
@@ -319,7 +320,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                                   <TeamLogo
                                     boxSize="50px"
                                     abbrev={
-                                      game.Teams_Games_awayToTeams.abbrev!
+                                      game.teams_games_awayToteams.abbrev!
                                     }
                                   />
                                 </Flex>
@@ -338,7 +339,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                                   <Radio
                                     isChecked={
                                       formikVal.winner ===
-                                      game.Teams_Games_awayToTeams.teamid
+                                      game.teams_games_awayToteams.teamid
                                     }
                                   />
                                 </Flex>
@@ -354,7 +355,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                                   justify="center"
                                 >
                                   <Typography.Body1>
-                                    {game.Teams_Games_awayToTeams.abbrev}
+                                    {game.teams_games_awayToteams.abbrev}
                                   </Typography.Body1>
                                 </Flex>
                               </GridItem>
@@ -368,7 +369,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                             }}
                             onClick={() => {
                               formikVal.winner =
-                                game.Teams_Games_homeToTeams.teamid;
+                                game.teams_games_homeToteams.teamid;
                               formikVal.random = false;
                               formik.values.games[index] = formikVal;
                               formik.setFieldValue("games", [
@@ -389,7 +390,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                                   justify="center"
                                 >
                                   <Typography.Body1>
-                                    {game.Teams_Games_homeToTeams.abbrev}
+                                    {game.teams_games_homeToteams.abbrev}
                                   </Typography.Body1>
                                 </Flex>
                               </GridItem>
@@ -406,7 +407,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                                   <Radio
                                     isChecked={
                                       formikVal.winner ===
-                                      game.Teams_Games_homeToTeams.teamid
+                                      game.teams_games_homeToteams.teamid
                                     }
                                   />
                                 </Flex>
@@ -424,7 +425,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                                   <TeamLogo
                                     boxSize="50px"
                                     abbrev={
-                                      game.Teams_Games_homeToTeams.abbrev!
+                                      game.teams_games_homeToteams.abbrev!
                                     }
                                   />
                                 </Flex>
@@ -490,7 +491,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                   bgColor="gray.100"
                 >
                   <option value={undefined} />
-                  {users.map(({ membership_id, People: { username } }) => {
+                  {users.map(({ membership_id, people: { username } }) => {
                     return (
                       <option key={membership_id} value={membership_id}>
                         {username}
@@ -506,8 +507,8 @@ export const PicksForm: React.FC<PicksFormProps> = ({
               </FormControl>
               <FormControl>
                 <FormLabel>
-                  Total Score of {tiebreakerGame.Teams_Games_homeToTeams.abbrev}{" "}
-                  @ {tiebreakerGame.Teams_Games_awayToTeams.abbrev}
+                  Total Score of {tiebreakerGame.teams_games_awayToteams.abbrev}{" "}
+                  @ {tiebreakerGame.teams_games_homeToteams.abbrev}
                 </FormLabel>
                 <Input
                   id="score"

@@ -33,6 +33,7 @@ export const WeekPicksTable: React.FC = () => {
     );
   }
 
+  console.log({ picksData });
   if (!picksData) {
     return (
       <Box w="100%">

@@ -80,13 +80,13 @@ const RegistrationForm: ReactFCC<{
     previousUserId: Yup.string().optional(),
     superbowlWinner: Yup.string()
       .oneOf(
-        teams.findManyTeams.map((t) => t.teamid.toString()),
+        teams.teams.map((t) => t.teamid.toString()),
         "Please choose your username"
       )
       .required(),
     superbowlLoser: Yup.string()
       .oneOf(
-        teams.findManyTeams.map((t) => t.teamid.toString()),
+        teams.teams.map((t) => t.teamid.toString()),
         "Please choose your username"
       )
       .required(),
@@ -96,24 +96,24 @@ const RegistrationForm: ReactFCC<{
       .lessThan(150, "Please enter a number below 150"),
   });
 
-  const [register, { data: registerData, loading, error }] =
+  const [register, { data: registerData, loading, error, client }] =
     useRegisterMutation();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   let previousUsers = useMemo(() => {
-    let val = [...previousMembers.findManyLeagueMembers];
-    val.sort((a, b) => a.People.username.localeCompare(b.People.username));
+    let val = [...previousMembers.leagueMembers];
+    val.sort((a, b) => a.people.username.localeCompare(b.people.username));
     return val;
-  }, [previousMembers.findManyLeagueMembers]);
+  }, [previousMembers.leagueMembers]);
 
   const teamsMap = useMemo(() => {
-    const map = new Map<number, typeof teams["findManyTeams"][number]>();
-    teams.findManyTeams.forEach((team) => {
+    const map = new Map<number, typeof teams["teams"][number]>();
+    teams.teams.forEach((team) => {
       map.set(team.teamid, team);
     });
     return map;
-  }, [teams.findManyTeams]);
+  }, [teams.teams]);
 
   return (
     <>
@@ -163,6 +163,7 @@ const RegistrationForm: ReactFCC<{
             if (!error) {
               resetForm();
             }
+            client.resetStore();
           }}
         >
           {(formik) => (
@@ -215,7 +216,7 @@ const RegistrationForm: ReactFCC<{
                       bgColor="gray.100"
                     >
                       <option value={undefined} />
-                      {previousUsers.map(({ People: { uid, username } }) => {
+                      {previousUsers.map(({ people: { uid, username } }) => {
                         return (
                           <option key={uid} value={uid}>
                             {username}
@@ -242,7 +243,7 @@ const RegistrationForm: ReactFCC<{
                     >
                       <option value={undefined} />
                       <option value={undefined}>-- AFC --</option>
-                      {teams.findManyTeams
+                      {teams.teams
                         .filter((t) => t.conference === "AFC")
                         .map((t) => {
                           return (
@@ -253,8 +254,7 @@ const RegistrationForm: ReactFCC<{
                         })}
                       <option value={undefined} />
                       <option value={undefined}>-- NFC --</option>
-                      {teams.findManyTeams
-
+                      {teams.teams
                         .filter((t) => t.conference === "NFC")
                         .map((t) => {
                           return (
@@ -282,7 +282,7 @@ const RegistrationForm: ReactFCC<{
                     >
                       <option value={undefined} />
                       <option value={undefined}>-- AFC --</option>
-                      {teams.findManyTeams
+                      {teams.teams
                         .filter((t) => t.conference === "AFC")
                         .map((t) => {
                           return (
@@ -293,7 +293,7 @@ const RegistrationForm: ReactFCC<{
                         })}
                       <option value={undefined} />
                       <option value={undefined}>-- NFC --</option>
-                      {teams.findManyTeams
+                      {teams.teams
                         .filter((t) => t.conference === "NFC")
                         .map((t) => {
                           return (

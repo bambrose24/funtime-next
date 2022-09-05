@@ -29,6 +29,7 @@ export const PicksContent: React.FC = () => {
   if (gamesLoading || peopleLoading) {
     return <FuntimeLoading />;
   }
+
   if (!games || !people || gamesError || peopleError) {
     return <FuntimeError />;
   }

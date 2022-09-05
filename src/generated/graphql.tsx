@@ -3534,7 +3534,7 @@ export type QueryPicksArgs = {
 
 
 export type QueryPicksByWeekArgs = {
-  leagueId: Scalars['Int'];
+  league_id: Scalars['Int'];
   override?: InputMaybe<Scalars['Boolean']>;
   week?: InputMaybe<Scalars['Int']>;
 };

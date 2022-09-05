@@ -9,6 +9,8 @@ const theme = extendTheme({
   colors: {
     primary: "#2B6CB0",
     error: "#C53030",
+    pickCorrect: "rgba(51, 170, 51, .5)",
+    pickWrong: "rgba(252, 0, 0, .6)",
   },
   components: {
     Button: {

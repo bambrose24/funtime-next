@@ -5080,10 +5080,13 @@ export type MakePicksMutationVariables = Exact<{
 
 export type MakePicksMutation = { __typename?: 'Mutation', makePicks: { __typename?: 'MakePicksResponse', user: { __typename?: 'User', username: string, email: string } } };
 
-export type PicksByWeekQueryVariables = Exact<{ [key: string]: never; }>;
+export type PicksByWeekQueryVariables = Exact<{
+  league_id: Scalars['Int'];
+  week?: InputMaybe<Scalars['Int']>;
+}>;
 
 
-export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', gid: number }>, picks: Array<{ __typename?: 'Pick', pickid: number }> } };
+export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', gid: number, ts: any, done?: boolean | null, home: number, away: number, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null }> } };
 
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
@@ -5345,16 +5348,36 @@ export type MakePicksMutationHookResult = ReturnType<typeof useMakePicksMutation
 export type MakePicksMutationResult = Apollo.MutationResult<MakePicksMutation>;
 export type MakePicksMutationOptions = Apollo.BaseMutationOptions<MakePicksMutation, MakePicksMutationVariables>;
 export const PicksByWeekDocument = gql`
-    query PicksByWeek {
-  picksByWeek(league_id: 7, week: 1, override: true) {
+    query PicksByWeek($league_id: Int!, $week: Int) {
+  picksByWeek(league_id: $league_id, week: $week, override: true) {
     week
     season
     canView
     games {
       gid
+      ts
+      done
+      home
+      away
+      homerecord
+      awayrecord
+      homescore
+      awayscore
+      teams_games_homeToteams {
+        teamid
+        abbrev
+      }
+      teams_games_awayToteams {
+        abbrev
+        teamid
+      }
     }
     picks {
+      gid
       pickid
+      member_id
+      winner
+      correct
     }
   }
 }
@@ -5372,10 +5395,12 @@ export const PicksByWeekDocument = gql`
  * @example
  * const { data, loading, error } = usePicksByWeekQuery({
  *   variables: {
+ *      league_id: // value for 'league_id'
+ *      week: // value for 'week'
  *   },
  * });
  */
-export function usePicksByWeekQuery(baseOptions?: Apollo.QueryHookOptions<PicksByWeekQuery, PicksByWeekQueryVariables>) {
+export function usePicksByWeekQuery(baseOptions: Apollo.QueryHookOptions<PicksByWeekQuery, PicksByWeekQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return Apollo.useQuery<PicksByWeekQuery, PicksByWeekQueryVariables>(PicksByWeekDocument, options);
       }

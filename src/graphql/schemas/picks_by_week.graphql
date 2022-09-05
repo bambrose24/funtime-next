@@ -1,0 +1,33 @@
+query PicksByWeek($league_id: Int!, $week: Int) {
+  picksByWeek(league_id: $league_id, week: $week, override: true) {
+    week
+    season
+    canView
+    games {
+      gid
+      ts
+      done
+      home
+      away
+      homerecord
+      awayrecord
+      homescore
+      awayscore
+      teams_games_homeToteams {
+        teamid
+        abbrev
+      }
+      teams_games_awayToteams {
+        abbrev
+        teamid
+      }
+    }
+    picks {
+      gid
+      pickid
+      member_id
+      winner
+      correct
+    }
+  }
+}

@@ -26,6 +26,8 @@ export const WeekPicksTable: React.FC = () => {
 
   const { data: picksData, loading: picksLoading } = usePicksByWeekQuery({
     variables: { league_id: LEAGUE_ID, week: 1 },
+    pollInterval: 60,
+    fetchPolicy: "cache-and-network",
   });
 
   const { data: people, loading: peopleLoading } = useFindLeagueMembersQuery({
@@ -36,7 +38,7 @@ export const WeekPicksTable: React.FC = () => {
 
   const { data: teams, loading: teamsLoading } = useAllTeamsQuery();
 
-  if (picksLoading || peopleLoading || teamsLoading) {
+  if ((picksLoading && !picksData) || peopleLoading || teamsLoading) {
     return (
       <Flex justify="center" m={8}>
         <Spinner />

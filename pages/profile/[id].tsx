@@ -30,7 +30,6 @@ export default function Profile() {
 
   //update user ID once we have access to the router query
   useEffect(() => {
-    console.log("router ready and query", router.isReady, router.query.id);
     if (router.isReady && router.query.id) {
       setUserId(
         typeof router.query.id === "string"
@@ -74,8 +73,8 @@ export default function Profile() {
   }
 
   //find the user from the league members query
-  const user = userData.findManyLeagueMembers.find(
-    (user) => user.People.uid === userId
+  const user = userData.leagueMembers.find(
+    (user) => user.people.uid === userId
   );
 
   return (
@@ -96,7 +95,7 @@ export default function Profile() {
           </Center>
           {/* commented out query map and personalization features like edit profile and bio */}
           {/* {userData.findManyPeople.map(({People: { username, fname, lname }, Picks: { correct } }) => { */}
-          <Typography.H4 mt={2}> {user!.People.username} </Typography.H4>
+          <Typography.H4 mt={2}> {user!.people.username} </Typography.H4>
           {/* })} */}
           {/* <Typography.Body2 maxWidth="300px" color="gray" mb={2}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Typography.Body2> */}
           {/* <Button size="sm">Edit Profile</Button> */}

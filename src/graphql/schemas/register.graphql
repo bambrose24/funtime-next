@@ -21,7 +21,7 @@ mutation Register(
     }
     membership {
       league_id
-      Leagues {
+      leagues {
         name
       }
     }

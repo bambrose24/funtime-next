@@ -46,7 +46,7 @@ export const PicksContent: React.FC = () => {
               week={week}
               season={season}
               games={games.firstNotStartedWeek.games}
-              users={people.findManyLeagueMembers}
+              users={people.leagueMembers}
             />
           </Flex>
         </Box>

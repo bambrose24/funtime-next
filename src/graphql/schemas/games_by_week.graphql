@@ -1,7 +1,5 @@
 query GamesByWeek($season: Int!, $week: Int!) {
-  findManyGames(
-    where: { season: { equals: $season }, week: { equals: $week } }
-  ) {
+  games(where: { season: { equals: $season }, week: { equals: $week } }) {
     gid
     week
     season
@@ -13,11 +11,11 @@ query GamesByWeek($season: Int!, $week: Int!) {
     awayrecord
     winner
     is_tiebreaker
-    Teams_Games_awayToTeams {
+    teams_games_awayToteams {
       teamid
       abbrev
     }
-    Teams_Games_homeToTeams {
+    teams_games_homeToteams {
       teamid
       abbrev
     }

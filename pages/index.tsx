@@ -42,7 +42,7 @@ const Home: NextPage = () => {
                   </ul>
                 </Box>
                 Each of these share the same principles of having the best
-                pick(s) for the category. Registraion for a season opts you into
+                pick(s) for the category. Registration for a season opts you into
                 each of these games for the duration of an NFL season.
                 <Divider my={4} />
                 <Typography.H4 align="center" variant="h6">

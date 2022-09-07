@@ -5086,7 +5086,7 @@ export type PicksByWeekQueryVariables = Exact<{
 }>;
 
 
-export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', gid: number, ts: any, done?: boolean | null, home: number, away: number, winner?: number | null, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null }> } };
+export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', gid: number, ts: any, done?: boolean | null, home: number, away: number, winner?: number | null, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, liveStatus?: { __typename?: 'GameLive', currentQuarter?: number | null, currentQuarterSecondsRemaining?: number | null, playedStatus?: MsfGamePlayedStatus | null } | null, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null }> } };
 
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
@@ -5360,6 +5360,11 @@ export const PicksByWeekDocument = gql`
       home
       away
       winner
+      liveStatus {
+        currentQuarter
+        currentQuarterSecondsRemaining
+        playedStatus
+      }
       homerecord
       awayrecord
       homescore

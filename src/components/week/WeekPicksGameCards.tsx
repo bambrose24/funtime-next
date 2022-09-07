@@ -1,5 +1,10 @@
 import { Box, Flex, HStack, VStack } from "@chakra-ui/react";
-import { AllTeamsQuery, PicksByWeekQuery } from "@src/generated/graphql";
+import {
+  AllTeamsQuery,
+  MsfGamePlayedStatus,
+  PicksByWeekQuery,
+} from "@src/generated/graphql";
+import moment from "moment-timezone";
 import { TeamLogo } from "../shared/TeamLogo";
 import { Typography } from "../Typography";
 
@@ -71,6 +76,25 @@ export const GameCard: React.FC<{
           <Typography.Body1 color={homeColor}>
             {game.homescore}
           </Typography.Body1>
+        </Flex>
+        <Flex justify="start">
+          {game?.liveStatus?.playedStatus === MsfGamePlayedStatus.Completed ? (
+            "Final"
+          ) : game?.liveStatus?.playedStatus ===
+            MsfGamePlayedStatus.CompletedPendingReview ? (
+            "Final Pending Review"
+          ) : game?.liveStatus?.playedStatus === MsfGamePlayedStatus.Live ? (
+            `Q${game?.liveStatus?.currentQuarter} ${moment(
+              {
+                seconds: game?.liveStatus?.currentQuarterSecondsRemaining || 0,
+              },
+              "mm:ss"
+            ).format()}`
+          ) : (
+            <Typography.Body2>
+              {moment(game.ts).tz("America/New_York").format("lll")}
+            </Typography.Body2>
+          )}
         </Flex>
       </VStack>
     </Box>

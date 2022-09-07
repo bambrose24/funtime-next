@@ -10,6 +10,11 @@ query PicksByWeek($league_id: Int!, $week: Int) {
       home
       away
       winner
+      liveStatus {
+        currentQuarter
+        currentQuarterSecondsRemaining
+        playedStatus
+      }
       homerecord
       awayrecord
       homescore

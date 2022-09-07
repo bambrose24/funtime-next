@@ -170,7 +170,7 @@ const RegistrationForm: ReactFCC<{
             <Form onSubmit={formik.handleSubmit}>
               <VStack spacing={4} align="flex-start">
                 <FormControl>
-                  <FormLabel margin={0} htmlFor="email">
+                  <FormLabel htmlFor="email">
                     Email
                   </FormLabel>
                   <Input
@@ -187,7 +187,7 @@ const RegistrationForm: ReactFCC<{
                   ) : null}
                 </FormControl>
                 <FormControl>
-                  <FormLabel margin={0} htmlFor="username">
+                  <FormLabel htmlFor="username">
                     2022 Username
                   </FormLabel>
                   <Input
@@ -204,11 +204,12 @@ const RegistrationForm: ReactFCC<{
                   ) : null}
                 </FormControl>
                 <FormControl>
-                  <FormLabel mr={0}>
+                  <FormLabel>
                     <Tooltip label="If you played last year, pick your username. This will connect your user to the one from last year.">
                       If you played in 2021, your Username from last year
                     </Tooltip>
-                    <Select
+                  </FormLabel>
+                  <Select
                       id="previousUserId"
                       name="previousUserId"
                       onChange={formik.handleChange}
@@ -223,17 +224,17 @@ const RegistrationForm: ReactFCC<{
                           </option>
                         );
                       })}
-                    </Select>
-                  </FormLabel>
+                  </Select>
                 </FormControl>
                 <Divider my={4} borderColor="gray.400" />
                 <FormControl>
-                  <FormLabel mr={0}>
+                  <FormLabel>
                     <Tooltip label="Be sure to pick a winner and loser from both the AFC and NFC.">
                       <>
                         Who will be the Super Bowl <strong>winner</strong>?
                       </>
                     </Tooltip>
+                  </FormLabel>
                     <Select
                       id="superbowlWinner"
                       name="superbowlWinner"
@@ -264,15 +265,15 @@ const RegistrationForm: ReactFCC<{
                           );
                         })}
                     </Select>
-                  </FormLabel>
                 </FormControl>
                 <FormControl>
-                  <FormLabel mr={0}>
+                  <FormLabel>
                     <Tooltip label="Be sure to pick a winner and loser from both the AFC and NFC.">
                       <>
                         Who will be the Super Bowl <strong>loser</strong>?
                       </>
                     </Tooltip>
+                  </FormLabel>
                     <Select
                       id="superbowlLoser"
                       name="superbowlLoser"
@@ -303,13 +304,13 @@ const RegistrationForm: ReactFCC<{
                           );
                         })}
                     </Select>
-                  </FormLabel>
                 </FormControl>
                 <FormControl>
                   <FormLabel mr={0}>
                     <Tooltip label="Pick a total score for the game. This will be used for the tiebreaker, should there be multiple people who are correct">
                       What will the total score of the Super Bowl be
                     </Tooltip>
+                  </FormLabel>
                     <Input
                       id="superbowlScore"
                       name="superbowlScore"
@@ -318,7 +319,6 @@ const RegistrationForm: ReactFCC<{
                       onChange={formik.handleChange}
                       value={formik.values.superbowlScore}
                     />
-                  </FormLabel>
                 </FormControl>
                 <Button
                   type="submit"

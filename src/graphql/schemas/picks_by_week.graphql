@@ -9,6 +9,7 @@ query PicksByWeek($league_id: Int!, $week: Int) {
       done
       home
       away
+      winner
       homerecord
       awayrecord
       homescore

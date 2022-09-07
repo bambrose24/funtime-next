@@ -1,4 +1,3 @@
-import { Typography } from "@src/components/Typography";
 import {
   Box,
   Flex,
@@ -14,44 +13,22 @@ import {
   AllTeamsQuery,
   FindLeagueMembersQuery,
   PicksByWeekQuery,
-  useAllTeamsQuery,
-  useFindLeagueMembersQuery,
-  usePicksByWeekQuery,
 } from "@src/generated/graphql";
 import { useState } from "react";
-import { LEAGUE_ID } from "@src/util/config";
 import UserTag from "@src/components/profile/UserTag";
 import moment from "moment";
-import { FuntimeLoading } from "../shared/FuntimeLoading";
 
-export const WeekPicksTable: React.FC = () => {
-  const { data: picksData, loading: picksLoading } = usePicksByWeekQuery({
-    variables: { league_id: LEAGUE_ID, week: 1 },
-    pollInterval: 1000 * 60 * 3, // every 3 minutes
-  });
+type WeekPicksTableProps = {
+  teams: AllTeamsQuery;
+  people: FindLeagueMembersQuery;
+  picksData: PicksByWeekQuery;
+};
 
-  const { data: people, loading: peopleLoading } = useFindLeagueMembersQuery({
-    variables: {
-      league_id: LEAGUE_ID,
-    },
-  });
-
-  const { data: teams, loading: teamsLoading } = useAllTeamsQuery();
-
-  if ((picksLoading && !picksData) || peopleLoading || teamsLoading) {
-    return <FuntimeLoading />;
-  }
-
-  if (!picksData || !people || !teams) {
-    return (
-      <Box w="100%">
-        <Typography.H2>
-          There was an error. Please refresh the page.
-        </Typography.H2>
-      </Box>
-    );
-  }
-
+export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
+  teams,
+  people,
+  picksData,
+}) => {
   const teamIdToTeam = teams.teams.reduce((prev, curr) => {
     prev[curr.teamid] = curr;
     return prev;

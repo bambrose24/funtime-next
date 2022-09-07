@@ -5083,6 +5083,7 @@ export type MakePicksMutation = { __typename?: 'Mutation', makePicks: { __typena
 export type PicksByWeekQueryVariables = Exact<{
   league_id: Scalars['Int'];
   week?: InputMaybe<Scalars['Int']>;
+  override?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
@@ -5348,8 +5349,8 @@ export type MakePicksMutationHookResult = ReturnType<typeof useMakePicksMutation
 export type MakePicksMutationResult = Apollo.MutationResult<MakePicksMutation>;
 export type MakePicksMutationOptions = Apollo.BaseMutationOptions<MakePicksMutation, MakePicksMutationVariables>;
 export const PicksByWeekDocument = gql`
-    query PicksByWeek($league_id: Int!, $week: Int) {
-  picksByWeek(league_id: $league_id, week: $week, override: true) {
+    query PicksByWeek($league_id: Int!, $week: Int, $override: Boolean) {
+  picksByWeek(league_id: $league_id, week: $week, override: $override) {
     week
     season
     canView
@@ -5403,6 +5404,7 @@ export const PicksByWeekDocument = gql`
  *   variables: {
  *      league_id: // value for 'league_id'
  *      week: // value for 'week'
+ *      override: // value for 'override'
  *   },
  * });
  */

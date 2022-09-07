@@ -4,7 +4,7 @@ import {
   useFindLeagueMembersQuery,
   usePicksByWeekQuery,
 } from "@src/generated/graphql";
-import { LEAGUE_ID } from "@src/util/config";
+import { env, LEAGUE_ID } from "@src/util/config";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
 import { Typography } from "../Typography";
 import { WeekPicksGameCards } from "./WeekPicksGameCards";
@@ -12,7 +12,11 @@ import { WeekPicksTable } from "./WeekPicksTable";
 
 export const WeekContent: React.FC = () => {
   const { data: picksData, loading: picksLoading } = usePicksByWeekQuery({
-    variables: { league_id: LEAGUE_ID, week: 1 },
+    variables: {
+      league_id: LEAGUE_ID,
+      week: env === "production" ? undefined : 1,
+      override: env === "production" ? undefined : true,
+    },
     pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
 
@@ -39,6 +43,17 @@ export const WeekContent: React.FC = () => {
   }
 
   const { week, season } = picksData.picksByWeek;
+
+  if (!picksData.picksByWeek.canView) {
+    return (
+      <Flex justify="center" w="100%">
+        <Typography.H1 mt={2} mb={4}>
+          Picks are not yet available for Week {week}, {season} because the week
+          has not started yet.
+        </Typography.H1>
+      </Flex>
+    );
+  }
 
   return (
     <>

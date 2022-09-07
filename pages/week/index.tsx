@@ -5,7 +5,7 @@ import WeekContent from "@src/components/week/WeekContent";
 import { env } from "@src/util/config";
 
 const WeekPage: React.FC = () => {
-  if (env === "production" && false) {
+  if (env === "production") {
     return (
       <FuntimePage>
         <Flex w="100%" align="center">

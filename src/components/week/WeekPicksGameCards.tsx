@@ -27,7 +27,7 @@ export const WeekPicksGameCards: React.FC<Props> = ({ picksData, teams }) => {
     <Flex justify="center">
       <HStack spacing="12px" m="12px" overflow="auto" paddingBottom="20px">
         {games.map((g) => {
-          return <GameCard game={g} teams={teamIdMapping} />;
+          return <GameCard g={g} teams={teamIdMapping} />;
         })}
       </HStack>
     </Flex>
@@ -35,11 +35,18 @@ export const WeekPicksGameCards: React.FC<Props> = ({ picksData, teams }) => {
 };
 
 export const GameCard: React.FC<{
-  game: PicksByWeekQuery["picksByWeek"]["games"][number];
+  g: PicksByWeekQuery["picksByWeek"]["games"][number];
   teams: TeamIDMapping;
-}> = ({ game, teams }) => {
-  const awayTeam = teams[game.away];
-  const homeTeam = teams[game.home];
+}> = ({ g, teams }) => {
+  const awayTeam = teams[g.away];
+  const homeTeam = teams[g.home];
+
+  const game = {
+    ...g,
+    liveStatus: {
+      playedStatus: MsfGamePlayedStatus.Unplayed,
+    },
+  };
 
   const awayColor = !game.done
     ? undefined
@@ -77,26 +84,64 @@ export const GameCard: React.FC<{
             {game.homescore}
           </Typography.Body1>
         </Flex>
-        <Flex justify="start">
-          {game?.liveStatus?.playedStatus === MsfGamePlayedStatus.Completed ? (
-            "Final"
-          ) : game?.liveStatus?.playedStatus ===
-            MsfGamePlayedStatus.CompletedPendingReview ? (
-            "Final Pending Review"
-          ) : game?.liveStatus?.playedStatus === MsfGamePlayedStatus.Live ? (
-            `Q${game?.liveStatus?.currentQuarter} ${moment(
-              {
-                seconds: game?.liveStatus?.currentQuarterSecondsRemaining || 0,
-              },
-              "mm:ss"
-            ).format()}`
-          ) : (
-            <Typography.Body2>
-              {moment(game.ts).tz("America/New_York").format("lll")}
-            </Typography.Body2>
-          )}
+        <Flex justify="start" w="100%">
+          <GameLiveState game={game} />
         </Flex>
       </VStack>
     </Box>
+  );
+};
+
+const GameLiveState: React.FC<{
+  game: PicksByWeekQuery["picksByWeek"]["games"][number];
+}> = ({ game }) => {
+  if (game.done) {
+    return <Typography.Body2>Final</Typography.Body2>;
+  }
+
+  if (!game.liveStatus) {
+    return <GameTS ts={game.ts} />;
+  }
+
+  const status = game.liveStatus.playedStatus;
+  if (status) {
+    switch (status) {
+      case MsfGamePlayedStatus.Completed:
+        return <Typography.Body2>Final</Typography.Body2>;
+      case MsfGamePlayedStatus.CompletedPendingReview:
+        return <Typography.Body2>Final Pending Review</Typography.Body2>;
+      case MsfGamePlayedStatus.Live:
+        const quarter = game.liveStatus.currentQuarter;
+        const secondsRemaining = game.liveStatus.currentQuarterSecondsRemaining;
+        if (!secondsRemaining) {
+          return <Typography.Body2>In Progress</Typography.Body2>;
+        }
+        const minutes = Math.floor(secondsRemaining / 60);
+        const seconds = secondsRemaining - minutes * 60;
+
+        const minutesStr = minutes.toLocaleString("en-US", {
+          minimumIntegerDigits: minutes < 10 && minutes !== 0 ? 1 : 2,
+          useGrouping: false,
+        });
+
+        const secondsStr = seconds.toLocaleString("en-US", {
+          minimumIntegerDigits: 2,
+          useGrouping: false,
+        });
+        return (
+          <Typography.Body2>
+            Q{quarter} {minutesStr}:{secondsStr}
+          </Typography.Body2>
+        );
+    }
+  }
+  return <GameTS ts={game.ts} />;
+};
+
+const GameTS: React.FC<{ ts: any }> = ({ ts }) => {
+  return (
+    <Typography.Body2>
+      {moment(ts).tz("America/New_York").format("lll")}
+    </Typography.Body2>
   );
 };

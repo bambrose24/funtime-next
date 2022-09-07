@@ -143,7 +143,8 @@ const PicksTable: React.FC<PicksTableProps> = ({
                   bg="white"
                   key={game.gid}
                 >
-                  {game.teams_games_awayToteams.abbrev} @{" "}
+                  {game.teams_games_awayToteams.abbrev}
+                  <br />
                   {game.teams_games_homeToteams.abbrev}
                 </Th>
               );

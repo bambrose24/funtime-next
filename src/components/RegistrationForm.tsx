@@ -170,7 +170,7 @@ const RegistrationForm: ReactFCC<{
             <Form onSubmit={formik.handleSubmit}>
               <VStack spacing={4} align="flex-start">
                 <FormControl>
-                  <FormLabel style={{margin: 0}} htmlFor="email">
+                  <FormLabel margin={0} htmlFor="email">
                     Email
                   </FormLabel>
                   <Input
@@ -187,7 +187,7 @@ const RegistrationForm: ReactFCC<{
                   ) : null}
                 </FormControl>
                 <FormControl>
-                  <FormLabel style={{margin: 0}} htmlFor="username">
+                  <FormLabel margin={0} htmlFor="username">
                     2022 Username
                   </FormLabel>
                   <Input

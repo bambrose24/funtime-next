@@ -306,7 +306,7 @@ const RegistrationForm: ReactFCC<{
                     </Select>
                 </FormControl>
                 <FormControl>
-                  <FormLabel mr={0}>
+                  <FormLabel>
                     <Tooltip label="Pick a total score for the game. This will be used for the tiebreaker, should there be multiple people who are correct">
                       What will the total score of the Super Bowl be
                     </Tooltip>

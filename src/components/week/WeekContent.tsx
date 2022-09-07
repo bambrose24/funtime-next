@@ -11,7 +11,11 @@ import { WeekPicksGameCards } from "./WeekPicksGameCards";
 import { WeekPicksTable } from "./WeekPicksTable";
 
 export const WeekContent: React.FC = () => {
-  const { data: picksData, loading: picksLoading } = usePicksByWeekQuery({
+  const {
+    data: picksData,
+    loading: picksLoading,
+    error: picksError,
+  } = usePicksByWeekQuery({
     variables: {
       league_id: LEAGUE_ID,
       week: env === "production" ? undefined : 1,
@@ -20,19 +24,28 @@ export const WeekContent: React.FC = () => {
     pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
 
-  const { data: people, loading: peopleLoading } = useFindLeagueMembersQuery({
+  const {
+    data: people,
+    loading: peopleLoading,
+    error: peopleError,
+  } = useFindLeagueMembersQuery({
     variables: {
       league_id: LEAGUE_ID,
     },
   });
 
-  const { data: teams, loading: teamsLoading } = useAllTeamsQuery();
+  const {
+    data: teams,
+    loading: teamsLoading,
+    error: teamsError,
+  } = useAllTeamsQuery();
 
   if ((picksLoading && !picksData) || peopleLoading || teamsLoading) {
     return <FuntimeLoading />;
   }
 
   if (!picksData || !people || !teams) {
+    console.log({ picksError, teamsError, peopleError });
     return (
       <Box w="100%">
         <Typography.H2>

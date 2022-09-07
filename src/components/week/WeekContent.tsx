@@ -1,7 +1,7 @@
 import { WeekPicksTable } from "./WeekPicksTable";
 
-export const WeekPage: React.FC = () => {
+export const WeekContent: React.FC = () => {
   return <WeekPicksTable />;
 };
 
-export default WeekPage;
+export default WeekContent;

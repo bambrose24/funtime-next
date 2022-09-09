@@ -58,7 +58,7 @@ export const GameCard: React.FC<{
     ? "pickCorrect"
     : "pickWrong";
   return (
-    <Box p="12px" bg="white" minWidth="130px">
+    <Box p="12px" bg="white" minWidth="130px" height="150px">
       <VStack>
         <Flex justify="space-between" w="100%">
           <HStack>

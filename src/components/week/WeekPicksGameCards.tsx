@@ -55,30 +55,30 @@ export const GameCard: React.FC<{
   const homeColor = !game.done
     ? undefined
     : game.winner === game.home
-    ? "pickCorrect"
-    : "pickWrong";
+    ? "pickWrong"
+    : "pickCorrect";
   return (
     <Box p="12px" bg="white" minWidth="130px" height="150px">
       <VStack>
         <Flex justify="space-between" w="100%">
           <HStack>
             <TeamLogo abbrev={awayTeam.abbrev!} height="25px" width="25px" />
-            <Typography.Body1 color={awayColor}>
+            <Typography.Body1 fontWeight="500" color={awayColor}>
               {awayTeam.abbrev}
             </Typography.Body1>
           </HStack>
-          <Typography.Body1 color={awayColor}>
+          <Typography.Body1 fontWeight="500" color={awayColor}>
             {game.awayscore}
           </Typography.Body1>
         </Flex>
         <Flex justify="space-between" w="100%">
           <HStack>
             <TeamLogo abbrev={homeTeam.abbrev!} height="25px" width="25px" />
-            <Typography.Body1 color={homeColor}>
+            <Typography.Body1 fontWeight="500" color={homeColor}>
               {homeTeam.abbrev}
             </Typography.Body1>
           </HStack>
-          <Typography.Body1 color={homeColor}>
+          <Typography.Body1 fontWeight="500" color={homeColor}>
             {game.homescore}
           </Typography.Body1>
         </Flex>

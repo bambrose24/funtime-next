@@ -42,10 +42,8 @@ export const GameCard: React.FC<{
   const homeTeam = teams[g.home];
 
   const game = {
+    // can override fields here for testing if wanted
     ...g,
-    liveStatus: {
-      playedStatus: MsfGamePlayedStatus.Unplayed,
-    },
   };
 
   const awayColor = !game.done

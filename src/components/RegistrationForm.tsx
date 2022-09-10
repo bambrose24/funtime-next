@@ -133,8 +133,8 @@ const RegistrationForm: ReactFCC<{
         py={5}
         rounded="lg"
       >
-        <Typography.H3>Register for 2022</Typography.H3>
-        <hr />
+        <Typography.H3 style={{textAlign: "center"}}>The season has started!<br/> Registration is closed.</Typography.H3>
+        {/* <hr />
         <br />
         <Formik
           initialValues={{
@@ -332,7 +332,7 @@ const RegistrationForm: ReactFCC<{
               </VStack>
             </Form>
           )}
-        </Formik>
+        </Formik> */}
       </Box>
     </>
   );

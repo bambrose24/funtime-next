@@ -66,6 +66,34 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
   const games = [...picksData.picksByWeek.games];
   games.sort(pickSort);
 
+  const memberIdToCorrect = Object.entries(memberIdToPicks).reduce(
+    (prev, val) => {
+      const [memberId, picks] = val;
+      prev[memberId] = picks.reduce(
+        (acc, curr) => acc + (curr.correct ? 1 : 0),
+        0
+      );
+      return prev;
+    },
+    {} as Record<string, number>
+  );
+
+  const rankedMemberIds = Object.keys(memberIdToPicks)
+    .sort((a, b) => {
+      const aCorrect = memberIdToCorrect[a];
+      const bCorrect = memberIdToCorrect[b];
+      if (aCorrect < bCorrect) {
+        return 1;
+      }
+      if (bCorrect < aCorrect) {
+        return -1;
+      }
+      const aMember = memberIdToMember[parseInt(a)];
+      const bMember = memberIdToMember[parseInt(b)];
+      return aMember.people.username.localeCompare(bMember.people.username);
+    })
+    .map((x) => parseInt(x));
+
   return (
     <Flex justify="center">
       <Box
@@ -79,7 +107,9 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
         <PicksTable
           games={games}
           memberIdToPicks={memberIdToPicks}
+          rankedMemberIds={rankedMemberIds}
           memberIdToMember={memberIdToMember}
+          memberIdToCorrect={memberIdToCorrect}
           gameIdToGame={gameIdToGame}
           teamIdToTeam={teamIdToTeam}
         />
@@ -95,6 +125,8 @@ type PicksTableProps = {
     number,
     FindLeagueMembersQuery["leagueMembers"][number]
   >;
+  memberIdToCorrect: Record<string, number>;
+  rankedMemberIds: Array<number>;
   gameIdToGame: Record<
     number,
     PicksByWeekQuery["picksByWeek"]["games"][number]
@@ -106,6 +138,8 @@ const PicksTable: React.FC<PicksTableProps> = ({
   games,
   memberIdToPicks,
   memberIdToMember,
+  memberIdToCorrect,
+  rankedMemberIds,
   gameIdToGame,
   teamIdToTeam,
 }) => {
@@ -152,10 +186,10 @@ const PicksTable: React.FC<PicksTableProps> = ({
           </Tr>
         </Thead>
         <Tbody>
-          {Object.entries(memberIdToPicks).map((val) => {
-            const memberPicks = val[1];
+          {/* {Object.entries(memberIdToPicks).map((val) => { */}
+          {rankedMemberIds.map((memberId) => {
+            const memberPicks = memberIdToPicks[memberId];
             memberPicks.sort(pickSort);
-            const memberId = parseInt(val[0]);
 
             const member = memberIdToMember[memberId!];
             return (
@@ -169,10 +203,17 @@ const PicksTable: React.FC<PicksTableProps> = ({
                 boxShadow={memberId === selectedRow ? "2px 2px 10px gray" : ""}
               >
                 <Td py={1}>
-                  <UserTag
-                    user_id={member.people.uid}
-                    username={member.people.username}
-                  />
+                  <Flex
+                    justify="space-between"
+                    align="center"
+                    px={{ base: 0, lg: "8px" }}
+                  >
+                    <UserTag
+                      user_id={member.people.uid}
+                      username={member.people.username}
+                    />
+                    <strong>{memberIdToCorrect[memberId.toString()]}</strong>
+                  </Flex>
                 </Td>
                 {memberPicks.map((pick) => {
                   const { correct, winner } = pick;

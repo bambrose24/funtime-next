@@ -55,8 +55,8 @@ export const GameCard: React.FC<{
   const homeColor = !game.done
     ? undefined
     : game.winner === game.home
-    ? "pickWrong"
-    : "pickCorrect";
+    ? "pickCorrect"
+    : "pickWrong";
   return (
     <Box p="12px" bg="white" minWidth="130px" height="150px">
       <VStack>

@@ -48,12 +48,16 @@ export const GameCard: React.FC<{
 
   const awayColor = !game.done
     ? undefined
+    : !game.winner
+    ? "yellow.400"
     : game.winner === game.away
     ? "pickCorrect"
     : "pickWrong";
 
   const homeColor = !game.done
     ? undefined
+    : !game.winner
+    ? "yellow.400"
     : game.winner === game.home
     ? "pickCorrect"
     : "pickWrong";

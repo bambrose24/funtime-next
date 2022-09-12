@@ -191,6 +191,8 @@ const PicksTable: React.FC<PicksTableProps> = ({
             const memberPicks = memberIdToPicks[memberId];
             memberPicks.sort(pickSort);
 
+            const scoreTotal = memberPicks.find(p => p.score && p.score > 0)?.score
+
             const member = memberIdToMember[memberId!];
             return (
               <Tr
@@ -212,7 +214,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
                       user_id={member.people.uid}
                       username={member.people.username}
                     />
-                    <strong>{memberIdToCorrect[memberId.toString()]}</strong>
+                    <strong>{memberIdToCorrect[memberId.toString()]} ({scoreTotal})</strong>
                   </Flex>
                 </Td>
                 {memberPicks.map((pick) => {

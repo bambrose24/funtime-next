@@ -150,7 +150,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
 
   React.useEffect(() => {
     const detectMobileView = () => {
-      window.innerWidth < 1240 ? setMobileView(true) : setMobileView(false);
+      window.innerWidth < 400 ? setMobileView(true) : setMobileView(false);
     }
     detectMobileView();
     window.addEventListener('resize', detectMobileView);

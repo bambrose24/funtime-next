@@ -18,7 +18,8 @@ export const WeekContent: React.FC = () => {
   } = usePicksByWeekQuery({
     variables: {
       league_id: LEAGUE_ID,
-      week: env === "production" ? undefined : 1,
+      // this is where you'd set the "week" from a dropdown
+      // week: env === "production" ? undefined : 1
       override: env === "production" ? undefined : true,
     },
     pollInterval: 1000 * 60 * 3, // every 3 minutes

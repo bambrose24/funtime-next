@@ -150,7 +150,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
 
   React.useEffect(() => {
     const detectMobileView = () => {
-      window.innerWidth < 400 ? setMobileView(true) : setMobileView(false);
+      window.innerWidth < 500 ? setMobileView(true) : setMobileView(false);
     }
     detectMobileView();
     window.addEventListener('resize', detectMobileView);
@@ -159,7 +159,6 @@ const PicksTable: React.FC<PicksTableProps> = ({
     }
   }, [mobileView]);
 
-  console.log(mobileView);
   const pickSort = (a: { gid: number }, b: { gid: number }) => {
     // get games from mapping and compare ts
     const aGame = gameIdToGame[a.gid];

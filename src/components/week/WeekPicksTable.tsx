@@ -17,6 +17,8 @@ import {
 import { useState } from "react";
 import UserTag from "@src/components/profile/UserTag";
 import moment from "moment";
+import React from "react";
+import { MobileNav } from "../nav/Nav";
 
 type WeekPicksTableProps = {
   teams: AllTeamsQuery;
@@ -144,6 +146,20 @@ const PicksTable: React.FC<PicksTableProps> = ({
   teamIdToTeam,
 }) => {
   const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
+  const [mobileView, setMobileView] = React.useState(false);
+
+  React.useEffect(() => {
+    const detectMobileView = () => {
+      window.innerWidth < 1240 ? setMobileView(true) : setMobileView(false);
+    }
+    detectMobileView();
+    window.addEventListener('resize', detectMobileView);
+    return() => {
+      window.removeEventListener('resize', detectMobileView);
+    }
+  }, [mobileView]);
+
+  console.log(mobileView);
   const pickSort = (a: { gid: number }, b: { gid: number }) => {
     // get games from mapping and compare ts
     const aGame = gameIdToGame[a.gid];
@@ -166,7 +182,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
       <Table size="md" fontSize={[14, 16]} variant="unstyled">
         <Thead>
           <Tr>
-            <Th bg="white">User</Th>
+            <Th bg="white" left={0} position={"sticky"} zIndex={1}>User</Th>
             {games.map((game) => {
               return (
                 <Th
@@ -204,18 +220,31 @@ const PicksTable: React.FC<PicksTableProps> = ({
                 bgColor={memberId === selectedRow ? "white" : ""}
                 boxShadow={memberId === selectedRow ? "2px 2px 10px gray" : ""}
               >
-                <Td py={1}>
-                  <Flex
-                    justify="space-between"
-                    align="center"
-                    px={{ base: 0, lg: "8px" }}
-                  >
-                    <UserTag
-                      user_id={member.people.uid}
-                      username={member.people.username}
-                    />
-                    <strong>{memberIdToCorrect[memberId.toString()]} ({scoreTotal})</strong>
-                  </Flex>
+                <Td py={1} left={0} position={"sticky"} zIndex={1} bgColor={"white"} pl={2} pr={2}>
+                  { mobileView 
+                    ? 
+                      <>
+                        <UserTag
+                            mobileView={mobileView}
+                            user_id={member.people.uid}
+                            username={member.people.username}
+                          />
+                          <strong style={{display: "block", textAlign: "center"}}>{memberIdToCorrect[memberId.toString()]} ({scoreTotal})</strong>
+                      </>
+                    :
+                      <Flex
+                        justify="space-between"
+                        align="center"
+                        px={{ base: 0, lg: "8px" }}
+                      >
+                        <UserTag
+                          user_id={member.people.uid}
+                          username={member.people.username}
+                        />
+                        <strong>{memberIdToCorrect[memberId.toString()]} ({scoreTotal})</strong>
+                      </Flex>
+                }
+
                 </Td>
                 {memberPicks.map((pick) => {
                   const { correct, winner } = pick;

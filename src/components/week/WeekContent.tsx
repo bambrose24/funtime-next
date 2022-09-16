@@ -71,11 +71,13 @@ export const WeekContent: React.FC = () => {
   return (
     <>
       <Flex justify="center" w="100%">
-        <Typography.H1 mt={2} mb={4}>
+        <Typography.H1 mt={2} mb={0}>
           Week {week}, {season}
         </Typography.H1>
       </Flex>
-      <WeekPicksGameCards picksData={picksData} teams={teams} />
+      <div style={{top: 0, position: "sticky", zIndex: 2, backgroundColor: "#EDF2F7", paddingTop: "16px"}}>
+        <WeekPicksGameCards picksData={picksData} teams={teams} />
+      </div>
       <WeekPicksTable teams={teams} people={people} picksData={picksData} />
     </>
   );

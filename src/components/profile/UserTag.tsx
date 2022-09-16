@@ -9,7 +9,6 @@ const UserTag = (props: { user_id: number, username: string, mobileView?: boolea
 
   return(
     
-    <Tooltip label={props.username} aria-label='A tooltip'>
     <a href={profile_url}>
       <Button size="sm" borderRadius="25px" border="2px solid" borderColor="gray.200" px={2} zIndex="20" bg="white">
       <HStack width={props.mobileView ? "75px" : "initial"}>
@@ -18,7 +17,6 @@ const UserTag = (props: { user_id: number, username: string, mobileView?: boolea
         </HStack>
       </Button>
     </a>
-    </Tooltip>
   );
 }
 export default UserTag

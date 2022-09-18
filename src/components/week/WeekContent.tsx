@@ -1,4 +1,11 @@
-import { Box, Flex } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  Flex,
+} from "@chakra-ui/react";
 import {
   useAllTeamsQuery,
   useFindLeagueMembersQuery,
@@ -99,6 +106,13 @@ export const WeekContent: React.FC = () => {
           Week {week}, {season}
         </Typography.H1>
       </Flex>
+      <Alert status="info">
+        <AlertIcon />
+        <AlertTitle>New feature!</AlertTitle>
+        <AlertDescription>
+          Click on a team to simulate the winner.
+        </AlertDescription>
+      </Alert>
       <WeekPicksGameCards
         picksData={picksData}
         teams={teams}

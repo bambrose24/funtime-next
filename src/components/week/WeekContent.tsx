@@ -5,12 +5,18 @@ import {
   usePicksByWeekQuery,
 } from "@src/generated/graphql";
 import { env, LEAGUE_ID } from "@src/util/config";
+import { useState } from "react";
+import { number } from "yup";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
 import { Typography } from "../Typography";
 import { WeekPicksGameCards } from "./WeekPicksGameCards";
 import { WeekPicksTable } from "./WeekPicksTable";
 
 export const WeekContent: React.FC = () => {
+  const [simulatedPicks, setSimulatedPicks] = useState<Record<number, number>>(
+    {}
+  );
+
   const {
     data: picksData,
     loading: picksLoading,
@@ -56,6 +62,23 @@ export const WeekContent: React.FC = () => {
     );
   }
 
+  const pickTeam = (t: number) => {
+    const g = picksData.picksByWeek.games.find(
+      (g) => g.home === t || g.away === t
+    );
+    if (g) {
+      if (g.gid in simulatedPicks && simulatedPicks[g.gid] === t) {
+        setSimulatedPicks((curr) => {
+          const copy = { ...curr };
+          delete copy[g.gid];
+          return copy;
+        });
+      } else {
+        setSimulatedPicks({ ...simulatedPicks, [g.gid]: t });
+      }
+    }
+  };
+
   const { week, season } = picksData.picksByWeek;
 
   if (!picksData.picksByWeek.canView) {
@@ -76,8 +99,18 @@ export const WeekContent: React.FC = () => {
           Week {week}, {season}
         </Typography.H1>
       </Flex>
-      <WeekPicksGameCards picksData={picksData} teams={teams} />
-      <WeekPicksTable teams={teams} people={people} picksData={picksData} />
+      <WeekPicksGameCards
+        picksData={picksData}
+        teams={teams}
+        pickTeam={pickTeam}
+        simulatedPicks={simulatedPicks}
+      />
+      <WeekPicksTable
+        teams={teams}
+        people={people}
+        picksData={picksData}
+        simulatedPicks={simulatedPicks}
+      />
     </>
   );
 };

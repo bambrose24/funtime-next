@@ -22,12 +22,14 @@ type WeekPicksTableProps = {
   teams: AllTeamsQuery;
   people: FindLeagueMembersQuery;
   picksData: PicksByWeekQuery;
+  simulatedPicks: Record<number, number>;
 };
 
 export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
   teams,
   people,
   picksData,
+  simulatedPicks,
 }) => {
   const teamIdToTeam = teams.teams.reduce((prev, curr) => {
     prev[curr.teamid] = curr;
@@ -44,7 +46,15 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
     if (!(member_id in prev)) {
       prev[member_id] = [];
     }
-    prev[member_id].push(curr);
+    if (curr.gid in simulatedPicks) {
+      const alteredPick = {
+        ...curr,
+        correct: curr.winner === simulatedPicks[curr.gid] ? 1 : 0,
+      };
+      prev[member_id].push(alteredPick);
+    } else {
+      prev[member_id].push(curr);
+    }
     return prev;
   }, {} as Record<number, PicksByWeekQuery["picksByWeek"]["picks"]>);
 
@@ -112,6 +122,7 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
           memberIdToCorrect={memberIdToCorrect}
           gameIdToGame={gameIdToGame}
           teamIdToTeam={teamIdToTeam}
+          simulatedPicks={simulatedPicks}
         />
       </Box>
     </Flex>
@@ -132,6 +143,7 @@ type PicksTableProps = {
     PicksByWeekQuery["picksByWeek"]["games"][number]
   >;
   teamIdToTeam: Record<number, AllTeamsQuery["teams"][number]>;
+  simulatedPicks: Record<number, number>;
 };
 
 const PicksTable: React.FC<PicksTableProps> = ({
@@ -142,6 +154,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
   rankedMemberIds,
   gameIdToGame,
   teamIdToTeam,
+  simulatedPicks,
 }) => {
   const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
   const pickSort = (a: { gid: number }, b: { gid: number }) => {
@@ -191,7 +204,9 @@ const PicksTable: React.FC<PicksTableProps> = ({
             const memberPicks = memberIdToPicks[memberId];
             memberPicks.sort(pickSort);
 
-            const scoreTotal = memberPicks.find(p => p.score && p.score > 0)?.score
+            const scoreTotal = memberPicks.find(
+              (p) => p.score && p.score > 0
+            )?.score;
 
             const member = memberIdToMember[memberId!];
             return (
@@ -214,7 +229,9 @@ const PicksTable: React.FC<PicksTableProps> = ({
                       user_id={member.people.uid}
                       username={member.people.username}
                     />
-                    <strong>{memberIdToCorrect[memberId.toString()]} ({scoreTotal})</strong>
+                    <strong>
+                      {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
+                    </strong>
                   </Flex>
                 </Td>
                 {memberPicks.map((pick) => {
@@ -222,11 +239,12 @@ const PicksTable: React.FC<PicksTableProps> = ({
                   const winnerTeam = teamIdToTeam[winner!];
                   const game = gameIdToGame[pick.gid];
 
-                  const bg = !game.done
-                    ? undefined
-                    : correct
-                    ? "pickCorrect"
-                    : "pickWrong";
+                  const bg =
+                    !game.done && !simulatedPicks[game.gid]
+                      ? undefined
+                      : correct
+                      ? "pickCorrect"
+                      : "pickWrong";
 
                   return (
                     <Td

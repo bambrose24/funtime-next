@@ -1,4 +1,4 @@
-import { Box, Flex, HStack, VStack } from "@chakra-ui/react";
+import { Box, Flex, HStack, Theme, VStack } from "@chakra-ui/react";
 import {
   AllTeamsQuery,
   MsfGamePlayedStatus,
@@ -11,11 +11,18 @@ import { Typography } from "../Typography";
 type Props = {
   picksData: PicksByWeekQuery;
   teams: AllTeamsQuery;
+  pickTeam: (t: number) => void;
+  simulatedPicks: Record<number, number>;
 };
 
 type TeamIDMapping = Record<number, AllTeamsQuery["teams"][number]>;
 
-export const WeekPicksGameCards: React.FC<Props> = ({ picksData, teams }) => {
+export const WeekPicksGameCards: React.FC<Props> = ({
+  picksData,
+  teams,
+  pickTeam,
+  simulatedPicks,
+}) => {
   const { games } = picksData.picksByWeek;
 
   const teamIdMapping = teams.teams.reduce((prev, curr) => {
@@ -27,17 +34,28 @@ export const WeekPicksGameCards: React.FC<Props> = ({ picksData, teams }) => {
     <Flex justify="center">
       <HStack spacing="12px" m="12px" overflow="auto" paddingBottom="20px">
         {games.map((g) => {
-          return <GameCard g={g} teams={teamIdMapping} />;
+          return (
+            <GameCard
+              g={g}
+              teams={teamIdMapping}
+              pickTeam={pickTeam}
+              simulatedPicks={simulatedPicks}
+            />
+          );
         })}
       </HStack>
     </Flex>
   );
 };
 
+type Game = PicksByWeekQuery["picksByWeek"]["games"][number];
+
 export const GameCard: React.FC<{
-  g: PicksByWeekQuery["picksByWeek"]["games"][number];
+  g: Game;
   teams: TeamIDMapping;
-}> = ({ g, teams }) => {
+  pickTeam: (t: number) => void;
+  simulatedPicks: Record<number, number>;
+}> = ({ g, teams, pickTeam, simulatedPicks }) => {
   const awayTeam = teams[g.away];
   const homeTeam = teams[g.home];
 
@@ -46,45 +64,99 @@ export const GameCard: React.FC<{
     ...g,
   };
 
-  const awayColor = !game.done
-    ? undefined
-    : !game.winner
-    ? "yellow.400"
-    : game.winner === game.away
-    ? "pickCorrect"
-    : "pickWrong";
+  const getColors = (
+    game: Game,
+    team: number,
+    simulatedWinner: number | undefined
+  ): [string | undefined, string | undefined] => {
+    if (simulatedWinner) {
+      if (simulatedWinner === team) {
+        return [undefined, "green.300"];
+      } else {
+        return [undefined, "red.300"];
+      }
+    }
+    if (game.winner === team) {
+      return ["pickCorrect", undefined];
+    }
+    if (game.done && !game.winner) {
+      return ["yellow.400", undefined];
+    }
+    if (game.done) {
+      return ["pickWrong", undefined];
+    }
+    return [undefined, undefined];
+  };
 
-  const homeColor = !game.done
-    ? undefined
-    : !game.winner
-    ? "yellow.400"
-    : game.winner === game.home
-    ? "pickCorrect"
-    : "pickWrong";
+  const [awayColor, awayBgColor] = getColors(
+    game,
+    game.away,
+    simulatedPicks[game.gid]
+  );
+
+  const [homeColor, homeBgColor] = getColors(
+    game,
+    game.home,
+    simulatedPicks[game.gid]
+  );
+
+  // const awayColor = !game.done
+  //   ? undefined
+  //   : !game.winner
+  //   ? "yellow.400"
+  //   : game.winner === game.away
+  //   ? "pickCorrect"
+  //   : "pickWrong";
+
+  // const homeColor = !game.done
+  //   ? undefined
+  //   : !game.winner
+  //   ? "yellow.400"
+  //   : game.winner === game.home
+  //   ? "pickCorrect"
+  //   : "pickWrong";
   return (
     <Box p="12px" bg="white" minWidth="130px" height="150px">
       <VStack>
         <Flex justify="space-between" w="100%">
           <HStack>
             <TeamLogo abbrev={awayTeam.abbrev!} height="25px" width="25px" />
-            <Typography.Body1 fontWeight="500" color={awayColor}>
-              {awayTeam.abbrev}
-            </Typography.Body1>
+            <Box
+              p="4px"
+              borderRadius="4px"
+              bg={awayBgColor}
+              _hover={{
+                cursor: "pointer",
+                bg: awayBgColor ? undefined : "gray.200",
+              }}
+              onClick={() => pickTeam(awayTeam.teamid)}
+            >
+              <Typography.Body1 fontWeight="500" color={awayColor}>
+                {awayTeam.abbrev}
+              </Typography.Body1>
+            </Box>
           </HStack>
-          <Typography.Body1 fontWeight="500" color={awayColor}>
-            {game.awayscore}
-          </Typography.Body1>
+          <Typography.Body1 fontWeight="500">{game.awayscore}</Typography.Body1>
         </Flex>
         <Flex justify="space-between" w="100%">
           <HStack>
             <TeamLogo abbrev={homeTeam.abbrev!} height="25px" width="25px" />
-            <Typography.Body1 fontWeight="500" color={homeColor}>
-              {homeTeam.abbrev}
-            </Typography.Body1>
+            <Box
+              p="4px"
+              borderRadius="4px"
+              bg={homeBgColor}
+              _hover={{
+                cursor: "pointer",
+                bg: homeBgColor ? undefined : "gray.200",
+              }}
+              onClick={() => pickTeam(homeTeam.teamid)}
+            >
+              <Typography.Body1 fontWeight="500" color={homeColor}>
+                {homeTeam.abbrev}
+              </Typography.Body1>
+            </Box>
           </HStack>
-          <Typography.Body1 fontWeight="500" color={homeColor}>
-            {game.homescore}
-          </Typography.Body1>
+          <Typography.Body1 fontWeight="500">{game.homescore}</Typography.Body1>
         </Flex>
         <Flex justify="start" w="100%">
           <GameLiveState game={game} />

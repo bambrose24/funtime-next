@@ -446,7 +446,8 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                             justify="center"
                           >
                             <Typography.Subtitle2>
-                              {game.awayrecord}
+                              {/* {game.awayrecord} */}
+                              {""}
                             </Typography.Subtitle2>
                           </Flex>
                         </GridItem>
@@ -462,7 +463,8 @@ export const PicksForm: React.FC<PicksFormProps> = ({
                             justify="center"
                           >
                             <Typography.Subtitle2>
-                              {game.homerecord}
+                              {/* {game.homerecord} */}
+                              {""}
                             </Typography.Subtitle2>
                           </Flex>
                         </GridItem>

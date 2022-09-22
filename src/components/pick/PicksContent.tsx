@@ -44,6 +44,10 @@ export const PicksContent: React.FC = () => {
     .sortBy("ts")
     .value();
 
+  const peopleSorted = _([...people.leagueMembers])
+    .orderBy((x) => x.people.username.toUpperCase())
+    .value();
+
   return (
     <Flex justify="center">
       <Box maxWidth="min(100%, 800px)" bgColor="white" p={4}>
@@ -56,7 +60,7 @@ export const PicksContent: React.FC = () => {
               week={week}
               season={season}
               games={gamesSorted}
-              users={people.leagueMembers}
+              users={peopleSorted}
             />
           </Flex>
         </Box>

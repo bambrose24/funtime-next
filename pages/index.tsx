@@ -42,8 +42,8 @@ const Home: NextPage = () => {
                   </ul>
                 </Box>
                 Each of these share the same principles of having the best
-                pick(s) for the category. Registration for a season opts you into
-                each of these games for the duration of an NFL season.
+                pick(s) for the category. Registration for a season opts you
+                into each of these games for the duration of an NFL season.
                 <Divider my={4} />
                 <Typography.H4 align="center" variant="h6">
                   <b>Weekly Picks</b>
@@ -75,7 +75,7 @@ const Home: NextPage = () => {
                 </Typography.H4>
                 This competition runs the duration of the season. It is similar
                 to Weekly Picks in that you aim to have the highest total
-                correct picks. The top 5 players will be winners. There is no
+                correct picks. The top 3 players will be winners. There is no
                 tiebreaker for point differences over the course of the season.
                 <Divider my={4} />
                 <Typography.H4 align="center" variant="h6">

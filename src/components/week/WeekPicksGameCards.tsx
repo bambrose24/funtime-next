@@ -122,7 +122,7 @@ export const GameCard: React.FC<{
   return (
     <Box p="12px" bg="white" minWidth="130px" height="150px">
       <VStack>
-        <Flex justify="space-between" w="100%">
+        <Flex justify="space-between" w="100%" h="100%" align="center">
           <HStack>
             <TeamLogo abbrev={awayTeam.abbrev!} height="25px" width="25px" />
             <Box
@@ -142,7 +142,7 @@ export const GameCard: React.FC<{
           </HStack>
           <Typography.Body1 fontWeight="500">{game.awayscore}</Typography.Body1>
         </Flex>
-        <Flex justify="space-between" w="100%">
+        <Flex justify="space-between" w="100%" h="100%" align="center">
           <HStack>
             <TeamLogo abbrev={homeTeam.abbrev!} height="25px" width="25px" />
             <Box

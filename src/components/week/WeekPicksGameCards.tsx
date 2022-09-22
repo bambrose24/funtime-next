@@ -4,6 +4,7 @@ import {
   MsfGamePlayedStatus,
   PicksByWeekQuery,
 } from "@src/generated/graphql";
+import _ from "lodash";
 import moment from "moment-timezone";
 import { TeamLogo } from "../shared/TeamLogo";
 import { Typography } from "../Typography";
@@ -23,7 +24,10 @@ export const WeekPicksGameCards: React.FC<Props> = ({
   pickTeam,
   simulatedPicks,
 }) => {
-  const { games } = picksData.picksByWeek;
+  const gamesSorted = _(picksData.picksByWeek.games)
+    .sortBy("ts")
+    .sortBy("gid")
+    .value();
 
   const teamIdMapping = teams.teams.reduce((prev, curr) => {
     prev[curr.teamid] = curr;
@@ -33,7 +37,7 @@ export const WeekPicksGameCards: React.FC<Props> = ({
   return (
     <Flex justify="center">
       <HStack spacing="12px" m="12px" overflow="auto" paddingBottom="20px">
-        {games.map((g) => {
+        {gamesSorted.map((g) => {
           return (
             <GameCard
               g={g}

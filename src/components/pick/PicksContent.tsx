@@ -1,4 +1,5 @@
 import { Box, Flex, Spinner } from "@chakra-ui/react";
+import { GamesSharp } from "@mui/icons-material";
 import { PicksForm } from "@src/components/pick/PicksForm";
 import { Typography } from "@src/components/Typography";
 import {
@@ -6,6 +7,8 @@ import {
   useFirstNotStartedWeekQuery,
 } from "@src/generated/graphql";
 import { LEAGUE_ID, SEASON } from "@src/util/config";
+import _ from "lodash";
+import moment from "moment";
 import { FuntimeError } from "../shared/FuntimeError";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
 
@@ -35,6 +38,12 @@ export const PicksContent: React.FC = () => {
   }
   const week = games.firstNotStartedWeek.games[0].week;
   const season = games.firstNotStartedWeek.games[0].season;
+
+  const gamesSorted = _([...games.firstNotStartedWeek.games])
+    .sortBy("gid")
+    .sortBy("ts")
+    .value();
+
   return (
     <Flex justify="center">
       <Box maxWidth="min(100%, 800px)" bgColor="white" p={4}>
@@ -46,7 +55,7 @@ export const PicksContent: React.FC = () => {
             <PicksForm
               week={week}
               season={season}
-              games={games.firstNotStartedWeek.games}
+              games={gamesSorted}
               users={people.leagueMembers}
             />
           </Flex>

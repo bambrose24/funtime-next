@@ -6,6 +6,9 @@ import FuntimePage from "@src/FuntimePage";
 const SeasonPage: React.FC = () => {
   return (
     <FuntimePage>
+      <Flex justify="center">
+        <Typography.H1 my={3}> Leaderboard </Typography.H1>
+      </Flex>
       <Flex justify="center" overflowX="hidden" overflowY="hidden">
         <Box
           bg="white"
@@ -15,7 +18,6 @@ const SeasonPage: React.FC = () => {
           minWidth="300px"
           w={[500, 500, 600]}
         >
-          <Typography.H3 pl={5}> Leaderboard </Typography.H3>
           <LeagueMembersTable />
         </Box>
       </Flex>

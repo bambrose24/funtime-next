@@ -111,7 +111,6 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
         bg="white"
         borderRadius="10px"
         minWidth="300px"
-        w={[500, 600, 1000, 1800]}
         paddingBottom="5px"
         overflow="auto"
       >

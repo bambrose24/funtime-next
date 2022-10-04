@@ -100,7 +100,7 @@ export const WeekContent: React.FC = () => {
   }
 
   return (
-    <>
+    <Box mx="12px">
       <Flex justify="center" w="100%">
         <Typography.H1 mt={2} mb={4}>
           Week {week}, {season}
@@ -135,7 +135,7 @@ export const WeekContent: React.FC = () => {
         picksData={picksData}
         simulatedPicks={simulatedPicks}
       />
-    </>
+    </Box>
   );
 };
 

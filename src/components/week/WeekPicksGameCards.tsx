@@ -36,7 +36,7 @@ export const WeekPicksGameCards: React.FC<Props> = ({
 
   return (
     <Flex justify="center">
-      <HStack spacing="12px" m="12px" overflow="auto" paddingBottom="20px">
+      <HStack spacing="12px" my="12px" overflow="auto" paddingBottom="20px">
         {gamesSorted.map((g) => {
           return (
             <GameCard

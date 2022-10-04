@@ -24,7 +24,7 @@ export const navOptions: Array<Page> = [
   { name: "weekly_picks", display: "Weekly Picks", href: "/week" },
   { name: "season", display: "Season Standings", href: "/season" },
   // { name: "profile", display: "Profile", href: "/profile/263", },
-  { name: "league", display: "League", href: "/league", },
+  // { name: "league", display: "League", href: "/league", },
 ];
 
 export const useSelectedNavOption = (): PageName | undefined => {

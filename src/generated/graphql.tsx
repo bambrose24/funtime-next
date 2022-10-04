@@ -5045,6 +5045,13 @@ export type UserWhereUniqueInput = {
   uid?: InputMaybe<Scalars['Int']>;
 };
 
+export type CorrectPicksByLeagueQueryVariables = Exact<{
+  league_id: Scalars['Int'];
+}>;
+
+
+export type CorrectPicksByLeagueQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', membership_id: number, picks: Array<{ __typename?: 'Pick', correct?: number | null }> }> };
+
 export type FirstNotStartedWeekQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -5107,6 +5114,44 @@ export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 export type AllTeamsQuery = { __typename?: 'Query', teams: Array<{ __typename?: 'Team', teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
 
 
+export const CorrectPicksByLeagueDocument = gql`
+    query CorrectPicksByLeague($league_id: Int!) {
+  leagueMembers(where: {league_id: {equals: $league_id}}) {
+    membership_id
+    picks {
+      correct
+    }
+  }
+}
+    `;
+
+/**
+ * __useCorrectPicksByLeagueQuery__
+ *
+ * To run a query within a React component, call `useCorrectPicksByLeagueQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCorrectPicksByLeagueQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCorrectPicksByLeagueQuery({
+ *   variables: {
+ *      league_id: // value for 'league_id'
+ *   },
+ * });
+ */
+export function useCorrectPicksByLeagueQuery(baseOptions: Apollo.QueryHookOptions<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>(CorrectPicksByLeagueDocument, options);
+      }
+export function useCorrectPicksByLeagueLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>(CorrectPicksByLeagueDocument, options);
+        }
+export type CorrectPicksByLeagueQueryHookResult = ReturnType<typeof useCorrectPicksByLeagueQuery>;
+export type CorrectPicksByLeagueLazyQueryHookResult = ReturnType<typeof useCorrectPicksByLeagueLazyQuery>;
+export type CorrectPicksByLeagueQueryResult = Apollo.QueryResult<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>;
 export const FirstNotStartedWeekDocument = gql`
     query FirstNotStartedWeek {
   firstNotStartedWeek {

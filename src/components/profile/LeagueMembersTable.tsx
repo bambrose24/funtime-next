@@ -1,7 +1,12 @@
 import React from "react";
 import { Box, Flex, Spinner } from "@chakra-ui/react";
 import { Typography } from "../Typography";
-import { useFindLeagueMembersQuery } from "../../generated/graphql";
+import {
+  CorrectPicksByLeagueQuery,
+  FindLeagueMembersQuery,
+  useCorrectPicksByLeagueQuery,
+  useFindLeagueMembersQuery,
+} from "../../generated/graphql";
 import { LEAGUE_ID } from "../../util/config";
 import {
   Table,
@@ -16,6 +21,8 @@ import {
   Center,
 } from "@chakra-ui/react";
 import UserTag from "./UserTag";
+import { number } from "yup";
+import _ from "lodash";
 
 export const LeagueMembersTable = () => {
   const {
@@ -24,7 +31,13 @@ export const LeagueMembersTable = () => {
     error: usersError,
   } = useFindLeagueMembersQuery({ variables: { league_id: LEAGUE_ID } });
 
-  if (usersLoading) {
+  const {
+    data: correctPicksData,
+    loading: correctPicksLoading,
+    error: correctPicksError,
+  } = useCorrectPicksByLeagueQuery({ variables: { league_id: LEAGUE_ID } });
+
+  if (usersLoading || correctPicksLoading) {
     return (
       <Flex justify="center" m={8}>
         <Spinner />
@@ -32,7 +45,7 @@ export const LeagueMembersTable = () => {
     );
   }
 
-  if (!usersData) {
+  if (!usersData || !correctPicksData) {
     return (
       <Box w="100%">
         <Typography.H2>
@@ -41,6 +54,11 @@ export const LeagueMembersTable = () => {
       </Box>
     );
   }
+
+  // sorted list of members based on correct pick count
+  // 1. make list of members & correct pick count
+  // 2. then sort it
+  const sortedMembers = sortedRanks(usersData, correctPicksData);
 
   return (
     <TableContainer overflowY="auto" overflowX="auto">
@@ -58,41 +76,87 @@ export const LeagueMembersTable = () => {
               <br />
               Picks
             </Th>
-            <Th pl={0} color="gray" cursor="default">
-              Week <br />
-              Wins
-            </Th>
           </Tr>
         </Thead>
         <Tbody>
-          {usersData.leagueMembers.map(({ people: { uid, username } }) => {
-            return (
-              <>
-                <Tr
-                  key={uid}
-                  transition={"all .3s ease"}
-                  _hover={{ bgColor: "gray.50" }}
-                >
-                  <Td pl={6} pr={0} py={0}>
-                    <Stat color="green">
-                      1 <StatArrow type="increase" pb={1} />
-                    </Stat>
-                  </Td>
-                  <Td pr={2} pl={4} py={2}>
-                    <UserTag user_id={uid} username={username}></UserTag>
-                  </Td>
-                  <Td pl={0} py={0} color="gray" cursor="default">
-                    0
-                  </Td>
-                  <Td pl={0} py={0} color="gray" cursor="default">
-                    0
-                  </Td>
-                </Tr>
-              </>
-            );
-          })}
+          {sortedMembers.map(
+            ({
+              member: {
+                people: { uid, username },
+                membership_id,
+              },
+              num_correct,
+              rank,
+            }) => {
+              const picks = correctPicksData.leagueMembers.find(
+                (m) => m.membership_id === membership_id
+              );
+              return (
+                <>
+                  <Tr
+                    key={uid}
+                    transition={"all .3s ease"}
+                    _hover={{ bgColor: "gray.50" }}
+                  >
+                    <Td pl={6} pr={0} py={0}>
+                      <Stat>{rank}</Stat>
+                    </Td>
+                    <Td pr={2} pl={4} py={2}>
+                      <UserTag user_id={uid} username={username}></UserTag>
+                    </Td>
+                    <Td>{num_correct}</Td>
+                  </Tr>
+                </>
+              );
+            }
+          )}
         </Tbody>
       </Table>
     </TableContainer>
   );
 };
+
+type RankingEntry = {
+  member: FindLeagueMembersQuery["leagueMembers"][0];
+  num_correct: number;
+  rank: number;
+};
+
+function sortedRanks(
+  leagueMembers: FindLeagueMembersQuery,
+  correctPicksData: CorrectPicksByLeagueQuery
+): Array<RankingEntry> {
+  // membership_id to member
+  const memberIdToMember = _.keyBy(
+    leagueMembers.leagueMembers,
+    (m) => m.membership_id
+  );
+
+  const memberWithCorrectPicks = correctPicksData.leagueMembers.map(
+    ({ membership_id, picks }) => {
+      const member = memberIdToMember[membership_id];
+      return {
+        member,
+        num_correct: _.sumBy(picks, (p) => (p.correct === 1 ? 1 : 0)),
+      };
+    }
+  );
+
+  const sortedResult = _(memberWithCorrectPicks)
+    .sortBy((x) => x.member.people.username)
+    .sortBy((x) => -1 * x.num_correct)
+    .value();
+
+  let rankingTracker = 1;
+  let prev = 0;
+  return sortedResult.map((current, i) => {
+    if (i === 0) {
+      prev = current.num_correct;
+    } else if (current.num_correct !== prev) {
+      prev = current.num_correct;
+      rankingTracker = i + 1;
+    }
+    prev = current.num_correct;
+    return { ...current, rank: rankingTracker };
+  });
+}

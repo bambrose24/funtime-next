@@ -106,13 +106,13 @@ export const WeekContent: React.FC = () => {
           Week {week}, {season}
         </Typography.H1>
       </Flex>
-      <Alert status="info">
+      {/* <Alert status="info">
         <AlertIcon />
         <AlertTitle>New feature!</AlertTitle>
         <AlertDescription>
           Click on a team to simulate the winner.
         </AlertDescription>
-      </Alert>
+      </Alert> */}
       <WeekPicksGameCards
         picksData={picksData}
         teams={teams}

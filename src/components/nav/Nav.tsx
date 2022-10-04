@@ -59,27 +59,6 @@ export const DesktopNav: React.FC = () => {
               </Link>
             </HStack>
           </Box>
-          {/* <Stack
-            flex={{ base: 1, md: 0 }}
-            justify={'flex-end'}
-            direction={'row'}
-            spacing={2}
-            marginRight={2}>
-              <IconButton
-                bgColor="primary"
-                color="white"
-                icon={<PersonIcon />}
-                aria-label={"User Profile"}
-                _hover={{bgColor: "blue.500",}}
-              />
-              <IconButton
-                bgColor="primary"
-                color="white"
-                icon={<SettingsIcon />}
-                aria-label={"User Settings"}
-                _hover={{bgColor: "blue.500",}}
-              />
-          </Stack> */}
         </Flex>
       </Section>
       <DesktopNavDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />

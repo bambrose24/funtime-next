@@ -1,0 +1,8 @@
+query CorrectPicksByLeague($league_id: Int!) {
+  leagueMembers(where: { league_id: { equals: $league_id } }) {
+    membership_id
+    picks {
+      correct
+    }
+  }
+}

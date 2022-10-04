@@ -7,7 +7,7 @@ const SeasonPage: React.FC = () => {
   return (
     <FuntimePage>
       <Flex justify="center">
-        <Typography.H1 my={3}> Leaderboard </Typography.H1>
+        <Typography.H1 my={3}>Leaderboard</Typography.H1>
       </Flex>
       <Flex justify="center" overflowX="hidden" overflowY="hidden">
         <Box

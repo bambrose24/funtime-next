@@ -113,12 +113,22 @@ export const WeekContent: React.FC = () => {
           Click on a team to simulate the winner.
         </AlertDescription>
       </Alert> */}
-      <WeekPicksGameCards
-        picksData={picksData}
-        teams={teams}
-        pickTeam={pickTeam}
-        simulatedPicks={simulatedPicks}
-      />
+      <div
+        style={{
+          top: 0,
+          position: "sticky",
+          zIndex: 2,
+          backgroundColor: "#EDF2F7",
+          paddingTop: "16px",
+        }}
+      >
+        <WeekPicksGameCards
+          picksData={picksData}
+          teams={teams}
+          pickTeam={pickTeam}
+          simulatedPicks={simulatedPicks}
+        />
+      </div>
       <WeekPicksTable
         teams={teams}
         people={people}

@@ -1,23 +1,32 @@
-import { Box, Flex, Spinner } from "@chakra-ui/react";
-import { GamesSharp } from "@mui/icons-material";
+import { Box, Flex } from "@chakra-ui/react";
 import { PicksForm } from "@src/components/pick/PicksForm";
 import { Typography } from "@src/components/Typography";
 import {
   useFindLeagueMembersQuery,
   useFirstNotStartedWeekQuery,
 } from "@src/generated/graphql";
-import { LEAGUE_ID, SEASON } from "@src/util/config";
+import { LEAGUE_ID } from "@src/util/config";
 import _ from "lodash";
-import moment from "moment";
+import { useRouter } from "next/router";
 import { FuntimeError } from "../shared/FuntimeError";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
 
 export const PicksContent: React.FC = () => {
+  const router = useRouter();
+  const weekParam = router.query["week"];
+  const overrideParam = router.query["override"];
   const {
     data: games,
     loading: gamesLoading,
     error: gamesError,
-  } = useFirstNotStartedWeekQuery();
+  } = useFirstNotStartedWeekQuery({
+    variables: {
+      ...(typeof weekParam === "string" ? { week: parseInt(weekParam) } : {}),
+      ...(typeof overrideParam === "string" && overrideParam === "true"
+        ? { override: true }
+        : {}),
+    },
+  });
 
   const {
     data: people,

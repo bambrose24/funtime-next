@@ -3388,6 +3388,12 @@ export type QueryFindFirstUserArgs = {
 };
 
 
+export type QueryFirstNotStartedWeekArgs = {
+  override?: InputMaybe<Scalars['Boolean']>;
+  week?: InputMaybe<Scalars['Int']>;
+};
+
+
 export type QueryGameArgs = {
   where: GameWhereUniqueInput;
 };
@@ -5052,7 +5058,10 @@ export type CorrectPicksByLeagueQueryVariables = Exact<{
 
 export type CorrectPicksByLeagueQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', membership_id: number, picks: Array<{ __typename?: 'Pick', correct?: number | null }> }> };
 
-export type FirstNotStartedWeekQueryVariables = Exact<{ [key: string]: never; }>;
+export type FirstNotStartedWeekQueryVariables = Exact<{
+  override?: InputMaybe<Scalars['Boolean']>;
+  week?: InputMaybe<Scalars['Int']>;
+}>;
 
 
 export type FirstNotStartedWeekQuery = { __typename?: 'Query', firstNotStartedWeek: { __typename?: 'FirstNotStartedWeekResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null } }> } };
@@ -5153,8 +5162,8 @@ export type CorrectPicksByLeagueQueryHookResult = ReturnType<typeof useCorrectPi
 export type CorrectPicksByLeagueLazyQueryHookResult = ReturnType<typeof useCorrectPicksByLeagueLazyQuery>;
 export type CorrectPicksByLeagueQueryResult = Apollo.QueryResult<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>;
 export const FirstNotStartedWeekDocument = gql`
-    query FirstNotStartedWeek {
-  firstNotStartedWeek {
+    query FirstNotStartedWeek($override: Boolean, $week: Int) {
+  firstNotStartedWeek(override: $override, week: $week) {
     week
     season
     games {
@@ -5194,6 +5203,8 @@ export const FirstNotStartedWeekDocument = gql`
  * @example
  * const { data, loading, error } = useFirstNotStartedWeekQuery({
  *   variables: {
+ *      override: // value for 'override'
+ *      week: // value for 'week'
  *   },
  * });
  */

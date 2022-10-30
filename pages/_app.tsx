@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { ReactNode } from "react";
 import { client } from "@src/graphql";
 import MetaTags from "@src/meta/MetaTags";
+import { Analytics } from "@vercel/analytics/react";
 
 import theme from "@src/util/theme";
 
@@ -23,6 +24,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <Providers>
       <MetaTags />
       <Component {...pageProps} />
+      <Analytics />
     </Providers>
   );
 }

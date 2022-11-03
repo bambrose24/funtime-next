@@ -4,6 +4,6 @@ export const TeamLogo: React.FC<{ abbrev: string } & Partial<ImageProps>> = ({
   abbrev,
   ...rest
 }) => {
-  const src = `https://static.nfl.com/static/content/public/static/wildcat/assets/img/logos/teams/${abbrev}.svg`;
+  const src = `https://a.espncdn.com/i/teamlogos/nfl/500/${abbrev}.png`
   return <Image src={src} {...rest} />;
 };

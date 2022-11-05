@@ -5086,7 +5086,7 @@ export type FindLeagueMembersQueryVariables = Exact<{
 }>;
 
 
-export type FindLeagueMembersQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', membership_id: number, people: { __typename?: 'User', uid: number, username: string }, leagues: { __typename?: 'League', name: string } }> };
+export type FindLeagueMembersQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', membership_id: number, people: { __typename?: 'User', uid: number, username: string, email: string }, leagues: { __typename?: 'League', name: string } }> };
 
 export type MakePicksMutationVariables = Exact<{
   picks: Array<GamePick> | GamePick;
@@ -5332,6 +5332,7 @@ export const FindLeagueMembersDocument = gql`
     people {
       uid
       username
+      email
     }
     leagues {
       name

@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Drawer,
   DrawerContent,
   DrawerHeader,
@@ -8,32 +9,23 @@ import {
   HStack,
   IconButton,
   Image,
-  Stack,
 } from "@chakra-ui/react";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import PersonIcon from "@mui/icons-material/Person";
-import SettingsIcon from "@mui/icons-material/Settings";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { useScreenSize } from "../../util/responsive";
 import Section from "../Section";
 import { Typography } from "../Typography";
 import { navOptions, useSelectedNavOption } from "./types";
 import Link from "next/link";
-
-export const MobileNav: React.FC = () => {
-  // const screenSize = useScreenSize();
-  // if (screenSize !== "mobile") {
-  //   return null;
-  // }
-
-  return <DesktopNav />;
-};
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const supabase = useSupabaseClient();
+  const session = useSession();
+  const router = useRouter();
   return (
     <>
       <Section bgColor="primary">
@@ -59,6 +51,21 @@ export const DesktopNav: React.FC = () => {
               </Link>
             </HStack>
           </Box>
+          <Flex align="center">
+            <Button
+              bg="white"
+              onClick={async () => {
+                if (session) {
+                  await supabase.auth.signOut();
+                }
+                router.push("/login");
+              }}
+            >
+              <Typography.Body1>
+                {session ? "Log Out" : "Log In"}
+              </Typography.Body1>
+            </Button>
+          </Flex>
         </Flex>
       </Section>
       <DesktopNavDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />
@@ -163,6 +170,5 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
 };
 
 export const Nav: React.FC = () => {
-  const screenSize = useScreenSize();
-  return screenSize === "desktop" ? <DesktopNav /> : <MobileNav />;
+  return <DesktopNav />;
 };

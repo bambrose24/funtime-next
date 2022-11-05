@@ -1,12 +1,17 @@
 import { ApolloProvider } from "@apollo/client";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { client } from "@src/graphql";
 import MetaTags from "@src/meta/MetaTags";
 import { Analytics } from "@vercel/analytics/react";
 
 import theme from "@src/util/theme";
+import {
+  createBrowserSupabaseClient,
+  Session,
+} from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider } from "@supabase/auth-helpers-react";
 
 const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -19,13 +24,23 @@ const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
   );
 };
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({
+  Component,
+  pageProps,
+}: AppProps<{ initialSession: Session }>) {
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
+
   return (
-    <Providers>
-      <MetaTags />
-      <Component {...pageProps} />
-      <Analytics />
-    </Providers>
+    <SessionContextProvider
+      supabaseClient={supabaseClient}
+      initialSession={pageProps.initialSession}
+    >
+      <Providers>
+        <MetaTags />
+        <Component {...pageProps} />
+        <Analytics />
+      </Providers>
+    </SessionContextProvider>
   );
 }
 

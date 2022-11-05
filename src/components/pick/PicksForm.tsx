@@ -206,7 +206,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
       </Modal>
       <Formik
         initialValues={{
-          user1: maybeLoggedInUser?.membership_id?.toString() || "",
+          user1: maybeLoggedInUser?.membership_id?.toString() || "", // test
           user2: maybeLoggedInUser?.membership_id?.toString() || "",
           games: games.map((g): GameEntry => {
             return {

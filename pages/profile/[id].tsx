@@ -9,7 +9,6 @@ import { LEAGUE_ID } from "../../src/util/config";
 import {
   Box,
   Flex,
-  Button,
   Center,
   Spinner,
   Stat,
@@ -28,7 +27,7 @@ export default function Profile() {
     typeof router.query.id === "string" ? parseInt(router.query.id) : undefined
   );
 
-  //update user ID once we have access to the router query
+  // update user ID once we have access to the router query
   useEffect(() => {
     if (router.isReady && router.query.id) {
       setUserId(

@@ -4,8 +4,8 @@ const themeConfig: ThemeConfig = {
   initialColorMode: "light",
   useSystemColorMode: false,
 };
-const theme = extendTheme({
-  config: themeConfig,
+
+export const themeVars = {
   colors: {
     primary: "#2B6CB0",
     error: "#C53030",
@@ -35,6 +35,11 @@ const theme = extendTheme({
       },
     },
   },
+};
+
+const theme = extendTheme({
+  config: themeConfig,
+  ...themeVars,
 });
 
 export default theme;

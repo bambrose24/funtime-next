@@ -17,12 +17,13 @@ const LoginPage = () => {
         <Box w={{ base: "80vw", md: "400px" }}>
           <Typography.H1>Login (EXPERIMENTAL)</Typography.H1>
           <Typography.Body1 mt="20px">
-            We are building out login. This feature will be required next year
-            but is in testing for now.
+            Soon, you will be able to log in to Funtime for more interesting
+            features. For now, you don't get any features for registering, but
+            there will be some interesting ones soon
           </Typography.Body1>
           <Typography.Body1 mt="20px">
-            Use the flow to create an account now. Please use your email that we
-            have on file.
+            Use the flow to create an account now if you want. Please use your
+            email that we have on file.
           </Typography.Body1>
           <Divider my="20px" />
           <Auth

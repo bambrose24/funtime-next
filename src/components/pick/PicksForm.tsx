@@ -29,7 +29,7 @@ import { Typography } from "../Typography";
 import { TeamLogo } from "../shared/TeamLogo";
 import moment from "moment-timezone";
 import { useState } from "react";
-import { useUser } from "@supabase/auth-helpers-react";
+import { useSession, useUser } from "@supabase/auth-helpers-react";
 
 interface PicksFormProps {
   week: number;
@@ -51,6 +51,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({
   users,
 }) => {
   const supabaseUser = useUser();
+  const session = useSession();
   const [submitPicks, { data, error, client }] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);

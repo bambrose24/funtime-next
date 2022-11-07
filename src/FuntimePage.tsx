@@ -1,4 +1,4 @@
-import { Box, Divider, HStack, useColorMode } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { Nav } from "./components/nav/Nav";
 

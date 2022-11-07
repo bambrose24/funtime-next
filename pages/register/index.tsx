@@ -8,7 +8,7 @@ import {
   FindLeagueMembersDocument,
   FindLeagueMembersQuery,
 } from "@src/generated/graphql";
-import { client } from "@src/graphql";
+import client from "@src/graphql";
 
 interface RegisterPageProps {
   previousMembers: FindLeagueMembersQuery;

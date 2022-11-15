@@ -1,0 +1,22 @@
+query SuperbowlPicks($league_id: Int!) {
+  superbowls(
+    where: { leaguemembers: { is: { league_id: { equals: $league_id } } } }
+  ) {
+    uid
+    leaguemembers {
+      membership_id
+      people {
+        username
+      }
+    }
+    score
+    teams_superbowl_winnerToteams {
+      abbrev
+      teamid
+    }
+    teams_superbowl_loserToteams {
+      abbrev
+      teamid
+    }
+  }
+}

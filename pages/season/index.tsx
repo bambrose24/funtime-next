@@ -6,18 +6,22 @@ import FuntimePage from "@src/FuntimePage";
 const SeasonPage: React.FC = () => {
   return (
     <FuntimePage>
-      <Flex justify="center">
-        <Typography.H1 my={3}>Leaderboard</Typography.H1>
-      </Flex>
       <Flex justify="center" overflowX="hidden" overflowY="hidden">
         <Box
           bg="white"
-          px={2}
-          py={2}
+          px="12px"
+          py="12px"
           borderRadius="10px"
           minWidth="300px"
           w={[500, 500, 600]}
         >
+          <Typography.H1 my="12px" align="center">
+            Leaderboard
+          </Typography.H1>
+          <Typography.Body2 my="12px">
+            Note, leaderboard stats are updated in real time. If a game has
+            completed, the standings have updated.
+          </Typography.Body2>
           <LeagueMembersTable />
         </Box>
       </Flex>

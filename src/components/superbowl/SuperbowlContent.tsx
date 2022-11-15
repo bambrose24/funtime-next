@@ -34,7 +34,7 @@ const SuperbowlContent = () => {
   );
   return (
     <Flex w="100%" justify="center">
-      <Box maxW="700px" bg="white" borderRadius="4px">
+      <Box maxW="min(100%, 700px)" bg="white" borderRadius="4px">
         <Typography.H2 mb="16px" align="center">
           Super Bowl Picks
         </Typography.H2>

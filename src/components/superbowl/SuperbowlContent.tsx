@@ -42,12 +42,8 @@ const SuperbowlContent = () => {
           <Table size="md" variant="simple" fontSize={[14, 16]}>
             <Thead>
               <Tr>
-                <Th pl={6} pr={0}>
-                  User
-                </Th>
-                <Th pr={2} pl={6}>
-                  Winner
-                </Th>
+                <Th>User</Th>
+                <Th>Winner</Th>
                 <Th>Loser</Th>
                 <Th>Total Score</Th>
               </Tr>
@@ -61,16 +57,14 @@ const SuperbowlContent = () => {
                       transition={"all .3s ease"}
                       _hover={{ bgColor: "gray.50" }}
                     >
-                      <Td pr={2}>
+                      <Td>
                         <UserTag
                           user_id={pick.uid}
                           username={pick.leaguemembers?.people.username!}
                         />
                       </Td>
-                      <Td pl={6}>
-                        {pick.teams_superbowl_winnerToteams.abbrev}
-                      </Td>
-                      <Td pl={6}>{pick.teams_superbowl_loserToteams.abbrev}</Td>
+                      <Td>{pick.teams_superbowl_winnerToteams.abbrev}</Td>
+                      <Td>{pick.teams_superbowl_loserToteams.abbrev}</Td>
                       <Td>{pick.score}</Td>
                     </Tr>
                   </>

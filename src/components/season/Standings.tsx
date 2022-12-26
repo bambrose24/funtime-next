@@ -72,7 +72,7 @@ export const Standings = () => {
     <Flex direction="column">
       <Box p="12px">
         {gamesLeft > 0 && (
-          <Alert status="error">
+          <Alert status="warning">
             <AlertIcon />
             <AlertTitle>There are {gamesLeft} games left!</AlertTitle>
           </Alert>

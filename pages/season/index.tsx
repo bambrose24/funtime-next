@@ -1,5 +1,5 @@
 import { Box, Flex } from "@chakra-ui/react";
-import { LeagueMembersTable } from "@src/components/profile/LeagueMembersTable";
+import { Standings } from "@src/components/season/Standings";
 import { Typography } from "@src/components/Typography";
 import FuntimePage from "@src/FuntimePage";
 
@@ -22,7 +22,7 @@ const SeasonPage: React.FC = () => {
             Note, leaderboard stats are updated in real time. If a game has
             completed, the standings have updated.
           </Typography.Body2>
-          <LeagueMembersTable />
+          <Standings />
         </Box>
       </Flex>
     </FuntimePage>

@@ -83,7 +83,6 @@ export const Standings = () => {
             <AlertTitle>The season is over!</AlertTitle>
           </Alert>
         )}
-        <Typography.Body1 color="red.400"></Typography.Body1>
       </Box>
       <TableContainer overflowY="auto" overflowX="auto">
         <Table size="md" variant="simple" fontSize={[14, 16]}>

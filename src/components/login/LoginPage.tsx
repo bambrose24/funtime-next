@@ -15,7 +15,7 @@ const LoginPage = () => {
     <FuntimePage>
       <Flex justify="center" w="100%">
         <Box w={{ base: "80vw", md: "400px" }}>
-          <Typography.H1>Login (EXPERIMENTAL)</Typography.H1>
+          <Typography.H1>Login</Typography.H1>
           <Typography.Body1 mt="20px">
             Soon, you will be able to log in to Funtime for more interesting
             features. For now, you don't get any features for registering, but

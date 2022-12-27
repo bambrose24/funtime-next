@@ -1,5 +1,14 @@
-import { Box, Flex } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from "@chakra-ui/react";
 import { Standings } from "@src/components/season/Standings";
+import { WeeklyWinners } from "@src/components/season/WeeklyWinners";
 import { Typography } from "@src/components/Typography";
 import FuntimePage from "@src/FuntimePage";
 
@@ -22,7 +31,20 @@ const SeasonPage: React.FC = () => {
             Note, leaderboard stats are updated in real time. If a game has
             completed, the standings have updated.
           </Typography.Body2>
-          <Standings />
+          <Tabs>
+            <TabList>
+              <Tab>Season</Tab>
+              <Tab>Weekly Winners</Tab>
+            </TabList>
+            <TabPanels>
+              <TabPanel>
+                <Standings />
+              </TabPanel>
+              <TabPanel>
+                <WeeklyWinners />
+              </TabPanel>
+            </TabPanels>
+          </Tabs>
         </Box>
       </Flex>
     </FuntimePage>

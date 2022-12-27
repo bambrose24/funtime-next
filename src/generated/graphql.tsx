@@ -3233,6 +3233,7 @@ export type Query = {
   teams: Array<Team>;
   user?: Maybe<User>;
   users: Array<User>;
+  weekWinners: Array<WeekWinner>;
 };
 
 
@@ -3603,6 +3604,13 @@ export type QueryUsersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type QueryWeekWinnersArgs = {
+  league_id: Scalars['Int'];
+  season?: InputMaybe<Scalars['Int']>;
+  weeks?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export enum QueryMode {
@@ -5333,6 +5341,14 @@ export type UserWhereUniqueInput = {
   uid?: InputMaybe<Scalars['Int']>;
 };
 
+export type WeekWinner = {
+  __typename?: 'WeekWinner';
+  correct: Scalars['Int'];
+  member: Array<LeagueMember>;
+  score_diff: Scalars['Int'];
+  week: Scalars['Int'];
+};
+
 export type CorrectPicksByLeagueQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
@@ -5410,6 +5426,13 @@ export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllTeamsQuery = { __typename?: 'Query', teams: Array<{ __typename?: 'Team', teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
+
+export type WinnersQueryVariables = Exact<{
+  league_id: Scalars['Int'];
+}>;
+
+
+export type WinnersQuery = { __typename?: 'Query', weekWinners: Array<{ __typename?: 'WeekWinner', week: number, correct: number, member: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', uid: number, username: string } }> }> };
 
 
 export const CorrectPicksByLeagueDocument = gql`
@@ -5909,3 +5932,45 @@ export function useAllTeamsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<A
 export type AllTeamsQueryHookResult = ReturnType<typeof useAllTeamsQuery>;
 export type AllTeamsLazyQueryHookResult = ReturnType<typeof useAllTeamsLazyQuery>;
 export type AllTeamsQueryResult = Apollo.QueryResult<AllTeamsQuery, AllTeamsQueryVariables>;
+export const WinnersDocument = gql`
+    query Winners($league_id: Int!) {
+  weekWinners(league_id: $league_id) {
+    week
+    correct
+    member {
+      people {
+        uid
+        username
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWinnersQuery__
+ *
+ * To run a query within a React component, call `useWinnersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWinnersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWinnersQuery({
+ *   variables: {
+ *      league_id: // value for 'league_id'
+ *   },
+ * });
+ */
+export function useWinnersQuery(baseOptions: Apollo.QueryHookOptions<WinnersQuery, WinnersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WinnersQuery, WinnersQueryVariables>(WinnersDocument, options);
+      }
+export function useWinnersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WinnersQuery, WinnersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WinnersQuery, WinnersQueryVariables>(WinnersDocument, options);
+        }
+export type WinnersQueryHookResult = ReturnType<typeof useWinnersQuery>;
+export type WinnersLazyQueryHookResult = ReturnType<typeof useWinnersLazyQuery>;
+export type WinnersQueryResult = Apollo.QueryResult<WinnersQuery, WinnersQueryVariables>;

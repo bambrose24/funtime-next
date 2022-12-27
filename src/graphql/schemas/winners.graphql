@@ -1,0 +1,12 @@
+query Winners($league_id: Int!) {
+  weekWinners(league_id: $league_id) {
+    week
+    correct
+    member {
+      people {
+        uid
+        username
+      }
+    }
+  }
+}

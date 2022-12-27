@@ -10,7 +10,6 @@ import {
   Box,
   Flex,
   Center,
-  Spinner,
   Stat,
   StatArrow,
   Table,
@@ -19,6 +18,7 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import { FuntimeLoading } from "@src/components/shared/FuntimeLoading";
 
 export default function Profile() {
   //Set up for querying the router for the user_id
@@ -54,9 +54,7 @@ export default function Profile() {
   if (userLoading) {
     return (
       <FuntimePage>
-        <Flex justify="center" m={8}>
-          <Spinner />
-        </Flex>
+        <FuntimeLoading />
       </FuntimePage>
     );
   }

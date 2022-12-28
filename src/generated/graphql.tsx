@@ -3383,16 +3383,32 @@ export type Query = {
   aggregateTeam: AggregateTeam;
   aggregateUser: AggregateUser;
   findFirstGame?: Maybe<Game>;
+  findFirstGameOrThrow?: Maybe<Game>;
   findFirstLeague?: Maybe<League>;
   findFirstLeagueMember?: Maybe<LeagueMember>;
+  findFirstLeagueMemberOrThrow?: Maybe<LeagueMember>;
+  findFirstLeagueOrThrow?: Maybe<League>;
   findFirstPick?: Maybe<Pick>;
+  findFirstPickOrThrow?: Maybe<Pick>;
   findFirstSuperbowl?: Maybe<Superbowl>;
+  findFirstSuperbowlOrThrow?: Maybe<Superbowl>;
   findFirstSuperbowlSquare?: Maybe<SuperbowlSquare>;
+  findFirstSuperbowlSquareOrThrow?: Maybe<SuperbowlSquare>;
   findFirstTeam?: Maybe<Team>;
+  findFirstTeamOrThrow?: Maybe<Team>;
   findFirstUser?: Maybe<User>;
+  findFirstUserOrThrow?: Maybe<User>;
   firstNotStartedWeek: FirstNotStartedWeekResponse;
   game?: Maybe<Game>;
   games: Array<Game>;
+  getGame?: Maybe<Game>;
+  getLeague?: Maybe<League>;
+  getLeagueMember?: Maybe<LeagueMember>;
+  getPick?: Maybe<Pick>;
+  getSuperbowl?: Maybe<Superbowl>;
+  getSuperbowlSquare?: Maybe<SuperbowlSquare>;
+  getTeam?: Maybe<Team>;
+  getUser?: Maybe<User>;
   groupByGame: Array<GameGroupBy>;
   groupByLeague: Array<LeagueGroupBy>;
   groupByLeagueMember: Array<LeagueMemberGroupBy>;
@@ -3503,6 +3519,16 @@ export type QueryFindFirstGameArgs = {
 };
 
 
+export type QueryFindFirstGameOrThrowArgs = {
+  cursor?: InputMaybe<GameWhereUniqueInput>;
+  distinct?: InputMaybe<Array<GameScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<GameOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<GameWhereInput>;
+};
+
+
 export type QueryFindFirstLeagueArgs = {
   cursor?: InputMaybe<LeagueWhereUniqueInput>;
   distinct?: InputMaybe<Array<LeagueScalarFieldEnum>>;
@@ -3523,7 +3549,37 @@ export type QueryFindFirstLeagueMemberArgs = {
 };
 
 
+export type QueryFindFirstLeagueMemberOrThrowArgs = {
+  cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<LeagueMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<LeagueMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LeagueMemberWhereInput>;
+};
+
+
+export type QueryFindFirstLeagueOrThrowArgs = {
+  cursor?: InputMaybe<LeagueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<LeagueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<LeagueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LeagueWhereInput>;
+};
+
+
 export type QueryFindFirstPickArgs = {
+  cursor?: InputMaybe<PickWhereUniqueInput>;
+  distinct?: InputMaybe<Array<PickScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<PickOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PickWhereInput>;
+};
+
+
+export type QueryFindFirstPickOrThrowArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
   distinct?: InputMaybe<Array<PickScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<PickOrderByWithRelationInput>>;
@@ -3543,7 +3599,27 @@ export type QueryFindFirstSuperbowlArgs = {
 };
 
 
+export type QueryFindFirstSuperbowlOrThrowArgs = {
+  cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SuperbowlScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SuperbowlOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SuperbowlWhereInput>;
+};
+
+
 export type QueryFindFirstSuperbowlSquareArgs = {
+  cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SuperbowlSquareScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SuperbowlSquareOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SuperbowlSquareWhereInput>;
+};
+
+
+export type QueryFindFirstSuperbowlSquareOrThrowArgs = {
   cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
   distinct?: InputMaybe<Array<SuperbowlSquareScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<SuperbowlSquareOrderByWithRelationInput>>;
@@ -3563,7 +3639,27 @@ export type QueryFindFirstTeamArgs = {
 };
 
 
+export type QueryFindFirstTeamOrThrowArgs = {
+  cursor?: InputMaybe<TeamWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TeamWhereInput>;
+};
+
+
 export type QueryFindFirstUserArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
+  distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<UserOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type QueryFindFirstUserOrThrowArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<UserOrderByWithRelationInput>>;
@@ -3591,6 +3687,46 @@ export type QueryGamesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type QueryGetGameArgs = {
+  where: GameWhereUniqueInput;
+};
+
+
+export type QueryGetLeagueArgs = {
+  where: LeagueWhereUniqueInput;
+};
+
+
+export type QueryGetLeagueMemberArgs = {
+  where: LeagueMemberWhereUniqueInput;
+};
+
+
+export type QueryGetPickArgs = {
+  where: PickWhereUniqueInput;
+};
+
+
+export type QueryGetSuperbowlArgs = {
+  where: SuperbowlWhereUniqueInput;
+};
+
+
+export type QueryGetSuperbowlSquareArgs = {
+  where: SuperbowlSquareWhereUniqueInput;
+};
+
+
+export type QueryGetTeamArgs = {
+  where: TeamWhereUniqueInput;
+};
+
+
+export type QueryGetUserArgs = {
+  where: UserWhereUniqueInput;
 };
 
 

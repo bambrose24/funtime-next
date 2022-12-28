@@ -16,7 +16,6 @@ const UserTag = (props: { user_id: number; username: string }) => {
           border="2px solid"
           borderColor="gray.200"
           px={2}
-          zIndex="20"
           bg="white"
         >
           <HStack>

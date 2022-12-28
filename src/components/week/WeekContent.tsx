@@ -5,15 +5,17 @@ import {
   AlertTitle,
   Box,
   Flex,
+  HStack,
 } from "@chakra-ui/react";
 import {
   useAllTeamsQuery,
   useFindLeagueMembersQuery,
   usePicksByWeekQuery,
+  useWinnersQuery,
 } from "@src/generated/graphql";
 import { env, LEAGUE_ID } from "@src/util/config";
 import { useState } from "react";
-import { number } from "yup";
+import UserTag from "../profile/UserTag";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
 import { Typography } from "../Typography";
 import { WeekPicksGameCards } from "./WeekPicksGameCards";
@@ -48,17 +50,21 @@ export const WeekContent: React.FC = () => {
     },
   });
 
+  const { data: winners, loading: winnersLoading } = useWinnersQuery({
+    variables: { league_id: LEAGUE_ID },
+  });
+
   const {
     data: teams,
     loading: teamsLoading,
     error: teamsError,
   } = useAllTeamsQuery();
 
-  if ((picksLoading && !picksData) || peopleLoading || teamsLoading) {
+  if (picksLoading || peopleLoading || teamsLoading || winnersLoading) {
     return <FuntimeLoading />;
   }
 
-  if (!picksData || !people || !teams) {
+  if (!picksData || !people || !teams || !winners) {
     console.log({ picksError, teamsError, peopleError });
     return (
       <Box w="100%">
@@ -99,6 +105,11 @@ export const WeekContent: React.FC = () => {
     );
   }
 
+  const currentWinners = winners.weekWinners.find(
+    (winners) => winners.week === week
+  );
+  const areMultipleWinners = currentWinners && currentWinners.member.length > 1;
+
   return (
     <Box mx="12px">
       <Flex justify="center" w="100%">
@@ -106,13 +117,6 @@ export const WeekContent: React.FC = () => {
           Week {week}, {season}
         </Typography.H1>
       </Flex>
-      {/* <Alert status="info">
-        <AlertIcon />
-        <AlertTitle>New feature!</AlertTitle>
-        <AlertDescription>
-          Click on a team to simulate the winner.
-        </AlertDescription>
-      </Alert> */}
       <div
         style={{
           top: 0,
@@ -129,6 +133,33 @@ export const WeekContent: React.FC = () => {
           simulatedPicks={simulatedPicks}
         />
       </div>
+      {currentWinners?.member?.length &&
+        currentWinners.member.length > 0 &&
+        Object.keys(simulatedPicks).length === 0 && (
+          <Box p="24px">
+            <Alert status="success">
+              <AlertIcon />
+              <AlertTitle>
+                {areMultipleWinners
+                  ? `Congrats to the week ${week} winners!`
+                  : `Congrats to the week ${week} winner!`}
+              </AlertTitle>
+              <AlertDescription>
+                <HStack>
+                  {currentWinners.member.map((winner) => {
+                    return (
+                      <UserTag
+                        key={winner.people.uid}
+                        user_id={winner.people.uid}
+                        username={winner.people.username}
+                      />
+                    );
+                  })}
+                </HStack>
+              </AlertDescription>
+            </Alert>
+          </Box>
+        )}
       <WeekPicksTable
         teams={teams}
         people={people}

@@ -58,7 +58,7 @@ export const DesktopNav: React.FC = () => {
                 if (session) {
                   await supabase.auth.signOut();
                 }
-                router.push("/login");
+                router.push({ pathname: "/login", query: {} });
               }}
             >
               <Typography.Body1>

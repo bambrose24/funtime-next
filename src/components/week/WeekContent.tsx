@@ -9,6 +9,7 @@ import {
   FormLabel,
   HStack,
   Select,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { WineBarSharp } from "@mui/icons-material";
 import {
@@ -91,6 +92,10 @@ export const WeekContent: React.FC = () => {
     error: teamsError,
   } = useAllTeamsQuery();
 
+  const Header =
+    useBreakpointValue({ base: Typography.H2, lg: Typography.H1 }) ||
+    Typography.H1;
+
   if (
     picksLoading ||
     peopleLoading ||
@@ -153,11 +158,11 @@ export const WeekContent: React.FC = () => {
         availableWeeks.map((week) => (
           <WeekPicksLoader key={week} week={week} />
         ))}
-      <Flex w="100%" justify="center" px="24px">
+      <Flex w="100%" justify="center" px={{ base: "4px", lg: "24px" }}>
         <HStack spacing="24px">
-          <Typography.H1 mt={2} mb={4}>
+          <Header mt={2} mb={4}>
             Week {week}, {season}
-          </Typography.H1>
+          </Header>
           <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
             <FormLabel>Week</FormLabel>
             <Select

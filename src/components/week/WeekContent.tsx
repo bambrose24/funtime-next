@@ -194,7 +194,7 @@ export const WeekContent: React.FC = () => {
       {currentWinners?.member?.length &&
         currentWinners.member.length > 0 &&
         Object.keys(simulatedPicks).length === 0 && (
-          <Box p="24px">
+          <Box px={{ base: "2px", lg: "24px" }} py="16px">
             <Alert status="success">
               <AlertIcon />
               <AlertTitle>

@@ -5,26 +5,45 @@ import {
   AlertTitle,
   Box,
   Flex,
+  FormControl,
+  FormLabel,
   HStack,
+  Select,
 } from "@chakra-ui/react";
+import { WineBarSharp } from "@mui/icons-material";
 import {
   useAllTeamsQuery,
   useFindLeagueMembersQuery,
+  usePicksByWeekLazyQuery,
   usePicksByWeekQuery,
   useWinnersQuery,
 } from "@src/generated/graphql";
+import client from "@src/graphql";
 import { env, LEAGUE_ID } from "@src/util/config";
-import { useState } from "react";
+import _ from "lodash";
+import { useEffect, useState } from "react";
 import UserTag from "../profile/UserTag";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
 import { Typography } from "../Typography";
 import { WeekPicksGameCards } from "./WeekPicksGameCards";
+import { WeekPicksLoader } from "./WeekPicksLoader";
 import { WeekPicksTable } from "./WeekPicksTable";
+
+const fetchedWeeks = new Set<number>();
 
 export const WeekContent: React.FC = () => {
   const [simulatedPicks, setSimulatedPicks] = useState<Record<number, number>>(
     {}
   );
+
+  const [week, setWeek] = useState<number | undefined>(undefined);
+
+  const { data: defaultPicksByWeekData, loading: defaultPicksLoading } =
+    usePicksByWeekQuery({ variables: { league_id: LEAGUE_ID } });
+
+  const { data: winners, loading: winnersLoading } = useWinnersQuery({
+    variables: { league_id: LEAGUE_ID },
+  });
 
   const {
     data: picksData,
@@ -34,11 +53,27 @@ export const WeekContent: React.FC = () => {
     variables: {
       league_id: LEAGUE_ID,
       // this is where you'd set the "week" from a dropdown
-      // week: env === "production" ? undefined : 1
-      override: env === "production" ? undefined : true,
+      ...(week ? { week } : {}),
+      ...(env === "production" ? { override: true } : {}),
     },
     pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
+  useEffect(() => {
+    const weekResponse = picksData?.picksByWeek?.week;
+    if (weekResponse && week !== weekResponse) {
+      setWeek(weekResponse);
+    }
+  }, [picksData, week, setWeek]);
+
+  const availableWeeksSet = new Set(
+    [
+      ...(winners?.weekWinners || []).map((w) => w.week),
+      defaultPicksByWeekData?.picksByWeek.week || undefined,
+    ]
+      .filter(Boolean)
+      .map((x) => parseInt((x as number)?.toString()))
+  );
+  const availableWeeks = _.sortBy([...availableWeeksSet]) as number[];
 
   const {
     data: people,
@@ -50,21 +85,23 @@ export const WeekContent: React.FC = () => {
     },
   });
 
-  const { data: winners, loading: winnersLoading } = useWinnersQuery({
-    variables: { league_id: LEAGUE_ID },
-  });
-
   const {
     data: teams,
     loading: teamsLoading,
     error: teamsError,
   } = useAllTeamsQuery();
 
-  if (picksLoading || peopleLoading || teamsLoading || winnersLoading) {
+  if (
+    picksLoading ||
+    peopleLoading ||
+    teamsLoading ||
+    winnersLoading ||
+    defaultPicksLoading
+  ) {
     return <FuntimeLoading />;
   }
 
-  if (!picksData || !people || !teams || !winners) {
+  if (!picksData || !people || !teams || !winners || !defaultPicksByWeekData) {
     console.log({ picksError, teamsError, peopleError });
     return (
       <Box w="100%">
@@ -92,7 +129,7 @@ export const WeekContent: React.FC = () => {
     }
   };
 
-  const { week, season } = picksData.picksByWeek;
+  const { week: weekResponse, season } = picksData.picksByWeek;
 
   if (!picksData.picksByWeek.canView) {
     return (
@@ -112,10 +149,34 @@ export const WeekContent: React.FC = () => {
 
   return (
     <Box mx="12px">
-      <Flex justify="center" w="100%">
+      <Flex w="100%" justify="space-between" px="24px">
+        {availableWeeks &&
+          availableWeeks.map((week) => (
+            <WeekPicksLoader key={week} week={week} />
+          ))}
+        <Box opacity={0}>
+          <Typography.H1 mt={2} mb={4}>
+            Week {week}, {season}
+          </Typography.H1>
+        </Box>
         <Typography.H1 mt={2} mb={4}>
           Week {week}, {season}
         </Typography.H1>
+        <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
+          <FormLabel>Week</FormLabel>
+          <Select
+            value={week}
+            onChange={(event) => setWeek(parseInt(event.target.value))}
+          >
+            {availableWeeks.map((week) => {
+              return (
+                <option key={week} value={week.toString()}>
+                  {week}
+                </option>
+              );
+            })}
+          </Select>
+        </FormControl>
       </Flex>
       <div
         style={{

@@ -40,6 +40,7 @@ export const WeekPicksGameCards: React.FC<Props> = ({
         {gamesSorted.map((g) => {
           return (
             <GameCard
+              key={g.gid}
               g={g}
               teams={teamIdMapping}
               pickTeam={pickTeam}

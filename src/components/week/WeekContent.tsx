@@ -149,34 +149,31 @@ export const WeekContent: React.FC = () => {
 
   return (
     <Box mx="12px">
-      <Flex w="100%" justify="space-between" px="24px">
-        {availableWeeks &&
-          availableWeeks.map((week) => (
-            <WeekPicksLoader key={week} week={week} />
-          ))}
-        <Box opacity={0}>
+      {availableWeeks &&
+        availableWeeks.map((week) => (
+          <WeekPicksLoader key={week} week={week} />
+        ))}
+      <Flex w="100%" justify="center" px="24px">
+        <HStack spacing="24px">
           <Typography.H1 mt={2} mb={4}>
             Week {week}, {season}
           </Typography.H1>
-        </Box>
-        <Typography.H1 mt={2} mb={4}>
-          Week {week}, {season}
-        </Typography.H1>
-        <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
-          <FormLabel>Week</FormLabel>
-          <Select
-            value={week}
-            onChange={(event) => setWeek(parseInt(event.target.value))}
-          >
-            {availableWeeks.map((week) => {
-              return (
-                <option key={week} value={week.toString()}>
-                  {week}
-                </option>
-              );
-            })}
-          </Select>
-        </FormControl>
+          <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
+            <FormLabel>Week</FormLabel>
+            <Select
+              value={week}
+              onChange={(event) => setWeek(parseInt(event.target.value))}
+            >
+              {availableWeeks.map((week) => {
+                return (
+                  <option key={week} value={week.toString()}>
+                    {week}
+                  </option>
+                );
+              })}
+            </Select>
+          </FormControl>
+        </HStack>
       </Flex>
       <div
         style={{

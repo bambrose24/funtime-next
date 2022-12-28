@@ -1,5 +1,4 @@
 import { CodegenConfig } from "@graphql-codegen/cli";
-console.log("envvvvv", process.env.NODE_ENV);
 const config: CodegenConfig = {
   schema:
     process.env.NODE_ENV === "development"

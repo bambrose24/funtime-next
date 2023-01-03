@@ -11,15 +11,13 @@ import {
   Select,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { WineBarSharp } from "@mui/icons-material";
+import { Preview } from "@mui/icons-material";
 import {
   useAllTeamsQuery,
   useFindLeagueMembersQuery,
-  usePicksByWeekLazyQuery,
   usePicksByWeekQuery,
   useWinnersQuery,
 } from "@src/generated/graphql";
-import client from "@src/graphql";
 import { env, LEAGUE_ID } from "@src/util/config";
 import _ from "lodash";
 import { useEffect, useState } from "react";
@@ -154,10 +152,6 @@ export const WeekContent: React.FC = () => {
 
   return (
     <Box mx="12px">
-      {availableWeeks &&
-        availableWeeks.map((week) => (
-          <WeekPicksLoader key={week} week={week} />
-        ))}
       <Flex w="100%" justify="center" px={{ base: "4px", lg: "24px" }}>
         <HStack spacing="24px">
           <Header mt={2} mb={4}>
@@ -171,7 +165,10 @@ export const WeekContent: React.FC = () => {
             >
               {availableWeeks.map((week) => {
                 return (
-                  <option key={week} value={week.toString()}>
+                  <option
+                    key={week}
+                    value={week.toString()}
+                  >
                     {week}
                   </option>
                 );
@@ -180,6 +177,13 @@ export const WeekContent: React.FC = () => {
           </FormControl>
         </HStack>
       </Flex>
+      <Box pt="8px">
+        <Alert status="warning">
+          <AlertIcon />
+          <AlertTitle>Week 17 BUF @ CIN</AlertTitle>
+          <AlertDescription>If the game isn't finished, we will forego the tiebreaker and the winners will split as if the game never was played. If the game is finished, even late, the tiebreaker will still be in play.</AlertDescription>
+        </Alert>
+      </Box>
       <div
         style={{
           top: 0,

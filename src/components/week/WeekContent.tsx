@@ -181,7 +181,7 @@ export const WeekContent: React.FC = () => {
         <Alert status="warning">
           <AlertIcon />
           <AlertTitle>Week 17 BUF @ CIN</AlertTitle>
-          <AlertDescription>If the game isn't finished, we will forego the tiebreaker and the winners will split as if the game never was played. If the game is finished, even late, the tiebreaker will still be in play.</AlertDescription>
+          <AlertDescription>We do not have an official policy for canceled or postponed games. For this case, we will forego the tiebreaker and the winners will split evenly as if the game was never played. </AlertDescription>
         </Alert>
       </Box>
       <div

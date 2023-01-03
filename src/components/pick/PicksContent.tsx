@@ -84,14 +84,12 @@ export const PicksContent: React.FC = () => {
               <Box py="8px">
                 <Alert status="warning">
                   <AlertIcon />
-                  <AlertTitle>Tiebreaker</AlertTitle>
                   <AlertDescription>
                     Since game times have changed and some people have made
                     picks already, we are keeping the tiebreaker game as ARI @
-                    SF even though it's not the final game.
-                    <br />
-                    <br />
-                    Also, some game times are not correct.
+                    SF even though it's not the final game. Also note, game
+                    times are not updated to preserve the "final" game being the
+                    ARI @ SF game.
                   </AlertDescription>
                 </Alert>
               </Box>

@@ -1,11 +1,18 @@
-import { Box, Flex } from "@chakra-ui/react";
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  Flex,
+} from "@chakra-ui/react";
 import { PicksForm } from "@src/components/pick/PicksForm";
 import { Typography } from "@src/components/Typography";
 import {
   useFindLeagueMembersQuery,
   useFirstNotStartedWeekQuery,
 } from "@src/generated/graphql";
-import { LEAGUE_ID } from "@src/util/config";
+import { LEAGUE_ID, SEASON } from "@src/util/config";
 import { useUser } from "@supabase/auth-helpers-react";
 import _ from "lodash";
 import { useRouter } from "next/router";
@@ -65,7 +72,30 @@ export const PicksContent: React.FC = () => {
           <Typography.H2>
             Make Your Picks for Week {week}, {season}
           </Typography.H2>
-          <Flex w="100%" justify="center" bgColor="white" py={8} px={4}>
+          <Flex
+            direction="column"
+            w="100%"
+            justify="center"
+            bgColor="white"
+            py={8}
+            px={4}
+          >
+            {week === 18 && season === SEASON && (
+              <Box py="8px">
+                <Alert status="warning">
+                  <AlertIcon />
+                  <AlertTitle>Tiebreaker</AlertTitle>
+                  <AlertDescription>
+                    Since game times have changed and some people have made
+                    picks already, we are keeping the tiebreaker game as ARI @
+                    SF even though it's not the final game.
+                    <br />
+                    <br />
+                    Also, some game times are not correct.
+                  </AlertDescription>
+                </Alert>
+              </Box>
+            )}
             <PicksForm
               week={week}
               season={season}

@@ -11,7 +11,6 @@ import {
   Select,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { Preview } from "@mui/icons-material";
 import {
   useAllTeamsQuery,
   useFindLeagueMembersQuery,
@@ -25,7 +24,6 @@ import UserTag from "../profile/UserTag";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
 import { Typography } from "../Typography";
 import { WeekPicksGameCards } from "./WeekPicksGameCards";
-import { WeekPicksLoader } from "./WeekPicksLoader";
 import { WeekPicksTable } from "./WeekPicksTable";
 
 const fetchedWeeks = new Set<number>();
@@ -165,10 +163,7 @@ export const WeekContent: React.FC = () => {
             >
               {availableWeeks.map((week) => {
                 return (
-                  <option
-                    key={week}
-                    value={week.toString()}
-                  >
+                  <option key={week} value={week.toString()}>
                     {week}
                   </option>
                 );
@@ -177,13 +172,6 @@ export const WeekContent: React.FC = () => {
           </FormControl>
         </HStack>
       </Flex>
-      <Box pt="8px">
-        <Alert status="warning">
-          <AlertIcon />
-          <AlertTitle>Week 17 BUF @ CIN</AlertTitle>
-          <AlertDescription>We do not have an official policy for canceled or postponed games. For this case, we will forego the tiebreaker and the winners will split evenly as if the game was never played. </AlertDescription>
-        </Alert>
-      </Box>
       <div
         style={{
           top: 0,

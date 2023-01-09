@@ -106,7 +106,6 @@ export const Standings = () => {
               ({
                 member: {
                   people: { uid, username },
-                  membership_id,
                 },
                 num_correct,
                 rank,
@@ -164,7 +163,7 @@ function sortedRanks(
     const correct = current._count!.correct;
     if (i === 0) {
       prev = correct;
-    } else if (current !== prev) {
+    } else if (correct !== prev) {
       prev = correct;
       rankingTracker = i + 1;
     }

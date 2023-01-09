@@ -21,7 +21,8 @@ type PageName = typeof pageNames[number];
 export const navOptions: Array<Page> = [
   { name: "home", display: "Home", href: "/" },
   { name: "register", display: "Register", href: "/register" },
-  { name: "make_picks", display: "Make Your Picks", href: "/pick" },
+  // turning this off at the end of 2022 season, it error'd so figured I'd just remove the option
+  // { name: "make_picks", display: "Make Your Picks", href: "/pick" },
   { name: "weekly_picks", display: "Weekly Picks", href: "/week" },
   { name: "season", display: "Season Standings", href: "/season" },
   { name: "superbowl", display: "Super Bowl Picks", href: "/superbowl" },

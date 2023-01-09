@@ -5677,12 +5677,12 @@ export type WeekWinner = {
   week: Scalars['Int'];
 };
 
-export type CorrectPicksByLeagueQueryVariables = Exact<{
+export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
 
 
-export type CorrectPicksByLeagueQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', membership_id: number, picks: Array<{ __typename?: 'Pick', correct?: number | null }> }> };
+export type SeasonCorrectPicksQuery = { __typename?: 'Query', groupByPick: Array<{ __typename?: 'PickGroupBy', member_id?: number | null, _count?: { __typename?: 'PickCountAggregate', correct: number } | null }> };
 
 export type FirstNotStartedWeekQueryVariables = Exact<{
   override?: InputMaybe<Scalars['Boolean']>;
@@ -5763,11 +5763,14 @@ export type WinnersQueryVariables = Exact<{
 export type WinnersQuery = { __typename?: 'Query', weekWinners: Array<{ __typename?: 'WeekWinner', week: number, correct: number, member: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', uid: number, username: string } }> }> };
 
 
-export const CorrectPicksByLeagueDocument = gql`
-    query CorrectPicksByLeague($league_id: Int!) {
-  leagueMembers(where: {league_id: {equals: $league_id}}) {
-    membership_id
-    picks {
+export const SeasonCorrectPicksDocument = gql`
+    query SeasonCorrectPicks($league_id: Int!) {
+  groupByPick(
+    by: [member_id]
+    where: {correct: {equals: 1}, leaguemembers: {is: {league_id: {equals: $league_id}}}}
+  ) {
+    member_id
+    _count {
       correct
     }
   }
@@ -5775,32 +5778,32 @@ export const CorrectPicksByLeagueDocument = gql`
     `;
 
 /**
- * __useCorrectPicksByLeagueQuery__
+ * __useSeasonCorrectPicksQuery__
  *
- * To run a query within a React component, call `useCorrectPicksByLeagueQuery` and pass it any options that fit your needs.
- * When your component renders, `useCorrectPicksByLeagueQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useSeasonCorrectPicksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSeasonCorrectPicksQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useCorrectPicksByLeagueQuery({
+ * const { data, loading, error } = useSeasonCorrectPicksQuery({
  *   variables: {
  *      league_id: // value for 'league_id'
  *   },
  * });
  */
-export function useCorrectPicksByLeagueQuery(baseOptions: Apollo.QueryHookOptions<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>) {
+export function useSeasonCorrectPicksQuery(baseOptions: Apollo.QueryHookOptions<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>(CorrectPicksByLeagueDocument, options);
+        return Apollo.useQuery<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>(SeasonCorrectPicksDocument, options);
       }
-export function useCorrectPicksByLeagueLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>) {
+export function useSeasonCorrectPicksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>(CorrectPicksByLeagueDocument, options);
+          return Apollo.useLazyQuery<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>(SeasonCorrectPicksDocument, options);
         }
-export type CorrectPicksByLeagueQueryHookResult = ReturnType<typeof useCorrectPicksByLeagueQuery>;
-export type CorrectPicksByLeagueLazyQueryHookResult = ReturnType<typeof useCorrectPicksByLeagueLazyQuery>;
-export type CorrectPicksByLeagueQueryResult = Apollo.QueryResult<CorrectPicksByLeagueQuery, CorrectPicksByLeagueQueryVariables>;
+export type SeasonCorrectPicksQueryHookResult = ReturnType<typeof useSeasonCorrectPicksQuery>;
+export type SeasonCorrectPicksLazyQueryHookResult = ReturnType<typeof useSeasonCorrectPicksLazyQuery>;
+export type SeasonCorrectPicksQueryResult = Apollo.QueryResult<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>;
 export const FirstNotStartedWeekDocument = gql`
     query FirstNotStartedWeek($override: Boolean, $week: Int) {
   firstNotStartedWeek(override: $override, week: $week) {

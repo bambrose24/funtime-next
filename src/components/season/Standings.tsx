@@ -10,11 +10,11 @@ import {
 } from "@chakra-ui/react";
 import { Typography } from "../Typography";
 import {
-  CorrectPicksByLeagueQuery,
+  SeasonCorrectPicksQuery,
   FindLeagueMembersQuery,
-  useCorrectPicksByLeagueQuery,
   useFindLeagueMembersQuery,
   useGamesBySeasonQuery,
+  useSeasonCorrectPicksQuery,
 } from "../../generated/graphql";
 import { LEAGUE_ID, SEASON } from "../../util/config";
 import {
@@ -36,7 +36,7 @@ export const Standings = () => {
   });
 
   const { data: correctPicksData, loading: correctPicksLoading } =
-    useCorrectPicksByLeagueQuery({ variables: { league_id: LEAGUE_ID } });
+    useSeasonCorrectPicksQuery({ variables: { league_id: LEAGUE_ID } });
 
   const { data: seasonGamesData, loading: seasonGamesLoading } =
     useGamesBySeasonQuery({ variables: { season: SEASON } });
@@ -111,9 +111,6 @@ export const Standings = () => {
                 num_correct,
                 rank,
               }) => {
-                const picks = correctPicksData.leagueMembers.find(
-                  (m) => m.membership_id === membership_id
-                );
                 return (
                   <>
                     <Tr
@@ -148,7 +145,7 @@ type RankingEntry = {
 
 function sortedRanks(
   leagueMembers: FindLeagueMembersQuery,
-  correctPicksData: CorrectPicksByLeagueQuery
+  correctPicksData: SeasonCorrectPicksQuery
 ): Array<RankingEntry> {
   // membership_id to member
   const memberIdToMember = _.keyBy(
@@ -156,31 +153,26 @@ function sortedRanks(
     (m) => m.membership_id
   );
 
-  const memberWithCorrectPicks = correctPicksData.leagueMembers.map(
-    ({ membership_id, picks }) => {
-      const member = memberIdToMember[membership_id];
-      return {
-        member,
-        num_correct: _.sumBy(picks, (p) => (p.correct === 1 ? 1 : 0)),
-      };
-    }
-  );
-
-  const sortedResult = _(memberWithCorrectPicks)
-    .sortBy((x) => x.member.people.username)
-    .sortBy((x) => -1 * x.num_correct)
+  const sortedResult = _(correctPicksData.groupByPick)
+    .sortBy((x) => memberIdToMember[x.member_id!].people.username)
+    .sortBy((x) => -1 * x._count!.correct)
     .value();
 
   let rankingTracker = 1;
   let prev = 0;
   return sortedResult.map((current, i) => {
+    const correct = current._count!.correct;
     if (i === 0) {
-      prev = current.num_correct;
-    } else if (current.num_correct !== prev) {
-      prev = current.num_correct;
+      prev = correct;
+    } else if (current !== prev) {
+      prev = correct;
       rankingTracker = i + 1;
     }
-    prev = current.num_correct;
-    return { ...current, rank: rankingTracker };
+    prev = correct;
+    return {
+      member: memberIdToMember[current.member_id!],
+      num_correct: correct,
+      rank: rankingTracker,
+    };
   });
 }

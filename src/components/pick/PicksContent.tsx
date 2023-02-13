@@ -53,6 +53,15 @@ export const PicksContent: React.FC = () => {
   if (!games || !people || gamesError || peopleError) {
     return <FuntimeError />;
   }
+
+  if (
+    !games.firstNotStartedWeek.week ||
+    !games.firstNotStartedWeek.season ||
+    !(games.firstNotStartedWeek.games.length > 0)
+  ) {
+    // TODO show a "the season is over" page
+    return <FuntimeError />;
+  }
   const week = games.firstNotStartedWeek.games[0].week;
   const season = games.firstNotStartedWeek.games[0].season;
 
@@ -85,7 +94,9 @@ export const PicksContent: React.FC = () => {
                 <Alert status="warning">
                   <AlertIcon />
                   <AlertDescription>
-                  Game times have changed, and some players have made picks already. We are keeping the tiebreaker game as ARI @ SF even though it's not the final game.
+                    Game times have changed, and some players have made picks
+                    already. We are keeping the tiebreaker game as ARI @ SF even
+                    though it's not the final game.
                   </AlertDescription>
                 </Alert>
               </Box>

@@ -109,25 +109,22 @@ export const Standings = () => {
                 },
                 num_correct,
                 rank,
-              }) => {
-                return (
-                  <>
-                    <Tr
-                      key={uid}
-                      transition={"all .3s ease"}
-                      _hover={{ bgColor: "gray.50" }}
-                    >
-                      <Td pl={6} pr={0} py={0}>
-                        <Stat>{rank}</Stat>
-                      </Td>
-                      <Td pr={2} pl={4} py={2}>
-                        <UserTag user_id={uid} username={username}></UserTag>
-                      </Td>
-                      <Td>{num_correct}</Td>
-                    </Tr>
-                  </>
-                );
-              }
+              }) => (
+                <React.Fragment key={uid}>
+                  <Tr
+                    transition={"all .3s ease"}
+                    _hover={{ bgColor: "gray.50" }}
+                  >
+                    <Td pl={6} pr={0} py={0}>
+                      <Stat>{rank}</Stat>
+                    </Td>
+                    <Td pr={2} pl={4} py={2}>
+                      <UserTag user_id={uid} username={username} />
+                    </Td>
+                    <Td>{num_correct}</Td>
+                  </Tr>
+                </React.Fragment>
+              )
             )}
           </Tbody>
         </Table>

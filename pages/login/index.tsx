@@ -7,7 +7,6 @@ import { useEffect } from "react";
 const Login = () => {
   const router = useRouter();
   const session = useSession();
-  console.log("session?", session);
   useEffect(() => {
     if (session) {
       if ("redirect_to" in router.query) {

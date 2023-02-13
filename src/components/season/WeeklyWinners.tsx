@@ -17,15 +17,15 @@ import {
 import { useWinnersQuery } from "@src/generated/graphql";
 import { LEAGUE_ID } from "@src/util/config";
 import _ from "lodash";
+import React from "react";
 import UserTag from "../profile/UserTag";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
 import { Typography } from "../Typography";
 
 export const WeeklyWinners = () => {
-  const { data, loading, error } = useWinnersQuery({
+  const { data, error } = useWinnersQuery({
     variables: { league_id: LEAGUE_ID },
   });
-  console.log("data?", data);
   if (error) {
     return (
       <Typography.H3>
@@ -69,7 +69,7 @@ export const WeeklyWinners = () => {
             {winners.map((winner) => {
               const { correct, member, week } = winner;
               return (
-                <>
+                <React.Fragment key={winner.week}>
                   <Tr
                     key={winner.week}
                     transition={"all .3s ease"}
@@ -82,6 +82,7 @@ export const WeeklyWinners = () => {
                       <HStack>
                         {member.map((m) => (
                           <UserTag
+                            key={m.people.uid}
                             user_id={m.people.uid}
                             username={m.people.username}
                           />
@@ -90,7 +91,7 @@ export const WeeklyWinners = () => {
                     </Td>
                     <Td>{correct}</Td>
                   </Tr>
-                </>
+                </React.Fragment>
               );
             })}
           </Tbody>

@@ -11,6 +11,8 @@ import { Standings } from "@src/components/season/Standings";
 import { WeeklyWinners } from "@src/components/season/WeeklyWinners";
 import { Typography } from "@src/components/Typography";
 import FuntimePage from "@src/FuntimePage";
+import { SECONDS_IN_DAY } from "@src/util/constants";
+import { GetStaticProps } from "next";
 
 const SeasonPage: React.FC = () => {
   return (
@@ -49,6 +51,13 @@ const SeasonPage: React.FC = () => {
       </Flex>
     </FuntimePage>
   );
+};
+
+export const getStaticProps: GetStaticProps = () => {
+  return {
+    props: {},
+    revalidate: 60 * 5,
+  };
 };
 
 export default SeasonPage;

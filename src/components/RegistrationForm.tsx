@@ -133,7 +133,10 @@ const RegistrationForm: ReactFCC<{
         py={5}
         rounded="lg"
       >
-        <Typography.H3 style={{textAlign: "center"}}>The season has started!<br/> Registration is closed.</Typography.H3>
+        <Typography.H3 style={{ textAlign: "center" }}>
+          The season has started!
+          <br /> Registration is closed.
+        </Typography.H3>
         {/* <hr />
         <br />
         <Formik

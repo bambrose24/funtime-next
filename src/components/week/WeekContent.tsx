@@ -103,7 +103,6 @@ export const WeekContent: React.FC = () => {
   }
 
   if (!picksData || !people || !teams || !winners || !defaultPicksByWeekData) {
-    console.log({ picksError, teamsError, peopleError });
     return (
       <Box w="100%">
         <Typography.H2>

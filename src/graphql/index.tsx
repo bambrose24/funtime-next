@@ -1,4 +1,9 @@
-import { ApolloClient, createHttpLink, InMemoryCache } from "@apollo/client";
+import {
+  ApolloClient,
+  createHttpLink,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { supabase } from "@src/user/supabase";
 
@@ -23,11 +28,19 @@ const authLink = setContext(async (_, { headers }) => {
 
 const { graphqlEndpoint } = config;
 
-const client = new ApolloClient({
-  ssrMode: true,
-  uri: graphqlEndpoint,
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
+let client: ApolloClient<NormalizedCacheObject>;
 
-export default client;
+// const isServer = typeof window === "undefined";
+// const windowApolloState = !isServer && window.__NEXT_DATA__.apolloState;
+
+export function getApolloClient(forceNew: boolean = false) {
+  if (!client || forceNew) {
+    client = new ApolloClient({
+      ssrMode: true,
+      uri: graphqlEndpoint,
+      link: authLink.concat(httpLink),
+      cache: new InMemoryCache(),
+    });
+  }
+  return client;
+}

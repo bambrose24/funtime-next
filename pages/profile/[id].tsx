@@ -19,6 +19,15 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import { FuntimeLoading } from "@src/components/shared/FuntimeLoading";
+import { GetStaticProps } from "next";
+
+// TODO getStaticPaths and load all the users
+// export const getStaticProps: GetStaticProps = () => {
+//   return {
+//     props: {},
+//     revalidate: 60 * 5,
+//   };
+// };
 
 export default function Profile() {
   //Set up for querying the router for the user_id

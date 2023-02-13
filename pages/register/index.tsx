@@ -3,22 +3,26 @@ import { GetStaticProps, NextPage } from "next";
 import RegistrationForm from "@src/components/RegistrationForm";
 import FuntimePage from "@src/FuntimePage";
 import {
-  AllTeamsDocument,
-  AllTeamsQuery,
-  FindLeagueMembersDocument,
-  FindLeagueMembersQuery,
+  useAllTeamsQuery,
+  useFindLeagueMembersQuery,
 } from "@src/generated/graphql";
-import client from "@src/graphql";
+import { FuntimeLoading } from "@src/components/shared/FuntimeLoading";
+import { SECONDS_IN_DAY } from "@src/util/constants";
 
-interface RegisterPageProps {
-  previousMembers: FindLeagueMembersQuery;
-  teams: AllTeamsQuery;
-}
+const PREVIOUS_LEAGUE_ID = 6;
 
-const RegisterPage: NextPage<RegisterPageProps> = ({
-  previousMembers,
-  teams,
-}) => {
+const RegisterPage: NextPage = () => {
+  const { data: teams } = useAllTeamsQuery();
+  const { data: previousMembers } = useFindLeagueMembersQuery({
+    variables: {
+      league_id: PREVIOUS_LEAGUE_ID,
+    },
+  });
+
+  if (!teams || !previousMembers) {
+    return <FuntimeLoading />;
+  }
+
   return (
     <FuntimePage>
       <Flex justify="center">
@@ -28,28 +32,10 @@ const RegisterPage: NextPage<RegisterPageProps> = ({
   );
 };
 
-const PREVIOUS_LEAGUE_ID = 6;
-
-export const getStaticProps: GetStaticProps = async (context) => {
-  const [previousMembers, teams] = await Promise.all([
-    client.query<FindLeagueMembersQuery>({
-      query: FindLeagueMembersDocument,
-      variables: {
-        league_id: PREVIOUS_LEAGUE_ID,
-      },
-    }),
-    client.query<AllTeamsQuery>({
-      query: AllTeamsDocument,
-    }),
-  ]);
-
-  const props: RegisterPageProps = {
-    previousMembers: previousMembers.data,
-    teams: teams.data,
-  };
-
+export const getStaticProps: GetStaticProps = () => {
   return {
-    props,
+    props: {},
+    revalidate: SECONDS_IN_DAY,
   };
 };
 

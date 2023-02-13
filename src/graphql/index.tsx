@@ -30,16 +30,17 @@ const { graphqlEndpoint } = config;
 
 let client: ApolloClient<NormalizedCacheObject>;
 
-// const isServer = typeof window === "undefined";
-// const windowApolloState = !isServer && window.__NEXT_DATA__.apolloState;
+const isServer = typeof window === "undefined";
+// @ts-ignore
+const windowApolloState = !isServer && window.__NEXT_DATA__.apolloState;
 
 export function getApolloClient(forceNew: boolean = false) {
   if (!client || forceNew) {
     client = new ApolloClient({
-      ssrMode: true,
+      ssrMode: isServer,
       uri: graphqlEndpoint,
       link: authLink.concat(httpLink),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache().restore(windowApolloState || {}),
     });
   }
   return client;

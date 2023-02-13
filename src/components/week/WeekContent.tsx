@@ -33,7 +33,7 @@ export const WeekContent: React.FC = () => {
     {}
   );
 
-  const [week, setWeek] = useState<number | undefined>(undefined);
+  const [weekState, setWeekState] = useState<number | undefined>(undefined);
 
   const { data: defaultPicksByWeekData, loading: defaultPicksLoading } =
     usePicksByWeekQuery({ variables: { league_id: LEAGUE_ID } });
@@ -42,25 +42,23 @@ export const WeekContent: React.FC = () => {
     variables: { league_id: LEAGUE_ID },
   });
 
-  const {
-    data: picksData,
-    loading: picksLoading,
-    error: picksError,
-  } = usePicksByWeekQuery({
+  const { data: picksData, loading: picksLoading } = usePicksByWeekQuery({
     variables: {
       league_id: LEAGUE_ID,
       // this is where you'd set the "week" from a dropdown
-      ...(week ? { week } : {}),
+      ...(weekState ? { week: weekState } : {}),
       ...(env === "production" ? { override: true } : {}),
     },
+    skip: weekState === undefined,
     pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
+
   useEffect(() => {
     const weekResponse = picksData?.picksByWeek?.week;
-    if (weekResponse && week !== weekResponse) {
-      setWeek(weekResponse);
+    if (weekResponse && weekState !== weekResponse) {
+      setWeekState(weekResponse);
     }
-  }, [picksData, week, setWeek]);
+  }, [picksData, weekState, setWeekState]);
 
   const availableWeeksSet = new Set(
     [
@@ -72,21 +70,13 @@ export const WeekContent: React.FC = () => {
   );
   const availableWeeks = _.sortBy([...availableWeeksSet]) as number[];
 
-  const {
-    data: people,
-    loading: peopleLoading,
-    error: peopleError,
-  } = useFindLeagueMembersQuery({
+  const { data: people, loading: peopleLoading } = useFindLeagueMembersQuery({
     variables: {
       league_id: LEAGUE_ID,
     },
   });
 
-  const {
-    data: teams,
-    loading: teamsLoading,
-    error: teamsError,
-  } = useAllTeamsQuery();
+  const { data: teams, loading: teamsLoading } = useAllTeamsQuery();
 
   const Header =
     useBreakpointValue({ base: Typography.H2, lg: Typography.H1 }) ||
@@ -102,7 +92,7 @@ export const WeekContent: React.FC = () => {
     return <FuntimeLoading />;
   }
 
-  if (!picksData || !people || !teams || !winners || !defaultPicksByWeekData) {
+  if (!people || !teams || !winners || !defaultPicksByWeekData) {
     return (
       <Box w="100%">
         <Typography.H2>
@@ -112,10 +102,10 @@ export const WeekContent: React.FC = () => {
     );
   }
 
+  const picks = picksData || defaultPicksByWeekData;
+
   const pickTeam = (t: number) => {
-    const g = picksData.picksByWeek.games.find(
-      (g) => g.home === t || g.away === t
-    );
+    const g = picks.picksByWeek.games.find((g) => g.home === t || g.away === t);
     if (g) {
       if (g.gid in simulatedPicks && simulatedPicks[g.gid] === t) {
         setSimulatedPicks((curr) => {
@@ -129,18 +119,20 @@ export const WeekContent: React.FC = () => {
     }
   };
 
-  const { week: weekResponse, season } = picksData.picksByWeek;
+  const { week: weekResponse, season } = picks.picksByWeek;
 
-  if (!picksData.picksByWeek.canView) {
+  if (!picks.picksByWeek.canView) {
     return (
       <Flex justify="center" w="100%">
         <Typography.H1 mt={2} mb={4}>
-          Picks are not yet available for Week {week}, {season} because the week
-          has not started yet.
+          Picks are not yet available for Week {weekState}, {season} because the
+          week has not started yet.
         </Typography.H1>
       </Flex>
     );
   }
+
+  const week = weekResponse || weekState;
 
   const currentWinners = winners.weekWinners.find(
     (winners) => winners.week === week
@@ -158,7 +150,7 @@ export const WeekContent: React.FC = () => {
             <FormLabel>Week</FormLabel>
             <Select
               value={week}
-              onChange={(event) => setWeek(parseInt(event.target.value))}
+              onChange={(event) => setWeekState(parseInt(event.target.value))}
             >
               {availableWeeks.map((week) => {
                 return (
@@ -181,7 +173,7 @@ export const WeekContent: React.FC = () => {
         }}
       >
         <WeekPicksGameCards
-          picksData={picksData}
+          picksData={picks}
           teams={teams}
           pickTeam={pickTeam}
           simulatedPicks={simulatedPicks}
@@ -217,7 +209,7 @@ export const WeekContent: React.FC = () => {
       <WeekPicksTable
         teams={teams}
         people={people}
-        picksData={picksData}
+        picksData={picks}
         simulatedPicks={simulatedPicks}
       />
     </Box>

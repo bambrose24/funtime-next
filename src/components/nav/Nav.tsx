@@ -25,6 +25,7 @@ export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const supabase = useSupabaseClient();
   const session = useSession();
+
   const router = useRouter();
   return (
     <>

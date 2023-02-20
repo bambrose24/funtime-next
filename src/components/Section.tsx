@@ -1,4 +1,4 @@
-import { Box, BoxProps, Flex } from "@chakra-ui/react";
+import { Box, BoxProps } from "@chakra-ui/react";
 
 const Section: ReactFCC<Omit<BoxProps, "px" | "py">> = ({
   children,

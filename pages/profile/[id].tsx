@@ -55,7 +55,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const uids = data.leagueMembers.map((u) => u.people.uid);
 
   return {
-    paths: uids.slice(0, 10).map((uid) => {
+    paths: uids.map((uid) => {
       return {
         params: { id: uid.toString() },
       };

@@ -29,6 +29,7 @@ import {
 } from "@chakra-ui/react";
 import UserTag from "../profile/UserTag";
 import _ from "lodash";
+import { useLeagueRankings } from "@src/hooks/useLeagueRankings";
 
 export const Standings = () => {
   const { data: usersData, loading: usersLoading } = useFindLeagueMembersQuery({
@@ -41,7 +42,18 @@ export const Standings = () => {
   const { data: seasonGamesData, loading: seasonGamesLoading } =
     useGamesBySeasonQuery({ variables: { season: SEASON } });
 
-  if (usersLoading || correctPicksLoading || seasonGamesLoading) {
+  const {
+    data: rankings,
+    loading: rankingsLoading,
+    error: rankingsError,
+  } = useLeagueRankings({ leagueId: LEAGUE_ID });
+
+  if (
+    usersLoading ||
+    correctPicksLoading ||
+    seasonGamesLoading ||
+    rankingsLoading
+  ) {
     return (
       <Flex justify="center" m={8}>
         <Spinner />
@@ -49,7 +61,7 @@ export const Standings = () => {
     );
   }
 
-  if (!usersData || !correctPicksData || !seasonGamesData) {
+  if (!usersData || !correctPicksData || !seasonGamesData || !rankings) {
     return (
       <Box w="100%">
         <Typography.H2>
@@ -62,7 +74,6 @@ export const Standings = () => {
   // sorted list of members based on correct pick count
   // 1. make list of members & correct pick count
   // 2. then sort it
-  const sortedMembers = sortedRanks(usersData, correctPicksData);
   const gamesLeft = seasonGamesData.games.reduce(
     (prev, curr) => (curr.done ? prev : prev + 1),
     0
@@ -102,7 +113,7 @@ export const Standings = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {sortedMembers.map(
+            {rankings.map(
               ({
                 member: {
                   people: { uid, username },
@@ -132,43 +143,3 @@ export const Standings = () => {
     </Flex>
   );
 };
-
-type RankingEntry = {
-  member: FindLeagueMembersQuery["leagueMembers"][0];
-  num_correct: number;
-  rank: number;
-};
-
-function sortedRanks(
-  leagueMembers: FindLeagueMembersQuery,
-  correctPicksData: SeasonCorrectPicksQuery
-): Array<RankingEntry> {
-  // membership_id to member
-  const memberIdToMember = _.keyBy(
-    leagueMembers.leagueMembers,
-    (m) => m.membership_id
-  );
-
-  const sortedResult = _(correctPicksData.groupByPick)
-    .sortBy((x) => memberIdToMember[x.member_id!].people.username)
-    .sortBy((x) => -1 * x._count!.correct)
-    .value();
-
-  let rankingTracker = 1;
-  let prev = 0;
-  return sortedResult.map((current, i) => {
-    const correct = current._count!.correct;
-    if (i === 0) {
-      prev = correct;
-    } else if (correct !== prev) {
-      prev = correct;
-      rankingTracker = i + 1;
-    }
-    prev = correct;
-    return {
-      member: memberIdToMember[current.member_id!],
-      num_correct: correct,
-      rank: rankingTracker,
-    };
-  });
-}

@@ -1,11 +1,13 @@
-import { useEffect } from "react";
 import FuntimePage from "../../src/FuntimePage";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import React from "react";
 import { Typography } from "../../src/components/Typography";
 import ProfilePicture from "../../src/components/profile/ProfilePicture";
-import { useFindLeagueMembersQuery } from "../../src/generated/graphql";
-import { LEAGUE_ID } from "../../src/util/config";
+import {
+  PeopleWithLeaguesDocument,
+  PeopleWithLeaguesQuery,
+  useProfileQuery,
+} from "../../src/generated/graphql";
 import {
   Box,
   Flex,
@@ -19,69 +21,88 @@ import {
   TableContainer,
 } from "@chakra-ui/react";
 import { FuntimeLoading } from "@src/components/shared/FuntimeLoading";
-import { GetStaticProps } from "next";
+import { GetStaticPaths, GetStaticProps } from "next";
+import { getApolloClient } from "@src/graphql";
+import { useLeagueRankings } from "@src/hooks/useLeagueRankings";
+import { LEAGUE_ID } from "@src/util/config";
+import { FuntimeError } from "@src/components/shared/FuntimeError";
+
+type IDParam = {
+  id: string;
+};
+
+type Props = IDParam & { leagueId: number };
 
 // TODO getStaticPaths and load all the users
-// export const getStaticProps: GetStaticProps = () => {
-//   return {
-//     props: {},
-//     revalidate: 60 * 5,
-//   };
-// };
+export const getStaticProps: GetStaticProps<Props, IDParam> = async (
+  context
+) => {
+  // const client = getApolloClient();
+  // const data = await client.query<AllPeopleQuery>({ query: AllPeopleDocument });
+  const id = context.params?.id || "";
+  return {
+    props: { id, leagueId: LEAGUE_ID },
+    revalidate: 60 * 5,
+  };
+};
 
-export default function Profile() {
-  //Set up for querying the router for the user_id
-  const router = useRouter();
-  const [userId, setUserId] = useState<number | undefined>(
-    typeof router.query.id === "string" ? parseInt(router.query.id) : undefined
-  );
+export const getStaticPaths: GetStaticPaths = async () => {
+  const client = getApolloClient();
+  const { data } = await client.query<PeopleWithLeaguesQuery>({
+    query: PeopleWithLeaguesDocument,
+  });
 
-  // update user ID once we have access to the router query
-  useEffect(() => {
-    if (router.isReady && router.query.id) {
-      setUserId(
-        typeof router.query.id === "string"
-          ? parseInt(router.query.id)
-          : undefined
-      );
-    }
-    if (router.isReady && !router.query.id) {
-      router.back();
-    }
-  }, [router.isReady]);
+  const uids = data.leagueMembers.map((u) => u.people.uid);
 
-  const {
-    data: userData,
-    loading: userLoading,
-    error: userError,
-  } = useFindLeagueMembersQuery({ variables: { league_id: LEAGUE_ID } });
+  return {
+    paths: uids.slice(0, 10).map((uid) => {
+      return {
+        params: { id: uid.toString() },
+      };
+    }),
+    fallback: "blocking",
+  };
+};
 
-  if (!userId) {
-    return null;
+export default function Profile({ id, leagueId }: Props) {
+  const userId = parseInt(id);
+
+  const { data: rankings, loading: rankingsLoading } = useLeagueRankings({
+    leagueId,
+  });
+  const { data: profile, loading: profileLoading } = useProfileQuery({
+    variables: { user_id: userId },
+  });
+
+  if (rankingsLoading || profileLoading) {
+    return <FuntimeLoading />;
   }
 
-  if (userLoading) {
-    return (
-      <FuntimePage>
-        <FuntimeLoading />
-      </FuntimePage>
-    );
+  const user = profile?.user;
+
+  if (!rankings || !profile || !user) {
+    return <FuntimeError />;
   }
 
-  if (!userData || userError) {
-    return (
-      <Box w="100%">
-        <Typography.H2>
-          There was an error. Please refresh the page.
-        </Typography.H2>
-      </Box>
-    );
+  const memberId = profile.members.find(
+    (members) => members.leagues.league_id === leagueId
+  )?.membership_id;
+
+  if (!memberId) {
+    return <FuntimeError />;
   }
 
-  //find the user from the league members query
-  const user = userData.leagueMembers.find(
-    (user) => user.people.uid === userId
-  );
+  const rank = rankings.find((r) => r.member.people.uid === userId);
+
+  const correct =
+    profile.picks.find((p) => p.correct === 1 && p.member_id === memberId)
+      ?._count?.pickid || 0;
+  const wrong =
+    profile.picks.find((p) => p.correct === 0 && p.member_id === memberId)
+      ?._count?.pickid || 0;
+
+  const ratio =
+    correct + wrong > 0 ? (correct / (correct + wrong)).toFixed(2) : 0.0;
 
   return (
     <FuntimePage>
@@ -99,43 +120,43 @@ export default function Profile() {
           <Center>
             <ProfilePicture
               id={userId}
-              username={user!.people.username}
+              username={user.username || ""}
               size="xl"
-            ></ProfilePicture>
+            />
           </Center>
-          {/* commented out query map and personalization features like edit profile and bio */}
-          {/* {userData.findManyPeople.map(({People: { username, fname, lname }, Picks: { correct } }) => { */}
-          <Typography.H4 mt={2}> {user!.people.username} </Typography.H4>
-          {/* })} */}
-          {/* <Typography.Body2 maxWidth="300px" color="gray" mb={2}> Lorem ipsum dolor sit amet, consectetur adipiscing elit. </Typography.Body2> */}
-          {/* <Button size="sm">Edit Profile</Button> */}
-
+          <Typography.H4 mt={2}>{user.username}</Typography.H4>
           <TableContainer>
             <Table>
               <Tbody>
                 <Tr>
                   <Td>League Rank</Td>
                   <Td>
-                    <Stat color="green">
-                      1 <StatArrow type="increase" pb={1} />
+                    <Stat
+                      color={
+                        rank?.rank && rank.rank < rankings.length / 2
+                          ? "green"
+                          : "red"
+                      }
+                    >
+                      {rank?.rank || "---"}
                     </Stat>
                   </Td>
                 </Tr>
                 <Tr>
                   <Td>Win/Loss Ratio:</Td>
-                  <Td>0</Td>
+                  <Td>{ratio}</Td>
                 </Tr>
                 <Tr>
                   <Td>Games Picked:</Td>
-                  <Td>0</Td>
+                  <Td>{correct + wrong}</Td>
                 </Tr>
                 <Tr>
                   <Td>Picks Won:</Td>
-                  <Td>0</Td>
+                  <Td>{correct}</Td>
                 </Tr>
                 <Tr>
                   <Td>Picks Lost:</Td>
-                  <Td>0</Td>
+                  <Td>{wrong}</Td>
                 </Tr>
               </Tbody>
             </Table>

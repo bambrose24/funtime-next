@@ -16,8 +16,6 @@ class DocumentWithApollo extends Document {
   }
 
   static async getInitialProps(ctx) {
-    console.clear();
-
     const startTime = Date.now();
 
     /**

@@ -109,58 +109,56 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
             const selected = name === selectedNavOption;
             return (
               <Link href={href} key={name}>
-                <a>
-                  <Box
-                    role={"group"}
-                    m={2}
-                    p={4}
-                    rounded="lg"
-                    transition={"all .3s ease"}
-                    bgColor={selected ? "primary" : undefined}
-                    color={selected ? "white" : undefined}
-                    _hover={{
-                      cursor: "pointer",
-                      backgroundColor: selected ? undefined : "gray.300",
-                    }}
-                  >
-                    <HStack>
-                      <Image
-                        cursor="pointer"
-                        src={
-                          "/nav_icons/" +
-                          name +
-                          (selected ? "_icon_white.png" : "_icon_black.png")
-                        }
-                        height={5}
-                        placeholder="blur"
-                        pr={2}
-                        mb={1}
-                        display="inline-block"
-                        verticalAlign="middle"
-                      />
-                      <Typography.H5
-                        display="inline-block"
-                        fontWeight={selected ? "bold" : undefined}
-                      >
-                        {display}
-                      </Typography.H5>
-                      <Flex
-                        transition={"all .3s ease"}
-                        transform={"translateX(-10px)"}
-                        opacity={0}
-                        _groupHover={{
-                          opacity: "100%",
-                          transform: "translateX(0)",
-                        }}
-                        justify={"flex-end"}
-                        align={"center"}
-                        flex={1}
-                      >
-                        {selected ? undefined : <ChevronRightIcon />}
-                      </Flex>
-                    </HStack>
-                  </Box>
-                </a>
+                <Box
+                  role={"group"}
+                  m={2}
+                  p={4}
+                  rounded="lg"
+                  transition={"all .3s ease"}
+                  bgColor={selected ? "primary" : undefined}
+                  color={selected ? "white" : undefined}
+                  _hover={{
+                    cursor: "pointer",
+                    backgroundColor: selected ? undefined : "gray.300",
+                  }}
+                >
+                  <HStack>
+                    <Image
+                      cursor="pointer"
+                      src={
+                        "/nav_icons/" +
+                        name +
+                        (selected ? "_icon_white.png" : "_icon_black.png")
+                      }
+                      height={5}
+                      placeholder="blur"
+                      pr={2}
+                      mb={1}
+                      display="inline-block"
+                      verticalAlign="middle"
+                    />
+                    <Typography.H5
+                      display="inline-block"
+                      fontWeight={selected ? "bold" : undefined}
+                    >
+                      {display}
+                    </Typography.H5>
+                    <Flex
+                      transition={"all .3s ease"}
+                      transform={"translateX(-10px)"}
+                      opacity={0}
+                      _groupHover={{
+                        opacity: "100%",
+                        transform: "translateX(0)",
+                      }}
+                      justify={"flex-end"}
+                      align={"center"}
+                      flex={1}
+                    >
+                      {selected ? undefined : <ChevronRightIcon />}
+                    </Flex>
+                  </HStack>
+                </Box>
               </Link>
             );
           })}

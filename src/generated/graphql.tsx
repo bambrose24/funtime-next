@@ -5722,6 +5722,11 @@ export type MakePicksMutationVariables = Exact<{
 
 export type MakePicksMutation = { __typename?: 'Mutation', makePicks: { __typename?: 'MakePicksResponse', user: { __typename?: 'User', username: string, email: string } } };
 
+export type PeopleWithLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PeopleWithLeaguesQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', league_id: number, membership_id: number, people: { __typename?: 'User', uid: number, username: string } }> };
+
 export type PicksByWeekQueryVariables = Exact<{
   league_id: Scalars['Int'];
   week?: InputMaybe<Scalars['Int']>;
@@ -5730,6 +5735,13 @@ export type PicksByWeekQueryVariables = Exact<{
 
 
 export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', gid: number, ts: any, done?: boolean | null, home: number, away: number, winner?: number | null, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, liveStatus?: { __typename?: 'GameLive', currentQuarter?: number | null, currentQuarterSecondsRemaining?: number | null, playedStatus?: MsfGamePlayedStatus | null } | null, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null, score?: number | null }> } };
+
+export type ProfileQueryVariables = Exact<{
+  user_id: Scalars['Int'];
+}>;
+
+
+export type ProfileQuery = { __typename?: 'Query', user?: { __typename?: 'User', uid: number, username: string } | null, picks: Array<{ __typename?: 'PickGroupBy', correct?: number | null, member_id?: number | null, _count?: { __typename?: 'PickCountAggregate', pickid: number } | null }>, members: Array<{ __typename?: 'LeagueMember', membership_id: number, leagues: { __typename?: 'League', name: string, league_id: number } }> };
 
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
@@ -6048,6 +6060,45 @@ export function useMakePicksMutation(baseOptions?: Apollo.MutationHookOptions<Ma
 export type MakePicksMutationHookResult = ReturnType<typeof useMakePicksMutation>;
 export type MakePicksMutationResult = Apollo.MutationResult<MakePicksMutation>;
 export type MakePicksMutationOptions = Apollo.BaseMutationOptions<MakePicksMutation, MakePicksMutationVariables>;
+export const PeopleWithLeaguesDocument = gql`
+    query PeopleWithLeagues {
+  leagueMembers {
+    league_id
+    membership_id
+    people {
+      uid
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __usePeopleWithLeaguesQuery__
+ *
+ * To run a query within a React component, call `usePeopleWithLeaguesQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePeopleWithLeaguesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePeopleWithLeaguesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePeopleWithLeaguesQuery(baseOptions?: Apollo.QueryHookOptions<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>(PeopleWithLeaguesDocument, options);
+      }
+export function usePeopleWithLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>(PeopleWithLeaguesDocument, options);
+        }
+export type PeopleWithLeaguesQueryHookResult = ReturnType<typeof usePeopleWithLeaguesQuery>;
+export type PeopleWithLeaguesLazyQueryHookResult = ReturnType<typeof usePeopleWithLeaguesLazyQuery>;
+export type PeopleWithLeaguesQueryResult = Apollo.QueryResult<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>;
 export const PicksByWeekDocument = gql`
     query PicksByWeek($league_id: Int!, $week: Int, $override: Boolean) {
   picksByWeek(league_id: $league_id, week: $week, override: $override) {
@@ -6120,6 +6171,56 @@ export function usePicksByWeekLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type PicksByWeekQueryHookResult = ReturnType<typeof usePicksByWeekQuery>;
 export type PicksByWeekLazyQueryHookResult = ReturnType<typeof usePicksByWeekLazyQuery>;
 export type PicksByWeekQueryResult = Apollo.QueryResult<PicksByWeekQuery, PicksByWeekQueryVariables>;
+export const ProfileDocument = gql`
+    query Profile($user_id: Int!) {
+  user: user(where: {uid: $user_id}) {
+    uid
+    username
+  }
+  picks: groupByPick(by: [member_id, correct], where: {uid: {equals: $user_id}}) {
+    correct
+    member_id
+    _count {
+      pickid
+    }
+  }
+  members: leagueMembers(where: {user_id: {equals: $user_id}}) {
+    membership_id
+    leagues {
+      name
+      league_id
+    }
+  }
+}
+    `;
+
+/**
+ * __useProfileQuery__
+ *
+ * To run a query within a React component, call `useProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileQuery({
+ *   variables: {
+ *      user_id: // value for 'user_id'
+ *   },
+ * });
+ */
+export function useProfileQuery(baseOptions: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
+      }
+export function useProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
+        }
+export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
+export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
+export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
 export const RegisterDocument = gql`
     mutation Register($username: String!, $email: String!, $previousUserId: Int, $superbowlWinner: Int!, $superbowlLoser: Int!, $superbowlScore: Int!) {
   register(

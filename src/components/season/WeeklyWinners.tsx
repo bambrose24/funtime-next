@@ -40,14 +40,6 @@ export const WeeklyWinners = () => {
 
   return (
     <Flex direction="column">
-      <Box p="12px">
-        <Alert status="warning">
-          <AlertIcon />
-          <AlertTitle>
-            This page is still in development, this might be wrong!
-          </AlertTitle>
-        </Alert>
-      </Box>
       <TableContainer overflowY="auto" overflowX="auto" mt="12px">
         <Table size="md" variant="simple" fontSize={[14, 16]}>
           <Thead>

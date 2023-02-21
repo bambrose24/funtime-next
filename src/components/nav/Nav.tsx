@@ -19,6 +19,7 @@ import Section from "../Section";
 import { Typography } from "../Typography";
 import { navOptions, useSelectedNavOption } from "./types";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+import Link from "next/link";
 
 export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -40,7 +41,7 @@ export const DesktopNav: React.FC = () => {
                 icon={<MenuIcon />}
                 aria-label={"Open menu"}
               />
-              <a href="/">
+              <Link href="/">
                 <Image
                   cursor="pointer"
                   src="/logo/funtime_full_logo.png"
@@ -48,7 +49,7 @@ export const DesktopNav: React.FC = () => {
                   height={30}
                   placeholder="blur"
                 />
-              </a>
+              </Link>
             </HStack>
           </Box>
           <Flex align="center">
@@ -107,7 +108,7 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           {navOptions.map(({ href, name, display }) => {
             const selected = name === selectedNavOption;
             return (
-              <a href={href} key={name}>
+              <Link href={href} key={name}>
                 <Box
                   role={"group"}
                   m={2}
@@ -158,7 +159,7 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                     </Flex>
                   </HStack>
                 </Box>
-              </a>
+              </Link>
             );
           })}
         </Box>

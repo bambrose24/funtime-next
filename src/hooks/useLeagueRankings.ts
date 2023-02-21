@@ -36,8 +36,6 @@ export function useLeagueRankings({ leagueId }: { leagueId: number }) {
     };
   }
 
-  console.log({ usersData, correctPicksData });
-
   // const data = useMemo(() => {
   //   return sortedRanks(usersData, correctPicksData);
   // }, [usersData, correctPicksData]);

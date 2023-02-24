@@ -53,7 +53,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     query: PeopleWithLeaguesDocument,
   });
 
-  const uids = data.leagueMembers.map((u) => u.people.uid);
+  const uids = data.leagueMembers.map((u) => u.people.uid).slice(0, 10);
 
   return {
     paths: uids.map((uid) => {

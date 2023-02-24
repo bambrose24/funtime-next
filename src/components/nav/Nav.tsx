@@ -108,7 +108,7 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
           {navOptions.map(({ href, name, display }) => {
             const selected = name === selectedNavOption;
             return (
-              <Link href={href} key={name}>
+              <a href={href} key={name}>
                 <Box
                   role={"group"}
                   m={2}
@@ -159,7 +159,7 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                     </Flex>
                   </HStack>
                 </Box>
-              </Link>
+              </a>
             );
           })}
         </Box>

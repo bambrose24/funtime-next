@@ -10,7 +10,7 @@ const UserTag = (props: { user_id: number; username: string }) => {
 
   return (
     <Tooltip label={props.username} aria-label="A tooltip">
-      <Link href={profile_url}>
+      <a href={profile_url}>
         <Button
           size="sm"
           borderRadius="25px"
@@ -39,7 +39,7 @@ const UserTag = (props: { user_id: number; username: string }) => {
             </Typography.Subtitle1>
           </HStack>
         </Button>
-      </Link>
+      </a>
     </Tooltip>
   );
 };

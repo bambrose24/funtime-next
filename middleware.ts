@@ -25,6 +25,9 @@ export async function middleware(req: NextRequest) {
   return NextResponse.redirect(redirectUrl);
 }
 
+const matcher = process.env.FUNTIME_PHASE === "build" ? [] : ["/profile/:id*"];
+console.log("matcher???", matcher);
+
 export const config = {
-  matcher: ["/profile/:id*"],
+  matcher: [],
 };

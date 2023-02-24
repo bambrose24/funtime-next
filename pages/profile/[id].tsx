@@ -31,7 +31,7 @@ type IDParam = {
   id: string;
 };
 
-type Props = IDParam & { leagueId: number };
+type Props = IDParam;
 
 // TODO getStaticPaths and load all the users
 export const getStaticProps: GetStaticProps<Props, IDParam> = async (
@@ -40,8 +40,9 @@ export const getStaticProps: GetStaticProps<Props, IDParam> = async (
   // const client = getApolloClient();
   // const data = await client.query<AllPeopleQuery>({ query: AllPeopleDocument });
   const id = context.params?.id || "";
+
   return {
-    props: { id, leagueId: LEAGUE_ID },
+    props: { id },
     revalidate: 60 * 5,
   };
 };
@@ -64,13 +65,26 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export default function Profile({ id, leagueId }: Props) {
+export default function Profile(props: Props) {
+  const { id } = props;
+
+  // TODO allow other leagues
+  const leagueId = LEAGUE_ID;
+
   const userId = parseInt(id);
 
-  const { data: rankings, loading: rankingsLoading } = useLeagueRankings({
+  const {
+    data: rankings,
+    loading: rankingsLoading,
+    error: rankingsError,
+  } = useLeagueRankings({
     leagueId,
   });
-  const { data: profile, loading: profileLoading } = useProfileQuery({
+  const {
+    data: profile,
+    loading: profileLoading,
+    error: profileError,
+  } = useProfileQuery({
     variables: { user_id: userId },
   });
 

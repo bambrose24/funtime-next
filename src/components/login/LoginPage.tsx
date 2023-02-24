@@ -6,7 +6,6 @@ import { useAuthTheme } from "./util";
 import { Typography } from "../Typography";
 
 const LoginPage = () => {
-  const session = useSession();
   const supabase = useSupabaseClient();
 
   const authTheme = useAuthTheme();

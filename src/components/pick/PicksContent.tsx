@@ -18,6 +18,7 @@ import _ from "lodash";
 import { useRouter } from "next/router";
 import { FuntimeError } from "../shared/FuntimeError";
 import { FuntimeLoading } from "../shared/FuntimeLoading";
+import { FuntimeSeasonOver } from "../shared/FuntimeSeasonOver";
 
 export const PicksContent: React.FC = () => {
   const router = useRouter();
@@ -60,7 +61,7 @@ export const PicksContent: React.FC = () => {
     !(games.firstNotStartedWeek.games.length > 0)
   ) {
     // TODO show a "the season is over" page
-    return <FuntimeError />;
+    return <FuntimeSeasonOver />;
   }
   const week = games.firstNotStartedWeek.games[0].week;
   const season = games.firstNotStartedWeek.games[0].season;

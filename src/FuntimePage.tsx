@@ -28,9 +28,9 @@ const FuntimePage: React.FC<Props> = ({ children, requiresAuth }) => {
   }
 
   return (
-    <Box bgColor="gray.100">
+    <Box bgColor="gray.100" w="100%">
       <Nav />
-      <Box minHeight="100vh" py={4}>
+      <Box minHeight="100vh" py={4} w="100%">
         {children}
       </Box>
     </Box>

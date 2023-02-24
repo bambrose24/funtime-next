@@ -26,6 +26,7 @@ import { getApolloClient } from "@src/graphql";
 import { useLeagueRankings } from "@src/hooks/useLeagueRankings";
 import { LEAGUE_ID } from "@src/util/config";
 import { FuntimeError } from "@src/components/shared/FuntimeError";
+import { SECONDS_IN_DAY } from "@src/util/constants";
 
 type IDParam = {
   id: string;
@@ -43,7 +44,7 @@ export const getStaticProps: GetStaticProps<Props, IDParam> = async (
 
   return {
     props: { id },
-    revalidate: 60 * 5,
+    revalidate: SECONDS_IN_DAY * 100,
   };
 };
 
@@ -53,6 +54,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     query: PeopleWithLeaguesDocument,
   });
 
+  // could pick people by current season or something to prioritize, and if the amount of people kept growing
+  // this would need to grow also
   const uids = data.leagueMembers.map((u) => u.people.uid).slice(0, 10);
 
   return {

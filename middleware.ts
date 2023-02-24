@@ -29,5 +29,5 @@ const matcher = process.env.FUNTIME_PHASE === "build" ? [] : ["/profile/:id*"];
 console.log("matcher???", matcher);
 
 export const config = {
-  matcher: [],
+  matcher: ["/profile/:id*"],
 };

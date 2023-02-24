@@ -19,7 +19,6 @@ import Section from "../Section";
 import { Typography } from "../Typography";
 import { navOptions, useSelectedNavOption } from "./types";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import Link from "next/link";
 
 export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -41,7 +40,7 @@ export const DesktopNav: React.FC = () => {
                 icon={<MenuIcon />}
                 aria-label={"Open menu"}
               />
-              <Link href="/">
+              <a href="/">
                 <Image
                   cursor="pointer"
                   src="/logo/funtime_full_logo.png"
@@ -49,7 +48,7 @@ export const DesktopNav: React.FC = () => {
                   height={30}
                   placeholder="blur"
                 />
-              </Link>
+              </a>
             </HStack>
           </Box>
           <Flex align="center">

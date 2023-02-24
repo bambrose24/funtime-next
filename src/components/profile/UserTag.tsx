@@ -1,7 +1,6 @@
 import { Button, HStack, Tooltip, useBreakpointValue } from "@chakra-ui/react";
 import ProfilePicture from "./ProfilePicture";
 import { Typography } from "../Typography";
-import Link from "next/link";
 
 const UserTag = (props: { user_id: number; username: string }) => {
   const profile_url = "/profile/" + props.user_id;

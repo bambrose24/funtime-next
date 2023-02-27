@@ -10,7 +10,7 @@ const themeConfig: ThemeConfig = {
   useSystemColorMode: false,
 };
 
-export const themeVars = {
+export const themeVars: ThemeOverride = {
   colors: {
     primary: "#2B6CB0",
     error: "#C53030",
@@ -40,7 +40,7 @@ export const themeVars = {
       },
     },
   },
-} satisfies ThemeOverride;
+};
 
 const theme = extendTheme({
   config: themeConfig,

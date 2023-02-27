@@ -7,8 +7,11 @@ import {
   SlideFade,
   useDisclosure,
 } from "@chakra-ui/react";
+import { motion } from "framer-motion";
 import FuntimePage from "@src/FuntimePage";
 import { useState } from "react";
+
+const colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
 
 export default function TestPage() {
   const [idx, setIdx] = useState(0);
@@ -23,10 +26,18 @@ export default function TestPage() {
         <Flex direction="column" w="400px">
           {range.map((r) => {
             const current = r === idx;
+            const isLater = r > idx;
             return (
-              <SlideFade unmountOnExit={true} in={current}>
-                <Box w="100%" bg="blue" h="200px" />
-              </SlideFade>
+              <motion.div
+                animate={{
+                  display: current ? "inline" : "none",
+                  opacity: current ? 1 : 0,
+                  x: current ? 0 : isLater ? 400 : -400,
+                }}
+                transition={{ type: "tween" }}
+              >
+                <Box w="100%" h="200px" bg={colors[idx % colors.length]} />
+              </motion.div>
             );
           })}
 

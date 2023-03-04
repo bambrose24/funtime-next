@@ -6,9 +6,9 @@ export const CreateLeaguePage = () => {
   return (
     <FuntimePage>
       <Flex w="100%" justify="center">
-        <Box p="24px" bg="white" maxWidth="400px">
+        <Flex p="24px" bg="white">
           <CreateLeagueForm />
-        </Box>
+        </Flex>
       </Flex>
     </FuntimePage>
   );

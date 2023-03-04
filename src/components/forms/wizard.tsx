@@ -1,27 +1,30 @@
-import { Box, Button, Flex } from "@chakra-ui/react";
+import { Box, Button, Flex, FlexProps } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { createContext, ReactNode, useState } from "react";
+import { ReactNode, useState } from "react";
 
-type WizardProps = {
+export type WizardProps = {
   steps: Array<{
     component: ReactNode;
   }>;
   onSubmit: () => void;
   isSubmitting: boolean;
+  canSubmit: boolean;
   startingIdx?: number;
-};
+} & Pick<FlexProps, "width" | "height">;
 
 export function Wizard({
   steps,
   onSubmit,
   isSubmitting,
+  canSubmit,
+  width,
   startingIdx = 0,
 }: WizardProps) {
   const [currentIdx, setCurrentIdx] = useState(startingIdx);
   const isFinal = currentIdx === steps.length - 1;
   const isStart = currentIdx === 0;
   return (
-    <Flex direction="column" w="400px">
+    <Flex direction="column" width={width}>
       {steps.map((step, idx) => {
         const current = currentIdx === idx;
         const isLater = currentIdx > idx;
@@ -54,6 +57,7 @@ export function Wizard({
             variant="funtime-primary"
             isLoading={isSubmitting}
             onClick={onSubmit}
+            disabled={!canSubmit}
           >
             Submit
           </Button>

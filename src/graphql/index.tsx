@@ -7,7 +7,7 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { supabase } from "@src/user/supabase";
 
-import config from "../util/config";
+import config, { env } from "../util/config";
 
 const httpLink = createHttpLink({
   uri: config.graphqlEndpoint,

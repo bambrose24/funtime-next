@@ -7,6 +7,8 @@ export type Config = {
   graphqlEndpoint: string;
 };
 
+console.log("process next public env?", process.env.NEXT_PUBLIC_ENV);
+
 const configMap: Record<Env, Config> = {
   development: {
     graphqlEndpoint: "http://localhost:3001/graphql",

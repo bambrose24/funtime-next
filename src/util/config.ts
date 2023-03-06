@@ -1,6 +1,8 @@
 export const SEASON = 2022;
 export const LEAGUE_ID = 7;
 
+// dummy comment to keep staging branch separate
+
 type Env = "development" | "preview" | "production";
 
 export type Config = {

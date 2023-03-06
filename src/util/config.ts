@@ -27,4 +27,8 @@ if (process.env.NEXT_PUBLIC_ENV) {
 }
 
 export const env = environment;
-export default configMap[env];
+const config = configMap[env];
+
+console.log("graphql endpoint", config.graphqlEndpoint);
+
+export default config;

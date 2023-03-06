@@ -1,0 +1,23 @@
+name: Sync
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  update-staging-branch:
+    name: Update staging branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Git config
+        run: |
+          git config --local user.email "actions@github.com"
+          git config --local user.name "Github Actions"
+      - name: Merge master back to dev
+        run: |
+          git fetch --unshallow
+          git checkout staging
+          git pull
+          git merge --no-ff main -m "Auto-merge main to staging"
+          git push

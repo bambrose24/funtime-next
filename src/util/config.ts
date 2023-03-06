@@ -33,6 +33,6 @@ console.log("env?", process.env.NEXT_PUBLIC_ENV);
 export const env = environment;
 const config = configMap[env];
 
-console.log("graphql endpoint", config.graphqlEndpoint);
+console.log("(do they get updated?) graphql endpoint", config.graphqlEndpoint);
 
 export default config;

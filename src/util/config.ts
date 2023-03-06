@@ -26,6 +26,8 @@ if (process.env.NEXT_PUBLIC_ENV) {
   environment = process.env.NEXT_PUBLIC_ENV as Env;
 }
 
+console.log("env?", process.env.NEXT_PUBLIC_ENV);
+
 export const env = environment;
 const config = configMap[env];
 

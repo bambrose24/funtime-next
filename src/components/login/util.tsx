@@ -1,9 +1,11 @@
-import { ThemeSupa, ThemeVariables } from "@supabase/auth-ui-shared";
+import { useTheme } from "@chakra-ui/react";
 import theme, { themeVars } from "@src/util/theme";
+import { ThemeSupa } from "@supabase/auth-ui-react";
+import { ThemeVariables } from "@supabase/auth-ui-react/dist/esm/common/theming";
 import _ from "lodash";
 
 export function useAuthTheme(): typeof ThemeSupa {
-  const defaultThemeExtension = {
+  const defaultThemeExtension: ThemeVariables = {
     colors: {
       brand: themeVars.colors.primary,
       inputBackground: "white",
@@ -18,7 +20,7 @@ export function useAuthTheme(): typeof ThemeSupa {
     radii: {
       inputBorderRadius: "8px",
     },
-  } satisfies ThemeVariables;
+  };
 
   return _.merge({}, ThemeSupa, { default: defaultThemeExtension });
 }

@@ -11,17 +11,13 @@ import { supabase } from "@src/user/supabase";
 import { getApolloClient } from "@src/graphql";
 import { ApolloProvider } from "@apollo/client";
 import LogRocket from "logrocket";
-import config from "@src/util/config";
-import { AnalyticsProvider } from "@src/components/analytics/AnalyticsProvider";
 
 const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <ApolloProvider client={getApolloClient()}>
       <ChakraProvider theme={theme}>
-        <AnalyticsProvider>
-          <ColorModeScript initialColorMode="light" />
-          {children}
-        </AnalyticsProvider>
+        <ColorModeScript initialColorMode="light" />
+        {children}
       </ChakraProvider>
     </ApolloProvider>
   );
@@ -31,9 +27,8 @@ function MyApp({
   Component,
   pageProps,
 }: AppProps<{ initialSession: Session }>) {
-  const { logRocket } = config;
-  if (typeof window !== "undefined" && logRocket.enable) {
-    LogRocket.init(logRocket.key);
+  if (typeof window !== "undefined") {
+    LogRocket.init("5gvyus/funtime");
   }
 
   return (

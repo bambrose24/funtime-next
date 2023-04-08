@@ -1,8 +1,0 @@
-{
-  "build": {
-    "env": {
-      "DISABLE_SWC_MINIFICATION": "1",
-      "DISABLE_SWC_LOADER": "1"
-    }
-  }
-}

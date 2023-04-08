@@ -11,14 +11,17 @@ import { supabase } from "@src/user/supabase";
 import { getApolloClient } from "@src/graphql";
 import { ApolloProvider } from "@apollo/client";
 import LogRocket from "logrocket";
+import { AnalyticsProvider } from "@src/analytics/AnalyticsProvider";
 
 const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <ApolloProvider client={getApolloClient()}>
-      <ChakraProvider theme={theme}>
-        <ColorModeScript initialColorMode="light" />
-        {children}
-      </ChakraProvider>
+      <AnalyticsProvider>
+        <ChakraProvider theme={theme}>
+          <ColorModeScript initialColorMode="light" />
+          {children}
+        </ChakraProvider>
+      </AnalyticsProvider>
     </ApolloProvider>
   );
 };
@@ -39,7 +42,6 @@ function MyApp({
       <Providers>
         <MetaTags />
         <Component {...pageProps} />
-        <Analytics />
       </Providers>
     </SessionContextProvider>
   );

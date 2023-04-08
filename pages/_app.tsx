@@ -10,6 +10,7 @@ import { SessionContextProvider } from "@supabase/auth-helpers-react";
 import { supabase } from "@src/user/supabase";
 import { getApolloClient } from "@src/graphql";
 import { ApolloProvider } from "@apollo/client";
+import LogRocket from "logrocket";
 
 const Providers: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -26,6 +27,10 @@ function MyApp({
   Component,
   pageProps,
 }: AppProps<{ initialSession: Session }>) {
+  if (typeof window !== "undefined") {
+    LogRocket.init("5gvyus/funtime");
+  }
+
   return (
     <SessionContextProvider
       supabaseClient={supabase}

@@ -28,6 +28,7 @@
     "framer-motion": "^6.5.1",
     "graphql": "^16.5.0",
     "install": "^0.13.0",
+    "logrocket": "^4.0.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.34",
     "next": "^13.1.6",

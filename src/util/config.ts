@@ -7,18 +7,35 @@ type Env = "development" | "preview" | "production";
 
 export type Config = {
   graphqlEndpoint: string;
+  logRocket: {
+    enable: boolean;
+    key: string;
+  };
 };
 
 const configMap: Record<Env, Config> = {
   development: {
-    graphqlEndpoint: "http://localhost:3001/graphql",
+    // graphqlEndpoint: "http://localhost:3001/graphql",
     // graphqlEndpoint: "https://funtime-api-staging.fly.dev/graphql",
+    graphqlEndpoint: "https://funtime-api.fly.dev/graphql",
+    logRocket: {
+      enable: false,
+      key: "5gvyus/funtime",
+    },
   },
   preview: {
     graphqlEndpoint: "https://funtime-api-staging.fly.dev/graphql",
+    logRocket: {
+      enable: true,
+      key: "5gvyus/funtime",
+    },
   },
   production: {
     graphqlEndpoint: "https://funtime-api.fly.dev/graphql",
+    logRocket: {
+      enable: true,
+      key: "5gvyus/funtime",
+    },
   },
 };
 

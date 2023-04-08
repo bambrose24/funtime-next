@@ -2,7 +2,6 @@ import {
   Alert,
   AlertDescription,
   AlertIcon,
-  AlertTitle,
   Box,
   Flex,
 } from "@chakra-ui/react";
@@ -13,7 +12,6 @@ import {
   useFirstNotStartedWeekQuery,
 } from "@src/generated/graphql";
 import { LEAGUE_ID, SEASON } from "@src/util/config";
-import { useUser } from "@supabase/auth-helpers-react";
 import _ from "lodash";
 import { useRouter } from "next/router";
 import { FuntimeError } from "../shared/FuntimeError";

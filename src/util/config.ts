@@ -27,7 +27,9 @@ if (process.env.NEXT_PUBLIC_ENV) {
   environment = process.env.NEXT_PUBLIC_ENV as Env;
 }
 
-console.log('env?', process.env.NEXT_PUBLIC_ENV);
+if (typeof window !== 'undefined') {
+  console.log('env?', process.env.NEXT_PUBLIC_ENV);
+}
 
 export const env = environment;
 const config = configMap[env];

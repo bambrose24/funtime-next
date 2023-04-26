@@ -19,7 +19,6 @@ const HomeQuery = gql`
 
 export default function Home() {
   const {data} = useHomeQuery({variables: {where: {uid: 263}}});
-  console.log('data?', data);
   return (
     <FuntimePage>
       <Flex justify="center">

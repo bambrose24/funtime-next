@@ -10,7 +10,6 @@ export default function TestPage() {
 
   const ENTRIES = 100;
   const range = [...Array(ENTRIES).keys()].map(x => x - ENTRIES / 2);
-  console.log(range);
 
   return (
     <FuntimePage>

@@ -1,4 +1,4 @@
-import { FC, PropsWithChildren } from "react";
+import {FC, PropsWithChildren} from 'react';
 
 // Custom Type for a React functional component with props AND CHILDREN
 declare global {

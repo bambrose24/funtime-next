@@ -1,8 +1,5 @@
 query FindLeagueMembers($league_id: Int!) {
-  leagueMembers(
-    where: { league_id: { equals: $league_id } }
-    orderBy: { people: { username: asc } }
-  ) {
+  leagueMembers(where: {league_id: {equals: $league_id}}, orderBy: {people: {username: asc}}) {
     membership_id
     people {
       uid

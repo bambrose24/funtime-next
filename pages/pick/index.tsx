@@ -1,6 +1,6 @@
-import FuntimePage from "@src/FuntimePage";
-import { PicksContent } from "@src/components/pick/PicksContent";
-import { GetStaticProps } from "next";
+import FuntimePage from '@src/FuntimePage';
+import {PicksContent} from '@src/components/pick/PicksContent';
+import {GetStaticProps} from 'next';
 
 const PickPage: React.FC = () => {
   return (

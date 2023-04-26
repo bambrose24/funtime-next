@@ -1,16 +1,12 @@
-import Document, {
-  DocumentInitialProps,
-  DocumentContext,
-  DocumentProps,
-} from "next/document";
+import Document, {DocumentInitialProps, DocumentContext, DocumentProps} from 'next/document';
 
-import { getDataFromTree } from "@apollo/client/react/ssr";
-import { getApolloClient } from "@src/graphql";
+import {getDataFromTree} from '@apollo/client/react/ssr';
+import {getApolloClient} from '@src/graphql';
 
-type DocProps = { apolloState: any };
+type DocProps = {apolloState: any};
 type Props = DocumentProps & DocProps;
 
-class DocumentWithApollo extends Document<{ apolloState: any }> {
+class DocumentWithApollo extends Document<{apolloState: any}> {
   // Reference: https://gist.github.com/Tylerian/16d48e5850b407ba9e3654e17d334c1e
   constructor(props: Props) {
     super(props);
@@ -18,7 +14,7 @@ class DocumentWithApollo extends Document<{ apolloState: any }> {
     /**
      * Attach apolloState to the "global" __NEXT_DATA__ so we can populate the ApolloClient cache
      */
-    const { __NEXT_DATA__, apolloState } = props;
+    const {__NEXT_DATA__, apolloState} = props;
     // @ts-ignore
     __NEXT_DATA__.apolloState = apolloState;
   }
@@ -42,7 +38,7 @@ class DocumentWithApollo extends Document<{ apolloState: any }> {
         // @ts-ignore
         {...ctx.appProps}
         apolloClient={apolloClient}
-        pageProps={{ ...ctx.query }}
+        pageProps={{...ctx.query}}
       />
     );
 
@@ -58,7 +54,7 @@ class DocumentWithApollo extends Document<{ apolloState: any }> {
 
     // console.info(`Render Time: ${Date.now() - startTime} milliseconds.`);
 
-    return { ...initialProps, apolloState };
+    return {...initialProps, apolloState};
   }
 }
 

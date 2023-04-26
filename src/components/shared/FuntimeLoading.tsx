@@ -1,4 +1,4 @@
-import { Flex, Spinner } from "@chakra-ui/react";
+import {Flex, Spinner} from '@chakra-ui/react';
 
 export const FuntimeLoading: React.FC = () => {
   return (

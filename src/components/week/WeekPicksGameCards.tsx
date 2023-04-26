@@ -1,13 +1,9 @@
-import { Box, Flex, HStack, Theme, VStack } from "@chakra-ui/react";
-import {
-  AllTeamsQuery,
-  MsfGamePlayedStatus,
-  PicksByWeekQuery,
-} from "@src/generated/graphql";
-import _ from "lodash";
-import moment from "moment-timezone";
-import { TeamLogo } from "../shared/TeamLogo";
-import { Typography } from "../Typography";
+import {Box, Flex, HStack, Theme, VStack} from '@chakra-ui/react';
+import {AllTeamsQuery, MsfGamePlayedStatus, PicksByWeekQuery} from '@src/generated/graphql';
+import _ from 'lodash';
+import moment from 'moment-timezone';
+import {TeamLogo} from '../shared/TeamLogo';
+import {Typography} from '../Typography';
 
 type Props = {
   picksData: PicksByWeekQuery;
@@ -16,7 +12,7 @@ type Props = {
   simulatedPicks: Record<number, number>;
 };
 
-type TeamIDMapping = Record<number, AllTeamsQuery["teams"][number]>;
+type TeamIDMapping = Record<number, AllTeamsQuery['teams'][number]>;
 
 export const WeekPicksGameCards: React.FC<Props> = ({
   picksData,
@@ -24,10 +20,7 @@ export const WeekPicksGameCards: React.FC<Props> = ({
   pickTeam,
   simulatedPicks,
 }) => {
-  const gamesSorted = _(picksData.picksByWeek.games)
-    .sortBy("ts")
-    .sortBy("gid")
-    .value();
+  const gamesSorted = _(picksData.picksByWeek.games).sortBy('ts').sortBy('gid').value();
 
   const teamIdMapping = teams.teams.reduce((prev, curr) => {
     prev[curr.teamid] = curr;
@@ -37,7 +30,7 @@ export const WeekPicksGameCards: React.FC<Props> = ({
   return (
     <Flex justify="center">
       <HStack spacing="12px" my="12px" overflow="auto" paddingBottom="20px">
-        {gamesSorted.map((g) => {
+        {gamesSorted.map(g => {
           return (
             <GameCard
               key={g.gid}
@@ -53,14 +46,14 @@ export const WeekPicksGameCards: React.FC<Props> = ({
   );
 };
 
-type Game = PicksByWeekQuery["picksByWeek"]["games"][number];
+type Game = PicksByWeekQuery['picksByWeek']['games'][number];
 
 export const GameCard: React.FC<{
   g: Game;
   teams: TeamIDMapping;
   pickTeam: (t: number) => void;
   simulatedPicks: Record<number, number>;
-}> = ({ g, teams, pickTeam, simulatedPicks }) => {
+}> = ({g, teams, pickTeam, simulatedPicks}) => {
   const awayTeam = teams[g.away];
   const homeTeam = teams[g.home];
 
@@ -76,34 +69,26 @@ export const GameCard: React.FC<{
   ): [string | undefined, string | undefined] => {
     if (simulatedWinner) {
       if (simulatedWinner === team) {
-        return [undefined, "green.300"];
+        return [undefined, 'green.300'];
       } else {
-        return [undefined, "red.300"];
+        return [undefined, 'red.300'];
       }
     }
     if (game.winner === team) {
-      return ["pickCorrect", undefined];
+      return ['pickCorrect', undefined];
     }
     if (game.done && !game.winner) {
-      return ["yellow.400", undefined];
+      return ['yellow.400', undefined];
     }
     if (game.done) {
-      return ["pickWrong", undefined];
+      return ['pickWrong', undefined];
     }
     return [undefined, undefined];
   };
 
-  const [awayColor, awayBgColor] = getColors(
-    game,
-    game.away,
-    simulatedPicks[game.gid]
-  );
+  const [awayColor, awayBgColor] = getColors(game, game.away, simulatedPicks[game.gid]);
 
-  const [homeColor, homeBgColor] = getColors(
-    game,
-    game.home,
-    simulatedPicks[game.gid]
-  );
+  const [homeColor, homeBgColor] = getColors(game, game.home, simulatedPicks[game.gid]);
 
   // const awayColor = !game.done
   //   ? undefined
@@ -131,8 +116,8 @@ export const GameCard: React.FC<{
               borderRadius="4px"
               bg={awayBgColor}
               _hover={{
-                cursor: "pointer",
-                bg: awayBgColor ? undefined : "gray.200",
+                cursor: 'pointer',
+                bg: awayBgColor ? undefined : 'gray.200',
               }}
               onClick={() => pickTeam(awayTeam.teamid)}
             >
@@ -151,8 +136,8 @@ export const GameCard: React.FC<{
               borderRadius="4px"
               bg={homeBgColor}
               _hover={{
-                cursor: "pointer",
-                bg: homeBgColor ? undefined : "gray.200",
+                cursor: 'pointer',
+                bg: homeBgColor ? undefined : 'gray.200',
               }}
               onClick={() => pickTeam(homeTeam.teamid)}
             >
@@ -172,8 +157,8 @@ export const GameCard: React.FC<{
 };
 
 const GameLiveState: React.FC<{
-  game: PicksByWeekQuery["picksByWeek"]["games"][number];
-}> = ({ game }) => {
+  game: PicksByWeekQuery['picksByWeek']['games'][number];
+}> = ({game}) => {
   if (game.done) {
     return <Typography.Body2>Final</Typography.Body2>;
   }
@@ -198,12 +183,12 @@ const GameLiveState: React.FC<{
         const minutes = Math.floor(secondsRemaining / 60);
         const seconds = secondsRemaining - minutes * 60;
 
-        const minutesStr = minutes.toLocaleString("en-US", {
+        const minutesStr = minutes.toLocaleString('en-US', {
           minimumIntegerDigits: minutes < 10 && minutes !== 0 ? 1 : 2,
           useGrouping: false,
         });
 
-        const secondsStr = seconds.toLocaleString("en-US", {
+        const secondsStr = seconds.toLocaleString('en-US', {
           minimumIntegerDigits: 2,
           useGrouping: false,
         });
@@ -217,10 +202,6 @@ const GameLiveState: React.FC<{
   return <GameTS ts={game.ts} />;
 };
 
-const GameTS: React.FC<{ ts: any }> = ({ ts }) => {
-  return (
-    <Typography.Body2>
-      {moment(ts).tz("America/New_York").format("lll")}
-    </Typography.Body2>
-  );
+const GameTS: React.FC<{ts: any}> = ({ts}) => {
+  return <Typography.Body2>{moment(ts).tz('America/New_York').format('lll')}</Typography.Body2>;
 };

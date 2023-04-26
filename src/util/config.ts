@@ -3,7 +3,7 @@ export const LEAGUE_ID = 7;
 
 // dummy comment to keep staging branch separate
 
-type Env = "development" | "preview" | "production";
+type Env = 'development' | 'preview' | 'production';
 
 export type Config = {
   graphqlEndpoint: string;
@@ -11,24 +11,25 @@ export type Config = {
 
 const configMap: Record<Env, Config> = {
   development: {
-    graphqlEndpoint: "http://localhost:3001/graphql",
+    graphqlEndpoint: 'http://localhost:3001/graphql',
     // graphqlEndpoint: "https://funtime-api-staging.fly.dev/graphql",
+    // graphqlEndpoint: "https://funtime-api.fly.dev/graphql",
   },
   preview: {
-    graphqlEndpoint: "https://funtime-api-staging.fly.dev/graphql",
+    graphqlEndpoint: 'https://funtime-api-staging.fly.dev/graphql',
   },
   production: {
-    graphqlEndpoint: "https://funtime-api.fly.dev/graphql",
+    graphqlEndpoint: 'https://funtime-api.fly.dev/graphql',
   },
 };
 
-let environment: Env = "production";
+let environment: Env = 'production';
 
 if (process.env.NEXT_PUBLIC_ENV) {
   environment = process.env.NEXT_PUBLIC_ENV as Env;
 }
 
-console.log("env?", process.env.NEXT_PUBLIC_ENV);
+console.log('env?', process.env.NEXT_PUBLIC_ENV);
 
 export const env = environment;
 const config = configMap[env];

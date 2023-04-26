@@ -1,6 +1,6 @@
-import { Box, Button, Flex, FlexProps } from "@chakra-ui/react";
-import { motion } from "framer-motion";
-import { ReactNode, useState } from "react";
+import {Box, Button, Flex, FlexProps} from '@chakra-ui/react';
+import {motion} from 'framer-motion';
+import {ReactNode, useState} from 'react';
 
 export type WizardProps = {
   steps: Array<{
@@ -10,7 +10,7 @@ export type WizardProps = {
   isSubmitting: boolean;
   canSubmit: boolean;
   startingIdx?: number;
-} & Pick<FlexProps, "width" | "height">;
+} & Pick<FlexProps, 'width' | 'height'>;
 
 export function Wizard({
   steps,
@@ -31,11 +31,11 @@ export function Wizard({
         return (
           <motion.div
             animate={{
-              display: current ? "inline" : "none",
+              display: current ? 'inline' : 'none',
               opacity: current ? 1 : 0,
               x: current ? 0 : isLater ? -400 : 400,
             }}
-            transition={{ type: "tween" }}
+            transition={{type: 'tween'}}
           >
             {step.component}
           </motion.div>
@@ -45,10 +45,7 @@ export function Wizard({
         {isStart ? (
           <Box />
         ) : (
-          <Button
-            variant="outline"
-            onClick={() => setCurrentIdx((prev) => prev - 1)}
-          >
+          <Button variant="outline" onClick={() => setCurrentIdx(prev => prev - 1)}>
             Back
           </Button>
         )}
@@ -62,10 +59,7 @@ export function Wizard({
             Submit
           </Button>
         ) : (
-          <Button
-            variant="funtime-primary"
-            onClick={() => setCurrentIdx((prev) => prev + 1)}
-          >
+          <Button variant="funtime-primary" onClick={() => setCurrentIdx(prev => prev + 1)}>
             Next
           </Button>
         )}

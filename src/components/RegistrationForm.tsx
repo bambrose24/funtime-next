@@ -1,4 +1,4 @@
-import { ApolloError } from "@apollo/client";
+import {ApolloError} from '@apollo/client';
 import {
   Box,
   Button,
@@ -16,17 +16,17 @@ import {
   Select,
   Tooltip,
   VStack,
-} from "@chakra-ui/react";
-import { Form, Formik } from "formik";
-import { useMemo, useState } from "react";
-import { Typography } from "@src/components/Typography";
+} from '@chakra-ui/react';
+import {Form, Formik} from 'formik';
+import {useMemo, useState} from 'react';
+import {Typography} from '@src/components/Typography';
 import {
   AllTeamsQuery,
   FindLeagueMembersQuery,
   RegisterMutation,
   useRegisterMutation,
-} from "@src/generated/graphql";
-import * as Yup from "yup";
+} from '@src/generated/graphql';
+import * as Yup from 'yup';
 
 const RegistrationResponseModal: ReactFCC<{
   isOpen: boolean;
@@ -34,7 +34,7 @@ const RegistrationResponseModal: ReactFCC<{
   data: RegisterMutation | null | undefined;
   loading: boolean;
   error: ApolloError | undefined;
-}> = ({ isOpen, onClose, data, loading, error }) => {
+}> = ({isOpen, onClose, data, loading, error}) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -44,14 +44,13 @@ const RegistrationResponseModal: ReactFCC<{
         <ModalBody>
           {!error ? (
             <Typography.H4>
-              You're registered for 2022! Stay tuned for more updates. You'll
-              hear from us before the season starts.
+              You're registered for 2022! Stay tuned for more updates. You'll hear from us before
+              the season starts.
             </Typography.H4>
           ) : (
             <Typography.H4>
-              Oh no, there was a problem registering. Please refresh the page
-              and try again, or reach out to Bob at bambrose24@gmail.com for
-              help.
+              Oh no, there was a problem registering. Please refresh the page and try again, or
+              reach out to Bob at bambrose24@gmail.com for help.
             </Typography.H4>
           )}
         </ModalBody>
@@ -70,34 +69,33 @@ type RegistrationFormFields = {
 const RegistrationForm: ReactFCC<{
   previousMembers: FindLeagueMembersQuery;
   teams: AllTeamsQuery;
-}> = ({ previousMembers, teams }) => {
+}> = ({previousMembers, teams}) => {
   const formValidationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Required"),
+    email: Yup.string().email('Invalid email').required('Required'),
     username: Yup.string()
-      .min(2, "Too Short!")
-      .max(50, "Too Long!")
-      .required("Please choose a username"),
+      .min(2, 'Too Short!')
+      .max(50, 'Too Long!')
+      .required('Please choose a username'),
     previousUserId: Yup.string().optional(),
     superbowlWinner: Yup.string()
       .oneOf(
-        teams.teams.map((t) => t.teamid.toString()),
-        "Please choose your username"
+        teams.teams.map(t => t.teamid.toString()),
+        'Please choose your username'
       )
       .required(),
     superbowlLoser: Yup.string()
       .oneOf(
-        teams.teams.map((t) => t.teamid.toString()),
-        "Please choose your username"
+        teams.teams.map(t => t.teamid.toString()),
+        'Please choose your username'
       )
       .required(),
     superbowlScore: Yup.number()
       .required()
       .integer()
-      .lessThan(150, "Please enter a number below 150"),
+      .lessThan(150, 'Please enter a number below 150'),
   });
 
-  const [register, { data: registerData, loading, error, client }] =
-    useRegisterMutation();
+  const [register, {data: registerData, loading, error, client}] = useRegisterMutation();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -108,8 +106,8 @@ const RegistrationForm: ReactFCC<{
   }, [previousMembers.leagueMembers]);
 
   const teamsMap = useMemo(() => {
-    const map = new Map<number, typeof teams["teams"][number]>();
-    teams.teams.forEach((team) => {
+    const map = new Map<number, typeof teams['teams'][number]>();
+    teams.teams.forEach(team => {
       map.set(team.teamid, team);
     });
     return map;
@@ -124,16 +122,8 @@ const RegistrationForm: ReactFCC<{
         loading={loading}
         error={error}
       />
-      <Box
-        my={8}
-        bg="white"
-        width="480px"
-        color="gray.700"
-        p={4}
-        py={5}
-        rounded="lg"
-      >
-        <Typography.H3 style={{ textAlign: "center" }}>
+      <Box my={8} bg="white" width="480px" color="gray.700" p={4} py={5} rounded="lg">
+        <Typography.H3 style={{textAlign: 'center'}}>
           The season has started!
           <br /> Registration is closed.
         </Typography.H3>

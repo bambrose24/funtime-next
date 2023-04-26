@@ -1,6 +1,6 @@
-import { Box, Flex } from "@chakra-ui/react";
-import FuntimePage from "@src/FuntimePage";
-import { CreateLeagueForm } from "./form/CreateLeagueForm";
+import {Box, Flex} from '@chakra-ui/react';
+import FuntimePage from '@src/FuntimePage';
+import {CreateLeagueForm} from './form/CreateLeagueForm';
 
 export const CreateLeaguePage = () => {
   return (

@@ -1,11 +1,8 @@
-import { Box, BoxProps } from "@chakra-ui/react";
+import {Box, BoxProps} from '@chakra-ui/react';
 
-const Section: ReactFCC<Omit<BoxProps, "px" | "py">> = ({
-  children,
-  ...rest
-}) => {
+const Section: ReactFCC<Omit<BoxProps, 'px' | 'py'>> = ({children, ...rest}) => {
   return (
-    <Box px={{ base: 4, lg: 8 }} py={4} {...rest}>
+    <Box px={{base: 4, lg: 8}} py={4} {...rest}>
       {children}
     </Box>
   );

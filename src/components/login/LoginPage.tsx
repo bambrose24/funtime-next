@@ -1,9 +1,10 @@
-import { Auth } from "@supabase/auth-ui-react";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { Box, Divider, Flex } from "@chakra-ui/react";
-import FuntimePage from "@src/FuntimePage";
-import { useAuthTheme } from "./util";
-import { Typography } from "../Typography";
+import {Auth} from '@supabase/auth-ui-react';
+import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
+import {Box, Divider, Flex} from '@chakra-ui/react';
+import FuntimePage from '@src/FuntimePage';
+import {useAuthTheme} from './util';
+import {Typography} from '../Typography';
+import {ThemeSupa} from '@supabase/auth-ui-shared';
 
 const LoginPage = () => {
   const supabase = useSupabaseClient();
@@ -13,22 +14,18 @@ const LoginPage = () => {
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
-        <Box w={{ base: "80vw", md: "400px" }}>
+        <Box w={{base: '80vw', md: '400px'}}>
           <Typography.H1>Login</Typography.H1>
           <Typography.Body1 mt="20px">
-            Soon, you will be able to log in to Funtime for more interesting
-            features. For now, you don't get any features for registering, but
-            there will be some interesting ones soon
-          </Typography.Body1>
-          <Typography.Body1 mt="20px">
-            Use the flow to create an account now if you want. Please use your
-            email that we have on file.
+            Login with your email below. You'll get an email with a link to sign in.
           </Typography.Body1>
           <Divider my="20px" />
           <Auth
-            // providers={["google", "facebook", "apple"]}
             supabaseClient={supabase}
-            appearance={{ theme: authTheme }}
+            appearance={{theme: authTheme}}
+            view="magic_link"
+            showLinks={false}
+            providers={['google', 'apple']}
             magicLink
           />
         </Box>

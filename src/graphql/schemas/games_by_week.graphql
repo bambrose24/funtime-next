@@ -1,5 +1,5 @@
 query GamesByWeek($season: Int!, $week: Int!) {
-  games(where: { season: { equals: $season }, week: { equals: $week } }) {
+  games(where: {season: {equals: $season}, week: {equals: $week}}) {
     gid
     week
     season

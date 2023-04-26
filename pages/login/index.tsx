@@ -1,20 +1,19 @@
-import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useRouter } from "next/router";
-import LoginPage from "@src/components/login/LoginPage";
-import { useEffect } from "react";
+import {useSession} from '@supabase/auth-helpers-react';
+import {useRouter} from 'next/router';
+import LoginPage from '@src/components/login/LoginPage';
+import {useEffect} from 'react';
 
 const Login = () => {
   const router = useRouter();
   const session = useSession();
   useEffect(() => {
     if (session) {
-      console.log("router query", JSON.stringify(router.query));
-      if ("redirectTo" in router.query) {
-        const redirectTo = router.query["redirectTo"];
-        router.push({ pathname: redirectTo as string });
+      console.log('router query', JSON.stringify(router.query));
+      if ('redirectTo' in router.query) {
+        const redirectTo = router.query['redirectTo'];
+        router.push({pathname: redirectTo as string});
       } else {
-        router.push("/pick");
+        router.push('/pick');
       }
     }
   }, [router.query, session]);

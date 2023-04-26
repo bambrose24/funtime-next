@@ -1,1 +1,1 @@
-export type ScreenSize = "mobile" | "desktop";
+export type ScreenSize = 'mobile' | 'desktop';

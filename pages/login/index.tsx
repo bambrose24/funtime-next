@@ -1,5 +1,4 @@
-import {Auth, ThemeSupa} from '@supabase/auth-ui-react';
-import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
+import {useSession} from '@supabase/auth-helpers-react';
 import {useRouter} from 'next/router';
 import LoginPage from '@src/components/login/LoginPage';
 import {useEffect} from 'react';

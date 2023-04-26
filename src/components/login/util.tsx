@@ -1,7 +1,6 @@
 import {useTheme} from '@chakra-ui/react';
 import theme, {themeVars} from '@src/util/theme';
-import {ThemeSupa} from '@supabase/auth-ui-react';
-import {ThemeVariables} from '@supabase/auth-ui-react/dist/esm/common/theming';
+import {ThemeSupa, ThemeVariables} from '@supabase/auth-ui-shared';
 import _ from 'lodash';
 
 export function useAuthTheme(): typeof ThemeSupa {

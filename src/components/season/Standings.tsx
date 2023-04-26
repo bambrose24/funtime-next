@@ -1,59 +1,39 @@
-import React from "react";
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-  Box,
-  Flex,
-  Spinner,
-} from "@chakra-ui/react";
-import { Typography } from "../Typography";
+import React from 'react';
+import {Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex, Spinner} from '@chakra-ui/react';
+import {Typography} from '../Typography';
 import {
   SeasonCorrectPicksQuery,
   FindLeagueMembersQuery,
   useFindLeagueMembersQuery,
   useGamesBySeasonQuery,
   useSeasonCorrectPicksQuery,
-} from "../../generated/graphql";
-import { LEAGUE_ID, SEASON } from "../../util/config";
-import {
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  Th,
-  Thead,
-  TableContainer,
-  Stat,
-} from "@chakra-ui/react";
-import UserTag from "../profile/UserTag";
-import _ from "lodash";
-import { useLeagueRankings } from "@src/hooks/useLeagueRankings";
+} from '../../generated/graphql';
+import {LEAGUE_ID, SEASON} from '../../util/config';
+import {Table, Tbody, Tr, Td, Th, Thead, TableContainer, Stat} from '@chakra-ui/react';
+import UserTag from '../profile/UserTag';
+import _ from 'lodash';
+import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 
 export const Standings = () => {
-  const { data: usersData, loading: usersLoading } = useFindLeagueMembersQuery({
-    variables: { league_id: LEAGUE_ID },
+  const {data: usersData, loading: usersLoading} = useFindLeagueMembersQuery({
+    variables: {league_id: LEAGUE_ID},
   });
 
-  const { data: correctPicksData, loading: correctPicksLoading } =
-    useSeasonCorrectPicksQuery({ variables: { league_id: LEAGUE_ID } });
+  const {data: correctPicksData, loading: correctPicksLoading} = useSeasonCorrectPicksQuery({
+    variables: {league_id: LEAGUE_ID},
+  });
 
-  const { data: seasonGamesData, loading: seasonGamesLoading } =
-    useGamesBySeasonQuery({ variables: { season: SEASON } });
+  const {data: seasonGamesData, loading: seasonGamesLoading} = useGamesBySeasonQuery({
+    variables: {season: SEASON},
+  });
 
   const {
     data: rankings,
     loading: rankingsLoading,
     error: rankingsError,
-  } = useLeagueRankings({ leagueId: LEAGUE_ID });
+  } = useLeagueRankings({leagueId: LEAGUE_ID});
 
-  if (
-    usersLoading ||
-    correctPicksLoading ||
-    seasonGamesLoading ||
-    rankingsLoading
-  ) {
+  if (usersLoading || correctPicksLoading || seasonGamesLoading || rankingsLoading) {
     return (
       <Flex justify="center" m={8}>
         <Spinner />
@@ -64,9 +44,7 @@ export const Standings = () => {
   if (!usersData || !correctPicksData || !seasonGamesData || !rankings) {
     return (
       <Box w="100%">
-        <Typography.H2>
-          There was an error. Please refresh the page.
-        </Typography.H2>
+        <Typography.H2>There was an error. Please refresh the page.</Typography.H2>
       </Box>
     );
   }
@@ -74,10 +52,7 @@ export const Standings = () => {
   // sorted list of members based on correct pick count
   // 1. make list of members & correct pick count
   // 2. then sort it
-  const gamesLeft = seasonGamesData.games.reduce(
-    (prev, curr) => (curr.done ? prev : prev + 1),
-    0
-  );
+  const gamesLeft = seasonGamesData.games.reduce((prev, curr) => (curr.done ? prev : prev + 1), 0);
 
   return (
     <Flex direction="column">
@@ -116,16 +91,13 @@ export const Standings = () => {
             {rankings.map(
               ({
                 member: {
-                  people: { uid, username },
+                  people: {uid, username},
                 },
                 num_correct,
                 rank,
               }) => (
                 <React.Fragment key={uid}>
-                  <Tr
-                    transition={"all .3s ease"}
-                    _hover={{ bgColor: "gray.50" }}
-                  >
+                  <Tr transition={'all .3s ease'} _hover={{bgColor: 'gray.50'}}>
                     <Td pl={6} pr={0} py={0}>
                       <Stat>{rank}</Stat>
                     </Td>

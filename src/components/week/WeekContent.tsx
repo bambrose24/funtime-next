@@ -10,44 +10,43 @@ import {
   HStack,
   Select,
   useBreakpointValue,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 import {
   useAllTeamsQuery,
   useFindLeagueMembersQuery,
   usePicksByWeekQuery,
   useWinnersQuery,
-} from "@src/generated/graphql";
-import { env, LEAGUE_ID } from "@src/util/config";
-import _ from "lodash";
-import { useEffect, useState } from "react";
-import UserTag from "../profile/UserTag";
-import { FuntimeLoading } from "../shared/FuntimeLoading";
-import { Typography } from "../Typography";
-import { WeekPicksGameCards } from "./WeekPicksGameCards";
-import { WeekPicksTable } from "./WeekPicksTable";
+} from '@src/generated/graphql';
+import {env, LEAGUE_ID} from '@src/util/config';
+import _ from 'lodash';
+import {useEffect, useState} from 'react';
+import UserTag from '../profile/UserTag';
+import {FuntimeLoading} from '../shared/FuntimeLoading';
+import {Typography} from '../Typography';
+import {WeekPicksGameCards} from './WeekPicksGameCards';
+import {WeekPicksTable} from './WeekPicksTable';
 
 const fetchedWeeks = new Set<number>();
 
 export const WeekContent: React.FC = () => {
-  const [simulatedPicks, setSimulatedPicks] = useState<Record<number, number>>(
-    {}
-  );
+  const [simulatedPicks, setSimulatedPicks] = useState<Record<number, number>>({});
 
   const [weekState, setWeekState] = useState<number | undefined>(undefined);
 
-  const { data: defaultPicksByWeekData, loading: defaultPicksLoading } =
-    usePicksByWeekQuery({ variables: { league_id: LEAGUE_ID } });
-
-  const { data: winners, loading: winnersLoading } = useWinnersQuery({
-    variables: { league_id: LEAGUE_ID },
+  const {data: defaultPicksByWeekData, loading: defaultPicksLoading} = usePicksByWeekQuery({
+    variables: {league_id: LEAGUE_ID},
   });
 
-  const { data: picksData, loading: picksLoading } = usePicksByWeekQuery({
+  const {data: winners, loading: winnersLoading} = useWinnersQuery({
+    variables: {league_id: LEAGUE_ID},
+  });
+
+  const {data: picksData, loading: picksLoading} = usePicksByWeekQuery({
     variables: {
       league_id: LEAGUE_ID,
       // this is where you'd set the "week" from a dropdown
-      ...(weekState ? { week: weekState } : {}),
-      ...(env === "production" ? { override: true } : {}),
+      ...(weekState ? {week: weekState} : {}),
+      ...(env === 'production' ? {override: true} : {}),
     },
     skip: weekState === undefined,
     pollInterval: 1000 * 60 * 3, // every 3 minutes
@@ -62,42 +61,32 @@ export const WeekContent: React.FC = () => {
 
   const availableWeeksSet = new Set(
     [
-      ...(winners?.weekWinners || []).map((w) => w.week),
+      ...(winners?.weekWinners || []).map(w => w.week),
       defaultPicksByWeekData?.picksByWeek.week || undefined,
     ]
       .filter(Boolean)
-      .map((x) => parseInt((x as number)?.toString()))
+      .map(x => parseInt((x as number)?.toString()))
   );
   const availableWeeks = _.sortBy([...availableWeeksSet]) as number[];
 
-  const { data: people, loading: peopleLoading } = useFindLeagueMembersQuery({
+  const {data: people, loading: peopleLoading} = useFindLeagueMembersQuery({
     variables: {
       league_id: LEAGUE_ID,
     },
   });
 
-  const { data: teams, loading: teamsLoading } = useAllTeamsQuery();
+  const {data: teams, loading: teamsLoading} = useAllTeamsQuery();
 
-  const Header =
-    useBreakpointValue({ base: Typography.H2, lg: Typography.H1 }) ||
-    Typography.H1;
+  const Header = useBreakpointValue({base: Typography.H2, lg: Typography.H1}) || Typography.H1;
 
-  if (
-    picksLoading ||
-    peopleLoading ||
-    teamsLoading ||
-    winnersLoading ||
-    defaultPicksLoading
-  ) {
+  if (picksLoading || peopleLoading || teamsLoading || winnersLoading || defaultPicksLoading) {
     return <FuntimeLoading />;
   }
 
   if (!people || !teams || !winners || !defaultPicksByWeekData) {
     return (
       <Box w="100%">
-        <Typography.H2>
-          There was an error. Please refresh the page.
-        </Typography.H2>
+        <Typography.H2>There was an error. Please refresh the page.</Typography.H2>
       </Box>
     );
   }
@@ -105,28 +94,28 @@ export const WeekContent: React.FC = () => {
   const picks = picksData || defaultPicksByWeekData;
 
   const pickTeam = (t: number) => {
-    const g = picks.picksByWeek.games.find((g) => g.home === t || g.away === t);
+    const g = picks.picksByWeek.games.find(g => g.home === t || g.away === t);
     if (g) {
       if (g.gid in simulatedPicks && simulatedPicks[g.gid] === t) {
-        setSimulatedPicks((curr) => {
-          const copy = { ...curr };
+        setSimulatedPicks(curr => {
+          const copy = {...curr};
           delete copy[g.gid];
           return copy;
         });
       } else {
-        setSimulatedPicks({ ...simulatedPicks, [g.gid]: t });
+        setSimulatedPicks({...simulatedPicks, [g.gid]: t});
       }
     }
   };
 
-  const { week: weekResponse, season } = picks.picksByWeek;
+  const {week: weekResponse, season} = picks.picksByWeek;
 
   if (!picks.picksByWeek.canView) {
     return (
       <Flex justify="center" w="100%">
         <Typography.H1 mt={2} mb={4}>
-          Picks are not yet available for Week {weekState}, {season} because the
-          week has not started yet.
+          Picks are not yet available for Week {weekState}, {season} because the week has not
+          started yet.
         </Typography.H1>
       </Flex>
     );
@@ -134,25 +123,20 @@ export const WeekContent: React.FC = () => {
 
   const week = weekResponse || weekState;
 
-  const currentWinners = winners.weekWinners.find(
-    (winners) => winners.week === week
-  );
+  const currentWinners = winners.weekWinners.find(winners => winners.week === week);
   const areMultipleWinners = currentWinners && currentWinners.member.length > 1;
 
   return (
     <Box mx="12px">
-      <Flex w="100%" justify="center" px={{ base: "4px", lg: "24px" }}>
+      <Flex w="100%" justify="center" px={{base: '4px', lg: '24px'}}>
         <HStack spacing="24px">
           <Header mt={2} mb={4}>
             Week {week}, {season}
           </Header>
           <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
             <FormLabel>Week</FormLabel>
-            <Select
-              value={week}
-              onChange={(event) => setWeekState(parseInt(event.target.value))}
-            >
-              {availableWeeks.map((week) => {
+            <Select value={week} onChange={event => setWeekState(parseInt(event.target.value))}>
+              {availableWeeks.map(week => {
                 return (
                   <option key={week} value={week.toString()}>
                     {week}
@@ -166,10 +150,10 @@ export const WeekContent: React.FC = () => {
       <div
         style={{
           top: 0,
-          position: "sticky",
+          position: 'sticky',
           zIndex: 2,
-          backgroundColor: "#EDF2F7",
-          paddingTop: "16px",
+          backgroundColor: '#EDF2F7',
+          paddingTop: '16px',
         }}
       >
         <WeekPicksGameCards
@@ -182,7 +166,7 @@ export const WeekContent: React.FC = () => {
       {currentWinners?.member?.length &&
         currentWinners.member.length > 0 &&
         Object.keys(simulatedPicks).length === 0 && (
-          <Box px={{ base: "2px", lg: "24px" }} py="16px">
+          <Box px={{base: '2px', lg: '24px'}} py="16px">
             <Alert status="success">
               <AlertIcon />
               <AlertTitle>
@@ -192,7 +176,7 @@ export const WeekContent: React.FC = () => {
               </AlertTitle>
               <AlertDescription>
                 <HStack>
-                  {currentWinners.member.map((winner) => {
+                  {currentWinners.member.map(winner => {
                     return (
                       <UserTag
                         key={winner.people.uid}

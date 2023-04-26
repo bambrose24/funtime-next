@@ -9,16 +9,16 @@ import {
   HStack,
   IconButton,
   Image,
-} from "@chakra-ui/react";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import Section from "../Section";
-import { Typography } from "../Typography";
-import { navOptions, useSelectedNavOption } from "./types";
-import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
+} from '@chakra-ui/react';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import {useRouter} from 'next/router';
+import {useState} from 'react';
+import Section from '../Section';
+import {Typography} from '../Typography';
+import {navOptions, useSelectedNavOption} from './types';
+import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
 
 export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -33,12 +33,12 @@ export const DesktopNav: React.FC = () => {
           <Box>
             <HStack spacing={4}>
               <IconButton
-                _hover={{ bgColor: "blue.500" }}
+                _hover={{bgColor: 'blue.500'}}
                 onClick={() => setIsOpen(true)}
                 bgColor="primary"
                 color="orange.50"
                 icon={<MenuIcon />}
-                aria-label={"Open menu"}
+                aria-label={'Open menu'}
               />
               <a href="/">
                 <Image
@@ -58,12 +58,10 @@ export const DesktopNav: React.FC = () => {
                 if (session) {
                   await supabase.auth.signOut();
                 }
-                router.push({ pathname: "/login", query: {} });
+                router.push({pathname: '/login', query: {}});
               }}
             >
-              <Typography.Body1>
-                {session ? "Log Out" : "Log In"}
-              </Typography.Body1>
+              <Typography.Body1>{session ? 'Log Out' : 'Log In'}</Typography.Body1>
             </Button>
           </Flex>
         </Flex>
@@ -73,10 +71,7 @@ export const DesktopNav: React.FC = () => {
   );
 };
 
-const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
-  isOpen,
-  onClose,
-}) => {
+const DesktopNavDrawer: React.FC<{isOpen: boolean; onClose: () => void}> = ({isOpen, onClose}) => {
   const router = useRouter();
   const selectedNavOption = useSelectedNavOption();
   return (
@@ -97,37 +92,35 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
               bgColor="primary"
               color="white"
               icon={<CloseIcon />}
-              aria-label={"Close menu"}
-              _hover={{ bgColor: "blue.500" }}
+              aria-label={'Close menu'}
+              _hover={{bgColor: 'blue.500'}}
               onClick={onClose}
             />
           </Flex>
         </DrawerHeader>
         <Box mx={5}>
-          {navOptions.map(({ href, name, display }) => {
+          {navOptions.map(({href, name, display}) => {
             const selected = name === selectedNavOption;
             return (
               <a href={href} key={name}>
                 <Box
-                  role={"group"}
+                  role={'group'}
                   m={2}
                   p={4}
                   rounded="lg"
-                  transition={"all .3s ease"}
-                  bgColor={selected ? "primary" : undefined}
-                  color={selected ? "white" : undefined}
+                  transition={'all .3s ease'}
+                  bgColor={selected ? 'primary' : undefined}
+                  color={selected ? 'white' : undefined}
                   _hover={{
-                    cursor: "pointer",
-                    backgroundColor: selected ? undefined : "gray.300",
+                    cursor: 'pointer',
+                    backgroundColor: selected ? undefined : 'gray.300',
                   }}
                 >
                   <HStack>
                     <Image
                       cursor="pointer"
                       src={
-                        "/nav_icons/" +
-                        name +
-                        (selected ? "_icon_white.png" : "_icon_black.png")
+                        '/nav_icons/' + name + (selected ? '_icon_white.png' : '_icon_black.png')
                       }
                       height={5}
                       placeholder="blur"
@@ -138,20 +131,20 @@ const DesktopNavDrawer: React.FC<{ isOpen: boolean; onClose: () => void }> = ({
                     />
                     <Typography.H5
                       display="inline-block"
-                      fontWeight={selected ? "bold" : undefined}
+                      fontWeight={selected ? 'bold' : undefined}
                     >
                       {display}
                     </Typography.H5>
                     <Flex
-                      transition={"all .3s ease"}
-                      transform={"translateX(-10px)"}
+                      transition={'all .3s ease'}
+                      transform={'translateX(-10px)'}
                       opacity={0}
                       _groupHover={{
-                        opacity: "100%",
-                        transform: "translateX(0)",
+                        opacity: '100%',
+                        transform: 'translateX(0)',
                       }}
-                      justify={"flex-end"}
-                      align={"center"}
+                      justify={'flex-end'}
+                      align={'center'}
                       flex={1}
                     >
                       {selected ? undefined : <ChevronRightIcon />}

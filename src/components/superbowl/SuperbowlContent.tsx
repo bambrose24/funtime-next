@@ -1,26 +1,15 @@
-import {
-  Box,
-  Flex,
-  Stat,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from "@chakra-ui/react";
-import { useSuperbowlPicksQuery } from "@src/generated/graphql";
-import { LEAGUE_ID } from "@src/util/config";
-import _ from "lodash";
-import UserTag from "../profile/UserTag";
-import { FuntimeError } from "../shared/FuntimeError";
-import { FuntimeLoading } from "../shared/FuntimeLoading";
-import { Typography } from "../Typography";
+import {Box, Flex, Stat, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
+import {useSuperbowlPicksQuery} from '@src/generated/graphql';
+import {LEAGUE_ID} from '@src/util/config';
+import _ from 'lodash';
+import UserTag from '../profile/UserTag';
+import {FuntimeError} from '../shared/FuntimeError';
+import {FuntimeLoading} from '../shared/FuntimeLoading';
+import {Typography} from '../Typography';
 
 const SuperbowlContent = () => {
-  const { data, loading, error } = useSuperbowlPicksQuery({
-    variables: { league_id: LEAGUE_ID },
+  const {data, loading, error} = useSuperbowlPicksQuery({
+    variables: {league_id: LEAGUE_ID},
   });
   if (loading) {
     return <FuntimeLoading />;
@@ -28,10 +17,7 @@ const SuperbowlContent = () => {
   if (error || !data) {
     return <FuntimeError />;
   }
-  const superbowls = _.sortBy(
-    data.superbowls,
-    (x) => x.leaguemembers?.people.username
-  );
+  const superbowls = _.sortBy(data.superbowls, x => x.leaguemembers?.people.username);
   return (
     <Flex w="100%" justify="center">
       <Box maxW="min(100%, 700px)" bg="white" borderRadius="4px">
@@ -49,13 +35,13 @@ const SuperbowlContent = () => {
               </Tr>
             </Thead>
             <Tbody>
-              {superbowls.map((pick) => {
+              {superbowls.map(pick => {
                 return (
                   <>
                     <Tr
                       key={pick.leaguemembers?.membership_id!}
-                      transition={"all .3s ease"}
-                      _hover={{ bgColor: "gray.50" }}
+                      transition={'all .3s ease'}
+                      _hover={{bgColor: 'gray.50'}}
                     >
                       <Td>
                         <UserTag

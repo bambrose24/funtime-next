@@ -1,10 +1,10 @@
-import { gql } from '@apollo/client';
+import {gql} from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends {[key: string]: unknown}> = {[K in keyof T]: T[K]};
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {[SubKey in K]?: Maybe<T[SubKey]>};
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {[SubKey in K]: Maybe<T[SubKey]>};
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -277,7 +277,6 @@ export type Game = {
   week: Scalars['Int'];
   winner?: Maybe<Scalars['Int']>;
 };
-
 
 export type GamePicksArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
@@ -725,7 +724,7 @@ export enum GameScalarFieldEnum {
   Seconds = 'seconds',
   Ts = 'ts',
   Week = 'week',
-  Winner = 'winner'
+  Winner = 'winner',
 }
 
 export type GameScalarWhereInput = {
@@ -1052,7 +1051,7 @@ export type IntWithAggregatesFilter = {
 
 export enum LatePolicy {
   AllowLateWholeWeek = 'allow_late_whole_week',
-  CloseAtFirstGameStart = 'close_at_first_game_start'
+  CloseAtFirstGameStart = 'close_at_first_game_start',
 }
 
 export type League = {
@@ -1070,7 +1069,6 @@ export type League = {
   scoring_type?: Maybe<ScoringType>;
   season?: Maybe<Scalars['Int']>;
 };
-
 
 export type LeagueLeaguemembersArgs = {
   cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
@@ -1273,7 +1271,6 @@ export type LeagueMember = {
   user_id: Scalars['Int'];
 };
 
-
 export type LeagueMemberPicksArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
   distinct?: InputMaybe<Array<PickScalarFieldEnum>>;
@@ -1282,7 +1279,6 @@ export type LeagueMemberPicksArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<PickWhereInput>;
 };
-
 
 export type LeagueMemberSuperbowlArgs = {
   cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
@@ -1542,7 +1538,7 @@ export enum LeagueMemberScalarFieldEnum {
   MembershipId = 'membership_id',
   Role = 'role',
   Ts = 'ts',
-  UserId = 'user_id'
+  UserId = 'user_id',
 }
 
 export type LeagueMemberScalarWhereInput = {
@@ -1809,7 +1805,7 @@ export enum LeagueScalarFieldEnum {
   PickPolicy = 'pick_policy',
   ReminderPolicy = 'reminder_policy',
   ScoringType = 'scoring_type',
-  Season = 'season'
+  Season = 'season',
 }
 
 export type LeagueScalarWhereInput = {
@@ -1968,7 +1964,7 @@ export enum MsfGamePlayedStatus {
   Completed = 'COMPLETED',
   CompletedPendingReview = 'COMPLETED_PENDING_REVIEW',
   Live = 'LIVE',
-  Unplayed = 'UNPLAYED'
+  Unplayed = 'UNPLAYED',
 }
 
 export type MakePicksResponse = {
@@ -2047,180 +2043,146 @@ export type Mutation = {
   upsertOneUser: User;
 };
 
-
 export type MutationCreateManyGameArgs = {
   data: Array<GameCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type MutationCreateManyLeagueArgs = {
   data: Array<LeagueCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type MutationCreateManyLeagueMemberArgs = {
   data: Array<LeagueMemberCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type MutationCreateManyPickArgs = {
   data: Array<PickCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type MutationCreateManySuperbowlArgs = {
   data: Array<SuperbowlCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type MutationCreateManySuperbowlSquareArgs = {
   data: Array<SuperbowlSquareCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type MutationCreateManyTeamArgs = {
   data: Array<TeamCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
-
 
 export type MutationCreateManyUserArgs = {
   data: Array<UserCreateManyInput>;
   skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
-
 export type MutationCreateOneGameArgs = {
   data: GameCreateInput;
 };
-
 
 export type MutationCreateOneLeagueArgs = {
   data: LeagueCreateInput;
 };
 
-
 export type MutationCreateOneLeagueMemberArgs = {
   data: LeagueMemberCreateInput;
 };
-
 
 export type MutationCreateOnePickArgs = {
   data: PickCreateInput;
 };
 
-
 export type MutationCreateOneSuperbowlArgs = {
   data: SuperbowlCreateInput;
 };
-
 
 export type MutationCreateOneSuperbowlSquareArgs = {
   data: SuperbowlSquareCreateInput;
 };
 
-
 export type MutationCreateOneTeamArgs = {
   data: TeamCreateInput;
 };
-
 
 export type MutationCreateOneUserArgs = {
   data: UserCreateInput;
 };
 
-
 export type MutationDeleteManyGameArgs = {
   where?: InputMaybe<GameWhereInput>;
 };
-
 
 export type MutationDeleteManyLeagueArgs = {
   where?: InputMaybe<LeagueWhereInput>;
 };
 
-
 export type MutationDeleteManyLeagueMemberArgs = {
   where?: InputMaybe<LeagueMemberWhereInput>;
 };
-
 
 export type MutationDeleteManyPickArgs = {
   where?: InputMaybe<PickWhereInput>;
 };
 
-
 export type MutationDeleteManySuperbowlArgs = {
   where?: InputMaybe<SuperbowlWhereInput>;
 };
-
 
 export type MutationDeleteManySuperbowlSquareArgs = {
   where?: InputMaybe<SuperbowlSquareWhereInput>;
 };
 
-
 export type MutationDeleteManyTeamArgs = {
   where?: InputMaybe<TeamWhereInput>;
 };
-
 
 export type MutationDeleteManyUserArgs = {
   where?: InputMaybe<UserWhereInput>;
 };
 
-
 export type MutationDeleteOneGameArgs = {
   where: GameWhereUniqueInput;
 };
-
 
 export type MutationDeleteOneLeagueArgs = {
   where: LeagueWhereUniqueInput;
 };
 
-
 export type MutationDeleteOneLeagueMemberArgs = {
   where: LeagueMemberWhereUniqueInput;
 };
-
 
 export type MutationDeleteOnePickArgs = {
   where: PickWhereUniqueInput;
 };
 
-
 export type MutationDeleteOneSuperbowlArgs = {
   where: SuperbowlWhereUniqueInput;
 };
-
 
 export type MutationDeleteOneSuperbowlSquareArgs = {
   where: SuperbowlSquareWhereUniqueInput;
 };
 
-
 export type MutationDeleteOneTeamArgs = {
   where: TeamWhereUniqueInput;
 };
-
 
 export type MutationDeleteOneUserArgs = {
   where: UserWhereUniqueInput;
 };
 
-
 export type MutationMakePicksArgs = {
   member_id: Scalars['Int'];
   picks: Array<GamePick>;
 };
-
 
 export type MutationRegisterArgs = {
   email: Scalars['String'];
@@ -2231,102 +2193,85 @@ export type MutationRegisterArgs = {
   username: Scalars['String'];
 };
 
-
 export type MutationUpdateManyGameArgs = {
   data: GameUpdateManyMutationInput;
   where?: InputMaybe<GameWhereInput>;
 };
-
 
 export type MutationUpdateManyLeagueArgs = {
   data: LeagueUpdateManyMutationInput;
   where?: InputMaybe<LeagueWhereInput>;
 };
 
-
 export type MutationUpdateManyLeagueMemberArgs = {
   data: LeagueMemberUpdateManyMutationInput;
   where?: InputMaybe<LeagueMemberWhereInput>;
 };
-
 
 export type MutationUpdateManyPickArgs = {
   data: PickUpdateManyMutationInput;
   where?: InputMaybe<PickWhereInput>;
 };
 
-
 export type MutationUpdateManySuperbowlArgs = {
   data: SuperbowlUpdateManyMutationInput;
   where?: InputMaybe<SuperbowlWhereInput>;
 };
-
 
 export type MutationUpdateManySuperbowlSquareArgs = {
   data: SuperbowlSquareUpdateManyMutationInput;
   where?: InputMaybe<SuperbowlSquareWhereInput>;
 };
 
-
 export type MutationUpdateManyTeamArgs = {
   data: TeamUpdateManyMutationInput;
   where?: InputMaybe<TeamWhereInput>;
 };
-
 
 export type MutationUpdateManyUserArgs = {
   data: UserUpdateManyMutationInput;
   where?: InputMaybe<UserWhereInput>;
 };
 
-
 export type MutationUpdateOneGameArgs = {
   data: GameUpdateInput;
   where: GameWhereUniqueInput;
 };
-
 
 export type MutationUpdateOneLeagueArgs = {
   data: LeagueUpdateInput;
   where: LeagueWhereUniqueInput;
 };
 
-
 export type MutationUpdateOneLeagueMemberArgs = {
   data: LeagueMemberUpdateInput;
   where: LeagueMemberWhereUniqueInput;
 };
-
 
 export type MutationUpdateOnePickArgs = {
   data: PickUpdateInput;
   where: PickWhereUniqueInput;
 };
 
-
 export type MutationUpdateOneSuperbowlArgs = {
   data: SuperbowlUpdateInput;
   where: SuperbowlWhereUniqueInput;
 };
-
 
 export type MutationUpdateOneSuperbowlSquareArgs = {
   data: SuperbowlSquareUpdateInput;
   where: SuperbowlSquareWhereUniqueInput;
 };
 
-
 export type MutationUpdateOneTeamArgs = {
   data: TeamUpdateInput;
   where: TeamWhereUniqueInput;
 };
 
-
 export type MutationUpdateOneUserArgs = {
   data: UserUpdateInput;
   where: UserWhereUniqueInput;
 };
-
 
 export type MutationUpsertOneGameArgs = {
   create: GameCreateInput;
@@ -2334,13 +2279,11 @@ export type MutationUpsertOneGameArgs = {
   where: GameWhereUniqueInput;
 };
 
-
 export type MutationUpsertOneLeagueArgs = {
   create: LeagueCreateInput;
   update: LeagueUpdateInput;
   where: LeagueWhereUniqueInput;
 };
-
 
 export type MutationUpsertOneLeagueMemberArgs = {
   create: LeagueMemberCreateInput;
@@ -2348,13 +2291,11 @@ export type MutationUpsertOneLeagueMemberArgs = {
   where: LeagueMemberWhereUniqueInput;
 };
 
-
 export type MutationUpsertOnePickArgs = {
   create: PickCreateInput;
   update: PickUpdateInput;
   where: PickWhereUniqueInput;
 };
-
 
 export type MutationUpsertOneSuperbowlArgs = {
   create: SuperbowlCreateInput;
@@ -2362,20 +2303,17 @@ export type MutationUpsertOneSuperbowlArgs = {
   where: SuperbowlWhereUniqueInput;
 };
 
-
 export type MutationUpsertOneSuperbowlSquareArgs = {
   create: SuperbowlSquareCreateInput;
   update: SuperbowlSquareUpdateInput;
   where: SuperbowlSquareWhereUniqueInput;
 };
 
-
 export type MutationUpsertOneTeamArgs = {
   create: TeamCreateInput;
   update: TeamUpdateInput;
   where: TeamWhereUniqueInput;
 };
-
 
 export type MutationUpsertOneUserArgs = {
   create: UserCreateInput;
@@ -3092,7 +3030,7 @@ export type PickOrderByWithRelationInput = {
 };
 
 export enum PickPolicy {
-  ChooseWinner = 'choose_winner'
+  ChooseWinner = 'choose_winner',
 }
 
 export enum PickScalarFieldEnum {
@@ -3108,7 +3046,7 @@ export enum PickScalarFieldEnum {
   Ts = 'ts',
   Uid = 'uid',
   Week = 'week',
-  Winner = 'winner'
+  Winner = 'winner',
 }
 
 export type PickScalarWhereInput = {
@@ -3436,7 +3374,6 @@ export type Query = {
   weekWinners: Array<WeekWinner>;
 };
 
-
 export type QueryAggregateGameArgs = {
   cursor?: InputMaybe<GameWhereUniqueInput>;
   orderBy?: InputMaybe<Array<GameOrderByWithRelationInput>>;
@@ -3444,7 +3381,6 @@ export type QueryAggregateGameArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<GameWhereInput>;
 };
-
 
 export type QueryAggregateLeagueArgs = {
   cursor?: InputMaybe<LeagueWhereUniqueInput>;
@@ -3454,7 +3390,6 @@ export type QueryAggregateLeagueArgs = {
   where?: InputMaybe<LeagueWhereInput>;
 };
 
-
 export type QueryAggregateLeagueMemberArgs = {
   cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
   orderBy?: InputMaybe<Array<LeagueMemberOrderByWithRelationInput>>;
@@ -3462,7 +3397,6 @@ export type QueryAggregateLeagueMemberArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<LeagueMemberWhereInput>;
 };
-
 
 export type QueryAggregatePickArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
@@ -3472,7 +3406,6 @@ export type QueryAggregatePickArgs = {
   where?: InputMaybe<PickWhereInput>;
 };
 
-
 export type QueryAggregateSuperbowlArgs = {
   cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
   orderBy?: InputMaybe<Array<SuperbowlOrderByWithRelationInput>>;
@@ -3480,7 +3413,6 @@ export type QueryAggregateSuperbowlArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<SuperbowlWhereInput>;
 };
-
 
 export type QueryAggregateSuperbowlSquareArgs = {
   cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
@@ -3490,7 +3422,6 @@ export type QueryAggregateSuperbowlSquareArgs = {
   where?: InputMaybe<SuperbowlSquareWhereInput>;
 };
 
-
 export type QueryAggregateTeamArgs = {
   cursor?: InputMaybe<TeamWhereUniqueInput>;
   orderBy?: InputMaybe<Array<TeamOrderByWithRelationInput>>;
@@ -3499,7 +3430,6 @@ export type QueryAggregateTeamArgs = {
   where?: InputMaybe<TeamWhereInput>;
 };
 
-
 export type QueryAggregateUserArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   orderBy?: InputMaybe<Array<UserOrderByWithRelationInput>>;
@@ -3507,7 +3437,6 @@ export type QueryAggregateUserArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<UserWhereInput>;
 };
-
 
 export type QueryFindFirstGameArgs = {
   cursor?: InputMaybe<GameWhereUniqueInput>;
@@ -3518,7 +3447,6 @@ export type QueryFindFirstGameArgs = {
   where?: InputMaybe<GameWhereInput>;
 };
 
-
 export type QueryFindFirstGameOrThrowArgs = {
   cursor?: InputMaybe<GameWhereUniqueInput>;
   distinct?: InputMaybe<Array<GameScalarFieldEnum>>;
@@ -3527,7 +3455,6 @@ export type QueryFindFirstGameOrThrowArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<GameWhereInput>;
 };
-
 
 export type QueryFindFirstLeagueArgs = {
   cursor?: InputMaybe<LeagueWhereUniqueInput>;
@@ -3538,7 +3465,6 @@ export type QueryFindFirstLeagueArgs = {
   where?: InputMaybe<LeagueWhereInput>;
 };
 
-
 export type QueryFindFirstLeagueMemberArgs = {
   cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
   distinct?: InputMaybe<Array<LeagueMemberScalarFieldEnum>>;
@@ -3547,7 +3473,6 @@ export type QueryFindFirstLeagueMemberArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<LeagueMemberWhereInput>;
 };
-
 
 export type QueryFindFirstLeagueMemberOrThrowArgs = {
   cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
@@ -3558,7 +3483,6 @@ export type QueryFindFirstLeagueMemberOrThrowArgs = {
   where?: InputMaybe<LeagueMemberWhereInput>;
 };
 
-
 export type QueryFindFirstLeagueOrThrowArgs = {
   cursor?: InputMaybe<LeagueWhereUniqueInput>;
   distinct?: InputMaybe<Array<LeagueScalarFieldEnum>>;
@@ -3567,7 +3491,6 @@ export type QueryFindFirstLeagueOrThrowArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<LeagueWhereInput>;
 };
-
 
 export type QueryFindFirstPickArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
@@ -3578,7 +3501,6 @@ export type QueryFindFirstPickArgs = {
   where?: InputMaybe<PickWhereInput>;
 };
 
-
 export type QueryFindFirstPickOrThrowArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
   distinct?: InputMaybe<Array<PickScalarFieldEnum>>;
@@ -3587,7 +3509,6 @@ export type QueryFindFirstPickOrThrowArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<PickWhereInput>;
 };
-
 
 export type QueryFindFirstSuperbowlArgs = {
   cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
@@ -3598,7 +3519,6 @@ export type QueryFindFirstSuperbowlArgs = {
   where?: InputMaybe<SuperbowlWhereInput>;
 };
 
-
 export type QueryFindFirstSuperbowlOrThrowArgs = {
   cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
   distinct?: InputMaybe<Array<SuperbowlScalarFieldEnum>>;
@@ -3607,7 +3527,6 @@ export type QueryFindFirstSuperbowlOrThrowArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<SuperbowlWhereInput>;
 };
-
 
 export type QueryFindFirstSuperbowlSquareArgs = {
   cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
@@ -3618,7 +3537,6 @@ export type QueryFindFirstSuperbowlSquareArgs = {
   where?: InputMaybe<SuperbowlSquareWhereInput>;
 };
 
-
 export type QueryFindFirstSuperbowlSquareOrThrowArgs = {
   cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
   distinct?: InputMaybe<Array<SuperbowlSquareScalarFieldEnum>>;
@@ -3627,7 +3545,6 @@ export type QueryFindFirstSuperbowlSquareOrThrowArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<SuperbowlSquareWhereInput>;
 };
-
 
 export type QueryFindFirstTeamArgs = {
   cursor?: InputMaybe<TeamWhereUniqueInput>;
@@ -3638,7 +3555,6 @@ export type QueryFindFirstTeamArgs = {
   where?: InputMaybe<TeamWhereInput>;
 };
 
-
 export type QueryFindFirstTeamOrThrowArgs = {
   cursor?: InputMaybe<TeamWhereUniqueInput>;
   distinct?: InputMaybe<Array<TeamScalarFieldEnum>>;
@@ -3647,7 +3563,6 @@ export type QueryFindFirstTeamOrThrowArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<TeamWhereInput>;
 };
-
 
 export type QueryFindFirstUserArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
@@ -3658,7 +3573,6 @@ export type QueryFindFirstUserArgs = {
   where?: InputMaybe<UserWhereInput>;
 };
 
-
 export type QueryFindFirstUserOrThrowArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
@@ -3668,17 +3582,14 @@ export type QueryFindFirstUserOrThrowArgs = {
   where?: InputMaybe<UserWhereInput>;
 };
 
-
 export type QueryFirstNotStartedWeekArgs = {
   override?: InputMaybe<Scalars['Boolean']>;
   week?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QueryGameArgs = {
   where: GameWhereUniqueInput;
 };
-
 
 export type QueryGamesArgs = {
   cursor?: InputMaybe<GameWhereUniqueInput>;
@@ -3689,46 +3600,37 @@ export type QueryGamesArgs = {
   where?: InputMaybe<GameWhereInput>;
 };
 
-
 export type QueryGetGameArgs = {
   where: GameWhereUniqueInput;
 };
-
 
 export type QueryGetLeagueArgs = {
   where: LeagueWhereUniqueInput;
 };
 
-
 export type QueryGetLeagueMemberArgs = {
   where: LeagueMemberWhereUniqueInput;
 };
-
 
 export type QueryGetPickArgs = {
   where: PickWhereUniqueInput;
 };
 
-
 export type QueryGetSuperbowlArgs = {
   where: SuperbowlWhereUniqueInput;
 };
-
 
 export type QueryGetSuperbowlSquareArgs = {
   where: SuperbowlSquareWhereUniqueInput;
 };
 
-
 export type QueryGetTeamArgs = {
   where: TeamWhereUniqueInput;
 };
 
-
 export type QueryGetUserArgs = {
   where: UserWhereUniqueInput;
 };
-
 
 export type QueryGroupByGameArgs = {
   by: Array<GameScalarFieldEnum>;
@@ -3739,7 +3641,6 @@ export type QueryGroupByGameArgs = {
   where?: InputMaybe<GameWhereInput>;
 };
 
-
 export type QueryGroupByLeagueArgs = {
   by: Array<LeagueScalarFieldEnum>;
   having?: InputMaybe<LeagueScalarWhereWithAggregatesInput>;
@@ -3748,7 +3649,6 @@ export type QueryGroupByLeagueArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<LeagueWhereInput>;
 };
-
 
 export type QueryGroupByLeagueMemberArgs = {
   by: Array<LeagueMemberScalarFieldEnum>;
@@ -3759,7 +3659,6 @@ export type QueryGroupByLeagueMemberArgs = {
   where?: InputMaybe<LeagueMemberWhereInput>;
 };
 
-
 export type QueryGroupByPickArgs = {
   by: Array<PickScalarFieldEnum>;
   having?: InputMaybe<PickScalarWhereWithAggregatesInput>;
@@ -3768,7 +3667,6 @@ export type QueryGroupByPickArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<PickWhereInput>;
 };
-
 
 export type QueryGroupBySuperbowlArgs = {
   by: Array<SuperbowlScalarFieldEnum>;
@@ -3779,7 +3677,6 @@ export type QueryGroupBySuperbowlArgs = {
   where?: InputMaybe<SuperbowlWhereInput>;
 };
 
-
 export type QueryGroupBySuperbowlSquareArgs = {
   by: Array<SuperbowlSquareScalarFieldEnum>;
   having?: InputMaybe<SuperbowlSquareScalarWhereWithAggregatesInput>;
@@ -3788,7 +3685,6 @@ export type QueryGroupBySuperbowlSquareArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<SuperbowlSquareWhereInput>;
 };
-
 
 export type QueryGroupByTeamArgs = {
   by: Array<TeamScalarFieldEnum>;
@@ -3799,7 +3695,6 @@ export type QueryGroupByTeamArgs = {
   where?: InputMaybe<TeamWhereInput>;
 };
 
-
 export type QueryGroupByUserArgs = {
   by: Array<UserScalarFieldEnum>;
   having?: InputMaybe<UserScalarWhereWithAggregatesInput>;
@@ -3809,16 +3704,13 @@ export type QueryGroupByUserArgs = {
   where?: InputMaybe<UserWhereInput>;
 };
 
-
 export type QueryLeagueArgs = {
   where: LeagueWhereUniqueInput;
 };
 
-
 export type QueryLeagueMemberArgs = {
   where: LeagueMemberWhereUniqueInput;
 };
-
 
 export type QueryLeagueMembersArgs = {
   cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
@@ -3829,7 +3721,6 @@ export type QueryLeagueMembersArgs = {
   where?: InputMaybe<LeagueMemberWhereInput>;
 };
 
-
 export type QueryLeaguesArgs = {
   cursor?: InputMaybe<LeagueWhereUniqueInput>;
   distinct?: InputMaybe<Array<LeagueScalarFieldEnum>>;
@@ -3839,16 +3730,13 @@ export type QueryLeaguesArgs = {
   where?: InputMaybe<LeagueWhereInput>;
 };
 
-
 export type QueryMostRecentStartedWeekArgs = {
   league_id: Scalars['Int'];
 };
 
-
 export type QueryPickArgs = {
   where: PickWhereUniqueInput;
 };
-
 
 export type QueryPicksArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
@@ -3859,23 +3747,19 @@ export type QueryPicksArgs = {
   where?: InputMaybe<PickWhereInput>;
 };
 
-
 export type QueryPicksByWeekArgs = {
   league_id: Scalars['Int'];
   override?: InputMaybe<Scalars['Boolean']>;
   week?: InputMaybe<Scalars['Int']>;
 };
 
-
 export type QuerySuperbowlArgs = {
   where: SuperbowlWhereUniqueInput;
 };
 
-
 export type QuerySuperbowlSquareArgs = {
   where: SuperbowlSquareWhereUniqueInput;
 };
-
 
 export type QuerySuperbowlSquaresArgs = {
   cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
@@ -3886,7 +3770,6 @@ export type QuerySuperbowlSquaresArgs = {
   where?: InputMaybe<SuperbowlSquareWhereInput>;
 };
 
-
 export type QuerySuperbowlsArgs = {
   cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
   distinct?: InputMaybe<Array<SuperbowlScalarFieldEnum>>;
@@ -3896,11 +3779,9 @@ export type QuerySuperbowlsArgs = {
   where?: InputMaybe<SuperbowlWhereInput>;
 };
 
-
 export type QueryTeamArgs = {
   where: TeamWhereUniqueInput;
 };
-
 
 export type QueryTeamsArgs = {
   cursor?: InputMaybe<TeamWhereUniqueInput>;
@@ -3911,11 +3792,9 @@ export type QueryTeamsArgs = {
   where?: InputMaybe<TeamWhereInput>;
 };
 
-
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
-
 
 export type QueryUsersArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
@@ -3926,7 +3805,6 @@ export type QueryUsersArgs = {
   where?: InputMaybe<UserWhereInput>;
 };
 
-
 export type QueryWeekWinnersArgs = {
   league_id: Scalars['Int'];
   season?: InputMaybe<Scalars['Int']>;
@@ -3935,7 +3813,7 @@ export type QueryWeekWinnersArgs = {
 
 export enum QueryMode {
   Default = 'default',
-  Insensitive = 'insensitive'
+  Insensitive = 'insensitive',
 }
 
 export type RegisterResponse = {
@@ -3946,16 +3824,16 @@ export type RegisterResponse = {
 };
 
 export enum ReminderPolicy {
-  ThreeHoursBefore = 'three_hours_before'
+  ThreeHoursBefore = 'three_hours_before',
 }
 
 export enum ScoringType {
-  GameWinner = 'game_winner'
+  GameWinner = 'game_winner',
 }
 
 export enum SortOrder {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -4163,14 +4041,18 @@ export type SuperbowlCreateNestedManyWithoutLeaguemembersInput = {
 
 export type SuperbowlCreateNestedManyWithoutTeams_Superbowl_LoserToteamsInput = {
   connect?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<SuperbowlCreateOrConnectWithoutTeams_Superbowl_LoserToteamsInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<SuperbowlCreateOrConnectWithoutTeams_Superbowl_LoserToteamsInput>
+  >;
   create?: InputMaybe<Array<SuperbowlCreateWithoutTeams_Superbowl_LoserToteamsInput>>;
   createMany?: InputMaybe<SuperbowlCreateManyTeams_Superbowl_LoserToteamsInputEnvelope>;
 };
 
 export type SuperbowlCreateNestedManyWithoutTeams_Superbowl_WinnerToteamsInput = {
   connect?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<SuperbowlCreateOrConnectWithoutTeams_Superbowl_WinnerToteamsInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<SuperbowlCreateOrConnectWithoutTeams_Superbowl_WinnerToteamsInput>
+  >;
   create?: InputMaybe<Array<SuperbowlCreateWithoutTeams_Superbowl_WinnerToteamsInput>>;
   createMany?: InputMaybe<SuperbowlCreateManyTeams_Superbowl_WinnerToteamsInputEnvelope>;
 };
@@ -4328,7 +4210,7 @@ export enum SuperbowlScalarFieldEnum {
   Season = 'season',
   Ts = 'ts',
   Uid = 'uid',
-  Winner = 'winner'
+  Winner = 'winner',
 }
 
 export type SuperbowlScalarWhereInput = {
@@ -4518,7 +4400,7 @@ export enum SuperbowlSquareScalarFieldEnum {
   NfcScoreIndex = 'nfc_score_index',
   SquareId = 'square_id',
   Ts = 'ts',
-  Uid = 'uid'
+  Uid = 'uid',
 }
 
 export type SuperbowlSquareScalarWhereWithAggregatesInput = {
@@ -4655,30 +4537,46 @@ export type SuperbowlUpdateManyWithoutLeaguemembersNestedInput = {
 
 export type SuperbowlUpdateManyWithoutTeams_Superbowl_LoserToteamsNestedInput = {
   connect?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<SuperbowlCreateOrConnectWithoutTeams_Superbowl_LoserToteamsInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<SuperbowlCreateOrConnectWithoutTeams_Superbowl_LoserToteamsInput>
+  >;
   create?: InputMaybe<Array<SuperbowlCreateWithoutTeams_Superbowl_LoserToteamsInput>>;
   createMany?: InputMaybe<SuperbowlCreateManyTeams_Superbowl_LoserToteamsInputEnvelope>;
   delete?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
   deleteMany?: InputMaybe<Array<SuperbowlScalarWhereInput>>;
   disconnect?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
   set?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
-  update?: InputMaybe<Array<SuperbowlUpdateWithWhereUniqueWithoutTeams_Superbowl_LoserToteamsInput>>;
-  updateMany?: InputMaybe<Array<SuperbowlUpdateManyWithWhereWithoutTeams_Superbowl_LoserToteamsInput>>;
-  upsert?: InputMaybe<Array<SuperbowlUpsertWithWhereUniqueWithoutTeams_Superbowl_LoserToteamsInput>>;
+  update?: InputMaybe<
+    Array<SuperbowlUpdateWithWhereUniqueWithoutTeams_Superbowl_LoserToteamsInput>
+  >;
+  updateMany?: InputMaybe<
+    Array<SuperbowlUpdateManyWithWhereWithoutTeams_Superbowl_LoserToteamsInput>
+  >;
+  upsert?: InputMaybe<
+    Array<SuperbowlUpsertWithWhereUniqueWithoutTeams_Superbowl_LoserToteamsInput>
+  >;
 };
 
 export type SuperbowlUpdateManyWithoutTeams_Superbowl_WinnerToteamsNestedInput = {
   connect?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
-  connectOrCreate?: InputMaybe<Array<SuperbowlCreateOrConnectWithoutTeams_Superbowl_WinnerToteamsInput>>;
+  connectOrCreate?: InputMaybe<
+    Array<SuperbowlCreateOrConnectWithoutTeams_Superbowl_WinnerToteamsInput>
+  >;
   create?: InputMaybe<Array<SuperbowlCreateWithoutTeams_Superbowl_WinnerToteamsInput>>;
   createMany?: InputMaybe<SuperbowlCreateManyTeams_Superbowl_WinnerToteamsInputEnvelope>;
   delete?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
   deleteMany?: InputMaybe<Array<SuperbowlScalarWhereInput>>;
   disconnect?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
   set?: InputMaybe<Array<SuperbowlWhereUniqueInput>>;
-  update?: InputMaybe<Array<SuperbowlUpdateWithWhereUniqueWithoutTeams_Superbowl_WinnerToteamsInput>>;
-  updateMany?: InputMaybe<Array<SuperbowlUpdateManyWithWhereWithoutTeams_Superbowl_WinnerToteamsInput>>;
-  upsert?: InputMaybe<Array<SuperbowlUpsertWithWhereUniqueWithoutTeams_Superbowl_WinnerToteamsInput>>;
+  update?: InputMaybe<
+    Array<SuperbowlUpdateWithWhereUniqueWithoutTeams_Superbowl_WinnerToteamsInput>
+  >;
+  updateMany?: InputMaybe<
+    Array<SuperbowlUpdateManyWithWhereWithoutTeams_Superbowl_WinnerToteamsInput>
+  >;
+  upsert?: InputMaybe<
+    Array<SuperbowlUpsertWithWhereUniqueWithoutTeams_Superbowl_WinnerToteamsInput>
+  >;
 };
 
 export type SuperbowlUpdateWithWhereUniqueWithoutLeaguemembersInput = {
@@ -4776,7 +4674,6 @@ export type Team = {
   teamid: Scalars['Int'];
 };
 
-
 export type TeamGames_Games_AwayToteamsArgs = {
   cursor?: InputMaybe<GameWhereUniqueInput>;
   distinct?: InputMaybe<Array<GameScalarFieldEnum>>;
@@ -4785,7 +4682,6 @@ export type TeamGames_Games_AwayToteamsArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<GameWhereInput>;
 };
-
 
 export type TeamGames_Games_HomeToteamsArgs = {
   cursor?: InputMaybe<GameWhereUniqueInput>;
@@ -4796,7 +4692,6 @@ export type TeamGames_Games_HomeToteamsArgs = {
   where?: InputMaybe<GameWhereInput>;
 };
 
-
 export type TeamSuperbowl_Superbowl_LoserToteamsArgs = {
   cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
   distinct?: InputMaybe<Array<SuperbowlScalarFieldEnum>>;
@@ -4805,7 +4700,6 @@ export type TeamSuperbowl_Superbowl_LoserToteamsArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<SuperbowlWhereInput>;
 };
-
 
 export type TeamSuperbowl_Superbowl_WinnerToteamsArgs = {
   cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
@@ -5037,7 +4931,7 @@ export enum TeamScalarFieldEnum {
   Conference = 'conference',
   Loc = 'loc',
   Name = 'name',
-  Teamid = 'teamid'
+  Teamid = 'teamid',
 }
 
 export type TeamScalarWhereWithAggregatesInput = {
@@ -5207,7 +5101,6 @@ export type User = {
   username: Scalars['String'];
 };
 
-
 export type UserLeaguemembersArgs = {
   cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
   distinct?: InputMaybe<Array<LeagueMemberScalarFieldEnum>>;
@@ -5217,7 +5110,6 @@ export type UserLeaguemembersArgs = {
   where?: InputMaybe<LeagueMemberWhereInput>;
 };
 
-
 export type UserLeaguesArgs = {
   cursor?: InputMaybe<LeagueWhereUniqueInput>;
   distinct?: InputMaybe<Array<LeagueScalarFieldEnum>>;
@@ -5226,7 +5118,6 @@ export type UserLeaguesArgs = {
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<LeagueWhereInput>;
 };
-
 
 export type UserPicksArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
@@ -5508,7 +5399,7 @@ export enum UserScalarFieldEnum {
   Lname = 'lname',
   Season = 'season',
   Uid = 'uid',
-  Username = 'username'
+  Username = 'username',
 }
 
 export type UserScalarWhereWithAggregatesInput = {
@@ -5677,55 +5568,147 @@ export type WeekWinner = {
   week: Scalars['Int'];
 };
 
+export type HomeQueryVariables = Exact<{
+  where: UserWhereUniqueInput;
+}>;
+
+export type HomeQuery = {
+  __typename?: 'Query';
+  user?: {
+    __typename?: 'User';
+    leaguemembers: Array<{
+      __typename?: 'LeagueMember';
+      leagues: {__typename?: 'League'; name: string; season?: number | null};
+    }>;
+  } | null;
+};
+
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
 
-
-export type SeasonCorrectPicksQuery = { __typename?: 'Query', groupByPick: Array<{ __typename?: 'PickGroupBy', member_id?: number | null, _count?: { __typename?: 'PickCountAggregate', correct: number } | null }> };
+export type SeasonCorrectPicksQuery = {
+  __typename?: 'Query';
+  groupByPick: Array<{
+    __typename?: 'PickGroupBy';
+    member_id?: number | null;
+    _count?: {__typename?: 'PickCountAggregate'; correct: number} | null;
+  }>;
+};
 
 export type FirstNotStartedWeekQueryVariables = Exact<{
   override?: InputMaybe<Scalars['Boolean']>;
   week?: InputMaybe<Scalars['Int']>;
 }>;
 
-
-export type FirstNotStartedWeekQuery = { __typename?: 'Query', firstNotStartedWeek: { __typename?: 'FirstNotStartedWeekResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null } }> } };
+export type FirstNotStartedWeekQuery = {
+  __typename?: 'Query';
+  firstNotStartedWeek: {
+    __typename?: 'FirstNotStartedWeekResponse';
+    week?: number | null;
+    season?: number | null;
+    games: Array<{
+      __typename?: 'Game';
+      gid: number;
+      week: number;
+      season: number;
+      awayscore?: number | null;
+      homescore?: number | null;
+      ts: any;
+      done?: boolean | null;
+      homerecord?: string | null;
+      awayrecord?: string | null;
+      winner?: number | null;
+      is_tiebreaker?: boolean | null;
+      teams_games_awayToteams: {__typename?: 'Team'; teamid: number; abbrev?: string | null};
+      teams_games_homeToteams: {__typename?: 'Team'; teamid: number; abbrev?: string | null};
+    }>;
+  };
+};
 
 export type GamesBySeasonQueryVariables = Exact<{
   season: Scalars['Int'];
 }>;
 
-
-export type GamesBySeasonQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', gid: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null } }> };
+export type GamesBySeasonQuery = {
+  __typename?: 'Query';
+  games: Array<{
+    __typename?: 'Game';
+    gid: number;
+    awayscore?: number | null;
+    homescore?: number | null;
+    ts: any;
+    done?: boolean | null;
+    winner?: number | null;
+    is_tiebreaker?: boolean | null;
+    teams_games_awayToteams: {__typename?: 'Team'; teamid: number; abbrev?: string | null};
+    teams_games_homeToteams: {__typename?: 'Team'; teamid: number; abbrev?: string | null};
+  }>;
+};
 
 export type GamesByWeekQueryVariables = Exact<{
   season: Scalars['Int'];
   week: Scalars['Int'];
 }>;
 
-
-export type GamesByWeekQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null } }> };
+export type GamesByWeekQuery = {
+  __typename?: 'Query';
+  games: Array<{
+    __typename?: 'Game';
+    gid: number;
+    week: number;
+    season: number;
+    awayscore?: number | null;
+    homescore?: number | null;
+    ts: any;
+    done?: boolean | null;
+    homerecord?: string | null;
+    awayrecord?: string | null;
+    winner?: number | null;
+    is_tiebreaker?: boolean | null;
+    teams_games_awayToteams: {__typename?: 'Team'; teamid: number; abbrev?: string | null};
+    teams_games_homeToteams: {__typename?: 'Team'; teamid: number; abbrev?: string | null};
+  }>;
+};
 
 export type FindLeagueMembersQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
 
-
-export type FindLeagueMembersQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', membership_id: number, people: { __typename?: 'User', uid: number, username: string, email: string }, leagues: { __typename?: 'League', name: string } }> };
+export type FindLeagueMembersQuery = {
+  __typename?: 'Query';
+  leagueMembers: Array<{
+    __typename?: 'LeagueMember';
+    membership_id: number;
+    people: {__typename?: 'User'; uid: number; username: string; email: string};
+    leagues: {__typename?: 'League'; name: string};
+  }>;
+};
 
 export type MakePicksMutationVariables = Exact<{
   picks: Array<GamePick> | GamePick;
   member_id: Scalars['Int'];
 }>;
 
+export type MakePicksMutation = {
+  __typename?: 'Mutation';
+  makePicks: {
+    __typename?: 'MakePicksResponse';
+    user: {__typename?: 'User'; username: string; email: string};
+  };
+};
 
-export type MakePicksMutation = { __typename?: 'Mutation', makePicks: { __typename?: 'MakePicksResponse', user: { __typename?: 'User', username: string, email: string } } };
+export type PeopleWithLeaguesQueryVariables = Exact<{[key: string]: never}>;
 
-export type PeopleWithLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type PeopleWithLeaguesQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', league_id: number, membership_id: number, people: { __typename?: 'User', uid: number, username: string } }> };
+export type PeopleWithLeaguesQuery = {
+  __typename?: 'Query';
+  leagueMembers: Array<{
+    __typename?: 'LeagueMember';
+    league_id: number;
+    membership_id: number;
+    people: {__typename?: 'User'; uid: number; username: string};
+  }>;
+};
 
 export type PicksByWeekQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -5733,15 +5716,65 @@ export type PicksByWeekQueryVariables = Exact<{
   override?: InputMaybe<Scalars['Boolean']>;
 }>;
 
-
-export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', gid: number, ts: any, done?: boolean | null, home: number, away: number, winner?: number | null, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, liveStatus?: { __typename?: 'GameLive', currentQuarter?: number | null, currentQuarterSecondsRemaining?: number | null, playedStatus?: MsfGamePlayedStatus | null } | null, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null, score?: number | null }> } };
+export type PicksByWeekQuery = {
+  __typename?: 'Query';
+  picksByWeek: {
+    __typename?: 'PicksByWeekResponse';
+    week?: number | null;
+    season?: number | null;
+    canView: boolean;
+    games: Array<{
+      __typename?: 'Game';
+      gid: number;
+      ts: any;
+      done?: boolean | null;
+      home: number;
+      away: number;
+      winner?: number | null;
+      homerecord?: string | null;
+      awayrecord?: string | null;
+      homescore?: number | null;
+      awayscore?: number | null;
+      liveStatus?: {
+        __typename?: 'GameLive';
+        currentQuarter?: number | null;
+        currentQuarterSecondsRemaining?: number | null;
+        playedStatus?: MsfGamePlayedStatus | null;
+      } | null;
+      teams_games_homeToteams: {__typename?: 'Team'; teamid: number; abbrev?: string | null};
+      teams_games_awayToteams: {__typename?: 'Team'; abbrev?: string | null; teamid: number};
+    }>;
+    picks: Array<{
+      __typename?: 'Pick';
+      gid: number;
+      pickid: number;
+      member_id?: number | null;
+      winner?: number | null;
+      correct?: number | null;
+      score?: number | null;
+    }>;
+  };
+};
 
 export type ProfileQueryVariables = Exact<{
   user_id: Scalars['Int'];
 }>;
 
-
-export type ProfileQuery = { __typename?: 'Query', user?: { __typename?: 'User', uid: number, username: string } | null, picks: Array<{ __typename?: 'PickGroupBy', correct?: number | null, member_id?: number | null, _count?: { __typename?: 'PickCountAggregate', pickid: number } | null }>, members: Array<{ __typename?: 'LeagueMember', membership_id: number, leagues: { __typename?: 'League', name: string, league_id: number } }> };
+export type ProfileQuery = {
+  __typename?: 'Query';
+  user?: {__typename?: 'User'; uid: number; username: string} | null;
+  picks: Array<{
+    __typename?: 'PickGroupBy';
+    correct?: number | null;
+    member_id?: number | null;
+    _count?: {__typename?: 'PickCountAggregate'; pickid: number} | null;
+  }>;
+  members: Array<{
+    __typename?: 'LeagueMember';
+    membership_id: number;
+    leagues: {__typename?: 'League'; name: string; league_id: number};
+  }>;
+};
 
 export type RegisterMutationVariables = Exact<{
   username: Scalars['String'];
@@ -5752,42 +5785,126 @@ export type RegisterMutationVariables = Exact<{
   superbowlScore: Scalars['Int'];
 }>;
 
-
-export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'RegisterResponse', success: boolean, user: { __typename?: 'User', username: string, uid: number }, membership: { __typename?: 'LeagueMember', league_id: number, leagues: { __typename?: 'League', name: string } } } };
+export type RegisterMutation = {
+  __typename?: 'Mutation';
+  register: {
+    __typename?: 'RegisterResponse';
+    success: boolean;
+    user: {__typename?: 'User'; username: string; uid: number};
+    membership: {
+      __typename?: 'LeagueMember';
+      league_id: number;
+      leagues: {__typename?: 'League'; name: string};
+    };
+  };
+};
 
 export type SuperbowlPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
 
+export type SuperbowlPicksQuery = {
+  __typename?: 'Query';
+  superbowls: Array<{
+    __typename?: 'Superbowl';
+    uid: number;
+    score: number;
+    leaguemembers?: {
+      __typename?: 'LeagueMember';
+      membership_id: number;
+      people: {__typename?: 'User'; username: string};
+    } | null;
+    teams_superbowl_winnerToteams: {__typename?: 'Team'; abbrev?: string | null; teamid: number};
+    teams_superbowl_loserToteams: {__typename?: 'Team'; abbrev?: string | null; teamid: number};
+  }>;
+};
 
-export type SuperbowlPicksQuery = { __typename?: 'Query', superbowls: Array<{ __typename?: 'Superbowl', uid: number, score: number, leaguemembers?: { __typename?: 'LeagueMember', membership_id: number, people: { __typename?: 'User', username: string } } | null, teams_superbowl_winnerToteams: { __typename?: 'Team', abbrev?: string | null, teamid: number }, teams_superbowl_loserToteams: { __typename?: 'Team', abbrev?: string | null, teamid: number } }> };
+export type AllTeamsQueryVariables = Exact<{[key: string]: never}>;
 
-export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllTeamsQuery = { __typename?: 'Query', teams: Array<{ __typename?: 'Team', teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
+export type AllTeamsQuery = {
+  __typename?: 'Query';
+  teams: Array<{
+    __typename?: 'Team';
+    teamid: number;
+    abbrev?: string | null;
+    loc: string;
+    name: string;
+    conference?: string | null;
+  }>;
+};
 
 export type WinnersQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
 
+export type WinnersQuery = {
+  __typename?: 'Query';
+  weekWinners: Array<{
+    __typename?: 'WeekWinner';
+    week: number;
+    correct: number;
+    member: Array<{
+      __typename?: 'LeagueMember';
+      people: {__typename?: 'User'; uid: number; username: string};
+    }>;
+  }>;
+};
 
-export type WinnersQuery = { __typename?: 'Query', weekWinners: Array<{ __typename?: 'WeekWinner', week: number, correct: number, member: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', uid: number, username: string } }> }> };
-
-
-export const SeasonCorrectPicksDocument = gql`
-    query SeasonCorrectPicks($league_id: Int!) {
-  groupByPick(
-    by: [member_id]
-    where: {correct: {equals: 1}, leaguemembers: {is: {league_id: {equals: $league_id}}}}
-  ) {
-    member_id
-    _count {
-      correct
+export const HomeDocument = gql`
+  query Home($where: UserWhereUniqueInput!) {
+    user(where: $where) {
+      leaguemembers {
+        leagues {
+          name
+          season
+        }
+      }
     }
   }
+`;
+
+/**
+ * __useHomeQuery__
+ *
+ * To run a query within a React component, call `useHomeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHomeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHomeQuery({
+ *   variables: {
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useHomeQuery(baseOptions: Apollo.QueryHookOptions<HomeQuery, HomeQueryVariables>) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<HomeQuery, HomeQueryVariables>(HomeDocument, options);
 }
-    `;
+export function useHomeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<HomeQuery, HomeQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<HomeQuery, HomeQueryVariables>(HomeDocument, options);
+}
+export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>;
+export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>;
+export type HomeQueryResult = Apollo.QueryResult<HomeQuery, HomeQueryVariables>;
+export const SeasonCorrectPicksDocument = gql`
+  query SeasonCorrectPicks($league_id: Int!) {
+    groupByPick(
+      by: [member_id]
+      where: {correct: {equals: 1}, leaguemembers: {is: {league_id: {equals: $league_id}}}}
+    ) {
+      member_id
+      _count {
+        correct
+      }
+    }
+  }
+`;
 
 /**
  * __useSeasonCorrectPicksQuery__
@@ -5805,23 +5922,176 @@ export const SeasonCorrectPicksDocument = gql`
  *   },
  * });
  */
-export function useSeasonCorrectPicksQuery(baseOptions: Apollo.QueryHookOptions<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>(SeasonCorrectPicksDocument, options);
-      }
-export function useSeasonCorrectPicksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>(SeasonCorrectPicksDocument, options);
-        }
+export function useSeasonCorrectPicksQuery(
+  baseOptions: Apollo.QueryHookOptions<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>(
+    SeasonCorrectPicksDocument,
+    options
+  );
+}
+export function useSeasonCorrectPicksLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SeasonCorrectPicksQuery,
+    SeasonCorrectPicksQueryVariables
+  >
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>(
+    SeasonCorrectPicksDocument,
+    options
+  );
+}
 export type SeasonCorrectPicksQueryHookResult = ReturnType<typeof useSeasonCorrectPicksQuery>;
-export type SeasonCorrectPicksLazyQueryHookResult = ReturnType<typeof useSeasonCorrectPicksLazyQuery>;
-export type SeasonCorrectPicksQueryResult = Apollo.QueryResult<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>;
+export type SeasonCorrectPicksLazyQueryHookResult = ReturnType<
+  typeof useSeasonCorrectPicksLazyQuery
+>;
+export type SeasonCorrectPicksQueryResult = Apollo.QueryResult<
+  SeasonCorrectPicksQuery,
+  SeasonCorrectPicksQueryVariables
+>;
 export const FirstNotStartedWeekDocument = gql`
-    query FirstNotStartedWeek($override: Boolean, $week: Int) {
-  firstNotStartedWeek(override: $override, week: $week) {
-    week
-    season
-    games {
+  query FirstNotStartedWeek($override: Boolean, $week: Int) {
+    firstNotStartedWeek(override: $override, week: $week) {
+      week
+      season
+      games {
+        gid
+        week
+        season
+        awayscore
+        homescore
+        ts
+        done
+        homerecord
+        awayrecord
+        winner
+        is_tiebreaker
+        teams_games_awayToteams {
+          teamid
+          abbrev
+        }
+        teams_games_homeToteams {
+          teamid
+          abbrev
+        }
+      }
+    }
+  }
+`;
+
+/**
+ * __useFirstNotStartedWeekQuery__
+ *
+ * To run a query within a React component, call `useFirstNotStartedWeekQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFirstNotStartedWeekQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useFirstNotStartedWeekQuery({
+ *   variables: {
+ *      override: // value for 'override'
+ *      week: // value for 'week'
+ *   },
+ * });
+ */
+export function useFirstNotStartedWeekQuery(
+  baseOptions?: Apollo.QueryHookOptions<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>(
+    FirstNotStartedWeekDocument,
+    options
+  );
+}
+export function useFirstNotStartedWeekLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    FirstNotStartedWeekQuery,
+    FirstNotStartedWeekQueryVariables
+  >
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>(
+    FirstNotStartedWeekDocument,
+    options
+  );
+}
+export type FirstNotStartedWeekQueryHookResult = ReturnType<typeof useFirstNotStartedWeekQuery>;
+export type FirstNotStartedWeekLazyQueryHookResult = ReturnType<
+  typeof useFirstNotStartedWeekLazyQuery
+>;
+export type FirstNotStartedWeekQueryResult = Apollo.QueryResult<
+  FirstNotStartedWeekQuery,
+  FirstNotStartedWeekQueryVariables
+>;
+export const GamesBySeasonDocument = gql`
+  query GamesBySeason($season: Int!) {
+    games(where: {season: {equals: $season}}) {
+      gid
+      awayscore
+      homescore
+      ts
+      done
+      winner
+      is_tiebreaker
+      teams_games_awayToteams {
+        teamid
+        abbrev
+      }
+      teams_games_homeToteams {
+        teamid
+        abbrev
+      }
+    }
+  }
+`;
+
+/**
+ * __useGamesBySeasonQuery__
+ *
+ * To run a query within a React component, call `useGamesBySeasonQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGamesBySeasonQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGamesBySeasonQuery({
+ *   variables: {
+ *      season: // value for 'season'
+ *   },
+ * });
+ */
+export function useGamesBySeasonQuery(
+  baseOptions: Apollo.QueryHookOptions<GamesBySeasonQuery, GamesBySeasonQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GamesBySeasonQuery, GamesBySeasonQueryVariables>(
+    GamesBySeasonDocument,
+    options
+  );
+}
+export function useGamesBySeasonLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GamesBySeasonQuery, GamesBySeasonQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GamesBySeasonQuery, GamesBySeasonQueryVariables>(
+    GamesBySeasonDocument,
+    options
+  );
+}
+export type GamesBySeasonQueryHookResult = ReturnType<typeof useGamesBySeasonQuery>;
+export type GamesBySeasonLazyQueryHookResult = ReturnType<typeof useGamesBySeasonLazyQuery>;
+export type GamesBySeasonQueryResult = Apollo.QueryResult<
+  GamesBySeasonQuery,
+  GamesBySeasonQueryVariables
+>;
+export const GamesByWeekDocument = gql`
+  query GamesByWeek($season: Int!, $week: Int!) {
+    games(where: {season: {equals: $season}, week: {equals: $week}}) {
       gid
       week
       season
@@ -5843,111 +6113,7 @@ export const FirstNotStartedWeekDocument = gql`
       }
     }
   }
-}
-    `;
-
-/**
- * __useFirstNotStartedWeekQuery__
- *
- * To run a query within a React component, call `useFirstNotStartedWeekQuery` and pass it any options that fit your needs.
- * When your component renders, `useFirstNotStartedWeekQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFirstNotStartedWeekQuery({
- *   variables: {
- *      override: // value for 'override'
- *      week: // value for 'week'
- *   },
- * });
- */
-export function useFirstNotStartedWeekQuery(baseOptions?: Apollo.QueryHookOptions<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>(FirstNotStartedWeekDocument, options);
-      }
-export function useFirstNotStartedWeekLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>(FirstNotStartedWeekDocument, options);
-        }
-export type FirstNotStartedWeekQueryHookResult = ReturnType<typeof useFirstNotStartedWeekQuery>;
-export type FirstNotStartedWeekLazyQueryHookResult = ReturnType<typeof useFirstNotStartedWeekLazyQuery>;
-export type FirstNotStartedWeekQueryResult = Apollo.QueryResult<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>;
-export const GamesBySeasonDocument = gql`
-    query GamesBySeason($season: Int!) {
-  games(where: {season: {equals: $season}}) {
-    gid
-    awayscore
-    homescore
-    ts
-    done
-    winner
-    is_tiebreaker
-    teams_games_awayToteams {
-      teamid
-      abbrev
-    }
-    teams_games_homeToteams {
-      teamid
-      abbrev
-    }
-  }
-}
-    `;
-
-/**
- * __useGamesBySeasonQuery__
- *
- * To run a query within a React component, call `useGamesBySeasonQuery` and pass it any options that fit your needs.
- * When your component renders, `useGamesBySeasonQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGamesBySeasonQuery({
- *   variables: {
- *      season: // value for 'season'
- *   },
- * });
- */
-export function useGamesBySeasonQuery(baseOptions: Apollo.QueryHookOptions<GamesBySeasonQuery, GamesBySeasonQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GamesBySeasonQuery, GamesBySeasonQueryVariables>(GamesBySeasonDocument, options);
-      }
-export function useGamesBySeasonLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GamesBySeasonQuery, GamesBySeasonQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GamesBySeasonQuery, GamesBySeasonQueryVariables>(GamesBySeasonDocument, options);
-        }
-export type GamesBySeasonQueryHookResult = ReturnType<typeof useGamesBySeasonQuery>;
-export type GamesBySeasonLazyQueryHookResult = ReturnType<typeof useGamesBySeasonLazyQuery>;
-export type GamesBySeasonQueryResult = Apollo.QueryResult<GamesBySeasonQuery, GamesBySeasonQueryVariables>;
-export const GamesByWeekDocument = gql`
-    query GamesByWeek($season: Int!, $week: Int!) {
-  games(where: {season: {equals: $season}, week: {equals: $week}}) {
-    gid
-    week
-    season
-    awayscore
-    homescore
-    ts
-    done
-    homerecord
-    awayrecord
-    winner
-    is_tiebreaker
-    teams_games_awayToteams {
-      teamid
-      abbrev
-    }
-    teams_games_homeToteams {
-      teamid
-      abbrev
-    }
-  }
-}
-    `;
+`;
 
 /**
  * __useGamesByWeekQuery__
@@ -5966,35 +6132,42 @@ export const GamesByWeekDocument = gql`
  *   },
  * });
  */
-export function useGamesByWeekQuery(baseOptions: Apollo.QueryHookOptions<GamesByWeekQuery, GamesByWeekQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GamesByWeekQuery, GamesByWeekQueryVariables>(GamesByWeekDocument, options);
-      }
-export function useGamesByWeekLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GamesByWeekQuery, GamesByWeekQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GamesByWeekQuery, GamesByWeekQueryVariables>(GamesByWeekDocument, options);
-        }
+export function useGamesByWeekQuery(
+  baseOptions: Apollo.QueryHookOptions<GamesByWeekQuery, GamesByWeekQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<GamesByWeekQuery, GamesByWeekQueryVariables>(GamesByWeekDocument, options);
+}
+export function useGamesByWeekLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GamesByWeekQuery, GamesByWeekQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<GamesByWeekQuery, GamesByWeekQueryVariables>(
+    GamesByWeekDocument,
+    options
+  );
+}
 export type GamesByWeekQueryHookResult = ReturnType<typeof useGamesByWeekQuery>;
 export type GamesByWeekLazyQueryHookResult = ReturnType<typeof useGamesByWeekLazyQuery>;
-export type GamesByWeekQueryResult = Apollo.QueryResult<GamesByWeekQuery, GamesByWeekQueryVariables>;
+export type GamesByWeekQueryResult = Apollo.QueryResult<
+  GamesByWeekQuery,
+  GamesByWeekQueryVariables
+>;
 export const FindLeagueMembersDocument = gql`
-    query FindLeagueMembers($league_id: Int!) {
-  leagueMembers(
-    where: {league_id: {equals: $league_id}}
-    orderBy: {people: {username: asc}}
-  ) {
-    membership_id
-    people {
-      uid
-      username
-      email
-    }
-    leagues {
-      name
+  query FindLeagueMembers($league_id: Int!) {
+    leagueMembers(where: {league_id: {equals: $league_id}}, orderBy: {people: {username: asc}}) {
+      membership_id
+      people {
+        uid
+        username
+        email
+      }
+      leagues {
+        name
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useFindLeagueMembersQuery__
@@ -6012,28 +6185,44 @@ export const FindLeagueMembersDocument = gql`
  *   },
  * });
  */
-export function useFindLeagueMembersQuery(baseOptions: Apollo.QueryHookOptions<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>(FindLeagueMembersDocument, options);
-      }
-export function useFindLeagueMembersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>(FindLeagueMembersDocument, options);
-        }
+export function useFindLeagueMembersQuery(
+  baseOptions: Apollo.QueryHookOptions<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>(
+    FindLeagueMembersDocument,
+    options
+  );
+}
+export function useFindLeagueMembersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>(
+    FindLeagueMembersDocument,
+    options
+  );
+}
 export type FindLeagueMembersQueryHookResult = ReturnType<typeof useFindLeagueMembersQuery>;
 export type FindLeagueMembersLazyQueryHookResult = ReturnType<typeof useFindLeagueMembersLazyQuery>;
-export type FindLeagueMembersQueryResult = Apollo.QueryResult<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>;
+export type FindLeagueMembersQueryResult = Apollo.QueryResult<
+  FindLeagueMembersQuery,
+  FindLeagueMembersQueryVariables
+>;
 export const MakePicksDocument = gql`
-    mutation MakePicks($picks: [GamePick!]!, $member_id: Int!) {
-  makePicks(picks: $picks, member_id: $member_id) {
-    user {
-      username
-      email
+  mutation MakePicks($picks: [GamePick!]!, $member_id: Int!) {
+    makePicks(picks: $picks, member_id: $member_id) {
+      user {
+        username
+        email
+      }
     }
   }
-}
-    `;
-export type MakePicksMutationFn = Apollo.MutationFunction<MakePicksMutation, MakePicksMutationVariables>;
+`;
+export type MakePicksMutationFn = Apollo.MutationFunction<
+  MakePicksMutation,
+  MakePicksMutationVariables
+>;
 
 /**
  * __useMakePicksMutation__
@@ -6053,25 +6242,33 @@ export type MakePicksMutationFn = Apollo.MutationFunction<MakePicksMutation, Mak
  *   },
  * });
  */
-export function useMakePicksMutation(baseOptions?: Apollo.MutationHookOptions<MakePicksMutation, MakePicksMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<MakePicksMutation, MakePicksMutationVariables>(MakePicksDocument, options);
-      }
+export function useMakePicksMutation(
+  baseOptions?: Apollo.MutationHookOptions<MakePicksMutation, MakePicksMutationVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<MakePicksMutation, MakePicksMutationVariables>(
+    MakePicksDocument,
+    options
+  );
+}
 export type MakePicksMutationHookResult = ReturnType<typeof useMakePicksMutation>;
 export type MakePicksMutationResult = Apollo.MutationResult<MakePicksMutation>;
-export type MakePicksMutationOptions = Apollo.BaseMutationOptions<MakePicksMutation, MakePicksMutationVariables>;
+export type MakePicksMutationOptions = Apollo.BaseMutationOptions<
+  MakePicksMutation,
+  MakePicksMutationVariables
+>;
 export const PeopleWithLeaguesDocument = gql`
-    query PeopleWithLeagues {
-  leagueMembers {
-    league_id
-    membership_id
-    people {
-      uid
-      username
+  query PeopleWithLeagues {
+    leagueMembers {
+      league_id
+      membership_id
+      people {
+        uid
+        username
+      }
     }
   }
-}
-    `;
+`;
 
 /**
  * __usePeopleWithLeaguesQuery__
@@ -6088,59 +6285,72 @@ export const PeopleWithLeaguesDocument = gql`
  *   },
  * });
  */
-export function usePeopleWithLeaguesQuery(baseOptions?: Apollo.QueryHookOptions<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>(PeopleWithLeaguesDocument, options);
-      }
-export function usePeopleWithLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>(PeopleWithLeaguesDocument, options);
-        }
+export function usePeopleWithLeaguesQuery(
+  baseOptions?: Apollo.QueryHookOptions<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>(
+    PeopleWithLeaguesDocument,
+    options
+  );
+}
+export function usePeopleWithLeaguesLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>(
+    PeopleWithLeaguesDocument,
+    options
+  );
+}
 export type PeopleWithLeaguesQueryHookResult = ReturnType<typeof usePeopleWithLeaguesQuery>;
 export type PeopleWithLeaguesLazyQueryHookResult = ReturnType<typeof usePeopleWithLeaguesLazyQuery>;
-export type PeopleWithLeaguesQueryResult = Apollo.QueryResult<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>;
+export type PeopleWithLeaguesQueryResult = Apollo.QueryResult<
+  PeopleWithLeaguesQuery,
+  PeopleWithLeaguesQueryVariables
+>;
 export const PicksByWeekDocument = gql`
-    query PicksByWeek($league_id: Int!, $week: Int, $override: Boolean) {
-  picksByWeek(league_id: $league_id, week: $week, override: $override) {
-    week
-    season
-    canView
-    games {
-      gid
-      ts
-      done
-      home
-      away
-      winner
-      liveStatus {
-        currentQuarter
-        currentQuarterSecondsRemaining
-        playedStatus
+  query PicksByWeek($league_id: Int!, $week: Int, $override: Boolean) {
+    picksByWeek(league_id: $league_id, week: $week, override: $override) {
+      week
+      season
+      canView
+      games {
+        gid
+        ts
+        done
+        home
+        away
+        winner
+        liveStatus {
+          currentQuarter
+          currentQuarterSecondsRemaining
+          playedStatus
+        }
+        homerecord
+        awayrecord
+        homescore
+        awayscore
+        teams_games_homeToteams {
+          teamid
+          abbrev
+        }
+        teams_games_awayToteams {
+          abbrev
+          teamid
+        }
       }
-      homerecord
-      awayrecord
-      homescore
-      awayscore
-      teams_games_homeToteams {
-        teamid
-        abbrev
+      picks {
+        gid
+        pickid
+        member_id
+        winner
+        correct
+        score
       }
-      teams_games_awayToteams {
-        abbrev
-        teamid
-      }
-    }
-    picks {
-      gid
-      pickid
-      member_id
-      winner
-      correct
-      score
     }
   }
-}
-    `;
+`;
 
 /**
  * __usePicksByWeekQuery__
@@ -6160,39 +6370,49 @@ export const PicksByWeekDocument = gql`
  *   },
  * });
  */
-export function usePicksByWeekQuery(baseOptions: Apollo.QueryHookOptions<PicksByWeekQuery, PicksByWeekQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<PicksByWeekQuery, PicksByWeekQueryVariables>(PicksByWeekDocument, options);
-      }
-export function usePicksByWeekLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PicksByWeekQuery, PicksByWeekQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<PicksByWeekQuery, PicksByWeekQueryVariables>(PicksByWeekDocument, options);
-        }
+export function usePicksByWeekQuery(
+  baseOptions: Apollo.QueryHookOptions<PicksByWeekQuery, PicksByWeekQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<PicksByWeekQuery, PicksByWeekQueryVariables>(PicksByWeekDocument, options);
+}
+export function usePicksByWeekLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<PicksByWeekQuery, PicksByWeekQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<PicksByWeekQuery, PicksByWeekQueryVariables>(
+    PicksByWeekDocument,
+    options
+  );
+}
 export type PicksByWeekQueryHookResult = ReturnType<typeof usePicksByWeekQuery>;
 export type PicksByWeekLazyQueryHookResult = ReturnType<typeof usePicksByWeekLazyQuery>;
-export type PicksByWeekQueryResult = Apollo.QueryResult<PicksByWeekQuery, PicksByWeekQueryVariables>;
+export type PicksByWeekQueryResult = Apollo.QueryResult<
+  PicksByWeekQuery,
+  PicksByWeekQueryVariables
+>;
 export const ProfileDocument = gql`
-    query Profile($user_id: Int!) {
-  user: user(where: {uid: $user_id}) {
-    uid
-    username
-  }
-  picks: groupByPick(by: [member_id, correct], where: {uid: {equals: $user_id}}) {
-    correct
-    member_id
-    _count {
-      pickid
+  query Profile($user_id: Int!) {
+    user: user(where: {uid: $user_id}) {
+      uid
+      username
+    }
+    picks: groupByPick(by: [member_id, correct], where: {uid: {equals: $user_id}}) {
+      correct
+      member_id
+      _count {
+        pickid
+      }
+    }
+    members: leagueMembers(where: {user_id: {equals: $user_id}}) {
+      membership_id
+      leagues {
+        name
+        league_id
+      }
     }
   }
-  members: leagueMembers(where: {user_id: {equals: $user_id}}) {
-    membership_id
-    leagues {
-      name
-      league_id
-    }
-  }
-}
-    `;
+`;
 
 /**
  * __useProfileQuery__
@@ -6210,42 +6430,56 @@ export const ProfileDocument = gql`
  *   },
  * });
  */
-export function useProfileQuery(baseOptions: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
-      }
-export function useProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
-        }
+export function useProfileQuery(
+  baseOptions: Apollo.QueryHookOptions<ProfileQuery, ProfileQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
+}
+export function useProfileLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<ProfileQuery, ProfileQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<ProfileQuery, ProfileQueryVariables>(ProfileDocument, options);
+}
 export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
 export const RegisterDocument = gql`
-    mutation Register($username: String!, $email: String!, $previousUserId: Int, $superbowlWinner: Int!, $superbowlLoser: Int!, $superbowlScore: Int!) {
-  register(
-    username: $username
-    email: $email
-    previousUserId: $previousUserId
-    superbowlWinner: $superbowlWinner
-    superbowlLoser: $superbowlLoser
-    superbowlScore: $superbowlScore
+  mutation Register(
+    $username: String!
+    $email: String!
+    $previousUserId: Int
+    $superbowlWinner: Int!
+    $superbowlLoser: Int!
+    $superbowlScore: Int!
   ) {
-    success
-    user {
-      username
-      uid
-    }
-    membership {
-      league_id
-      leagues {
-        name
+    register(
+      username: $username
+      email: $email
+      previousUserId: $previousUserId
+      superbowlWinner: $superbowlWinner
+      superbowlLoser: $superbowlLoser
+      superbowlScore: $superbowlScore
+    ) {
+      success
+      user {
+        username
+        uid
+      }
+      membership {
+        league_id
+        leagues {
+          name
+        }
       }
     }
   }
-}
-    `;
-export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, RegisterMutationVariables>;
+`;
+export type RegisterMutationFn = Apollo.MutationFunction<
+  RegisterMutation,
+  RegisterMutationVariables
+>;
 
 /**
  * __useRegisterMutation__
@@ -6269,35 +6503,40 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  *   },
  * });
  */
-export function useRegisterMutation(baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
-      }
+export function useRegisterMutation(
+  baseOptions?: Apollo.MutationHookOptions<RegisterMutation, RegisterMutationVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useMutation<RegisterMutation, RegisterMutationVariables>(RegisterDocument, options);
+}
 export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
-export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
+export type RegisterMutationOptions = Apollo.BaseMutationOptions<
+  RegisterMutation,
+  RegisterMutationVariables
+>;
 export const SuperbowlPicksDocument = gql`
-    query SuperbowlPicks($league_id: Int!) {
-  superbowls(where: {leaguemembers: {is: {league_id: {equals: $league_id}}}}) {
-    uid
-    leaguemembers {
-      membership_id
-      people {
-        username
+  query SuperbowlPicks($league_id: Int!) {
+    superbowls(where: {leaguemembers: {is: {league_id: {equals: $league_id}}}}) {
+      uid
+      leaguemembers {
+        membership_id
+        people {
+          username
+        }
+      }
+      score
+      teams_superbowl_winnerToteams {
+        abbrev
+        teamid
+      }
+      teams_superbowl_loserToteams {
+        abbrev
+        teamid
       }
     }
-    score
-    teams_superbowl_winnerToteams {
-      abbrev
-      teamid
-    }
-    teams_superbowl_loserToteams {
-      abbrev
-      teamid
-    }
   }
-}
-    `;
+`;
 
 /**
  * __useSuperbowlPicksQuery__
@@ -6315,28 +6554,41 @@ export const SuperbowlPicksDocument = gql`
  *   },
  * });
  */
-export function useSuperbowlPicksQuery(baseOptions: Apollo.QueryHookOptions<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>(SuperbowlPicksDocument, options);
-      }
-export function useSuperbowlPicksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>(SuperbowlPicksDocument, options);
-        }
+export function useSuperbowlPicksQuery(
+  baseOptions: Apollo.QueryHookOptions<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>(
+    SuperbowlPicksDocument,
+    options
+  );
+}
+export function useSuperbowlPicksLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>(
+    SuperbowlPicksDocument,
+    options
+  );
+}
 export type SuperbowlPicksQueryHookResult = ReturnType<typeof useSuperbowlPicksQuery>;
 export type SuperbowlPicksLazyQueryHookResult = ReturnType<typeof useSuperbowlPicksLazyQuery>;
-export type SuperbowlPicksQueryResult = Apollo.QueryResult<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>;
+export type SuperbowlPicksQueryResult = Apollo.QueryResult<
+  SuperbowlPicksQuery,
+  SuperbowlPicksQueryVariables
+>;
 export const AllTeamsDocument = gql`
-    query AllTeams {
-  teams(where: {teamid: {gt: 0}}) {
-    teamid
-    abbrev
-    loc
-    name
-    conference
+  query AllTeams {
+    teams(where: {teamid: {gt: 0}}) {
+      teamid
+      abbrev
+      loc
+      name
+      conference
+    }
   }
-}
-    `;
+`;
 
 /**
  * __useAllTeamsQuery__
@@ -6353,31 +6605,35 @@ export const AllTeamsDocument = gql`
  *   },
  * });
  */
-export function useAllTeamsQuery(baseOptions?: Apollo.QueryHookOptions<AllTeamsQuery, AllTeamsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllTeamsQuery, AllTeamsQueryVariables>(AllTeamsDocument, options);
-      }
-export function useAllTeamsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllTeamsQuery, AllTeamsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllTeamsQuery, AllTeamsQueryVariables>(AllTeamsDocument, options);
-        }
+export function useAllTeamsQuery(
+  baseOptions?: Apollo.QueryHookOptions<AllTeamsQuery, AllTeamsQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<AllTeamsQuery, AllTeamsQueryVariables>(AllTeamsDocument, options);
+}
+export function useAllTeamsLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<AllTeamsQuery, AllTeamsQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<AllTeamsQuery, AllTeamsQueryVariables>(AllTeamsDocument, options);
+}
 export type AllTeamsQueryHookResult = ReturnType<typeof useAllTeamsQuery>;
 export type AllTeamsLazyQueryHookResult = ReturnType<typeof useAllTeamsLazyQuery>;
 export type AllTeamsQueryResult = Apollo.QueryResult<AllTeamsQuery, AllTeamsQueryVariables>;
 export const WinnersDocument = gql`
-    query Winners($league_id: Int!) {
-  weekWinners(league_id: $league_id) {
-    week
-    correct
-    member {
-      people {
-        uid
-        username
+  query Winners($league_id: Int!) {
+    weekWinners(league_id: $league_id) {
+      week
+      correct
+      member {
+        people {
+          uid
+          username
+        }
       }
     }
   }
-}
-    `;
+`;
 
 /**
  * __useWinnersQuery__
@@ -6395,14 +6651,18 @@ export const WinnersDocument = gql`
  *   },
  * });
  */
-export function useWinnersQuery(baseOptions: Apollo.QueryHookOptions<WinnersQuery, WinnersQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<WinnersQuery, WinnersQueryVariables>(WinnersDocument, options);
-      }
-export function useWinnersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WinnersQuery, WinnersQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<WinnersQuery, WinnersQueryVariables>(WinnersDocument, options);
-        }
+export function useWinnersQuery(
+  baseOptions: Apollo.QueryHookOptions<WinnersQuery, WinnersQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useQuery<WinnersQuery, WinnersQueryVariables>(WinnersDocument, options);
+}
+export function useWinnersLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<WinnersQuery, WinnersQueryVariables>
+) {
+  const options = {...defaultOptions, ...baseOptions};
+  return Apollo.useLazyQuery<WinnersQuery, WinnersQueryVariables>(WinnersDocument, options);
+}
 export type WinnersQueryHookResult = ReturnType<typeof useWinnersQuery>;
 export type WinnersLazyQueryHookResult = ReturnType<typeof useWinnersLazyQuery>;
 export type WinnersQueryResult = Apollo.QueryResult<WinnersQuery, WinnersQueryVariables>;

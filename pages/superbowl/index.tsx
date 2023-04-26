@@ -1,7 +1,7 @@
-import SuperbowlContent from "@src/components/superbowl/SuperbowlContent";
-import FuntimePage from "@src/FuntimePage";
-import { SECONDS_IN_DAY } from "@src/util/constants";
-import { GetStaticProps } from "next";
+import SuperbowlContent from '@src/components/superbowl/SuperbowlContent';
+import FuntimePage from '@src/FuntimePage';
+import {SECONDS_IN_DAY} from '@src/util/constants';
+import {GetStaticProps} from 'next';
 
 const SuperbowlPage = () => {
   return (

@@ -3,30 +3,30 @@ import {
   SeasonCorrectPicksQuery,
   useFindLeagueMembersQuery,
   useSeasonCorrectPicksQuery,
-} from "@src/generated/graphql";
-import _ from "lodash";
-import { useMemo } from "react";
+} from '@src/generated/graphql';
+import _ from 'lodash';
+import {useMemo} from 'react';
 
 type RankingEntry = {
-  member: FindLeagueMembersQuery["leagueMembers"][0];
+  member: FindLeagueMembersQuery['leagueMembers'][0];
   num_correct: number;
   rank: number;
 };
 
-export function useLeagueRankings({ leagueId }: { leagueId: number }) {
+export function useLeagueRankings({leagueId}: {leagueId: number}) {
   const {
     data: usersData,
     loading: usersLoading,
     error: usersError,
   } = useFindLeagueMembersQuery({
-    variables: { league_id: leagueId },
+    variables: {league_id: leagueId},
   });
 
   const {
     data: correctPicksData,
     loading: correctPicksLoading,
     error: correctPicksError,
-  } = useSeasonCorrectPicksQuery({ variables: { league_id: leagueId } });
+  } = useSeasonCorrectPicksQuery({variables: {league_id: leagueId}});
 
   if (!usersData || !correctPicksData) {
     return {
@@ -53,14 +53,11 @@ function sortedRanks(
   correctPicksData: SeasonCorrectPicksQuery
 ): Array<RankingEntry> {
   // membership_id to member
-  const memberIdToMember = _.keyBy(
-    leagueMembers.leagueMembers,
-    (m) => m.membership_id
-  );
+  const memberIdToMember = _.keyBy(leagueMembers.leagueMembers, m => m.membership_id);
 
   const sortedResult = _(correctPicksData.groupByPick)
-    .sortBy((x) => memberIdToMember[x.member_id!].people.username)
-    .sortBy((x) => -1 * x._count!.correct)
+    .sortBy(x => memberIdToMember[x.member_id!].people.username)
+    .sortBy(x => -1 * x._count!.correct)
     .value();
 
   let rankingTracker = 1;

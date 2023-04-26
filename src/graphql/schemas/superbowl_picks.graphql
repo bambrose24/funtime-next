@@ -1,7 +1,5 @@
 query SuperbowlPicks($league_id: Int!) {
-  superbowls(
-    where: { leaguemembers: { is: { league_id: { equals: $league_id } } } }
-  ) {
+  superbowls(where: {leaguemembers: {is: {league_id: {equals: $league_id}}}}) {
     uid
     leaguemembers {
       membership_id

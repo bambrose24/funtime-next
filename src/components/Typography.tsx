@@ -1,6 +1,6 @@
-import { Text, TextProps } from "@chakra-ui/react";
+import {Text, TextProps} from '@chakra-ui/react';
 
-const H1: ReactFCC<TextProps> = ({ children, ...rest }) => {
+const H1: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="4xl" {...rest}>
       {children}
@@ -8,7 +8,7 @@ const H1: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
-const H2: ReactFCC<TextProps> = ({ children, ...rest }) => {
+const H2: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="3xl" {...rest}>
       {children}
@@ -16,7 +16,7 @@ const H2: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
-const H3: ReactFCC<TextProps> = ({ children, ...rest }) => {
+const H3: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="2xl" {...rest}>
       {children}
@@ -24,7 +24,7 @@ const H3: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
-const H4: ReactFCC<TextProps> = ({ children, ...rest }) => {
+const H4: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="xl" {...rest}>
       {children}
@@ -32,7 +32,7 @@ const H4: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
-const H5: ReactFCC<TextProps> = ({ children, ...rest }) => {
+const H5: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="md" {...rest}>
       {children}
@@ -40,8 +40,7 @@ const H5: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
-
-export const Body1: ReactFCC<TextProps> = ({ children, ...rest }) => {
+export const Body1: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="lg" {...rest}>
       {children}
@@ -49,7 +48,7 @@ export const Body1: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
-const Body2: ReactFCC<TextProps> = ({ children, ...rest }) => {
+const Body2: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="md" {...rest}>
       {children}
@@ -57,7 +56,7 @@ const Body2: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
-const Subtitle1: ReactFCC<TextProps> = ({ children, ...rest }) => {
+const Subtitle1: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="sm" {...rest}>
       {children}
@@ -65,14 +64,13 @@ const Subtitle1: ReactFCC<TextProps> = ({ children, ...rest }) => {
   );
 };
 
-const Subtitle2: ReactFCC<TextProps> = ({ children, ...rest }) => {
+const Subtitle2: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
     <Text fontSize="xs" {...rest}>
       {children}
     </Text>
   );
 };
-
 
 export const Typography = {
   H1,

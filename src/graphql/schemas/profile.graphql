@@ -1,19 +1,16 @@
 query Profile($user_id: Int!) {
-  user: user(where: { uid: $user_id }) {
+  user: user(where: {uid: $user_id}) {
     uid
     username
   }
-  picks: groupByPick(
-    by: [member_id, correct]
-    where: { uid: { equals: $user_id } }
-  ) {
+  picks: groupByPick(by: [member_id, correct], where: {uid: {equals: $user_id}}) {
     correct
     member_id
     _count {
       pickid
     }
   }
-  members: leagueMembers(where: { user_id: { equals: $user_id } }) {
+  members: leagueMembers(where: {user_id: {equals: $user_id}}) {
     membership_id
     leagues {
       name

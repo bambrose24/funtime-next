@@ -1,10 +1,7 @@
 query SeasonCorrectPicks($league_id: Int!) {
   groupByPick(
     by: [member_id]
-    where: {
-      correct: { equals: 1 }
-      leaguemembers: { is: { league_id: { equals: $league_id } } }
-    }
+    where: {correct: {equals: 1}, leaguemembers: {is: {league_id: {equals: $league_id}}}}
   ) {
     member_id
     _count {

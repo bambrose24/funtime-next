@@ -1,11 +1,11 @@
-import { Button, HStack, Tooltip, useBreakpointValue } from "@chakra-ui/react";
-import ProfilePicture from "./ProfilePicture";
-import { Typography } from "../Typography";
+import {Button, HStack, Tooltip, useBreakpointValue} from '@chakra-ui/react';
+import ProfilePicture from './ProfilePicture';
+import {Typography} from '../Typography';
 
-const UserTag = (props: { user_id: number; username: string }) => {
-  const profile_url = "/profile/" + props.user_id;
+const UserTag = (props: {user_id: number; username: string}) => {
+  const profile_url = '/profile/' + props.user_id;
 
-  const isMobile = useBreakpointValue({ base: true, lg: false });
+  const isMobile = useBreakpointValue({base: true, lg: false});
 
   return (
     <Tooltip label={props.username} aria-label="A tooltip">
@@ -19,14 +19,10 @@ const UserTag = (props: { user_id: number; username: string }) => {
           bg="white"
         >
           <HStack>
-            <ProfilePicture
-              id={props.user_id}
-              username={props.username}
-              size="xs"
-            />
+            <ProfilePicture id={props.user_id} username={props.username} size="xs" />
             <Typography.Subtitle1
-              overflow={{ base: "hidden", lg: "initial" }}
-              textOverflow={{ base: "ellipsis", lg: "initial" }}
+              overflow={{base: 'hidden', lg: 'initial'}}
+              textOverflow={{base: 'ellipsis', lg: 'initial'}}
               pl={0}
               color="black"
             >

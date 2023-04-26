@@ -1,5 +1,5 @@
 query GamesBySeason($season: Int!) {
-  games(where: { season: { equals: $season } }) {
+  games(where: {season: {equals: $season}}) {
     gid
     awayscore
     homescore

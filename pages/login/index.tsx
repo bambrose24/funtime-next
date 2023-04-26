@@ -8,7 +8,6 @@ const Login = () => {
   const session = useSession();
   useEffect(() => {
     if (session) {
-      console.log('router query', JSON.stringify(router.query));
       if ('redirectTo' in router.query) {
         const redirectTo = router.query['redirectTo'];
         router.push({pathname: redirectTo as string});

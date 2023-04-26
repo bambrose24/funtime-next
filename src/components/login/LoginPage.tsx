@@ -1,11 +1,9 @@
 import {Auth} from '@supabase/auth-ui-react';
-import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
+import {useSupabaseClient} from '@supabase/auth-helpers-react';
 import {Box, Divider, Flex} from '@chakra-ui/react';
 import FuntimePage from '@src/FuntimePage';
 import {useAuthTheme} from './util';
 import {Typography} from '../Typography';
-import {ThemeSupa} from '@supabase/auth-ui-shared';
-import config from '@src/util/config';
 import {useRouter} from 'next/router';
 
 const LoginPage = () => {

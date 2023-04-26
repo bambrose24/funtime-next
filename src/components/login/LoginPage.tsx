@@ -5,11 +5,15 @@ import FuntimePage from '@src/FuntimePage';
 import {useAuthTheme} from './util';
 import {Typography} from '../Typography';
 import {ThemeSupa} from '@supabase/auth-ui-shared';
+import config from '@src/util/config';
+import {useRouter} from 'next/router';
 
 const LoginPage = () => {
   const supabase = useSupabaseClient();
 
   const authTheme = useAuthTheme();
+
+  const router = useRouter();
 
   return (
     <FuntimePage>
@@ -21,6 +25,7 @@ const LoginPage = () => {
           </Typography.Body1>
           <Divider my="20px" />
           <Auth
+            redirectTo={router.asPath}
             supabaseClient={supabase}
             appearance={{theme: authTheme}}
             view="magic_link"

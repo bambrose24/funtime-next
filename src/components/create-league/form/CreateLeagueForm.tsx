@@ -1,8 +1,4 @@
 import {
-  Box,
-  Button,
-  Divider,
-  Flex,
   FormControl,
   FormErrorMessage,
   FormHelperText,
@@ -12,11 +8,9 @@ import {
   Radio,
   RadioGroup,
   Select,
-  Stack,
   VStack,
 } from '@chakra-ui/react';
-import {Info, InfoOutlined, InfoRounded} from '@mui/icons-material';
-import {Wizard, WizardProps} from '@src/components/forms/wizard';
+import {SequentialWizard} from '@src/components/forms/SequentialWizard';
 import {Typography} from '@src/components/Typography';
 import {Formik, FormikProps} from 'formik';
 import * as Yup from 'yup';
@@ -27,7 +21,10 @@ const validationSchema = Yup.object({
     .min(5, 'Must be at least 5 characters')
     .max(50, 'Can only be 50 characters')
     .required('Please enter a league name'),
-  maxMembers: Yup.number().min(2).max(100).required(),
+  maxMembers: Yup.number()
+    .min(2)
+    .max(100)
+    .required(),
   leagueType: Yup.string()
     .oneOf([...leagueTypes])
     .required(),
@@ -67,7 +64,7 @@ export const CreateLeagueForm = () => {
     >
       {formik => {
         return (
-          <Wizard
+          <SequentialWizard
             width={{base: '400px'}}
             onSubmit={() => {
               console.log('on submit', formik.values);

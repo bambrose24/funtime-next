@@ -12,7 +12,7 @@ export type WizardProps = {
   startingIdx?: number;
 } & Pick<FlexProps, 'width' | 'height'>;
 
-export function Wizard({
+export function SequentialWizard({
   steps,
   onSubmit,
   isSubmitting,

@@ -1,4 +1,4 @@
-import {gql, useQuery} from '@apollo/client';
+import {gql} from '@apollo/client';
 import {Flex, Box, VStack, Image, Divider} from '@chakra-ui/react';
 import {Typography} from '@src/components/Typography';
 import FuntimePage from '@src/FuntimePage';

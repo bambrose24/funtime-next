@@ -12,8 +12,9 @@ const FuntimePage: React.FC<Props> = ({children, requiresAuth}) => {
   const router = useRouter();
   const session = useSession();
   const isAuthenticated = Boolean(session);
+  const needsToLogIn = requiresAuth && !isAuthenticated;
   useEffect(() => {
-    if (!isAuthenticated && requiresAuth) {
+    if (needsToLogIn) {
       router.push({
         pathname: '/login',
         query: {
@@ -21,16 +22,16 @@ const FuntimePage: React.FC<Props> = ({children, requiresAuth}) => {
         },
       });
     }
-  }, [isAuthenticated, router]);
+  }, [needsToLogIn, router]);
 
-  if (requiresAuth && !isAuthenticated) {
+  if (needsToLogIn) {
     return <FuntimeLoading />;
   }
 
   return (
     <Box bgColor="gray.100" w="100%">
       <Nav />
-      <Box minHeight="100vh" py={4} w="100%">
+      <Box minHeight="100vh" py={4} w="100%" px="8px">
         {children}
       </Box>
     </Box>

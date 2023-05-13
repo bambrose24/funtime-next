@@ -8,9 +8,7 @@ import {useRouter} from 'next/router';
 
 const LoginPage = () => {
   const supabase = useSupabaseClient();
-
   const authTheme = useAuthTheme();
-
   const router = useRouter();
 
   return (

@@ -9,7 +9,9 @@
     "lint": "next lint",
     "generate": "graphql-codegen --config codegen.ts",
     "generate:theme": "npx @chakra-ui/cli tokens src/util/theme.ts",
-    "postinstall": "npm run generate:theme"
+    "postinstall": "npm run generate:theme",
+    "tsc": "tsc",
+    "tsc:watch": "tsc -w"
   },
   "prettier": "prettier-airbnb-config",
   "dependencies": {
@@ -42,11 +44,10 @@
     "@graphql-codegen/cli": "^2.16.2",
     "@graphql-codegen/typescript": "^2.7.2",
     "@graphql-codegen/typescript-operations": "^2.5.2",
-    "@graphql-codegen/typescript-react-apollo": "^3.3.2",
+    "@typescript-eslint/parser": "^5.32.0",
     "@types/node": "18.0.6",
     "@types/react": "18.0.15",
     "@types/react-dom": "18.0.6",
-    "@typescript-eslint/parser": "^5.32.0",
     "eslint": "8.20.0",
     "eslint-config-next": "^13.1.6",
     "prettier": "^1.19.1",

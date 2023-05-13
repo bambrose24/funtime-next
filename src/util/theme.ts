@@ -11,6 +11,14 @@ const themeConfig: ThemeConfig = {
 };
 
 export const themeVars = {
+  layerStyles: {
+    "funtime-card": {
+      bg: 'white',
+      borderRadius: '4px',
+      px: '12px', // TODO do we want these here?
+      py: '12px',
+    }
+  },
   colors: {
     primary: "#2B6CB0",
     error: "#C53030",

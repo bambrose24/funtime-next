@@ -1,7 +1,7 @@
 query Winners($league_id: Int!) {
-  weekWinners(league_id: $league_id) {
+  findManyWeekWinners(where: {league_id: {equals: $league_id}}) {
     week
-    correct
+    correct_count
     member {
       people {
         uid

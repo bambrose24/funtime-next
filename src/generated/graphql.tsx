@@ -3630,7 +3630,6 @@ export type Query = {
   teams: Array<Team>;
   user?: Maybe<User>;
   users: Array<User>;
-  weekWinners: Array<WeekWinner>;
 };
 
 
@@ -4180,13 +4179,6 @@ export type QueryUsersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<UserWhereInput>;
-};
-
-
-export type QueryWeekWinnersArgs = {
-  league_id: Scalars['Int'];
-  season?: InputMaybe<Scalars['Int']>;
-  weeks?: InputMaybe<Array<Scalars['Int']>>;
 };
 
 export enum QueryMode {
@@ -5926,14 +5918,6 @@ export type UserWhereUniqueInput = {
   uid?: InputMaybe<Scalars['Int']>;
 };
 
-export type WeekWinner = {
-  __typename?: 'WeekWinner';
-  correct: Scalars['Int'];
-  member: Array<LeagueMember>;
-  score_diff: Scalars['Int'];
-  week: Scalars['Int'];
-};
-
 export type WeekWinners = {
   __typename?: 'WeekWinners';
   correct_count: Scalars['Int'];
@@ -6422,7 +6406,7 @@ export type WinnersQueryVariables = Exact<{
 }>;
 
 
-export type WinnersQuery = { __typename?: 'Query', weekWinners: Array<{ __typename?: 'WeekWinner', week: number, correct: number, member: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', uid: number, username: string } }> }> };
+export type WinnersQuery = { __typename?: 'Query', findManyWeekWinners: Array<{ __typename?: 'WeekWinners', week: number, correct_count: number, member: { __typename?: 'LeagueMember', people: { __typename?: 'User', uid: number, username: string } } }> };
 
 
 export const LeagueContentDocument = gql`
@@ -7108,9 +7092,9 @@ export type AllTeamsLazyQueryHookResult = ReturnType<typeof useAllTeamsLazyQuery
 export type AllTeamsQueryResult = Apollo.QueryResult<AllTeamsQuery, AllTeamsQueryVariables>;
 export const WinnersDocument = gql`
     query Winners($league_id: Int!) {
-  weekWinners(league_id: $league_id) {
+  findManyWeekWinners(where: {league_id: {equals: $league_id}}) {
     week
-    correct
+    correct_count
     member {
       people {
         uid

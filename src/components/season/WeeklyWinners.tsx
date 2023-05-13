@@ -32,7 +32,8 @@ export const WeeklyWinners = () => {
   if (!data) {
     return <FuntimeLoading />;
   }
-  const winners = _.sortBy(data.weekWinners, 'week');
+  const winners = _.sortBy(data.findManyWeekWinners, 'week');
+  const weeks = Array.from(new Set(winners.map(w => w.week)));
 
   return (
     <Flex direction="column">
@@ -54,28 +55,30 @@ export const WeeklyWinners = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {winners.map(winner => {
-              const {correct, member, week} = winner;
+            {weeks.map(week => {
+              const weekWinners = winners.filter(w => w.week === week);
+              if (!weekWinners || weekWinners.length === 0) {
+                return;
+              }
+              const {correct_count, member} = weekWinners[0];
               return (
-                <React.Fragment key={winner.week}>
-                  <Tr key={winner.week} transition={'all .3s ease'} _hover={{bgColor: 'gray.50'}}>
-                    <Td pl={6} pr={0} py={0}>
-                      <Stat>{winner.week}</Stat>
-                    </Td>
-                    <Td pr={2} pl={4} py={2}>
-                      <HStack>
-                        {member.map(m => (
-                          <UserTag
-                            key={m.people.uid}
-                            user_id={m.people.uid}
-                            username={m.people.username}
-                          />
-                        ))}
-                      </HStack>
-                    </Td>
-                    <Td>{correct}</Td>
-                  </Tr>
-                </React.Fragment>
+                <Tr key={week} transition={'all .3s ease'} _hover={{bgColor: 'gray.50'}}>
+                  <Td pl={6} pr={0} py={0}>
+                    <Stat>{week}</Stat>
+                  </Td>
+                  <Td pr={2} pl={4} py={2}>
+                    <HStack>
+                      {weekWinners.map(w => (
+                        <UserTag
+                          key={w.member.people.uid}
+                          user_id={w.member.people.uid}
+                          username={w.member.people.username}
+                        />
+                      ))}
+                    </HStack>
+                  </Td>
+                  <Td>{correct_count}</Td>
+                </Tr>
               );
             })}
           </Tbody>

@@ -61,7 +61,7 @@ export const WeekContent: React.FC = () => {
 
   const availableWeeksSet = new Set(
     [
-      ...(winners?.weekWinners || []).map(w => w.week),
+      ...(winners?.findManyWeekWinners || []).map(w => w.week),
       defaultPicksByWeekData?.picksByWeek.week || undefined,
     ]
       .filter(Boolean)
@@ -123,8 +123,8 @@ export const WeekContent: React.FC = () => {
 
   const week = weekResponse || weekState;
 
-  const currentWinners = winners.weekWinners.find(winners => winners.week === week);
-  const areMultipleWinners = currentWinners && currentWinners.member.length > 1;
+  const currentWinners = winners.findManyWeekWinners.filter(winners => winners.week === week);
+  const areMultipleWinners = currentWinners && currentWinners.length > 1;
 
   return (
     <Box mx="12px">
@@ -163,8 +163,8 @@ export const WeekContent: React.FC = () => {
           simulatedPicks={simulatedPicks}
         />
       </div>
-      {currentWinners?.member?.length &&
-        currentWinners.member.length > 0 &&
+      {currentWinners?.length &&
+        currentWinners.length > 0 &&
         Object.keys(simulatedPicks).length === 0 && (
           <Box px={{base: '2px', lg: '24px'}} py="16px">
             <Alert status="success">
@@ -176,12 +176,12 @@ export const WeekContent: React.FC = () => {
               </AlertTitle>
               <AlertDescription>
                 <HStack>
-                  {currentWinners.member.map(winner => {
+                  {currentWinners.map(winner => {
                     return (
                       <UserTag
-                        key={winner.people.uid}
-                        user_id={winner.people.uid}
-                        username={winner.people.username}
+                        key={winner.member.people.uid}
+                        user_id={winner.member.people.uid}
+                        username={winner.member.people.username}
                       />
                     );
                   })}

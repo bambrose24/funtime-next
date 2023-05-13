@@ -1,10 +1,9 @@
-import {gql, useQuery} from '@apollo/client';
-import {Flex, Grid, SimpleGrid, Skeleton, useBreakpointValue} from '@chakra-ui/react';
+import {gql} from '@apollo/client';
+import {Flex, SimpleGrid, Skeleton, useBreakpointValue} from '@chakra-ui/react';
 import {useHomeQuery} from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
 import {FuntimeError} from '../shared/FuntimeError';
-import {FuntimeLoading} from '../shared/FuntimeLoading';
-import {LeagueCard, useLeagueCardDimensions} from './useLeageCardDimensions';
+import {useLeagueCardDimensions} from './useLeageCardDimensions';
 import {LeagueCardContent} from './LeagueCardContent';
 
 const HomeQuery = gql`

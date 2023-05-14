@@ -1078,7 +1078,7 @@ export type League = {
   pick_policy?: Maybe<PickPolicy>;
   reminder_policy?: Maybe<ReminderPolicy>;
   scoring_type?: Maybe<ScoringType>;
-  season?: Maybe<Scalars['Int']>;
+  season: Scalars['Int'];
 };
 
 
@@ -1156,7 +1156,7 @@ export type LeagueCreateInput = {
   pick_policy?: InputMaybe<PickPolicy>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
-  season?: InputMaybe<Scalars['Int']>;
+  season: Scalars['Int'];
 };
 
 export type LeagueCreateManyInput = {
@@ -1168,7 +1168,7 @@ export type LeagueCreateManyInput = {
   pick_policy?: InputMaybe<PickPolicy>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
-  season?: InputMaybe<Scalars['Int']>;
+  season: Scalars['Int'];
 };
 
 export type LeagueCreateManyPeopleInput = {
@@ -1179,7 +1179,7 @@ export type LeagueCreateManyPeopleInput = {
   pick_policy?: InputMaybe<PickPolicy>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
-  season?: InputMaybe<Scalars['Int']>;
+  season: Scalars['Int'];
 };
 
 export type LeagueCreateManyPeopleInputEnvelope = {
@@ -1230,7 +1230,7 @@ export type LeagueCreateWithoutLeaguemembersInput = {
   pick_policy?: InputMaybe<PickPolicy>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
-  season?: InputMaybe<Scalars['Int']>;
+  season: Scalars['Int'];
 };
 
 export type LeagueCreateWithoutPeopleInput = {
@@ -1242,7 +1242,7 @@ export type LeagueCreateWithoutPeopleInput = {
   pick_policy?: InputMaybe<PickPolicy>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
-  season?: InputMaybe<Scalars['Int']>;
+  season: Scalars['Int'];
 };
 
 export type LeagueCreateWithoutWeekWinnersInput = {
@@ -1254,7 +1254,7 @@ export type LeagueCreateWithoutWeekWinnersInput = {
   pick_policy?: InputMaybe<PickPolicy>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
-  season?: InputMaybe<Scalars['Int']>;
+  season: Scalars['Int'];
 };
 
 export type LeagueGroupBy = {
@@ -1272,7 +1272,7 @@ export type LeagueGroupBy = {
   pick_policy?: Maybe<PickPolicy>;
   reminder_policy?: Maybe<ReminderPolicy>;
   scoring_type?: Maybe<ScoringType>;
-  season?: Maybe<Scalars['Int']>;
+  season: Scalars['Int'];
 };
 
 export type LeagueListRelationFilter = {
@@ -1938,7 +1938,7 @@ export type LeagueScalarWhereInput = {
   pick_policy?: InputMaybe<EnumPickPolicyNullableFilter>;
   reminder_policy?: InputMaybe<EnumReminderPolicyNullableFilter>;
   scoring_type?: InputMaybe<EnumScoringTypeNullableFilter>;
-  season?: InputMaybe<IntNullableFilter>;
+  season?: InputMaybe<IntFilter>;
 };
 
 export type LeagueScalarWhereWithAggregatesInput = {
@@ -1953,7 +1953,7 @@ export type LeagueScalarWhereWithAggregatesInput = {
   pick_policy?: InputMaybe<EnumPickPolicyNullableWithAggregatesFilter>;
   reminder_policy?: InputMaybe<EnumReminderPolicyNullableWithAggregatesFilter>;
   scoring_type?: InputMaybe<EnumScoringTypeNullableWithAggregatesFilter>;
-  season?: InputMaybe<IntNullableWithAggregatesFilter>;
+  season?: InputMaybe<IntWithAggregatesFilter>;
 };
 
 export type LeagueSumAggregate = {
@@ -1979,7 +1979,7 @@ export type LeagueUpdateInput = {
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
-  season?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  season?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type LeagueUpdateManyMutationInput = {
@@ -1989,7 +1989,7 @@ export type LeagueUpdateManyMutationInput = {
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
-  season?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  season?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type LeagueUpdateManyWithWhereWithoutPeopleInput = {
@@ -2041,7 +2041,7 @@ export type LeagueUpdateWithoutLeaguemembersInput = {
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
-  season?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  season?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type LeagueUpdateWithoutPeopleInput = {
@@ -2053,7 +2053,7 @@ export type LeagueUpdateWithoutPeopleInput = {
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
-  season?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  season?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type LeagueUpdateWithoutWeekWinnersInput = {
@@ -2065,7 +2065,7 @@ export type LeagueUpdateWithoutWeekWinnersInput = {
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
-  season?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+  season?: InputMaybe<IntFieldUpdateOperationsInput>;
 };
 
 export type LeagueUpsertWithWhereUniqueWithoutPeopleInput = {
@@ -2099,7 +2099,7 @@ export type LeagueWhereInput = {
   pick_policy?: InputMaybe<EnumPickPolicyNullableFilter>;
   reminder_policy?: InputMaybe<EnumReminderPolicyNullableFilter>;
   scoring_type?: InputMaybe<EnumScoringTypeNullableFilter>;
-  season?: InputMaybe<IntNullableFilter>;
+  season?: InputMaybe<IntFilter>;
 };
 
 export type LeagueWhereUniqueInput = {
@@ -6302,14 +6302,14 @@ export type LeagueContentQueryVariables = Exact<{
 }>;
 
 
-export type LeagueContentQuery = { __typename?: 'Query', league?: { __typename?: 'League', league_id: number, name: string, season?: number | null, leaguemembers: Array<{ __typename?: 'LeagueMember', membership_id: number }> } | null, findManyWeekWinners: Array<{ __typename?: 'WeekWinners', correct_count: number, membership_id: number, week: number, score_diff: number }> };
+export type LeagueContentQuery = { __typename?: 'Query', league?: { __typename?: 'League', league_id: number, name: string, season: number, leaguemembers: Array<{ __typename?: 'LeagueMember', membership_id: number }> } | null, findManyWeekWinners: Array<{ __typename?: 'WeekWinners', correct_count: number, membership_id: number, week: number, score_diff: number }>, correctPicks: { __typename?: 'AggregatePick', _count?: { __typename?: 'PickCountAggregate', pickid: number } | null }, wrongPicks: { __typename?: 'AggregatePick', _count?: { __typename?: 'PickCountAggregate', pickid: number } | null } };
 
 export type HomeQueryVariables = Exact<{
   where: UserWhereUniqueInput;
 }>;
 
 
-export type HomeQuery = { __typename?: 'Query', user?: { __typename?: 'User', leaguemembers: Array<{ __typename?: 'LeagueMember', league_id: number, membership_id: number, leagues: { __typename?: 'League', league_id: number, name: string, season?: number | null } }> } | null };
+export type HomeQuery = { __typename?: 'Query', user?: { __typename?: 'User', leaguemembers: Array<{ __typename?: 'LeagueMember', league_id: number, membership_id: number, leagues: { __typename?: 'League', league_id: number, name: string, season: number } }> } | null };
 
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -6426,6 +6426,20 @@ export const LeagueContentDocument = gql`
     membership_id
     week
     score_diff
+  }
+  correctPicks: aggregatePick(
+    where: {member_id: {equals: $membership_id}, correct: {equals: 1}}
+  ) {
+    _count {
+      pickid
+    }
+  }
+  wrongPicks: aggregatePick(
+    where: {member_id: {equals: $membership_id}, correct: {equals: 0}}
+  ) {
+    _count {
+      pickid
+    }
   }
 }
     `;

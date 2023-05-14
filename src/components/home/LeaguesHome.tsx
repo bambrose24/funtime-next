@@ -47,6 +47,7 @@ export function LeaguesHome() {
             {leagueMemberships.map((leagueMember, i) => {
               return (
                 <LeagueCardContent
+                  key={i}
                   league_id={leagueMember.league_id}
                   membership_id={leagueMember.membership_id}
                 />

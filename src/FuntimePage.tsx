@@ -1,5 +1,5 @@
 import {Box} from '@chakra-ui/react';
-import {useSession} from '@supabase/auth-helpers-react';
+import {useSession, useSessionContext} from '@supabase/auth-helpers-react';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {ReactNode} from 'react';
@@ -10,7 +10,7 @@ type Props = {children: ReactNode; requiresAuth?: boolean};
 
 const FuntimePage: React.FC<Props> = ({children, requiresAuth}) => {
   const router = useRouter();
-  const session = useSession();
+  const {error: authError, isLoading: authIsLoading, session} = useSessionContext();
   const isAuthenticated = Boolean(session);
   const needsToLogIn = requiresAuth && !isAuthenticated;
   useEffect(() => {
@@ -24,7 +24,7 @@ const FuntimePage: React.FC<Props> = ({children, requiresAuth}) => {
     }
   }, [needsToLogIn, router]);
 
-  if (needsToLogIn) {
+  if (needsToLogIn || authIsLoading) {
     return <FuntimeLoading />;
   }
 

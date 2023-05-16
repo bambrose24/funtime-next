@@ -9,13 +9,24 @@ import {LeagueCardContent} from './LeagueCardContent';
 const HomeQuery = gql`
   query Home($where: UserWhereUniqueInput!) {
     user(where: $where) {
-      leaguemembers(orderBy: {leagues: {season: desc}}) {
-        league_id
+      leaguemembers {
         membership_id
         leagues {
           league_id
           name
           season
+        }
+        WeekWinners {
+          correct_count
+          membership_id
+          week
+          score_diff
+        }
+        correctPicks: aggregatePick(where: {correct: {equals: 1}}) {
+          count
+        }
+        wrongPicks: aggregatePick(where: {correct: {equals: 0}}) {
+          count
         }
       }
     }
@@ -42,15 +53,11 @@ export function LeaguesHome() {
   return (
     <Flex w="100%" justify="center" px={{base: '8px', lg: '40px'}}>
       <SimpleGrid w="100%" maxW={{base: '100%'}} columns={firstRowResponsive} gap={6}>
-        {leagueMemberships?.length ? (
+        {data && leagueMemberships?.length ? (
           <>
             {leagueMemberships.map((leagueMember, i) => {
               return (
-                <LeagueCardContent
-                  key={i}
-                  league_id={leagueMember.league_id}
-                  membership_id={leagueMember.membership_id}
-                />
+                <LeagueCardContent key={i} league_id={leagueMember.leagues.league_id} data={data} />
               );
             })}
           </>

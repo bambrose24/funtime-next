@@ -64,18 +64,18 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
               </HStack>
             </>
           ) : (
-            <Typography.Subtitle1>None</Typography.Subtitle1>
+            <Typography.Subtitle1 fontWeight="bold">None</Typography.Subtitle1>
           )}
         </Flex>
         <Flex w="100%" justify="space-between">
           <Typography.Body2>League Rank</Typography.Body2>
-          <Typography.Subtitle1>
+          <Typography.Subtitle1 fontWeight="bold">
             {memberRanking?.rank ? getOrdinal(memberRanking.rank) : '--'}
           </Typography.Subtitle1>
         </Flex>
         <Flex w="100%" justify="space-between">
           <Typography.Body2>Number Correct</Typography.Body2>
-          <Typography.Subtitle1>
+          <Typography.Subtitle1 fontWeight="bold">
             {member.correctPicks.count ?? 0} /{' '}
             {(member.correctPicks.count ?? 0) + (member.wrongPicks.count ?? 0)}
           </Typography.Subtitle1>

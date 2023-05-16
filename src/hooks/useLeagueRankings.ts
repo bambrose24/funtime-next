@@ -14,11 +14,7 @@ type RankingEntry = {
 };
 
 export function useLeagueRankings({leagueId}: {leagueId: number}) {
-  const {
-    data: usersData,
-    loading: usersLoading,
-    error: usersError,
-  } = useFindLeagueMembersQuery({
+  const {data: usersData, loading: usersLoading, error: usersError} = useFindLeagueMembersQuery({
     variables: {league_id: leagueId},
   });
 
@@ -28,18 +24,20 @@ export function useLeagueRankings({leagueId}: {leagueId: number}) {
     error: correctPicksError,
   } = useSeasonCorrectPicksQuery({variables: {league_id: leagueId}});
 
+  const data = useMemo(() => {
+    if (!usersData || !correctPicksData) {
+      return [];
+    }
+    return sortedRanks(usersData, correctPicksData);
+  }, [usersData, correctPicksData]);
+
   if (!usersData || !correctPicksData) {
     return {
-      data: undefined,
+      data,
       loading: usersLoading || correctPicksLoading,
       error: usersError || correctPicksError,
     };
   }
-
-  // const data = useMemo(() => {
-  //   return sortedRanks(usersData, correctPicksData);
-  // }, [usersData, correctPicksData]);
-  const data = sortedRanks(usersData, correctPicksData);
 
   return {
     data,

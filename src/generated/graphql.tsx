@@ -6415,7 +6415,7 @@ export type WinnersQuery = { __typename?: 'Query', findManyWeekWinners: Array<{ 
 export const HomeDocument = gql`
     query Home($where: UserWhereUniqueInput!) {
   user(where: $where) {
-    leaguemembers {
+    leaguemembers(orderBy: {leagues: {season: desc}}) {
       membership_id
       leagues {
         league_id

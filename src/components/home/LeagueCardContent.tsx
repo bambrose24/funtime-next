@@ -81,6 +81,7 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
               {(member.correctPicks.count ?? 0) + (member.wrongPicks.count ?? 0)}
             </Typography.Subtitle1>
           </Flex>
+          {/* Idea: put a small graph of standing by week? y axis is 1 -> count of members */}
         </VStack>
         <Flex w="100%" justify="space-between">
           <Button variant="outline">Standings</Button>

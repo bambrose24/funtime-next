@@ -1,4 +1,4 @@
-import {Badge, Box, Divider, Flex, HStack, Skeleton, VStack} from '@chakra-ui/react';
+import {Badge, Box, Button, Divider, Flex, HStack, Skeleton, VStack} from '@chakra-ui/react';
 import {HomeQuery} from '@src/generated/graphql';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 import {getOrdinal} from '@src/util/ordinals';
@@ -48,39 +48,47 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
         </Flex>
       </Flex>
       <Box mt="16px" />
-      <VStack divider={<Divider />} spacing="8px">
+      <Flex direction="column" h="100%" justify="space-between">
+        <VStack divider={<Divider />} spacing="8px">
+          <Flex w="100%" justify="space-between">
+            <Typography.Body2>Week Wins</Typography.Body2>
+            {member.WeekWinners.length && member.WeekWinners.length > 0 ? (
+              <>
+                <HStack>
+                  {member.WeekWinners.map((weekWinner, i) => {
+                    return (
+                      <Badge key={i} colorScheme="green" variant="subtle">
+                        Week {weekWinner.week}
+                      </Badge>
+                    );
+                  })}
+                </HStack>
+              </>
+            ) : (
+              <Typography.Subtitle1 fontWeight="bold">None</Typography.Subtitle1>
+            )}
+          </Flex>
+          <Flex w="100%" justify="space-between">
+            <Typography.Body2>League Rank</Typography.Body2>
+            <Typography.Subtitle1 fontWeight="bold">
+              {memberRanking?.rank ? getOrdinal(memberRanking.rank) : '--'}
+            </Typography.Subtitle1>
+          </Flex>
+          <Flex w="100%" justify="space-between">
+            <Typography.Body2>Number Correct</Typography.Body2>
+            <Typography.Subtitle1 fontWeight="bold">
+              {member.correctPicks.count ?? 0} /{' '}
+              {(member.correctPicks.count ?? 0) + (member.wrongPicks.count ?? 0)}
+            </Typography.Subtitle1>
+          </Flex>
+        </VStack>
         <Flex w="100%" justify="space-between">
-          <Typography.Body2>Week Wins</Typography.Body2>
-          {member.WeekWinners.length && member.WeekWinners.length > 0 ? (
-            <>
-              <HStack>
-                {member.WeekWinners.map((weekWinner, i) => {
-                  return (
-                    <Badge key={i} colorScheme="green" variant="subtle">
-                      Week {weekWinner.week}
-                    </Badge>
-                  );
-                })}
-              </HStack>
-            </>
-          ) : (
-            <Typography.Subtitle1 fontWeight="bold">None</Typography.Subtitle1>
-          )}
+          <Button variant="outline">Standings</Button>
+          <Button variant="solid" colorScheme="blue">
+            Play Again
+          </Button>
         </Flex>
-        <Flex w="100%" justify="space-between">
-          <Typography.Body2>League Rank</Typography.Body2>
-          <Typography.Subtitle1 fontWeight="bold">
-            {memberRanking?.rank ? getOrdinal(memberRanking.rank) : '--'}
-          </Typography.Subtitle1>
-        </Flex>
-        <Flex w="100%" justify="space-between">
-          <Typography.Body2>Number Correct</Typography.Body2>
-          <Typography.Subtitle1 fontWeight="bold">
-            {member.correctPicks.count ?? 0} /{' '}
-            {(member.correctPicks.count ?? 0) + (member.wrongPicks.count ?? 0)}
-          </Typography.Subtitle1>
-        </Flex>
-      </VStack>
+      </Flex>
     </Flex>
   );
 }

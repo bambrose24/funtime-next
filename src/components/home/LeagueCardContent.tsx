@@ -1,56 +1,14 @@
-import {gql} from '@apollo/client';
-import {Badge, Box, Divider, Flex, HStack, Skeleton, Stat, VStack} from '@chakra-ui/react';
-import {useLeagueContentQuery} from '@src/generated/graphql';
+import {Badge, Box, Divider, Flex, HStack, Skeleton, VStack} from '@chakra-ui/react';
+import {HomeQuery} from '@src/generated/graphql';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 import {getOrdinal} from '@src/util/ordinals';
 import {Typography} from '../Typography';
 import {useLeagueCardDimensions} from './useLeageCardDimensions';
 
-const LeagueContentQuery = gql`
-  query LeagueContent($league_id: Int!, $membership_id: Int!) {
-    league(where: {league_id: $league_id}) {
-      league_id
-      name
-      season
-      leaguemembers {
-        membership_id
-      }
-    }
-    findManyWeekWinners(
-      where: {league_id: {equals: $league_id}, membership_id: {equals: $membership_id}}
-    ) {
-      correct_count
-      membership_id
-      week
-      score_diff
-    }
-    correctPicks: aggregatePick(
-      where: {member_id: {equals: $membership_id}, correct: {equals: 1}}
-    ) {
-      _count {
-        pickid
-      }
-    }
-    wrongPicks: aggregatePick(where: {member_id: {equals: $membership_id}, correct: {equals: 0}}) {
-      _count {
-        pickid
-      }
-    }
-  }
-`;
+export function LeagueCardContent({league_id, data}: {league_id: number; data: HomeQuery}) {
+  const member = data.user?.leaguemembers?.find(member => member.leagues.league_id === league_id);
+  const membership_id = member?.membership_id;
 
-export function LeagueCardContent({
-  league_id,
-  membership_id,
-}: {
-  league_id: number;
-  membership_id: number;
-}) {
-  const {
-    data: leagueContent,
-    loading: leagueContentLoading,
-    error: leagueContentError,
-  } = useLeagueContentQuery({variables: {league_id, membership_id}});
   const {width, height} = useLeagueCardDimensions();
   const {
     data: leagueRankings,
@@ -58,20 +16,15 @@ export function LeagueCardContent({
     error: leagueRankingsError,
   } = useLeagueRankings({leagueId: league_id});
 
-  if (
-    leagueContentLoading ||
-    leagueRankingsLoading ||
-    leagueContentError ||
-    leagueRankingsError ||
-    !leagueContent ||
-    !leagueContent.league ||
-    !leagueRankings
-  ) {
+  if (!member || !membership_id) {
+    return null;
+  }
+
+  if (leagueRankingsLoading || leagueRankingsError || !leagueRankings) {
     return <Skeleton w={width} h={height} />;
   }
 
-  const winningWeeks = leagueContent.findManyWeekWinners;
-  const league = leagueContent.league;
+  const league = member.leagues;
   const isLeagueDone = league.season < 2023;
 
   const memberRanking = leagueRankings.find(
@@ -98,10 +51,10 @@ export function LeagueCardContent({
       <VStack divider={<Divider />} spacing="8px">
         <Flex w="100%" justify="space-between">
           <Typography.Body2>Week Wins</Typography.Body2>
-          {winningWeeks.length && winningWeeks.length > 0 ? (
+          {member.WeekWinners.length && member.WeekWinners.length > 0 ? (
             <>
               <HStack>
-                {winningWeeks.map((weekWinner, i) => {
+                {member.WeekWinners.map((weekWinner, i) => {
                   return (
                     <Badge key={i} colorScheme="green" variant="subtle">
                       Week {weekWinner.week}
@@ -123,9 +76,8 @@ export function LeagueCardContent({
         <Flex w="100%" justify="space-between">
           <Typography.Body2>Number Correct</Typography.Body2>
           <Typography.Subtitle1>
-            {leagueContent.correctPicks._count?.pickid ?? 0} /{' '}
-            {(leagueContent.correctPicks._count?.pickid ?? 0) +
-              (leagueContent.wrongPicks._count?.pickid ?? 0)}
+            {member.correctPicks.count ?? 0} /{' '}
+            {(member.correctPicks.count ?? 0) + (member.wrongPicks.count ?? 0)}
           </Typography.Subtitle1>
         </Flex>
       </VStack>

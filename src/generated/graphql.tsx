@@ -1310,6 +1310,7 @@ export type LeagueMember = {
   __typename?: 'LeagueMember';
   WeekWinners: Array<WeekWinners>;
   _count?: Maybe<LeagueMemberCount>;
+  aggregatePick: PickAggregateResponse;
   league_id: Scalars['Int'];
   leagues: League;
   membership_id: Scalars['Int'];
@@ -1329,6 +1330,11 @@ export type LeagueMemberWeekWinnersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<WeekWinnersWhereInput>;
+};
+
+
+export type LeagueMemberAggregatePickArgs = {
+  where?: InputMaybe<PickWhereInput>;
 };
 
 
@@ -2909,6 +2915,11 @@ export type Pick = {
   uid: Scalars['Int'];
   week: Scalars['Int'];
   winner?: Maybe<Scalars['Int']>;
+};
+
+export type PickAggregateResponse = {
+  __typename?: 'PickAggregateResponse';
+  count: Scalars['Int'];
 };
 
 export type PickAvgAggregate = {
@@ -6296,20 +6307,12 @@ export type WeekWinnersWhereUniqueInput = {
   id?: InputMaybe<Scalars['Int']>;
 };
 
-export type LeagueContentQueryVariables = Exact<{
-  league_id: Scalars['Int'];
-  membership_id: Scalars['Int'];
-}>;
-
-
-export type LeagueContentQuery = { __typename?: 'Query', league?: { __typename?: 'League', league_id: number, name: string, season: number, leaguemembers: Array<{ __typename?: 'LeagueMember', membership_id: number }> } | null, findManyWeekWinners: Array<{ __typename?: 'WeekWinners', correct_count: number, membership_id: number, week: number, score_diff: number }>, correctPicks: { __typename?: 'AggregatePick', _count?: { __typename?: 'PickCountAggregate', pickid: number } | null }, wrongPicks: { __typename?: 'AggregatePick', _count?: { __typename?: 'PickCountAggregate', pickid: number } | null } };
-
 export type HomeQueryVariables = Exact<{
   where: UserWhereUniqueInput;
 }>;
 
 
-export type HomeQuery = { __typename?: 'Query', user?: { __typename?: 'User', leaguemembers: Array<{ __typename?: 'LeagueMember', league_id: number, membership_id: number, leagues: { __typename?: 'League', league_id: number, name: string, season: number } }> } | null };
+export type HomeQuery = { __typename?: 'Query', user?: { __typename?: 'User', leaguemembers: Array<{ __typename?: 'LeagueMember', membership_id: number, leagues: { __typename?: 'League', league_id: number, name: string, season: number }, WeekWinners: Array<{ __typename?: 'WeekWinners', correct_count: number, membership_id: number, week: number, score_diff: number }>, correctPicks: { __typename?: 'PickAggregateResponse', count: number }, wrongPicks: { __typename?: 'PickAggregateResponse', count: number } }> } | null };
 
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -6409,79 +6412,27 @@ export type WinnersQueryVariables = Exact<{
 export type WinnersQuery = { __typename?: 'Query', findManyWeekWinners: Array<{ __typename?: 'WeekWinners', week: number, correct_count: number, member: { __typename?: 'LeagueMember', people: { __typename?: 'User', uid: number, username: string } } }> };
 
 
-export const LeagueContentDocument = gql`
-    query LeagueContent($league_id: Int!, $membership_id: Int!) {
-  league(where: {league_id: $league_id}) {
-    league_id
-    name
-    season
-    leaguemembers {
-      membership_id
-    }
-  }
-  findManyWeekWinners(
-    where: {league_id: {equals: $league_id}, membership_id: {equals: $membership_id}}
-  ) {
-    correct_count
-    membership_id
-    week
-    score_diff
-  }
-  correctPicks: aggregatePick(
-    where: {member_id: {equals: $membership_id}, correct: {equals: 1}}
-  ) {
-    _count {
-      pickid
-    }
-  }
-  wrongPicks: aggregatePick(
-    where: {member_id: {equals: $membership_id}, correct: {equals: 0}}
-  ) {
-    _count {
-      pickid
-    }
-  }
-}
-    `;
-
-/**
- * __useLeagueContentQuery__
- *
- * To run a query within a React component, call `useLeagueContentQuery` and pass it any options that fit your needs.
- * When your component renders, `useLeagueContentQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLeagueContentQuery({
- *   variables: {
- *      league_id: // value for 'league_id'
- *      membership_id: // value for 'membership_id'
- *   },
- * });
- */
-export function useLeagueContentQuery(baseOptions: Apollo.QueryHookOptions<LeagueContentQuery, LeagueContentQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LeagueContentQuery, LeagueContentQueryVariables>(LeagueContentDocument, options);
-      }
-export function useLeagueContentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeagueContentQuery, LeagueContentQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LeagueContentQuery, LeagueContentQueryVariables>(LeagueContentDocument, options);
-        }
-export type LeagueContentQueryHookResult = ReturnType<typeof useLeagueContentQuery>;
-export type LeagueContentLazyQueryHookResult = ReturnType<typeof useLeagueContentLazyQuery>;
-export type LeagueContentQueryResult = Apollo.QueryResult<LeagueContentQuery, LeagueContentQueryVariables>;
 export const HomeDocument = gql`
     query Home($where: UserWhereUniqueInput!) {
   user(where: $where) {
-    leaguemembers(orderBy: {leagues: {season: desc}}) {
-      league_id
+    leaguemembers {
       membership_id
       leagues {
         league_id
         name
         season
+      }
+      WeekWinners {
+        correct_count
+        membership_id
+        week
+        score_diff
+      }
+      correctPicks: aggregatePick(where: {correct: {equals: 1}}) {
+        count
+      }
+      wrongPicks: aggregatePick(where: {correct: {equals: 0}}) {
+        count
       }
     }
   }

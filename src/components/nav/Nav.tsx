@@ -6,6 +6,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  FlexProps,
   HStack,
   IconButton,
   Image,
@@ -20,21 +21,26 @@ import {Typography} from '../Typography';
 import {navOptions, useSelectedNavOption} from './types';
 import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
 import Link from 'next/link';
+import {useNavHeight} from '@src/hooks/useNavHeight';
 
 export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const supabase = useSupabaseClient();
   const session = useSession();
 
+  const height = useNavHeight();
+
+  const bg: FlexProps['bg'] = 'green.400';
+
   const router = useRouter();
   return (
     <>
-      <Section bgColor="primary">
-        <Flex justify="space-between">
+      <Flex h={height} alignItems="center" bg={bg} w="100%" px="16px">
+        <Flex justify="space-between" w="100%">
           <Box>
             <HStack spacing={4}>
               <IconButton
-                _hover={{bgColor: 'green.400'}}
+                _hover={{bgColor: bg}}
                 onClick={() => setIsOpen(true)}
                 bgColor="primary"
                 color="purple.50"
@@ -67,7 +73,7 @@ export const DesktopNav: React.FC = () => {
             </Button>
           </Flex>
         </Flex>
-      </Section>
+      </Flex>
       <DesktopNavDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );

@@ -2,6 +2,7 @@ import {Badge, Box, Button, Divider, Flex, HStack, Skeleton, VStack} from '@chak
 import {HomeQuery} from '@src/generated/graphql';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 import {getOrdinal} from '@src/util/ordinals';
+import Link from 'next/link';
 import {Typography} from '../Typography';
 import {useLeagueCardDimensions} from './useLeageCardDimensions';
 
@@ -37,7 +38,7 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
         <Typography.H3>{league.name}</Typography.H3>
         <Flex alignItems="center">
           {isLeagueDone ? (
-            <Badge colorScheme="blue" variant="solid">
+            <Badge colorScheme="green" variant="solid">
               Complete
             </Badge>
           ) : (
@@ -84,10 +85,13 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
           {/* Idea: put a small graph of standing by week? y axis is 1 -> count of members */}
         </VStack>
         <Flex w="100%" justify="space-between">
-          <Button variant="outline">Standings</Button>
-          <Button variant="solid" colorScheme="blue">
+          <Box />
+          <Link href={`/season/${league.league_id}`}>
+            <Button variant="outline">Standings</Button>
+          </Link>
+          {/* <Button variant="solid">
             Play Again
-          </Button>
+          </Button> */}
         </Flex>
       </Flex>
     </Flex>

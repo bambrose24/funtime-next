@@ -24,7 +24,7 @@ import {Typography} from '../Typography';
 
 export function WeeklyWinners({leagueId}: {leagueId: number}) {
   const {data, error} = useWinnersQuery({
-    variables: {league_id: LEAGUE_ID},
+    variables: {league_id: leagueId},
   });
   if (error) {
     return <Typography.H3>There was an error loading winners for the year.</Typography.H3>;

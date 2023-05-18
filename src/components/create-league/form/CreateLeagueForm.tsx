@@ -55,27 +55,28 @@ export const CreateLeagueForm = () => {
         weeklyScoreTiebreaker: 'true',
         superbowlCompetition: 'true',
       }}
+      isInitialValid={false}
       validateOnBlur
       validateOnChange={false}
       validationSchema={validationSchema}
-      onSubmit={values => {
-        console.log('submitted values', values);
+      onSubmit={async (values, helpers) => {
+        console.log('submitting...', values);
+        await new Promise(resolve => setTimeout(resolve, 500)).then(() => {
+          console.log('submitted values', values);
+        });
       }}
     >
       {formik => {
         return (
           <SequentialWizard
-            onSubmit={async () => {
-              console.log('on submit', formik.values);
-            }}
-            canSubmit={formik.isValid}
-            isSubmitting={formik.isSubmitting}
             steps={CREATE_LEAGUE_FORM_STEPS.map(formStep => {
               return {
                 component: <CreateLeagueFormStep formStep={formStep} formik={formik} />,
               };
             })}
-            width={{base: '500px'}}
+            flexProps={{
+              width: {base: '500px'},
+            }}
           />
         );
       }}

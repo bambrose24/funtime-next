@@ -20,7 +20,10 @@ export const WeekPicksGameCards: React.FC<Props> = ({
   pickTeam,
   simulatedPicks,
 }) => {
-  const gamesSorted = _(picksData.picksByWeek.games).sortBy('ts').sortBy('gid').value();
+  const gamesSorted = _(picksData.picksByWeek.games)
+    .sortBy('ts')
+    .sortBy('gid')
+    .value();
 
   const teamIdMapping = teams.teams.reduce((prev, curr) => {
     prev[curr.teamid] = curr;
@@ -75,13 +78,13 @@ export const GameCard: React.FC<{
       }
     }
     if (game.winner === team) {
-      return ['pickCorrect', undefined];
+      return ['green.300', undefined];
     }
     if (game.done && !game.winner) {
       return ['yellow.400', undefined];
     }
     if (game.done) {
-      return ['pickWrong', undefined];
+      return ['red.300', undefined];
     }
     return [undefined, undefined];
   };
@@ -90,21 +93,6 @@ export const GameCard: React.FC<{
 
   const [homeColor, homeBgColor] = getColors(game, game.home, simulatedPicks[game.gid]);
 
-  // const awayColor = !game.done
-  //   ? undefined
-  //   : !game.winner
-  //   ? "yellow.400"
-  //   : game.winner === game.away
-  //   ? "pickCorrect"
-  //   : "pickWrong";
-
-  // const homeColor = !game.done
-  //   ? undefined
-  //   : !game.winner
-  //   ? "yellow.400"
-  //   : game.winner === game.home
-  //   ? "pickCorrect"
-  //   : "pickWrong";
   return (
     <Box p="12px" bg="white" minWidth="130px" height="150px">
       <VStack>
@@ -203,5 +191,11 @@ const GameLiveState: React.FC<{
 };
 
 const GameTS: React.FC<{ts: any}> = ({ts}) => {
-  return <Typography.Body2>{moment(ts).tz('America/New_York').format('lll')}</Typography.Body2>;
+  return (
+    <Typography.Body2>
+      {moment(ts)
+        .tz('America/New_York')
+        .format('lll')}
+    </Typography.Body2>
+  );
 };

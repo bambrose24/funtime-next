@@ -36,7 +36,7 @@ export default function TestPage() {
             <Button variant="outline" onClick={() => setIdx(prev => prev - 1)}>
               Back
             </Button>
-            <Button variant="funtime-primary" onClick={() => setIdx(prev => prev + 1)}>
+            <Button variant="solid" onClick={() => setIdx(prev => prev + 1)}>
               Next
             </Button>
           </Flex>

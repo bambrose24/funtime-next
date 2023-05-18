@@ -24,7 +24,13 @@ export function CreateLeagueFormStep({
   formik: FormikProps<CreateLeagueFormType>;
   formStep: CreateLeagueFormStepType;
 }) {
-  const {back, forward, submit} = useWizard();
+  const {back, forward} = useWizard();
+
+  const createLeague = () => {
+    console.log('going to create league?');
+    formik.submitForm();
+  };
+
   switch (formStep) {
     case 'league_info':
       return (
@@ -76,8 +82,12 @@ export function CreateLeagueFormStep({
         <SequentialWizardLayout
           nav={{
             primary: {
-              label: 'Next',
-              onClick: forward,
+              label: 'Create',
+              onClick: createLeague,
+              buttonProps: {
+                isLoading: formik.isSubmitting,
+                isDisabled: !formik.isValid,
+              },
             },
             secondary: {
               label: 'Back',

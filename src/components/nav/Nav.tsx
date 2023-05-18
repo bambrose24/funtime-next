@@ -19,6 +19,7 @@ import Section from '../Section';
 import {Typography} from '../Typography';
 import {navOptions, useSelectedNavOption} from './types';
 import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
+import Link from 'next/link';
 
 export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -33,27 +34,28 @@ export const DesktopNav: React.FC = () => {
           <Box>
             <HStack spacing={4}>
               <IconButton
-                _hover={{bgColor: 'blue.500'}}
+                _hover={{bgColor: 'green.400'}}
                 onClick={() => setIsOpen(true)}
                 bgColor="primary"
-                color="orange.50"
+                color="purple.50"
                 icon={<MenuIcon />}
                 aria-label={'Open menu'}
               />
-              <a href="/">
+              <Link href="/">
                 <Image
                   cursor="pointer"
                   src="/logo/funtime_full_logo.png"
-                  alt="FunTime Logo"
+                  alt="Funtime Logo"
                   height={30}
                   placeholder="blur"
                 />
-              </a>
+              </Link>
             </HStack>
           </Box>
           <Flex align="center">
             <Button
-              bg="white"
+              variant="outline"
+              colorScheme="whiteAlpha"
               onClick={async () => {
                 if (session) {
                   await supabase.auth.signOut();
@@ -61,7 +63,7 @@ export const DesktopNav: React.FC = () => {
                 router.push({pathname: '/login', query: {}});
               }}
             >
-              <Typography.Body1>{session ? 'Log Out' : 'Log In'}</Typography.Body1>
+              <Typography.Body1 color="white">{session ? 'Log Out' : 'Log In'}</Typography.Body1>
             </Button>
           </Flex>
         </Flex>
@@ -72,7 +74,6 @@ export const DesktopNav: React.FC = () => {
 };
 
 const DesktopNavDrawer: React.FC<{isOpen: boolean; onClose: () => void}> = ({isOpen, onClose}) => {
-  const router = useRouter();
   const selectedNavOption = useSelectedNavOption();
   return (
     <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
@@ -102,7 +103,7 @@ const DesktopNavDrawer: React.FC<{isOpen: boolean; onClose: () => void}> = ({isO
           {navOptions.map(({href, name, display}) => {
             const selected = name === selectedNavOption;
             return (
-              <a href={href} key={name}>
+              <Link href={href} key={name}>
                 <Box
                   role={'group'}
                   m={2}
@@ -151,7 +152,7 @@ const DesktopNavDrawer: React.FC<{isOpen: boolean; onClose: () => void}> = ({isO
                     </Flex>
                   </HStack>
                 </Box>
-              </a>
+              </Link>
             );
           })}
         </Box>

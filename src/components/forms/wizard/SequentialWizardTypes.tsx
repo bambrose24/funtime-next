@@ -4,22 +4,12 @@ export type SequentialWizardContextType = {
   currentIdx: number;
   forward: () => void;
   back: () => void;
-  submit: {
-    onSubmit: () => Promise<void>;
-    canSubmit: boolean;
-    isSubmitting: boolean;
-  };
 };
 
 const SequentialWizardContext = createContext<SequentialWizardContextType>({
   currentIdx: 0,
   forward: () => {},
   back: () => {},
-  submit: {
-    onSubmit: async () => {},
-    canSubmit: false,
-    isSubmitting: false,
-  },
 });
 
 export function SequentialWizardProvider({

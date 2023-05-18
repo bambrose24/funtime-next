@@ -8,33 +8,23 @@ export type WizardProps = {
   steps: Array<{
     component: JSX.Element;
   }>;
-  onSubmit: () => Promise<void>;
-  isSubmitting: boolean;
-  canSubmit: boolean;
   startingIdx?: number;
-} & Omit<FlexProps, 'direction'>;
+  flexProps: Omit<FlexProps, 'direction'>;
+};
 
-export function SequentialWizard({
-  steps,
-  onSubmit,
-  isSubmitting,
-  canSubmit,
-  startingIdx,
-  ...rest
-}: WizardProps) {
+export function SequentialWizard({steps, startingIdx, flexProps}: WizardProps) {
   const [currentIdx, setCurrentIdx] = useState(startingIdx ?? 0);
   const forward = () => setCurrentIdx(prev => prev + 1);
   const back = () => setCurrentIdx(prev => prev - 1);
   return (
-    <SequentialWizardProvider
-      value={{currentIdx, forward, back, submit: {onSubmit, canSubmit, isSubmitting}}}
-    >
-      <Flex direction="column" {...rest}>
+    <SequentialWizardProvider value={{currentIdx, forward, back}}>
+      <Flex direction="column" {...flexProps}>
         {steps.map((step, idx) => {
           const current = currentIdx === idx;
           const isLater = currentIdx > idx;
           return (
             <motion.div
+              key={idx}
               style={{height: '100%'}}
               animate={{
                 display: current ? 'inline' : 'none',

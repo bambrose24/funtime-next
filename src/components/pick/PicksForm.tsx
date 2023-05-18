@@ -70,7 +70,10 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
         })
       )
       .length(games.length, 'Please select a winner for every game'),
-    score: Yup.number().required().integer().lessThan(150, 'Please enter a number below 150'),
+    score: Yup.number()
+      .required()
+      .integer()
+      .lessThan(150, 'Please enter a number below 150'),
   });
 
   // TODO fetch the logged in user specifically and block the web app on loading that user
@@ -185,13 +188,15 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
         initialValues={{
           user1: maybeLoggedInUser?.membership_id?.toString() || '', // test
           user2: maybeLoggedInUser?.membership_id?.toString() || '',
-          games: games.map((g): GameEntry => {
-            return {
-              gameId: g.gid,
-              random: false,
-              winner: undefined,
-            };
-          }),
+          games: games.map(
+            (g): GameEntry => {
+              return {
+                gameId: g.gid,
+                random: false,
+                winner: undefined,
+              };
+            }
+          ),
           scoreGameId: tiebreakerGame.gid,
           score: '',
         }}
@@ -240,7 +245,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
               </FormControl>
               <Button
                 width="full"
-                variant="funtime-primary"
+                variant="solid"
                 onClick={() => {
                   const gamePicks: Array<GameEntry> = games.map(g => {
                     const winner =
@@ -412,7 +417,9 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
                           rowStart={2}
                         >
                           <Typography.Subtitle2>
-                            {moment(game.ts).tz('America/New_York').format('MMM D YYYY, h:mm A z')}
+                            {moment(game.ts)
+                              .tz('America/New_York')
+                              .format('MMM D YYYY, h:mm A z')}
                           </Typography.Subtitle2>
                         </GridItem>
                       </Grid>

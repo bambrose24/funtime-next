@@ -7,8 +7,9 @@ import {
   useFindLeagueMembersQuery,
   useGamesBySeasonQuery,
   useSeasonCorrectPicksQuery,
+  useGamesByLeagueQuery,
 } from '../../generated/graphql';
-import {LEAGUE_ID, SEASON} from '../../util/config';
+import {SEASON} from '../../util/config';
 import {Table, Tbody, Tr, Td, Th, Thead, TableContainer, Stat} from '@chakra-ui/react';
 import UserTag from '../profile/UserTag';
 import _ from 'lodash';
@@ -16,19 +17,19 @@ import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 
 export function Standings({leagueId}: {leagueId: number}) {
   const {data: usersData, loading: usersLoading} = useFindLeagueMembersQuery({
-    variables: {league_id: LEAGUE_ID},
+    variables: {league_id: leagueId},
   });
 
   const {data: correctPicksData, loading: correctPicksLoading} = useSeasonCorrectPicksQuery({
-    variables: {league_id: LEAGUE_ID},
+    variables: {league_id: leagueId},
   });
 
-  const {data: seasonGamesData, loading: seasonGamesLoading} = useGamesBySeasonQuery({
-    variables: {season: SEASON},
+  const {data: seasonGamesData, loading: seasonGamesLoading} = useGamesByLeagueQuery({
+    variables: {leagueId},
   });
 
   const {data: rankings, loading: rankingsLoading, error: rankingsError} = useLeagueRankings({
-    leagueId: LEAGUE_ID,
+    leagueId: leagueId,
   });
 
   if (usersLoading || correctPicksLoading || seasonGamesLoading || rankingsLoading) {
@@ -50,7 +51,8 @@ export function Standings({leagueId}: {leagueId: number}) {
   // sorted list of members based on correct pick count
   // 1. make list of members & correct pick count
   // 2. then sort it
-  const gamesLeft = seasonGamesData.games.reduce((prev, curr) => (curr.done ? prev : prev + 1), 0);
+  const gamesLeft =
+    seasonGamesData.league?.games.reduce((prev, curr) => (curr.done ? prev : prev + 1), 0) ?? 0;
 
   return (
     <Flex direction="column">

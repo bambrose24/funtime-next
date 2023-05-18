@@ -51,7 +51,7 @@ export function LeaguesHome() {
   const leagueMemberships = data?.user?.leaguemembers;
 
   return (
-    <Flex w="100%" justify="center" px={{base: '8px', lg: '40px'}}>
+    <Flex w="100%" justify="center" px={{base: '8px', lg: '24px'}}>
       <SimpleGrid w="100%" maxW={{base: '100%'}} columns={firstRowResponsive} gap={6}>
         {data && leagueMemberships?.length ? (
           <>

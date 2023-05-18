@@ -5,6 +5,7 @@ import FuntimePage from '@src/FuntimePage';
 import {useAuthTheme} from './util';
 import {Typography} from '../Typography';
 import {useRouter} from 'next/router';
+import {env} from '@src/util/config';
 
 const LoginPage = () => {
   const supabase = useSupabaseClient();
@@ -24,7 +25,7 @@ const LoginPage = () => {
             redirectTo={router.asPath}
             supabaseClient={supabase}
             appearance={{theme: authTheme}}
-            view="magic_link"
+            view={env === 'development' ? 'sign_in' : 'magic_link'}
             showLinks={false}
             providers={['google', 'apple']}
             magicLink

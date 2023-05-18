@@ -6,7 +6,7 @@ import FuntimePage from '@src/FuntimePage';
 import {SECONDS_IN_DAY} from '@src/util/constants';
 import {GetStaticProps} from 'next';
 
-const SeasonPage: React.FC = () => {
+function SeasonPage() {
   return (
     <FuntimePage>
       <Flex justify="center" overflowX="hidden" overflowY="hidden">
@@ -43,7 +43,7 @@ const SeasonPage: React.FC = () => {
       </Flex>
     </FuntimePage>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = () => {
   return {

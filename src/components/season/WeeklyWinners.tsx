@@ -22,7 +22,7 @@ import UserTag from '../profile/UserTag';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';
 
-export const WeeklyWinners = () => {
+export function WeeklyWinners({leagueId}: {leagueId: number}) {
   const {data, error} = useWinnersQuery({
     variables: {league_id: LEAGUE_ID},
   });
@@ -86,4 +86,4 @@ export const WeeklyWinners = () => {
       </TableContainer>
     </Flex>
   );
-};
+}

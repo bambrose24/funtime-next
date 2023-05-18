@@ -3629,6 +3629,7 @@ export type Query = {
   leagueMember?: Maybe<LeagueMember>;
   leagueMembers: Array<LeagueMember>;
   leagues: Array<League>;
+  me?: Maybe<User>;
   mostRecentStartedWeek: MostRecentStartedWeekResponse;
   pick?: Maybe<Pick>;
   picks: Array<Pick>;
@@ -6314,6 +6315,11 @@ export type HomeQueryVariables = Exact<{
 
 export type HomeQuery = { __typename?: 'Query', user?: { __typename?: 'User', leaguemembers: Array<{ __typename?: 'LeagueMember', membership_id: number, leagues: { __typename?: 'League', league_id: number, name: string, season: number }, WeekWinners: Array<{ __typename?: 'WeekWinners', correct_count: number, membership_id: number, week: number, score_diff: number }>, correctPicks: { __typename?: 'PickAggregateResponse', count: number }, wrongPicks: { __typename?: 'PickAggregateResponse', count: number } }> } | null };
 
+export type MyLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyLeaguesQuery = { __typename?: 'Query', me?: { __typename?: 'User', leaguemembers: Array<{ __typename?: 'LeagueMember', leagues: { __typename?: 'League', league_id: number, name: string } }> } | null };
+
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
@@ -6466,6 +6472,45 @@ export function useHomeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HomeQ
 export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>;
 export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>;
 export type HomeQueryResult = Apollo.QueryResult<HomeQuery, HomeQueryVariables>;
+export const MyLeaguesDocument = gql`
+    query MyLeagues {
+  me {
+    leaguemembers {
+      leagues {
+        league_id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyLeaguesQuery__
+ *
+ * To run a query within a React component, call `useMyLeaguesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyLeaguesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyLeaguesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyLeaguesQuery(baseOptions?: Apollo.QueryHookOptions<MyLeaguesQuery, MyLeaguesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MyLeaguesQuery, MyLeaguesQueryVariables>(MyLeaguesDocument, options);
+      }
+export function useMyLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyLeaguesQuery, MyLeaguesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MyLeaguesQuery, MyLeaguesQueryVariables>(MyLeaguesDocument, options);
+        }
+export type MyLeaguesQueryHookResult = ReturnType<typeof useMyLeaguesQuery>;
+export type MyLeaguesLazyQueryHookResult = ReturnType<typeof useMyLeaguesLazyQuery>;
+export type MyLeaguesQueryResult = Apollo.QueryResult<MyLeaguesQuery, MyLeaguesQueryVariables>;
 export const SeasonCorrectPicksDocument = gql`
     query SeasonCorrectPicks($league_id: Int!) {
   groupByPick(

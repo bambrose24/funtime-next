@@ -14,7 +14,7 @@ import UserTag from '../profile/UserTag';
 import _ from 'lodash';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 
-export const Standings = () => {
+export function Standings({leagueId}: {leagueId: number}) {
   const {data: usersData, loading: usersLoading} = useFindLeagueMembersQuery({
     variables: {league_id: LEAGUE_ID},
   });
@@ -27,11 +27,9 @@ export const Standings = () => {
     variables: {season: SEASON},
   });
 
-  const {
-    data: rankings,
-    loading: rankingsLoading,
-    error: rankingsError,
-  } = useLeagueRankings({leagueId: LEAGUE_ID});
+  const {data: rankings, loading: rankingsLoading, error: rankingsError} = useLeagueRankings({
+    leagueId: LEAGUE_ID,
+  });
 
   if (usersLoading || correctPicksLoading || seasonGamesLoading || rankingsLoading) {
     return (
@@ -88,30 +86,22 @@ export const Standings = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {rankings.map(
-              ({
-                member: {
-                  people: {uid, username},
-                },
-                num_correct,
-                rank,
-              }) => (
-                <React.Fragment key={uid}>
-                  <Tr transition={'all .3s ease'} _hover={{bgColor: 'gray.50'}}>
-                    <Td pl={6} pr={0} py={0}>
-                      <Stat>{rank}</Stat>
-                    </Td>
-                    <Td pr={2} pl={4} py={2}>
-                      <UserTag user_id={uid} username={username} />
-                    </Td>
-                    <Td>{num_correct}</Td>
-                  </Tr>
-                </React.Fragment>
-              )
-            )}
+            {rankings.map(({member: {people: {uid, username}}, num_correct, rank}) => (
+              <React.Fragment key={uid}>
+                <Tr transition={'all .3s ease'} _hover={{bgColor: 'gray.50'}}>
+                  <Td pl={6} pr={0} py={0}>
+                    <Stat>{rank}</Stat>
+                  </Td>
+                  <Td pr={2} pl={4} py={2}>
+                    <UserTag user_id={uid} username={username} />
+                  </Td>
+                  <Td>{num_correct}</Td>
+                </Tr>
+              </React.Fragment>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
     </Flex>
   );
-};
+}

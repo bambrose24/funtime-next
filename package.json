@@ -8,6 +8,7 @@
     "start": "FUNTIME_PHASE=prod next start",
     "lint": "next lint",
     "generate": "graphql-codegen --config codegen.ts",
+    "generate:local": "FUNTIME_ENV=development graphql-codegen --config codegen.ts",
     "generate:theme": "npx @chakra-ui/cli tokens src/util/theme.ts",
     "postinstall": "npm run generate:theme",
     "tsc": "tsc",

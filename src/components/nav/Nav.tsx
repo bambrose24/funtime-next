@@ -35,7 +35,7 @@ export const DesktopNav: React.FC = () => {
   const router = useRouter();
   return (
     <>
-      <Flex h={height} alignItems="center" bg={bg} w="100%" px="16px">
+      <Flex h={height} alignItems="center" bg={bg} w="100%" px={{base: '8px', lg: '24px'}}>
         <Flex justify="space-between" w="100%">
           <Box>
             <HStack spacing={4}>

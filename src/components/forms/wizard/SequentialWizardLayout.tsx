@@ -26,7 +26,7 @@ export function SequentialWizardLayout({children, nav}: SequentialWizardLayoutPr
       borderRadius="4px"
     >
       {children}
-      <Flex mt="12px" justify="space-between">
+      <Flex mt="24px" justify="space-between">
         {nav.secondary ? (
           <Button variant="outline" {...nav.secondary.buttonProps} onClick={nav.secondary.onClick}>
             {nav.secondary.label}
@@ -40,11 +40,7 @@ export function SequentialWizardLayout({children, nav}: SequentialWizardLayoutPr
               {nav.tertiary.label}
             </Button>
           ) : null}
-          <Button
-            variant="funtime-primary"
-            {...nav.primary.buttonProps}
-            onClick={nav.primary.onClick}
-          >
+          <Button variant="solid" {...nav.primary.buttonProps} onClick={nav.primary.onClick}>
             {nav.primary.label}
           </Button>
         </Flex>

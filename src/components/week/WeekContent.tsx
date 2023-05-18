@@ -129,8 +129,8 @@ export const WeekContent: React.FC = () => {
   return (
     <Box mx="12px">
       <Flex w="100%" justify="center" px={{base: '4px', lg: '24px'}}>
-        <HStack spacing="24px">
-          <Header mt={2} mb={4}>
+        <HStack spacing="24px" w="100%" px={{base: '4px', md: '24px'}}>
+          <Header mt={2} mb={4} w="100%">
             Week {week}, {season}
           </Header>
           <FormControl w="150px" p="8px" bg="white" borderRadius="4px">

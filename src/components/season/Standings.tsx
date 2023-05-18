@@ -7,31 +7,30 @@ import {
   useFindLeagueMembersQuery,
   useGamesBySeasonQuery,
   useSeasonCorrectPicksQuery,
+  useGamesByLeagueQuery,
 } from '../../generated/graphql';
-import {LEAGUE_ID, SEASON} from '../../util/config';
+import {SEASON} from '../../util/config';
 import {Table, Tbody, Tr, Td, Th, Thead, TableContainer, Stat} from '@chakra-ui/react';
 import UserTag from '../profile/UserTag';
 import _ from 'lodash';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 
-export const Standings = () => {
+export function Standings({leagueId}: {leagueId: number}) {
   const {data: usersData, loading: usersLoading} = useFindLeagueMembersQuery({
-    variables: {league_id: LEAGUE_ID},
+    variables: {league_id: leagueId},
   });
 
   const {data: correctPicksData, loading: correctPicksLoading} = useSeasonCorrectPicksQuery({
-    variables: {league_id: LEAGUE_ID},
+    variables: {league_id: leagueId},
   });
 
-  const {data: seasonGamesData, loading: seasonGamesLoading} = useGamesBySeasonQuery({
-    variables: {season: SEASON},
+  const {data: seasonGamesData, loading: seasonGamesLoading} = useGamesByLeagueQuery({
+    variables: {leagueId},
   });
 
-  const {
-    data: rankings,
-    loading: rankingsLoading,
-    error: rankingsError,
-  } = useLeagueRankings({leagueId: LEAGUE_ID});
+  const {data: rankings, loading: rankingsLoading, error: rankingsError} = useLeagueRankings({
+    leagueId: leagueId,
+  });
 
   if (usersLoading || correctPicksLoading || seasonGamesLoading || rankingsLoading) {
     return (
@@ -52,7 +51,8 @@ export const Standings = () => {
   // sorted list of members based on correct pick count
   // 1. make list of members & correct pick count
   // 2. then sort it
-  const gamesLeft = seasonGamesData.games.reduce((prev, curr) => (curr.done ? prev : prev + 1), 0);
+  const gamesLeft =
+    seasonGamesData.league?.games.reduce((prev, curr) => (curr.done ? prev : prev + 1), 0) ?? 0;
 
   return (
     <Flex direction="column">
@@ -88,30 +88,22 @@ export const Standings = () => {
             </Tr>
           </Thead>
           <Tbody>
-            {rankings.map(
-              ({
-                member: {
-                  people: {uid, username},
-                },
-                num_correct,
-                rank,
-              }) => (
-                <React.Fragment key={uid}>
-                  <Tr transition={'all .3s ease'} _hover={{bgColor: 'gray.50'}}>
-                    <Td pl={6} pr={0} py={0}>
-                      <Stat>{rank}</Stat>
-                    </Td>
-                    <Td pr={2} pl={4} py={2}>
-                      <UserTag user_id={uid} username={username} />
-                    </Td>
-                    <Td>{num_correct}</Td>
-                  </Tr>
-                </React.Fragment>
-              )
-            )}
+            {rankings.map(({member: {people: {uid, username}}, num_correct, rank}) => (
+              <React.Fragment key={uid}>
+                <Tr transition={'all .3s ease'} _hover={{bgColor: 'gray.50'}}>
+                  <Td pl={6} pr={0} py={0}>
+                    <Stat>{rank}</Stat>
+                  </Td>
+                  <Td pr={2} pl={4} py={2}>
+                    <UserTag user_id={uid} username={username} />
+                  </Td>
+                  <Td>{num_correct}</Td>
+                </Tr>
+              </React.Fragment>
+            ))}
           </Tbody>
         </Table>
       </TableContainer>
     </Flex>
   );
-};
+}

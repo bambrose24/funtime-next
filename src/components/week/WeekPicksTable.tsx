@@ -216,8 +216,8 @@ const PicksTable: React.FC<PicksTableProps> = ({
                     !game.done && !simulatedPicks[game.gid]
                       ? undefined
                       : correct
-                      ? 'pickCorrect'
-                      : 'pickWrong';
+                      ? 'green.300'
+                      : 'red.300';
 
                   return (
                     <Td cursor="default" bg={bg} key={`${member.membership_id}_${game.gid}_pick`}>

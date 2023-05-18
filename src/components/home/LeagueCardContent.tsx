@@ -85,10 +85,10 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
           {/* Idea: put a small graph of standing by week? y axis is 1 -> count of members */}
         </VStack>
         <Flex w="100%" justify="space-between">
-          <Box />
           <Link href={`/season/${league.league_id}`}>
             <Button variant="outline">Standings</Button>
           </Link>
+          <Box />
           {/* <Button variant="solid">
             Play Again
           </Button> */}

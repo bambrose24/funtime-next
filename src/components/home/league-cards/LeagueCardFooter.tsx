@@ -58,7 +58,6 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
             {member.role === MemberRole.Admin && <MenuItem>Manage League (admin only)</MenuItem>}
             <MenuItem>Standings</MenuItem>
             <MenuItem>Make Picks</MenuItem>
-            <MenuItem>Make Picks (remove this)</MenuItem>
           </MenuList>
         </Menu>
       </Flex>

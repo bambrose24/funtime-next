@@ -3,18 +3,29 @@ import {Flex, SimpleGrid, Skeleton, useBreakpointValue} from '@chakra-ui/react';
 import {useHomeQuery} from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
 import {FuntimeError} from '../shared/FuntimeError';
-import {useLeagueCardDimensions} from './useLeageCardDimensions';
-import {LeagueCardContent} from './LeagueCardContent';
+import {useLeagueCardDimensions} from './league-cards/useLeageCardDimensions';
+import {LeagueCardContent} from './league-cards/LeagueCardContent';
 
 const HomeQuery = gql`
   query Home($where: UserWhereUniqueInput!) {
     user(where: $where) {
       leaguemembers(orderBy: {leagues: {season: desc}}) {
         membership_id
+        role
+        nextGame {
+          week
+          ts
+        }
+        hasPickedNextGame
         leagues {
           league_id
           name
           season
+          status
+          share_code
+          aggregateLeagueMember {
+            count
+          }
         }
         WeekWinners {
           correct_count

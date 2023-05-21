@@ -74,18 +74,10 @@ export default function Profile(props: Props) {
 
   const userId = parseInt(id);
 
-  const {
-    data: rankings,
-    loading: rankingsLoading,
-    error: rankingsError,
-  } = useLeagueRankings({
+  const {data: rankings, loading: rankingsLoading, error: rankingsError} = useLeagueRankings({
     leagueId,
   });
-  const {
-    data: profile,
-    loading: profileLoading,
-    error: profileError,
-  } = useProfileQuery({
+  const {data: profile, loading: profileLoading, error: profileError} = useProfileQuery({
     variables: {user_id: userId},
   });
 
@@ -99,9 +91,8 @@ export default function Profile(props: Props) {
     return <FuntimeError />;
   }
 
-  const memberId = profile.members.find(
-    members => members.leagues.league_id === leagueId
-  )?.membership_id;
+  const memberId = profile.members.find(members => members.leagues.league_id === leagueId)
+    ?.membership_id;
 
   if (!memberId) {
     return <FuntimeError />;

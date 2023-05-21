@@ -1,4 +1,10 @@
-import {extendTheme, ThemeConfig, ThemeOverride, ThemingProps} from '@chakra-ui/react';
+import {
+  extendTheme,
+  ThemeConfig,
+  ThemeOverride,
+  ThemingProps,
+  withDefaultColorScheme,
+} from '@chakra-ui/react';
 
 const themeConfig: ThemeConfig = {
   initialColorMode: 'light',
@@ -16,6 +22,7 @@ export const themeVars = {
   },
   colors: {
     primary: '#38A169',
+    'primary.hover': '#276749',
     error: '#C53030',
   },
   components: {
@@ -38,31 +45,26 @@ export const themeVars = {
       },
       defaultProps: {
         variant: 'primary',
-        colorScheme: 'green',
       },
-    },
-    Radio: {
-      defaultProps: {
-        colorScheme: 'green',
-      }
-    },
-    Form: {
-      defaultProps: {
-        colorScheme: 'green'
-      }
     },
     Input: {
       defaultProps: {
-        colorScheme: 'green',
-        focusBorderColor: 'green.500'
-      }
-    }
+        focusBorderColor: 'green.500',
+      },
+    },
   },
-  } satisfies ThemeOverride;
+};
+// } satisfies ThemeOverride;
 
-const theme = extendTheme({
-  config: themeConfig,
-  ...themeVars,
-});
+const theme = extendTheme(
+  {
+    config: themeConfig,
+    ...themeVars,
+  },
+  withDefaultColorScheme({
+    colorScheme: 'green',
+    components: ['Input', 'Form', 'Radio', 'Button', 'Tabs'],
+  })
+);
 
 export default theme;

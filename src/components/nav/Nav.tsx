@@ -16,7 +16,6 @@ import CloseIcon from '@mui/icons-material/Close';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {useRouter} from 'next/router';
 import {useState} from 'react';
-import Section from '../Section';
 import {Typography} from '../Typography';
 import {navOptions, useSelectedNavOption} from './types';
 import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
@@ -30,7 +29,7 @@ export const DesktopNav: React.FC = () => {
 
   const height = useNavHeight();
 
-  const bg: FlexProps['bg'] = 'green.400';
+  const bg: FlexProps['bg'] = 'primary';
 
   const router = useRouter();
   return (
@@ -40,10 +39,10 @@ export const DesktopNav: React.FC = () => {
           <Box>
             <HStack spacing={4}>
               <IconButton
-                _hover={{bgColor: bg}}
+                _hover={{bg: 'primary.hover'}}
+                color="white"
+                bg={bg}
                 onClick={() => setIsOpen(true)}
-                bgColor="primary"
-                color="purple.50"
                 icon={<MenuIcon />}
                 aria-label={'Open menu'}
               />
@@ -100,7 +99,7 @@ const DesktopNavDrawer: React.FC<{isOpen: boolean; onClose: () => void}> = ({isO
               color="white"
               icon={<CloseIcon />}
               aria-label={'Close menu'}
-              _hover={{bgColor: 'blue.500'}}
+              _hover={{bgColor: 'primary.hover'}}
               onClick={onClose}
             />
           </Flex>

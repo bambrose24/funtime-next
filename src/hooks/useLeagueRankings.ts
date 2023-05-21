@@ -7,7 +7,7 @@ import {
 import _ from 'lodash';
 import {useMemo} from 'react';
 
-type RankingEntry = {
+export type RankingEntry = {
   member: FindLeagueMembersQuery['leagueMembers'][0];
   num_correct: number;
   rank: number;

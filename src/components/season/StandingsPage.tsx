@@ -69,7 +69,7 @@ function StandingsPageImpl({leagueId}: StandingsPageProps) {
         <Typography.H1 my="12px" align="center">
           {league.name} - Leaderboard
         </Typography.H1>
-        <Tabs>
+        <Tabs variant="soft-rounded">
           <TabList>
             <Tab>Season</Tab>
             <Tab>Weekly Winners</Tab>

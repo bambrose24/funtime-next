@@ -6520,7 +6520,7 @@ export type FirstNotStartedWeekQueryVariables = Exact<{
 }>;
 
 
-export type FirstNotStartedWeekQuery = { __typename?: 'Query', firstNotStartedWeek: { __typename?: 'FirstNotStartedWeekResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null } }> } };
+export type FirstNotStartedWeekQuery = { __typename?: 'Query', firstNotStartedWeek: { __typename?: 'FirstNotStartedWeekResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> } };
 
 export type GamesByLeagueQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -6884,6 +6884,7 @@ export const FirstNotStartedWeekDocument = gql`
     week
     season
     games {
+      id
       gid
       week
       season
@@ -6896,10 +6897,12 @@ export const FirstNotStartedWeekDocument = gql`
       winner
       is_tiebreaker
       teams_games_awayToteams {
+        id
         teamid
         abbrev
       }
       teams_games_homeToteams {
+        id
         teamid
         abbrev
       }

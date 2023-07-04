@@ -8,6 +8,7 @@
     "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals"
   ]
+  // July 2023, could not get this working... I want id-when-available as a rule so apollo cache doesn't suck
   // "overrides": [
   //   {
   //     "files": ["*.ts", "*.tsx"],

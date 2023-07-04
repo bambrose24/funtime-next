@@ -15,8 +15,11 @@ export type StandingsPageProps = {
 const MyLeaguesQuery = gql`
   query MyLeagues {
     me {
+      id
       leaguemembers(orderBy: {leagues: {season: desc}}) {
+        id
         leagues {
+          id
           league_id
           name
         }
@@ -47,6 +50,7 @@ export function StandingsPage({leagueId: leagueIdProp}: Partial<StandingsPagePro
 const LeagueNameQueryDoc = gql`
   query LeagueName($leagueId: Int!) {
     league(where: {league_id: $leagueId}) {
+      id
       name
     }
   }

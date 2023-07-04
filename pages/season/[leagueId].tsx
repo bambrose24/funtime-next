@@ -10,6 +10,7 @@ import {useRouter} from 'next/router';
 const AllLeaguesQueryDoc = gql`
   query AllLeagues {
     leagues {
+      id
       league_id
     }
   }

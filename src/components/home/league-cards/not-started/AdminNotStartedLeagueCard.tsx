@@ -29,6 +29,7 @@ export function AdminNotStartedLeagueCard({member}: AdminNotStartedLeagueCardPro
             <FormLabel>Registration Link</FormLabel>
             <Flex>
               <Input
+                readOnly
                 borderRadius="2px 0 0 2px"
                 variant="outline"
                 fontSize="14px"

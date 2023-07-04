@@ -1,6 +1,5 @@
 import {CheckIcon, CopyIcon} from '@chakra-ui/icons';
 import {
-  Box,
   Flex,
   FormControl,
   FormLabel,
@@ -9,20 +8,18 @@ import {
   useClipboard,
   useToast,
 } from '@chakra-ui/react';
-import {HomeQuery, MemberRole} from '@src/generated/graphql';
-import {useRouter} from 'next/router';
-import {Typography} from '../../../Typography';
+import {HomeQuery} from '@src/generated/graphql';
 import {LeagueCardFooter} from '../LeagueCardFooter';
 
 export type AdminNotStartedLeagueCardProps = {
-  member: NonNullable<HomeQuery['user']>['leaguemembers'][number];
+  member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
 };
 
 export function AdminNotStartedLeagueCard({member}: AdminNotStartedLeagueCardProps) {
   const toaster = useToast();
   const registrationLink = `${
     typeof window !== 'undefined' ? window.location.origin : 'https://www.play-funtime.com'
-  }/${member.leagues.share_code}/register`;
+  }/register/${member.leagues.share_code}`;
   const {onCopy, hasCopied} = useClipboard(registrationLink);
   return (
     <Flex w="100%" direction="column" gap="20px" justify="space-between" h="100%">
@@ -49,12 +46,14 @@ export function AdminNotStartedLeagueCard({member}: AdminNotStartedLeagueCardPro
                 icon={hasCopied ? <CheckIcon /> : <CopyIcon />}
                 onClick={() => {
                   onCopy();
-                  toaster({
-                    position: 'bottom-left',
-                    variant: 'subtle',
-                    status: 'info',
-                    title: 'Copied registration link!',
-                  });
+                  if (!hasCopied) {
+                    toaster({
+                      position: 'bottom-left',
+                      variant: 'subtle',
+                      status: 'info',
+                      title: 'Copied registration link!',
+                    });
+                  }
                 }}
                 aria-label={'Copy registration link'}
               />

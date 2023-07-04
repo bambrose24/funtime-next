@@ -3,7 +3,7 @@ import {AdminNotStartedLeagueCard} from './AdminNotStartedLeagueCard';
 import {RegularNotStartedLeagueCard} from './RegularNotStartedLeagueCard';
 
 export type NotStartedLeagueCardContentProps = {
-  member: NonNullable<HomeQuery['user']>['leaguemembers'][number];
+  member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
 };
 
 export function NotStartedLeagueCardContent({member}: NotStartedLeagueCardContentProps) {

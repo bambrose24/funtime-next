@@ -1,25 +1,13 @@
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  Badge,
-  Box,
-  Button,
-  Divider,
-  Flex,
-  HStack,
-  VStack,
-} from '@chakra-ui/react';
+import {Badge, Divider, Flex, HStack, VStack} from '@chakra-ui/react';
 import {CardStatRow} from '@src/components/shared/CardStatRow';
 import {Typography} from '@src/components/Typography';
-import {HomeQuery, MemberRole} from '@src/generated/graphql';
+import {HomeQuery} from '@src/generated/graphql';
 import {RankingEntry} from '@src/hooks/useLeagueRankings';
 import {getOrdinal} from '@src/util/ordinals';
-import Link from 'next/link';
 import {LeagueCardFooter} from '../LeagueCardFooter';
 
 export type InProgressLeagueCardContentProps = {
-  member: NonNullable<HomeQuery['user']>['leaguemembers'][number];
+  member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
   memberRanking: RankingEntry | undefined;
 };
 

@@ -16,10 +16,10 @@ const configMap: Record<Env, Config> = {
     // graphqlEndpoint: "https://funtime-api.fly.dev/graphql",
   },
   preview: {
-    graphqlEndpoint: 'https://funtime-api-staging.fly.dev/graphql',
+    graphqlEndpoint: 'https://funtime-api-staging.up.railway.app/graphql',
   },
   production: {
-    graphqlEndpoint: 'https://funtime-api.fly.dev/graphql',
+    graphqlEndpoint: 'https://funtime-api-production.up.railway.app/graphql',
   },
 };
 

@@ -1,4 +1,4 @@
-import {Box, Flex, HStack, Theme, VStack} from '@chakra-ui/react';
+import {Box, Flex, HStack, VStack} from '@chakra-ui/react';
 import {AllTeamsQuery, MsfGamePlayedStatus, PicksByWeekQuery} from '@src/generated/graphql';
 import _ from 'lodash';
 import moment from 'moment-timezone';

@@ -1,5 +1,6 @@
 query Profile($user_id: Int!) {
   user: user(where: {uid: $user_id}) {
+    id
     uid
     username
   }
@@ -11,8 +12,10 @@ query Profile($user_id: Int!) {
     }
   }
   members: leagueMembers(where: {user_id: {equals: $user_id}}) {
+    id
     membership_id
     leagues {
+      id
       name
       league_id
     }

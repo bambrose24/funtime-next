@@ -4,6 +4,7 @@ query PicksByWeek($league_id: Int!, $week: Int, $override: Boolean) {
     season
     canView
     games {
+      id
       gid
       ts
       done
@@ -20,15 +21,18 @@ query PicksByWeek($league_id: Int!, $week: Int, $override: Boolean) {
       homescore
       awayscore
       teams_games_homeToteams {
+        id
         teamid
         abbrev
       }
       teams_games_awayToteams {
+        id
         abbrev
         teamid
       }
     }
     picks {
+      id
       gid
       pickid
       member_id

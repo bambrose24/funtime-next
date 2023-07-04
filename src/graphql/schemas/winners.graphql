@@ -1,9 +1,12 @@
 query Winners($league_id: Int!) {
   findManyWeekWinners(where: {league_id: {equals: $league_id}}) {
+    id
     week
     correct_count
     member {
+      id
       people {
+        id
         uid
         username
       }

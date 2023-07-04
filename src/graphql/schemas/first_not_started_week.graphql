@@ -3,6 +3,7 @@ query FirstNotStartedWeek($override: Boolean, $week: Int) {
     week
     season
     games {
+      id
       gid
       week
       season
@@ -15,10 +16,12 @@ query FirstNotStartedWeek($override: Boolean, $week: Int) {
       winner
       is_tiebreaker
       teams_games_awayToteams {
+        id
         teamid
         abbrev
       }
       teams_games_homeToteams {
+        id
         teamid
         abbrev
       }

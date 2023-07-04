@@ -6,7 +6,7 @@ export function FuntimeStandardRules() {
     <Flex justify="center">
       <Box px={8} py={6} bgColor="white" rounded="lg" boxShadow="sm" maxWidth="1000px">
         <VStack>
-          <Image src="/favicon.ico" width={50} />
+          <Image src="/favicon.ico" width={50} alt="Favicon" />
           <Typography.H3 textAlign="center">
             Welcome to{' '}
             <Image
@@ -15,6 +15,7 @@ export function FuntimeStandardRules() {
               width={100}
               verticalAlign="middle"
               display="inline-block"
+              alt="Funtime logo"
             />{' '}
             2022!
           </Typography.H3>

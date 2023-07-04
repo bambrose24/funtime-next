@@ -6,18 +6,22 @@ import {FuntimeError} from '../shared/FuntimeError';
 import {useLeagueCardDimensions} from './league-cards/useLeageCardDimensions';
 import {LeagueCardContent} from './league-cards/LeagueCardContent';
 
-const _HomeQuery = gql`
+const HomeQuery = gql`
   query Home($where: UserWhereUniqueInput!) {
     user(where: $where) {
+      id
       leaguemembers(orderBy: {leagues: {season: desc}}) {
+        id
         membership_id
         role
         nextGame {
+          id
           week
           ts
         }
         hasPickedNextGame
         leagues {
+          id
           league_id
           name
           season
@@ -28,6 +32,7 @@ const _HomeQuery = gql`
           }
         }
         WeekWinners {
+          id
           correct_count
           membership_id
           week

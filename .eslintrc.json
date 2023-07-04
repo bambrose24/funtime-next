@@ -7,19 +7,19 @@
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
     "next/core-web-vitals"
-  ],
-  "overrides": [
-    {
-      "files": ["*.ts", "*.tsx"],
-      "processor": "@graphql-eslint/graphql"
-      // DO NOT EDIT, this will create virtual GraphQL documents that will be used in the next block
-    },
-    {
-      "files": ["*.graphql"],
-      "parserOptions": {
-        "schema": "http://localhost:3001/graphql"
-      },
-      "extends": "plugin:@graphql-eslint/operations-recommended"
-    }
   ]
+  // "overrides": [
+  //   {
+  //     "files": ["*.ts", "*.tsx"],
+  //     "processor": "@graphql-eslint/graphql"
+  //     // DO NOT EDIT, this will create virtual GraphQL documents that will be used in the next block
+  //   },
+  //   {
+  //     "files": ["*.graphql"],
+  //     "parserOptions": {
+  //       "schema": "http://localhost:3001/graphql"
+  //     },
+  //     "extends": "plugin:@graphql-eslint/operations-recommended"
+  //   }
+  // ]
 }

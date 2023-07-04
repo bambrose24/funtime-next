@@ -1,11 +1,6 @@
 import {ApolloError} from '@apollo/client';
 import {
   Box,
-  Button,
-  Divider,
-  FormControl,
-  FormLabel,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -13,11 +8,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
-  Select,
-  Tooltip,
-  VStack,
 } from '@chakra-ui/react';
-import {Form, Formik} from 'formik';
 import {useMemo, useState} from 'react';
 import {Typography} from '@src/components/Typography';
 import {
@@ -71,7 +62,9 @@ const RegistrationForm: ReactFCC<{
   teams: AllTeamsQuery;
 }> = ({previousMembers, teams}) => {
   const formValidationSchema = Yup.object().shape({
-    email: Yup.string().email('Invalid email').required('Required'),
+    email: Yup.string()
+      .email('Invalid email')
+      .required('Required'),
     username: Yup.string()
       .min(2, 'Too Short!')
       .max(50, 'Too Long!')

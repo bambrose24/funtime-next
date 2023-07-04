@@ -6,7 +6,7 @@ import {FuntimeError} from '../shared/FuntimeError';
 import {useLeagueCardDimensions} from './league-cards/useLeageCardDimensions';
 import {LeagueCardContent} from './league-cards/LeagueCardContent';
 
-const HomeQuery = gql`
+const _HomeQuery = gql`
   query Home($where: UserWhereUniqueInput!) {
     user(where: $where) {
       leaguemembers(orderBy: {leagues: {season: desc}}) {

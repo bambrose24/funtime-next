@@ -1,5 +1,6 @@
 query GamesBySeason($season: Int!) {
   games(where: {season: {equals: $season}}) {
+    id
     gid
     awayscore
     homescore
@@ -8,10 +9,12 @@ query GamesBySeason($season: Int!) {
     winner
     is_tiebreaker
     teams_games_awayToteams {
+      id
       teamid
       abbrev
     }
     teams_games_homeToteams {
+      id
       teamid
       abbrev
     }

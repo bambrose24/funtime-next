@@ -1,8 +1,10 @@
 query PeopleWithLeagues {
   leagueMembers {
+    id
     league_id
     membership_id
     people {
+      id
       uid
       username
     }

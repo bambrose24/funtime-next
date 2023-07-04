@@ -1,5 +1,6 @@
 query GamesByWeek($season: Int!, $week: Int!) {
   games(where: {season: {equals: $season}, week: {equals: $week}}) {
+    id
     gid
     week
     season
@@ -12,10 +13,12 @@ query GamesByWeek($season: Int!, $week: Int!) {
     winner
     is_tiebreaker
     teams_games_awayToteams {
+      id
       teamid
       abbrev
     }
     teams_games_homeToteams {
+      id
       teamid
       abbrev
     }

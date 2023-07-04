@@ -99,8 +99,8 @@ const RegistrationForm: ReactFCC<{
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  let previousUsers = useMemo(() => {
-    let val = [...previousMembers.leagueMembers];
+  const previousUsers = useMemo(() => {
+    const val = [...previousMembers.leagueMembers];
     val.sort((a, b) => a.people.username.localeCompare(b.people.username));
     return val;
   }, [previousMembers.leagueMembers]);

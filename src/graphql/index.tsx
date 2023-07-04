@@ -2,7 +2,7 @@ import {ApolloClient, createHttpLink, InMemoryCache, NormalizedCacheObject} from
 import {setContext} from '@apollo/client/link/context';
 import {supabase} from '@src/user/supabase';
 
-import config, {env} from '../util/config';
+import config from '../util/config';
 
 const httpLink = createHttpLink({
   uri: config.graphqlEndpoint,
@@ -26,10 +26,11 @@ const {graphqlEndpoint} = config;
 let client: ApolloClient<NormalizedCacheObject>;
 
 const isServer = typeof window === 'undefined';
-// @ts-ignore
+
+// @ts-expect-error This is used to perhaps hydrate the cache on the client
 const windowApolloState = !isServer && window.__NEXT_DATA__.apolloState;
 
-export function getApolloClient(forceNew: boolean = false) {
+export function getApolloClient(forceNew = false) {
   if (!client || forceNew) {
     client = new ApolloClient({
       ssrMode: isServer,

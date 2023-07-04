@@ -16,12 +16,15 @@ mutation Register(
   ) {
     success
     user {
+      id
       username
       uid
     }
     membership {
+      id
       league_id
       leagues {
+        id
         name
       }
     }

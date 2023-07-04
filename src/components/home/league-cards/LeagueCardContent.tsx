@@ -1,16 +1,13 @@
-import {Badge, Box, Button, Divider, Flex, HStack, Skeleton, VStack} from '@chakra-ui/react';
-import {CardStatRow} from '@src/components/shared/CardStatRow';
+import {Badge, Box, Flex, Skeleton} from '@chakra-ui/react';
 import {HomeQuery, LeagueStatus, MemberRole} from '@src/generated/graphql';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
-import {getOrdinal} from '@src/util/ordinals';
-import Link from 'next/link';
 import {Typography} from '../../Typography';
 import {InProgressLeagueCardContent} from './in-progress/InProgressLeagueCardContent';
 import {NotStartedLeagueCardContent} from './not-started/NotStartedLeagueCardContent';
 import {useLeagueCardDimensions} from './useLeageCardDimensions';
 
 export function LeagueCardContent({league_id, data}: {league_id: number; data: HomeQuery}) {
-  const member = data.user?.leaguemembers?.find(member => member.leagues.league_id === league_id);
+  const member = data.me?.leaguemembers?.find(member => member.leagues.league_id === league_id);
   const membership_id = member?.membership_id;
 
   const {width, height} = useLeagueCardDimensions();

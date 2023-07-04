@@ -2,7 +2,7 @@ import {Text, TextProps} from '@chakra-ui/react';
 
 const H1: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
-    <Text fontSize="4xl" {...rest}>
+    <Text as="h1" fontSize="4xl" {...rest}>
       {children}
     </Text>
   );
@@ -10,7 +10,7 @@ const H1: ReactFCC<TextProps> = ({children, ...rest}) => {
 
 const H2: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
-    <Text fontSize="3xl" {...rest}>
+    <Text as="h2" fontSize="3xl" {...rest}>
       {children}
     </Text>
   );
@@ -18,7 +18,7 @@ const H2: ReactFCC<TextProps> = ({children, ...rest}) => {
 
 const H3: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
-    <Text fontSize="2xl" {...rest}>
+    <Text as="h3" fontSize="2xl" {...rest}>
       {children}
     </Text>
   );
@@ -26,7 +26,7 @@ const H3: ReactFCC<TextProps> = ({children, ...rest}) => {
 
 const H4: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
-    <Text fontSize="xl" {...rest}>
+    <Text as="h3" fontSize="xl" {...rest}>
       {children}
     </Text>
   );
@@ -42,7 +42,7 @@ const H5: ReactFCC<TextProps> = ({children, ...rest}) => {
 
 export const Body1: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
-    <Text fontSize="lg" {...rest}>
+    <Text as="p" fontSize="lg" {...rest}>
       {children}
     </Text>
   );
@@ -50,7 +50,7 @@ export const Body1: ReactFCC<TextProps> = ({children, ...rest}) => {
 
 const Body2: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
-    <Text fontSize="md" {...rest}>
+    <Text as="p" fontSize="md" {...rest}>
       {children}
     </Text>
   );
@@ -58,7 +58,7 @@ const Body2: ReactFCC<TextProps> = ({children, ...rest}) => {
 
 const Subtitle1: ReactFCC<TextProps> = ({children, ...rest}) => {
   return (
-    <Text fontSize="sm" {...rest}>
+    <Text as="p" fontSize="sm" {...rest}>
       {children}
     </Text>
   );

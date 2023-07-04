@@ -4,7 +4,6 @@ import {
   AlertDescription,
   AlertIcon,
   AlertProps,
-  Box,
   Button,
   Flex,
   Menu,
@@ -17,7 +16,7 @@ import moment from 'moment';
 import Link from 'next/link';
 
 export type LeagueCardFooterProps = {
-  member: NonNullable<HomeQuery['user']>['leaguemembers'][number];
+  member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
 };
 
 export function LeagueCardFooter({member}: LeagueCardFooterProps) {

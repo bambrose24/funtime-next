@@ -12,7 +12,7 @@
     "generate:theme": "npx @chakra-ui/cli tokens src/util/theme.ts",
     "postinstall": "npm run generate:theme",
     "tsc": "tsc",
-    "tsc:watch": "tsc -w"
+    "tsc-watch": "tsc -w"
   },
   "prettier": "prettier-airbnb-config",
   "dependencies": {

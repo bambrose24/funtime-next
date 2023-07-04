@@ -6,9 +6,10 @@ import {FuntimeError} from '../shared/FuntimeError';
 import {useLeagueCardDimensions} from './league-cards/useLeageCardDimensions';
 import {LeagueCardContent} from './league-cards/LeagueCardContent';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const HomeQuery = gql`
-  query Home($where: UserWhereUniqueInput!) {
-    user(where: $where) {
+  query Home {
+    me {
       id
       leaguemembers(orderBy: {leagues: {season: desc}}) {
         id
@@ -52,7 +53,6 @@ const HomeQuery = gql`
 export function LeaguesHome() {
   const user = useUser();
   const {data, error} = useHomeQuery({
-    variables: {where: {email: user?.email}},
     skip: !user?.email,
   });
 
@@ -64,7 +64,7 @@ export function LeaguesHome() {
     return <FuntimeError />;
   }
 
-  const leagueMemberships = data?.user?.leaguemembers;
+  const leagueMemberships = data?.me?.leaguemembers;
 
   return (
     <Flex w="100%" justify="center" px={{base: '8px', lg: '24px'}}>

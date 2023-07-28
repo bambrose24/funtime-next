@@ -30,11 +30,8 @@ const LeagueRegistrationQuery = gql`
       }
       rules {
         id
-        rules {
-          id
-          rule
-          description
-        }
+        name
+        description
       }
       priorLeague {
         leaguemembers {
@@ -86,14 +83,14 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
                   <Typography.H3 textAlign="center">League Rules</Typography.H3>
                   <Box mt="16px" />
                   <Grid templateColumns="repeat(5, 1fr)" columnGap="4px" rowGap="20px">
-                    {league.rules.rules.map(rule => {
+                    {league.rules.map(({id, name, description}) => {
                       return (
-                        <React.Fragment key={rule.id}>
+                        <React.Fragment key={id}>
                           <GridItem colSpan={{base: 5, md: 2}}>
-                            <Typography.Body1 fontWeight="bold">{rule.rule}</Typography.Body1>
+                            <Typography.Body1 fontWeight="bold">{name}</Typography.Body1>
                           </GridItem>
                           <GridItem colSpan={{base: 5, md: 3}} colStart={{base: 1, md: 3}}>
-                            <Typography.Body1>{rule.description}</Typography.Body1>
+                            <Typography.Body1>{description}</Typography.Body1>
                           </GridItem>
                         </React.Fragment>
                       );

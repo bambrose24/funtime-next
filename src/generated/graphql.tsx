@@ -1152,7 +1152,7 @@ export type League = {
   priorLeague?: Maybe<League>;
   prior_league_id?: Maybe<Scalars['Int']>;
   reminder_policy?: Maybe<ReminderPolicy>;
-  rules: LeagueRules;
+  rules: Array<LeagueRuleWithExplanation>;
   scoring_type?: Maybe<ScoringType>;
   season: Scalars['Int'];
   share_code?: Maybe<Scalars['String']>;
@@ -2148,13 +2148,7 @@ export type LeagueRuleWithExplanation = {
   __typename?: 'LeagueRuleWithExplanation';
   description: Scalars['String'];
   id: Scalars['ID'];
-  rule: Scalars['String'];
-};
-
-export type LeagueRules = {
-  __typename?: 'LeagueRules';
-  id: Scalars['ID'];
-  rules: Array<LeagueRuleWithExplanation>;
+  name: Scalars['String'];
 };
 
 export enum LeagueScalarFieldEnum {
@@ -6748,7 +6742,7 @@ export type LeagueRegistrationQueryVariables = Exact<{
 }>;
 
 
-export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: { __typename?: 'LeagueRules', id: string, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, rule: string, description: string }> }, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, uid: number } }> } | null } | null };
+export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, uid: number } }> } | null } | null };
 
 export type MyLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7030,11 +7024,8 @@ export const LeagueRegistrationDocument = gql`
     }
     rules {
       id
-      rules {
-        id
-        rule
-        description
-      }
+      name
+      description
     }
     priorLeague {
       leaguemembers {

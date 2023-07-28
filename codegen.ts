@@ -4,7 +4,8 @@ const config: CodegenConfig = {
   //   process.env.FUNTIME_ENV === 'development'
   //     ? 'http://localhost:3001/graphql'
   //     : 'https://funtime-api.fly.dev/graphql',
-  schema: 'http://localhost:3001/graphql',
+  // schema: 'http://localhost:3001/graphql',
+  schema: 'https://funtime-api-production.up.railway.app/graphql',
   documents: [
     'src/**/*.graphql',
     'src/**/*.ts',

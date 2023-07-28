@@ -18,7 +18,7 @@ const LoginPage = () => {
         <Box w={{base: '80vw', md: '400px'}}>
           <Typography.H1>Login</Typography.H1>
           <Typography.Body1 mt="20px">
-            Login with your email below. You'll get an email with a link to sign in.
+            Login with your email below. You will get an email with a link to sign in.
           </Typography.Body1>
           <Divider my="20px" />
           <Auth
@@ -27,7 +27,7 @@ const LoginPage = () => {
             appearance={{theme: authTheme}}
             view={env === 'development' ? 'sign_in' : 'magic_link'}
             showLinks={false}
-            providers={['google', 'apple']}
+            providers={[]}
             magicLink
           />
         </Box>

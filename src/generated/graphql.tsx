@@ -1141,13 +1141,18 @@ export type League = {
   created_time: Scalars['DateTimeBetterSerialization'];
   games: Array<Game>;
   id: Scalars['ID'];
+  isViewerMember: Scalars['Boolean'];
   late_policy?: Maybe<LatePolicy>;
   league_id: Scalars['Int'];
   leaguemembers: Array<LeagueMember>;
   name: Scalars['String'];
+  nextLeague?: Maybe<League>;
   people: User;
   pick_policy?: Maybe<PickPolicy>;
+  priorLeague?: Maybe<League>;
+  prior_league_id?: Maybe<Scalars['Int']>;
   reminder_policy?: Maybe<ReminderPolicy>;
+  rules: LeagueRules;
   scoring_type?: Maybe<ScoringType>;
   season: Scalars['Int'];
   share_code?: Maybe<Scalars['String']>;
@@ -1189,12 +1194,14 @@ export type LeagueAvgAggregate = {
   __typename?: 'LeagueAvgAggregate';
   created_by_user_id?: Maybe<Scalars['Float']>;
   league_id?: Maybe<Scalars['Float']>;
+  prior_league_id?: Maybe<Scalars['Float']>;
   season?: Maybe<Scalars['Float']>;
 };
 
 export type LeagueAvgOrderByAggregateInput = {
   created_by_user_id?: InputMaybe<SortOrder>;
   league_id?: InputMaybe<SortOrder>;
+  prior_league_id?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
 };
 
@@ -1223,6 +1230,7 @@ export type LeagueCountAggregate = {
   league_id: Scalars['Int'];
   name: Scalars['Int'];
   pick_policy: Scalars['Int'];
+  prior_league_id: Scalars['Int'];
   reminder_policy: Scalars['Int'];
   scoring_type: Scalars['Int'];
   season: Scalars['Int'];
@@ -1237,6 +1245,7 @@ export type LeagueCountOrderByAggregateInput = {
   league_id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   pick_policy?: InputMaybe<SortOrder>;
+  prior_league_id?: InputMaybe<SortOrder>;
   reminder_policy?: InputMaybe<SortOrder>;
   scoring_type?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -1250,8 +1259,10 @@ export type LeagueCreateInput = {
   late_policy?: InputMaybe<LatePolicy>;
   leaguemembers?: InputMaybe<LeagueMemberCreateNestedManyWithoutLeaguesInput>;
   name: Scalars['String'];
+  nextLeague?: InputMaybe<LeagueCreateNestedOneWithoutPriorLeagueInput>;
   people: UserCreateNestedOneWithoutLeaguesInput;
   pick_policy?: InputMaybe<PickPolicy>;
+  priorLeague?: InputMaybe<LeagueCreateNestedOneWithoutNextLeagueInput>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
   season: Scalars['Int'];
@@ -1266,6 +1277,7 @@ export type LeagueCreateManyInput = {
   league_id?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   pick_policy?: InputMaybe<PickPolicy>;
+  prior_league_id?: InputMaybe<Scalars['Int']>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
   season: Scalars['Int'];
@@ -1279,6 +1291,7 @@ export type LeagueCreateManyPeopleInput = {
   league_id?: InputMaybe<Scalars['Int']>;
   name: Scalars['String'];
   pick_policy?: InputMaybe<PickPolicy>;
+  prior_league_id?: InputMaybe<Scalars['Int']>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
   season: Scalars['Int'];
@@ -1304,6 +1317,18 @@ export type LeagueCreateNestedOneWithoutLeaguemembersInput = {
   create?: InputMaybe<LeagueCreateWithoutLeaguemembersInput>;
 };
 
+export type LeagueCreateNestedOneWithoutNextLeagueInput = {
+  connect?: InputMaybe<LeagueWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutNextLeagueInput>;
+  create?: InputMaybe<LeagueCreateWithoutNextLeagueInput>;
+};
+
+export type LeagueCreateNestedOneWithoutPriorLeagueInput = {
+  connect?: InputMaybe<LeagueWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutPriorLeagueInput>;
+  create?: InputMaybe<LeagueCreateWithoutPriorLeagueInput>;
+};
+
 export type LeagueCreateNestedOneWithoutWeekWinnersInput = {
   connect?: InputMaybe<LeagueWhereUniqueInput>;
   connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutWeekWinnersInput>;
@@ -1315,8 +1340,18 @@ export type LeagueCreateOrConnectWithoutLeaguemembersInput = {
   where: LeagueWhereUniqueInput;
 };
 
+export type LeagueCreateOrConnectWithoutNextLeagueInput = {
+  create: LeagueCreateWithoutNextLeagueInput;
+  where: LeagueWhereUniqueInput;
+};
+
 export type LeagueCreateOrConnectWithoutPeopleInput = {
   create: LeagueCreateWithoutPeopleInput;
+  where: LeagueWhereUniqueInput;
+};
+
+export type LeagueCreateOrConnectWithoutPriorLeagueInput = {
+  create: LeagueCreateWithoutPriorLeagueInput;
   where: LeagueWhereUniqueInput;
 };
 
@@ -1330,8 +1365,26 @@ export type LeagueCreateWithoutLeaguemembersInput = {
   created_time?: InputMaybe<Scalars['DateTime']>;
   late_policy?: InputMaybe<LatePolicy>;
   name: Scalars['String'];
+  nextLeague?: InputMaybe<LeagueCreateNestedOneWithoutPriorLeagueInput>;
   people: UserCreateNestedOneWithoutLeaguesInput;
   pick_policy?: InputMaybe<PickPolicy>;
+  priorLeague?: InputMaybe<LeagueCreateNestedOneWithoutNextLeagueInput>;
+  reminder_policy?: InputMaybe<ReminderPolicy>;
+  scoring_type?: InputMaybe<ScoringType>;
+  season: Scalars['Int'];
+  share_code?: InputMaybe<Scalars['String']>;
+  superbowl_competition?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type LeagueCreateWithoutNextLeagueInput = {
+  WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutLeagueInput>;
+  created_time?: InputMaybe<Scalars['DateTime']>;
+  late_policy?: InputMaybe<LatePolicy>;
+  leaguemembers?: InputMaybe<LeagueMemberCreateNestedManyWithoutLeaguesInput>;
+  name: Scalars['String'];
+  people: UserCreateNestedOneWithoutLeaguesInput;
+  pick_policy?: InputMaybe<PickPolicy>;
+  priorLeague?: InputMaybe<LeagueCreateNestedOneWithoutNextLeagueInput>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
   season: Scalars['Int'];
@@ -1345,6 +1398,24 @@ export type LeagueCreateWithoutPeopleInput = {
   late_policy?: InputMaybe<LatePolicy>;
   leaguemembers?: InputMaybe<LeagueMemberCreateNestedManyWithoutLeaguesInput>;
   name: Scalars['String'];
+  nextLeague?: InputMaybe<LeagueCreateNestedOneWithoutPriorLeagueInput>;
+  pick_policy?: InputMaybe<PickPolicy>;
+  priorLeague?: InputMaybe<LeagueCreateNestedOneWithoutNextLeagueInput>;
+  reminder_policy?: InputMaybe<ReminderPolicy>;
+  scoring_type?: InputMaybe<ScoringType>;
+  season: Scalars['Int'];
+  share_code?: InputMaybe<Scalars['String']>;
+  superbowl_competition?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type LeagueCreateWithoutPriorLeagueInput = {
+  WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutLeagueInput>;
+  created_time?: InputMaybe<Scalars['DateTime']>;
+  late_policy?: InputMaybe<LatePolicy>;
+  leaguemembers?: InputMaybe<LeagueMemberCreateNestedManyWithoutLeaguesInput>;
+  name: Scalars['String'];
+  nextLeague?: InputMaybe<LeagueCreateNestedOneWithoutPriorLeagueInput>;
+  people: UserCreateNestedOneWithoutLeaguesInput;
   pick_policy?: InputMaybe<PickPolicy>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
@@ -1358,8 +1429,10 @@ export type LeagueCreateWithoutWeekWinnersInput = {
   late_policy?: InputMaybe<LatePolicy>;
   leaguemembers?: InputMaybe<LeagueMemberCreateNestedManyWithoutLeaguesInput>;
   name: Scalars['String'];
+  nextLeague?: InputMaybe<LeagueCreateNestedOneWithoutPriorLeagueInput>;
   people: UserCreateNestedOneWithoutLeaguesInput;
   pick_policy?: InputMaybe<PickPolicy>;
+  priorLeague?: InputMaybe<LeagueCreateNestedOneWithoutNextLeagueInput>;
   reminder_policy?: InputMaybe<ReminderPolicy>;
   scoring_type?: InputMaybe<ScoringType>;
   season: Scalars['Int'];
@@ -1380,6 +1453,7 @@ export type LeagueGroupBy = {
   league_id: Scalars['Int'];
   name: Scalars['String'];
   pick_policy?: Maybe<PickPolicy>;
+  prior_league_id?: Maybe<Scalars['Int']>;
   reminder_policy?: Maybe<ReminderPolicy>;
   scoring_type?: Maybe<ScoringType>;
   season: Scalars['Int'];
@@ -1401,6 +1475,7 @@ export type LeagueMaxAggregate = {
   league_id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   pick_policy?: Maybe<PickPolicy>;
+  prior_league_id?: Maybe<Scalars['Int']>;
   reminder_policy?: Maybe<ReminderPolicy>;
   scoring_type?: Maybe<ScoringType>;
   season?: Maybe<Scalars['Int']>;
@@ -1415,6 +1490,7 @@ export type LeagueMaxOrderByAggregateInput = {
   league_id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   pick_policy?: InputMaybe<SortOrder>;
+  prior_league_id?: InputMaybe<SortOrder>;
   reminder_policy?: InputMaybe<SortOrder>;
   scoring_type?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -1996,6 +2072,7 @@ export type LeagueMinAggregate = {
   league_id?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   pick_policy?: Maybe<PickPolicy>;
+  prior_league_id?: Maybe<Scalars['Int']>;
   reminder_policy?: Maybe<ReminderPolicy>;
   scoring_type?: Maybe<ScoringType>;
   season?: Maybe<Scalars['Int']>;
@@ -2010,6 +2087,7 @@ export type LeagueMinOrderByAggregateInput = {
   league_id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   pick_policy?: InputMaybe<SortOrder>;
+  prior_league_id?: InputMaybe<SortOrder>;
   reminder_policy?: InputMaybe<SortOrder>;
   scoring_type?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
@@ -2033,6 +2111,7 @@ export type LeagueOrderByWithAggregationInput = {
   league_id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   pick_policy?: InputMaybe<SortOrderInput>;
+  prior_league_id?: InputMaybe<SortOrderInput>;
   reminder_policy?: InputMaybe<SortOrderInput>;
   scoring_type?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
@@ -2048,8 +2127,11 @@ export type LeagueOrderByWithRelationInput = {
   league_id?: InputMaybe<SortOrder>;
   leaguemembers?: InputMaybe<LeagueMemberOrderByRelationAggregateInput>;
   name?: InputMaybe<SortOrder>;
+  nextLeague?: InputMaybe<LeagueOrderByWithRelationInput>;
   people?: InputMaybe<UserOrderByWithRelationInput>;
   pick_policy?: InputMaybe<SortOrderInput>;
+  priorLeague?: InputMaybe<LeagueOrderByWithRelationInput>;
+  prior_league_id?: InputMaybe<SortOrderInput>;
   reminder_policy?: InputMaybe<SortOrderInput>;
   scoring_type?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
@@ -2062,6 +2144,19 @@ export type LeagueRelationFilter = {
   isNot?: InputMaybe<LeagueWhereInput>;
 };
 
+export type LeagueRuleWithExplanation = {
+  __typename?: 'LeagueRuleWithExplanation';
+  description: Scalars['String'];
+  id: Scalars['ID'];
+  rule: Scalars['String'];
+};
+
+export type LeagueRules = {
+  __typename?: 'LeagueRules';
+  id: Scalars['ID'];
+  rules: Array<LeagueRuleWithExplanation>;
+};
+
 export enum LeagueScalarFieldEnum {
   CreatedByUserId = 'created_by_user_id',
   CreatedTime = 'created_time',
@@ -2069,6 +2164,7 @@ export enum LeagueScalarFieldEnum {
   LeagueId = 'league_id',
   Name = 'name',
   PickPolicy = 'pick_policy',
+  PriorLeagueId = 'prior_league_id',
   ReminderPolicy = 'reminder_policy',
   ScoringType = 'scoring_type',
   Season = 'season',
@@ -2086,6 +2182,7 @@ export type LeagueScalarWhereInput = {
   league_id?: InputMaybe<IntFilter>;
   name?: InputMaybe<StringFilter>;
   pick_policy?: InputMaybe<EnumPickPolicyNullableFilter>;
+  prior_league_id?: InputMaybe<IntNullableFilter>;
   reminder_policy?: InputMaybe<EnumReminderPolicyNullableFilter>;
   scoring_type?: InputMaybe<EnumScoringTypeNullableFilter>;
   season?: InputMaybe<IntFilter>;
@@ -2103,6 +2200,7 @@ export type LeagueScalarWhereWithAggregatesInput = {
   league_id?: InputMaybe<IntWithAggregatesFilter>;
   name?: InputMaybe<StringWithAggregatesFilter>;
   pick_policy?: InputMaybe<EnumPickPolicyNullableWithAggregatesFilter>;
+  prior_league_id?: InputMaybe<IntNullableWithAggregatesFilter>;
   reminder_policy?: InputMaybe<EnumReminderPolicyNullableWithAggregatesFilter>;
   scoring_type?: InputMaybe<EnumScoringTypeNullableWithAggregatesFilter>;
   season?: InputMaybe<IntWithAggregatesFilter>;
@@ -2120,12 +2218,14 @@ export type LeagueSumAggregate = {
   __typename?: 'LeagueSumAggregate';
   created_by_user_id?: Maybe<Scalars['Int']>;
   league_id?: Maybe<Scalars['Int']>;
+  prior_league_id?: Maybe<Scalars['Int']>;
   season?: Maybe<Scalars['Int']>;
 };
 
 export type LeagueSumOrderByAggregateInput = {
   created_by_user_id?: InputMaybe<SortOrder>;
   league_id?: InputMaybe<SortOrder>;
+  prior_league_id?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
 };
 
@@ -2135,8 +2235,10 @@ export type LeagueUpdateInput = {
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
   leaguemembers?: InputMaybe<LeagueMemberUpdateManyWithoutLeaguesNestedInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nextLeague?: InputMaybe<LeagueUpdateOneWithoutPriorLeagueNestedInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguesNestedInput>;
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
+  priorLeague?: InputMaybe<LeagueUpdateOneWithoutNextLeagueNestedInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -2191,6 +2293,26 @@ export type LeagueUpdateOneRequiredWithoutWeekWinnersNestedInput = {
   upsert?: InputMaybe<LeagueUpsertWithoutWeekWinnersInput>;
 };
 
+export type LeagueUpdateOneWithoutNextLeagueNestedInput = {
+  connect?: InputMaybe<LeagueWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutNextLeagueInput>;
+  create?: InputMaybe<LeagueCreateWithoutNextLeagueInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<LeagueUpdateWithoutNextLeagueInput>;
+  upsert?: InputMaybe<LeagueUpsertWithoutNextLeagueInput>;
+};
+
+export type LeagueUpdateOneWithoutPriorLeagueNestedInput = {
+  connect?: InputMaybe<LeagueWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutPriorLeagueInput>;
+  create?: InputMaybe<LeagueCreateWithoutPriorLeagueInput>;
+  delete?: InputMaybe<Scalars['Boolean']>;
+  disconnect?: InputMaybe<Scalars['Boolean']>;
+  update?: InputMaybe<LeagueUpdateWithoutPriorLeagueInput>;
+  upsert?: InputMaybe<LeagueUpsertWithoutPriorLeagueInput>;
+};
+
 export type LeagueUpdateWithWhereUniqueWithoutPeopleInput = {
   data: LeagueUpdateWithoutPeopleInput;
   where: LeagueWhereUniqueInput;
@@ -2201,8 +2323,26 @@ export type LeagueUpdateWithoutLeaguemembersInput = {
   created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nextLeague?: InputMaybe<LeagueUpdateOneWithoutPriorLeagueNestedInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguesNestedInput>;
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
+  priorLeague?: InputMaybe<LeagueUpdateOneWithoutNextLeagueNestedInput>;
+  reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
+  scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
+  season?: InputMaybe<IntFieldUpdateOperationsInput>;
+  share_code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  superbowl_competition?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+};
+
+export type LeagueUpdateWithoutNextLeagueInput = {
+  WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutLeagueNestedInput>;
+  created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
+  leaguemembers?: InputMaybe<LeagueMemberUpdateManyWithoutLeaguesNestedInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguesNestedInput>;
+  pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
+  priorLeague?: InputMaybe<LeagueUpdateOneWithoutNextLeagueNestedInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -2216,6 +2356,24 @@ export type LeagueUpdateWithoutPeopleInput = {
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
   leaguemembers?: InputMaybe<LeagueMemberUpdateManyWithoutLeaguesNestedInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nextLeague?: InputMaybe<LeagueUpdateOneWithoutPriorLeagueNestedInput>;
+  pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
+  priorLeague?: InputMaybe<LeagueUpdateOneWithoutNextLeagueNestedInput>;
+  reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
+  scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
+  season?: InputMaybe<IntFieldUpdateOperationsInput>;
+  share_code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  superbowl_competition?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+};
+
+export type LeagueUpdateWithoutPriorLeagueInput = {
+  WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutLeagueNestedInput>;
+  created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
+  leaguemembers?: InputMaybe<LeagueMemberUpdateManyWithoutLeaguesNestedInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nextLeague?: InputMaybe<LeagueUpdateOneWithoutPriorLeagueNestedInput>;
+  people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguesNestedInput>;
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
@@ -2229,8 +2387,10 @@ export type LeagueUpdateWithoutWeekWinnersInput = {
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
   leaguemembers?: InputMaybe<LeagueMemberUpdateManyWithoutLeaguesNestedInput>;
   name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nextLeague?: InputMaybe<LeagueUpdateOneWithoutPriorLeagueNestedInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguesNestedInput>;
   pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
+  priorLeague?: InputMaybe<LeagueUpdateOneWithoutNextLeagueNestedInput>;
   reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
   scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
@@ -2249,6 +2409,16 @@ export type LeagueUpsertWithoutLeaguemembersInput = {
   update: LeagueUpdateWithoutLeaguemembersInput;
 };
 
+export type LeagueUpsertWithoutNextLeagueInput = {
+  create: LeagueCreateWithoutNextLeagueInput;
+  update: LeagueUpdateWithoutNextLeagueInput;
+};
+
+export type LeagueUpsertWithoutPriorLeagueInput = {
+  create: LeagueCreateWithoutPriorLeagueInput;
+  update: LeagueUpdateWithoutPriorLeagueInput;
+};
+
 export type LeagueUpsertWithoutWeekWinnersInput = {
   create: LeagueCreateWithoutWeekWinnersInput;
   update: LeagueUpdateWithoutWeekWinnersInput;
@@ -2265,8 +2435,11 @@ export type LeagueWhereInput = {
   league_id?: InputMaybe<IntFilter>;
   leaguemembers?: InputMaybe<LeagueMemberListRelationFilter>;
   name?: InputMaybe<StringFilter>;
+  nextLeague?: InputMaybe<LeagueRelationFilter>;
   people?: InputMaybe<UserRelationFilter>;
   pick_policy?: InputMaybe<EnumPickPolicyNullableFilter>;
+  priorLeague?: InputMaybe<LeagueRelationFilter>;
+  prior_league_id?: InputMaybe<IntNullableFilter>;
   reminder_policy?: InputMaybe<EnumReminderPolicyNullableFilter>;
   scoring_type?: InputMaybe<EnumScoringTypeNullableFilter>;
   season?: InputMaybe<IntFilter>;
@@ -2276,6 +2449,7 @@ export type LeagueWhereInput = {
 
 export type LeagueWhereUniqueInput = {
   league_id?: InputMaybe<Scalars['Int']>;
+  prior_league_id?: InputMaybe<Scalars['Int']>;
   share_code?: InputMaybe<Scalars['String']>;
 };
 
@@ -6574,7 +6748,7 @@ export type LeagueRegistrationQueryVariables = Exact<{
 }>;
 
 
-export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null } | null };
+export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: { __typename?: 'LeagueRules', id: string, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, rule: string, description: string }> }, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, uid: number } }> } | null } | null };
 
 export type MyLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6853,6 +7027,22 @@ export const LeagueRegistrationDocument = gql`
     superbowl_competition
     _count {
       leaguemembers
+    }
+    rules {
+      id
+      rules {
+        id
+        rule
+        description
+      }
+    }
+    priorLeague {
+      leaguemembers {
+        people {
+          username
+          uid
+        }
+      }
     }
   }
 }

@@ -6742,7 +6742,7 @@ export type LeagueRegistrationQueryVariables = Exact<{
 }>;
 
 
-export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, uid: number } }> } | null } | null };
+export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
 
 export type MyLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7031,10 +7031,19 @@ export const LeagueRegistrationDocument = gql`
       leaguemembers {
         people {
           username
+          email
           uid
         }
       }
     }
+  }
+  teams {
+    id
+    abbrev
+    conference
+    teamid
+    loc
+    name
   }
 }
     `;

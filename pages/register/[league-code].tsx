@@ -1,6 +1,5 @@
 import {LeagueRegistration} from '@src/components/registration';
 import {FuntimeError} from '@src/components/shared/FuntimeError';
-import {Typography} from '@src/components/Typography';
 import FuntimePage from '@src/FuntimePage';
 import {useRouter} from 'next/router';
 

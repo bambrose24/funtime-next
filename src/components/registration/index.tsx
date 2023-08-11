@@ -1,6 +1,7 @@
 import {gql} from '@apollo/client';
 import {
   Box,
+  Button,
   Divider,
   Flex,
   FormControl,
@@ -8,7 +9,9 @@ import {
   Grid,
   GridItem,
   Input,
+  Select,
   Stack,
+  Tooltip,
 } from '@chakra-ui/react';
 import {useLeagueRegistrationQuery} from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
@@ -75,8 +78,7 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
     if (!loading && router.isReady && !league) {
       router.push('/');
     } else if (!user) {
-      router.push('/login');
-      `1  qawsZXD≈`;
+      router.push(`/login?redirectTo=${router.asPath}`);
     }
   }, [league, router, loading]);
 
@@ -113,7 +115,6 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
             <Formik<RegistrationFormType>
               initialValues={{
                 didPlayLastYear: false,
-                lastYearEmail: undefined,
                 username: priorMember ? priorMember.people.username : '',
                 superbowlLoserTeamId: undefined,
                 superbowlWinnerTeamId: undefined,
@@ -125,8 +126,8 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
             >
               {formik => {
                 return (
-                  <>
-                    <Flex w="100%" justify="space-between">
+                  <Flex direction="column" gap="12px">
+                    <Flex w="100%">
                       <FormControl>
                         <FormLabel>Username</FormLabel>
                         <Input
@@ -137,7 +138,69 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
                         />
                       </FormControl>
                     </Flex>
-                  </>
+                    <Flex w="100%">
+                      <Tooltip
+                        placement="top-start"
+                        label={`To use an email other than ${user.email}, please sign out in the top right and log in with a different email.`}
+                      >
+                        <FormControl>
+                          <FormLabel>Email</FormLabel>
+                          <Input disabled variant="outline" value={user.email} />
+                        </FormControl>
+                      </Tooltip>
+                    </Flex>
+                    <Flex w="100%">
+                      <FormControl>
+                        <FormLabel>Super Bowl Winner</FormLabel>
+                        <Select
+                          variant="outline"
+                          value={formik.values.superbowlWinnerTeamId}
+                          name="superbowlWinnerTeamId"
+                          onChange={formik.handleChange}
+                        >
+                          {/* put all the teams here with dividers */}
+                        </Select>
+                      </FormControl>
+                    </Flex>
+                    <Flex w="100%">
+                      <FormControl>
+                        <FormLabel>Super Bowl Loser</FormLabel>
+                        <Select
+                          variant="outline"
+                          value={formik.values.superbowlLoserTeamId}
+                          name="superbowlLoserTeamId"
+                          onChange={formik.handleChange}
+                        >
+                          {/* put all the teams here with dividers */}
+                        </Select>
+                      </FormControl>
+                    </Flex>
+                    <Flex w="100%">
+                      <FormControl>
+                        <FormLabel>Super Bowl Total Score</FormLabel>
+                        <Input
+                          type="number"
+                          min={1}
+                          max={150}
+                          variant="outline"
+                          value={formik.values.superbowlTotalScore}
+                          name="superbowlTotalScore"
+                          onChange={formik.handleChange}
+                        />
+                      </FormControl>
+                    </Flex>
+                    <Box />
+                    <Flex w="100%">
+                      <Button
+                        variant="solid"
+                        w="100%"
+                        isLoading={formik.isSubmitting}
+                        disabled={formik.isSubmitting || !formik.isValid}
+                      >
+                        Register
+                      </Button>
+                    </Flex>
+                  </Flex>
                 );
               }}
             </Formik>

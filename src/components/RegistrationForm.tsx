@@ -88,7 +88,7 @@ const RegistrationForm: ReactFCC<{
       .lessThan(150, 'Please enter a number below 150'),
   });
 
-  const [register, {data: registerData, loading, error, client}] = useRegisterMutation();
+  const [register, {data: registerData, loading, error}] = useRegisterMutation();
 
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 

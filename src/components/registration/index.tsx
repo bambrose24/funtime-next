@@ -9,15 +9,26 @@ import {
   Grid,
   GridItem,
   Input,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
   Select,
   Stack,
   Tooltip,
 } from '@chakra-ui/react';
-import {useLeagueRegistrationQuery} from '@src/generated/graphql';
+import {
+  useAllTeamsQuery,
+  useLeagueRegistrationQuery,
+  useRegisterMutation,
+} from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
 import {Formik} from 'formik';
 import {useRouter} from 'next/router';
-import React from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {useEffect} from 'react';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';
@@ -70,9 +81,16 @@ const LeagueRegistrationQuery = gql`
 
 export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
   const {data, loading} = useLeagueRegistrationQuery({variables: {leagueCode}});
+  const [register] = useRegisterMutation();
   const user = useUser();
   const league = data?.league;
   const router = useRouter();
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const onModalClose = useCallback(() => {
+    setModalOpen(false);
+    router.push('/');
+  }, [router, setModalOpen]);
 
   useEffect(() => {
     if (!loading && router.isReady && !league) {
@@ -80,133 +98,215 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
     } else if (!user) {
       router.push(`/login?redirectTo=${router.asPath}`);
     }
-  }, [league, router, loading]);
+  }, [league, router, loading, user]);
 
   if (loading || !league || !user) {
     return <FuntimeLoading />;
   }
 
   const priorMember = league.priorLeague?.leaguemembers.find(m => m.people.email === user.email);
-  const didPlayLastYear = Boolean(priorMember);
 
   return (
-    <Flex w="100%" justify="center">
-      <Flex maxW="xl" justify="center" minW="xl" layerStyle="funtime-card">
-        <Stack dir="column" gap="16px" divider={<Divider />} direction="column" w="100%">
-          <Typography.H1 textAlign="center">Register for {league.name}</Typography.H1>
-          <Flex direction="column">
-            <Typography.H3 textAlign="center">League Rules</Typography.H3>
-            <Box mt="16px" />
-            <Grid templateColumns="repeat(5, 1fr)" columnGap="4px" rowGap="20px">
-              {league.rules.map(({id, name, description}) => {
-                return (
-                  <React.Fragment key={id}>
-                    <GridItem colSpan={{base: 5, md: 2}}>
-                      <Typography.Body1 fontWeight="bold">{name}</Typography.Body1>
-                    </GridItem>
-                    <GridItem colSpan={{base: 5, md: 3}} colStart={{base: 1, md: 3}}>
-                      <Typography.Body1>{description}</Typography.Body1>
-                    </GridItem>
-                  </React.Fragment>
-                );
-              })}
-            </Grid>
-            <Divider my="16px" />
-            <Formik<RegistrationFormType>
-              initialValues={{
-                didPlayLastYear: false,
-                username: priorMember ? priorMember.people.username : '',
-                superbowlLoserTeamId: undefined,
-                superbowlWinnerTeamId: undefined,
-                superbowlTotalScore: undefined,
-              }}
-              onSubmit={async values => {
-                console.log('values', values);
-              }}
-            >
-              {formik => {
-                return (
-                  <Flex direction="column" gap="12px">
-                    <Flex w="100%">
-                      <FormControl>
-                        <FormLabel>Username</FormLabel>
-                        <Input
-                          variant="outline"
-                          value={formik.values.username}
-                          name="username"
-                          onChange={formik.handleChange}
-                        />
-                      </FormControl>
-                    </Flex>
-                    <Flex w="100%">
-                      <Tooltip
-                        placement="top-start"
-                        label={`To use an email other than ${user.email}, please sign out in the top right and log in with a different email.`}
-                      >
+    <>
+      <Flex w="100%" justify="center">
+        <Flex maxW="xl" justify="center" minW="xl" layerStyle="funtime-card">
+          <Stack dir="column" gap="16px" divider={<Divider />} direction="column" w="100%">
+            <Typography.H1 textAlign="center">Register for {league.name}</Typography.H1>
+            <Flex direction="column">
+              <Typography.H3 textAlign="center">League Rules</Typography.H3>
+              <Box pt="16px" />
+              <Grid templateColumns="repeat(5, 1fr)" columnGap="4px" rowGap="20px">
+                {league.rules.map(({id, name, description}) => {
+                  return (
+                    <React.Fragment key={id}>
+                      <GridItem colSpan={{base: 5, md: 2}}>
+                        <Typography.Body1 fontWeight="bold">{name}</Typography.Body1>
+                      </GridItem>
+                      <GridItem colSpan={{base: 5, md: 3}} colStart={{base: 1, md: 3}}>
+                        <Typography.Body1>{description}</Typography.Body1>
+                      </GridItem>
+                    </React.Fragment>
+                  );
+                })}
+              </Grid>
+              <Divider my="16px" />
+              <Formik<RegistrationFormType>
+                initialValues={{
+                  username: priorMember ? priorMember.people.username : '',
+                  superbowlLoserTeamId: undefined,
+                  superbowlWinnerTeamId: undefined,
+                  superbowlTotalScore: '',
+                }}
+                onSubmit={async values => {
+                  const {
+                    username,
+                    superbowlLoserTeamId: superbowlLoserTeamIdRaw,
+                    superbowlTotalScore: superbowlTotalScoreRaw,
+                    superbowlWinnerTeamId: superbowlWinnerTeamIdRaw,
+                  } = values;
+
+                  const superbowlLoserTeamId = parseInt(superbowlLoserTeamIdRaw ?? '');
+                  const superbowlWinnerTeamId = parseInt(superbowlWinnerTeamIdRaw ?? ''); // intentionally throw if fails
+                  const superbowlTotalScore =
+                    typeof superbowlTotalScoreRaw === 'number'
+                      ? superbowlTotalScoreRaw
+                      : parseInt(superbowlTotalScoreRaw ?? ''); // intentionally throw if fails
+
+                  await register({
+                    variables: {
+                      leagueCode,
+                      superbowlLoser: superbowlLoserTeamId,
+                      superbowlWinner: superbowlWinnerTeamId,
+                      superbowlScore: superbowlTotalScore,
+                      username,
+                    },
+                  });
+                  setModalOpen(true);
+                }}
+              >
+                {formik => {
+                  return (
+                    <Flex direction="column" gap="12px">
+                      <Flex w="100%">
                         <FormControl>
-                          <FormLabel>Email</FormLabel>
-                          <Input disabled variant="outline" value={user.email} />
+                          <FormLabel>Username</FormLabel>
+                          <Input
+                            variant="outline"
+                            value={formik.values.username}
+                            name="username"
+                            onChange={formik.handleChange}
+                          />
                         </FormControl>
-                      </Tooltip>
-                    </Flex>
-                    <Flex w="100%">
-                      <FormControl>
-                        <FormLabel>Super Bowl Winner</FormLabel>
-                        <Select
-                          variant="outline"
-                          value={formik.values.superbowlWinnerTeamId}
-                          name="superbowlWinnerTeamId"
-                          onChange={formik.handleChange}
+                      </Flex>
+                      <Flex w="100%">
+                        <Tooltip
+                          placement="top-start"
+                          label={`To use an email other than ${user.email}, please sign out in the top right and log in with a different email.`}
                         >
-                          {/* put all the teams here with dividers */}
-                        </Select>
-                      </FormControl>
-                    </Flex>
-                    <Flex w="100%">
-                      <FormControl>
-                        <FormLabel>Super Bowl Loser</FormLabel>
-                        <Select
-                          variant="outline"
-                          value={formik.values.superbowlLoserTeamId}
-                          name="superbowlLoserTeamId"
-                          onChange={formik.handleChange}
+                          <FormControl>
+                            <FormLabel>Email</FormLabel>
+                            <Input disabled variant="outline" value={user.email} />
+                          </FormControl>
+                        </Tooltip>
+                      </Flex>
+                      <Flex w="100%">
+                        <FormControl>
+                          <FormLabel>Super Bowl Winner</FormLabel>
+                          <Select
+                            variant="outline"
+                            value={formik.values.superbowlWinnerTeamId}
+                            name="superbowlWinnerTeamId"
+                            onChange={formik.handleChange}
+                          >
+                            <SuperbowlTeamOptions />
+                          </Select>
+                        </FormControl>
+                      </Flex>
+                      <Flex w="100%">
+                        <FormControl>
+                          <FormLabel>Super Bowl Loser</FormLabel>
+                          <Select
+                            variant="outline"
+                            value={formik.values.superbowlLoserTeamId}
+                            name="superbowlLoserTeamId"
+                            onChange={formik.handleChange}
+                          >
+                            <SuperbowlTeamOptions />
+                          </Select>
+                        </FormControl>
+                      </Flex>
+                      <Flex w="100%">
+                        <FormControl>
+                          <FormLabel>Super Bowl Total Score</FormLabel>
+                          <Input
+                            type="number"
+                            min={1}
+                            max={150}
+                            variant="outline"
+                            value={formik.values.superbowlTotalScore}
+                            name="superbowlTotalScore"
+                            onChange={formik.handleChange}
+                          />
+                        </FormControl>
+                      </Flex>
+                      <Box />
+                      <Flex w="100%">
+                        <Button
+                          variant="solid"
+                          w="100%"
+                          isLoading={formik.isSubmitting}
+                          disabled={formik.isSubmitting || !formik.isValid}
+                          onClick={formik.submitForm}
                         >
-                          {/* put all the teams here with dividers */}
-                        </Select>
-                      </FormControl>
+                          Register
+                        </Button>
+                      </Flex>
                     </Flex>
-                    <Flex w="100%">
-                      <FormControl>
-                        <FormLabel>Super Bowl Total Score</FormLabel>
-                        <Input
-                          type="number"
-                          min={1}
-                          max={150}
-                          variant="outline"
-                          value={formik.values.superbowlTotalScore}
-                          name="superbowlTotalScore"
-                          onChange={formik.handleChange}
-                        />
-                      </FormControl>
-                    </Flex>
-                    <Box />
-                    <Flex w="100%">
-                      <Button
-                        variant="solid"
-                        w="100%"
-                        isLoading={formik.isSubmitting}
-                        disabled={formik.isSubmitting || !formik.isValid}
-                      >
-                        Register
-                      </Button>
-                    </Flex>
-                  </Flex>
-                );
-              }}
-            </Formik>
-          </Flex>
-        </Stack>
+                  );
+                }}
+              </Formik>
+            </Flex>
+          </Stack>
+        </Flex>
       </Flex>
-    </Flex>
+      <Modal isOpen={modalOpen} onClose={onModalClose} size="lg">
+        <ModalOverlay />
+        <ModalContent p="12px">
+          <ModalHeader>
+            <Typography.H2>Success!</Typography.H2>
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Typography.Body1>
+              You are registered for {league.name}! You should have received an email confirming
+              your registration details.
+            </Typography.Body1>
+            <Box pt="12px" />
+            <Typography.Body1>
+              Please reach out to Bob at{' '}
+              <a href="mailto:bambrose24@gmail.com" style={{textDecoration: 'underline'}}>
+                bambrose24@gmail.com
+              </a>{' '}
+              with any questions or help
+            </Typography.Body1>
+          </ModalBody>
+          <ModalFooter>
+            <Button w="100%" variant="solid" onClick={onModalClose}>
+              Done
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    </>
+  );
+}
+
+function SuperbowlTeamOptions() {
+  const {data} = useAllTeamsQuery();
+  if (!data) return null;
+  return (
+    <>
+      <option value={undefined}>-- AFC --</option>
+      {data.teams
+        .filter(t => t.conference === 'AFC')
+        .map(t => {
+          return (
+            <option key={t.teamid} value={t.teamid}>
+              {t.loc} {t.name}
+            </option>
+          );
+        })}
+      <option value={undefined} />
+      <option value={undefined}>-- NFC --</option>
+      {data.teams
+        .filter(t => t.conference === 'NFC')
+        .map(t => {
+          return (
+            <option key={t.teamid} value={t.teamid}>
+              {t.loc} {t.name}
+            </option>
+          );
+        })}
+    </>
   );
 }

@@ -16,7 +16,7 @@ export const themeVars = {
     'funtime-card': {
       bg: 'white',
       borderRadius: '4px',
-      px: '12px', // TODO do we want these here?
+      px: '20px', // TODO do we want these here?
       py: '12px',
     },
   },
@@ -49,7 +49,12 @@ export const themeVars = {
     },
     Input: {
       defaultProps: {
-        focusBorderColor: 'green.500',
+        focusBorderColor: 'primary',
+      },
+    },
+    Select: {
+      defaultProps: {
+        focusBorderColor: 'primary',
       },
     },
   },

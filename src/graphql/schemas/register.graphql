@@ -1,15 +1,13 @@
 mutation Register(
+  $leagueCode: String!
   $username: String!
-  $email: String!
-  $previousUserId: Int
   $superbowlWinner: Int!
   $superbowlLoser: Int!
   $superbowlScore: Int!
 ) {
   register(
+    leagueCode: $leagueCode
     username: $username
-    email: $email
-    previousUserId: $previousUserId
     superbowlWinner: $superbowlWinner
     superbowlLoser: $superbowlLoser
     superbowlScore: $superbowlScore

@@ -2746,8 +2746,7 @@ export type MutationMakePicksArgs = {
 
 
 export type MutationRegisterArgs = {
-  email: Scalars['String'];
-  previousUserId?: InputMaybe<Scalars['Int']>;
+  leagueCode: Scalars['String'];
   superbowlLoser: Scalars['Int'];
   superbowlScore: Scalars['Int'];
   superbowlWinner: Scalars['Int'];
@@ -6831,9 +6830,8 @@ export type ProfileQueryVariables = Exact<{
 export type ProfileQuery = { __typename?: 'Query', user?: { __typename?: 'User', id: string, uid: number, username: string } | null, picks: Array<{ __typename?: 'PickGroupBy', correct?: number | null, member_id?: number | null, _count?: { __typename?: 'PickCountAggregate', pickid: number } | null }>, members: Array<{ __typename?: 'LeagueMember', id: string, membership_id: number, leagues: { __typename?: 'League', id: string, name: string, league_id: number } }> };
 
 export type RegisterMutationVariables = Exact<{
+  leagueCode: Scalars['String'];
   username: Scalars['String'];
-  email: Scalars['String'];
-  previousUserId?: InputMaybe<Scalars['Int']>;
   superbowlWinner: Scalars['Int'];
   superbowlLoser: Scalars['Int'];
   superbowlScore: Scalars['Int'];
@@ -7676,11 +7674,10 @@ export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
 export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = Apollo.QueryResult<ProfileQuery, ProfileQueryVariables>;
 export const RegisterDocument = gql`
-    mutation Register($username: String!, $email: String!, $previousUserId: Int, $superbowlWinner: Int!, $superbowlLoser: Int!, $superbowlScore: Int!) {
+    mutation Register($leagueCode: String!, $username: String!, $superbowlWinner: Int!, $superbowlLoser: Int!, $superbowlScore: Int!) {
   register(
+    leagueCode: $leagueCode
     username: $username
-    email: $email
-    previousUserId: $previousUserId
     superbowlWinner: $superbowlWinner
     superbowlLoser: $superbowlLoser
     superbowlScore: $superbowlScore
@@ -7717,9 +7714,8 @@ export type RegisterMutationFn = Apollo.MutationFunction<RegisterMutation, Regis
  * @example
  * const [registerMutation, { data, loading, error }] = useRegisterMutation({
  *   variables: {
+ *      leagueCode: // value for 'leagueCode'
  *      username: // value for 'username'
- *      email: // value for 'email'
- *      previousUserId: // value for 'previousUserId'
  *      superbowlWinner: // value for 'superbowlWinner'
  *      superbowlLoser: // value for 'superbowlLoser'
  *      superbowlScore: // value for 'superbowlScore'

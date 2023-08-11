@@ -30,6 +30,20 @@ const LoginPage = () => {
             providers={[]}
             magicLink
           />
+          {env === 'development' && (
+            <>
+              <Typography.H3>Dev Only -- Signup</Typography.H3>
+              <Auth
+                redirectTo={router.asPath}
+                supabaseClient={supabase}
+                appearance={{theme: authTheme}}
+                view="sign_up"
+                showLinks={false}
+                providers={[]}
+                magicLink
+              />
+            </>
+          )}
         </Box>
       </Flex>
     </FuntimePage>

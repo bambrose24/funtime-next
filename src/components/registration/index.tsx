@@ -26,7 +26,7 @@ import {
   useRegisterMutation,
 } from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
-import {Formik} from 'formik';
+import {Formik, FormikErrors, useFormikContext} from 'formik';
 import {useRouter} from 'next/router';
 import React, {useCallback, useMemo, useState} from 'react';
 import {useEffect} from 'react';
@@ -82,6 +82,7 @@ const LeagueRegistrationQuery = gql`
 export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
   const {data, loading} = useLeagueRegistrationQuery({variables: {leagueCode}});
   const [register] = useRegisterMutation();
+  const {data: teams} = useAllTeamsQuery();
   const user = useUser();
   const league = data?.league;
   const router = useRouter();
@@ -96,11 +97,17 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
     if (!loading && router.isReady && !league) {
       router.push('/');
     } else if (!user) {
-      router.push(`/login?redirectTo=${router.asPath}`);
+      router.push({
+        pathname: `/login`,
+        query: {
+          redirectTo: router.asPath,
+          banner: 'registration',
+        },
+      });
     }
   }, [league, router, loading, user]);
 
-  if (loading || !league || !user) {
+  if (loading || !league || !user || !teams) {
     return <FuntimeLoading />;
   }
 
@@ -136,6 +143,41 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
                   superbowlLoserTeamId: undefined,
                   superbowlWinnerTeamId: undefined,
                   superbowlTotalScore: '',
+                }}
+                validateOnMount={true}
+                validate={async values => {
+                  const {
+                    username,
+                    superbowlLoserTeamId,
+                    superbowlWinnerTeamId,
+                    superbowlTotalScore,
+                  } = values;
+                  const errors: FormikErrors<RegistrationFormType> = {};
+                  if (!username) {
+                    errors['username'] = 'Please enter a valid username';
+                  }
+                  if (!superbowlWinnerTeamId) {
+                    errors['superbowlWinnerTeamId'] = 'Please enter a Super Bowl winner';
+                  }
+                  if (!superbowlLoserTeamId) {
+                    errors['superbowlLoserTeamId'] = 'Please enter a Super Bowl loser';
+                  }
+                  const scoreError = 'Please enter a valid total score for the Super Bowl';
+                  if (!superbowlTotalScore || !Number(superbowlTotalScore)) {
+                    errors['superbowlTotalScore'] = scoreError;
+                  }
+                  const winnerTeam = teams.teams.find(
+                    t => t.teamid === Number(superbowlWinnerTeamId)
+                  );
+                  const loserTeam = teams.teams.find(
+                    t => t.teamid === Number(superbowlLoserTeamId)
+                  );
+                  if (winnerTeam && loserTeam && winnerTeam.conference === loserTeam.conference) {
+                    errors[
+                      'superbowlWinnerTeamId'
+                    ] = `You cannot choose teams in the same conference for winner/loser (${winnerTeam.conference})`;
+                  }
+                  return errors;
                 }}
                 onSubmit={async values => {
                   const {
@@ -231,15 +273,13 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
                       </Flex>
                       <Box />
                       <Flex w="100%">
-                        <Button
-                          variant="solid"
-                          w="100%"
-                          isLoading={formik.isSubmitting}
-                          disabled={formik.isSubmitting || !formik.isValid}
-                          onClick={formik.submitForm}
-                        >
-                          Register
-                        </Button>
+                        {Object.values(formik.errors).length > 0 ? (
+                          <Tooltip label={Object.values(formik.errors).find(Boolean)}>
+                            <RegisterButton />
+                          </Tooltip>
+                        ) : (
+                          <RegisterButton />
+                        )}
                       </Flex>
                     </Flex>
                   );
@@ -278,6 +318,21 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
         </ModalContent>
       </Modal>
     </>
+  );
+}
+
+function RegisterButton() {
+  const formik = useFormikContext<RegistrationFormType>();
+  return (
+    <Button
+      variant="solid"
+      w="100%"
+      isLoading={formik.isSubmitting}
+      disabled={formik.isSubmitting || !formik.isValid}
+      onClick={formik.submitForm}
+    >
+      Register
+    </Button>
   );
 }
 

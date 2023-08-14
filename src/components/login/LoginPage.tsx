@@ -1,6 +1,6 @@
 import {Auth} from '@supabase/auth-ui-react';
 import {useSupabaseClient} from '@supabase/auth-helpers-react';
-import {Box, Divider, Flex} from '@chakra-ui/react';
+import {Alert, AlertDescription, AlertIcon, AlertTitle, Box, Divider, Flex} from '@chakra-ui/react';
 import FuntimePage from '@src/FuntimePage';
 import {useAuthTheme} from './util';
 import {Typography} from '../Typography';
@@ -16,6 +16,7 @@ const LoginPage = () => {
     <FuntimePage>
       <Flex justify="center" w="100%">
         <Box w={{base: '80vw', md: '400px'}}>
+          <LoginBanner />
           <Typography.H1>Login</Typography.H1>
           <Typography.Body1 mt="20px">
             Login with your email below. You will get an email with a link to sign in.
@@ -49,4 +50,26 @@ const LoginPage = () => {
     </FuntimePage>
   );
 };
+
+function LoginBanner() {
+  const router = useRouter();
+  const banner = router.query.banner;
+  if (!banner || typeof banner !== 'string') {
+    return null;
+  }
+  switch (banner) {
+    case 'registration':
+      return (
+        <Alert status="info">
+          <AlertIcon />
+          <AlertDescription>
+            You must log in with an email to register for the league. Please enter your email below
+            to log in, then re-visit the registration link.
+          </AlertDescription>
+        </Alert>
+      );
+  }
+  return null;
+}
+
 export default LoginPage;

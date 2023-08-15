@@ -15,7 +15,7 @@ const LoginPage = () => {
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
-        <Box w={{base: '80vw', md: '400px'}}>
+        <Box w={{base: '80vw', md: '400px'}} layerStyle="funtime-card">
           <LoginBanner />
           <Typography.H1>Login</Typography.H1>
           <Typography.Body1 mt="20px">

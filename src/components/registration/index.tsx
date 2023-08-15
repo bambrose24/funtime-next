@@ -28,10 +28,11 @@ import {
 import {useUser} from '@supabase/auth-helpers-react';
 import {Formik, FormikErrors, useFormikContext} from 'formik';
 import {useRouter} from 'next/router';
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useEffect} from 'react';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';
+import {AlreadyExistingUserModal} from './AlreadyExistingUserModal';
 import {RegistrationFormType} from './types';
 
 export type RegistrationFormProps = {
@@ -49,6 +50,7 @@ const LeagueRegistrationQuery = gql`
       late_policy
       pick_policy
       scoring_type
+      isViewerMember
       superbowl_competition
       _count {
         leaguemembers
@@ -115,6 +117,7 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
 
   return (
     <>
+      {league.isViewerMember && <AlreadyExistingUserModal leagueName={league.name} />}
       <Flex w="100%" justify="center">
         <Flex maxW="xl" justify="center" minW="xl" layerStyle="funtime-card">
           <Stack dir="column" gap="16px" divider={<Divider />} direction="column" w="100%">

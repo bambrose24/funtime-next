@@ -3,6 +3,7 @@ import {HomeQuery, LeagueStatus, MemberRole} from '@src/generated/graphql';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 import {Typography} from '../../Typography';
 import {InProgressLeagueCardContent} from './in-progress/InProgressLeagueCardContent';
+import {LeagueCardFooter} from './LeagueCardFooter';
 import {NotStartedLeagueCardContent} from './not-started/NotStartedLeagueCardContent';
 import {useLeagueCardDimensions} from './useLeageCardDimensions';
 
@@ -61,12 +62,13 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
           )}
         </Flex>
       </Flex>
-      <Box mt="16px" />
+      <Box pt="16px" />
       {status !== LeagueStatus.NotStarted ? (
         <InProgressLeagueCardContent member={member} memberRanking={memberRanking} />
       ) : (
         <NotStartedLeagueCardContent member={member} />
       )}
+      <LeagueCardFooter member={member} />
     </Flex>
   );
 }

@@ -11,8 +11,7 @@ const LoginPage = () => {
   const supabase = useSupabaseClient();
   const authTheme = useAuthTheme();
   const router = useRouter();
-  const authRedirect =
-    (window ?? {})?.location?.href ?? `https://www.play-funtime.com${router.asPath}`;
+  const authRedirect = `https://www.play-funtime.com${router.asPath}`;
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">

@@ -3,6 +3,7 @@ import {
   FindLeagueMembersQuery,
   GamePick,
   GamesByWeekQuery,
+  useLeagueQuery,
   useMakePicksMutation,
 } from '../../generated/graphql';
 import * as Yup from 'yup';
@@ -36,7 +37,7 @@ interface PicksFormProps {
   week: number;
   season: number;
   games: GamesByWeekQuery['games'];
-  users: FindLeagueMembersQuery['leagueMembers'];
+  leagueId: number;
 }
 
 interface GameEntry {
@@ -45,11 +46,14 @@ interface GameEntry {
   winner: number | undefined;
 }
 
-export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}) => {
-  const supabaseUser = useUser();
+export function PicksForm({week, season, games, leagueId}: PicksFormProps) {
   const [submitPicks, {data, error, client}] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
+
+  const {data: leagueData} = useLeagueQuery({variables: {leagueId}});
+
+  // TODO... query the "viewer" LeagueMember field on a League, and get it from useLeagueQuery
 
   const validationSchema = Yup.object().shape({
     games: Yup.array()
@@ -67,10 +71,11 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
       .lessThan(150, 'Please enter a number below 150'),
   });
 
-  // TODO fetch the logged in user specifically and block the web app on loading that user
-  const maybeLoggedInUser = users.find(u => u.people.email === supabaseUser?.email);
+  const tiebreakerGame = games.find(g => g.is_tiebreaker);
 
-  const tiebreakerGame = games.find(g => g.is_tiebreaker)!;
+  if (!tiebreakerGame) {
+    throw new Error(`Cannot find a tiebreaker game for week ${week} ${season}`);
+  }
   return (
     <>
       <Modal
@@ -207,7 +212,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
             return res;
           });
           const res = await submitPicks({
-            variables: {picks, member_id: parseInt(memberId)},
+            variables: {picks, league_id: leagueId},
           });
           setModalPicks(picks);
           resetForm();
@@ -226,22 +231,8 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
                 <FormControl>
                   <FormLabel>Username</FormLabel>
 
-                  <Select
-                    disabled
-                    id="user1"
-                    name="user1"
-                    onChange={formik.handleChange}
-                    value={formik.values.user1}
-                    bgColor="gray.100"
-                  >
+                  <Select disabled>
                     <option value={undefined} />
-                    {users.map(({membership_id, people: {username}}) => {
-                      return (
-                        <option key={membership_id} value={membership_id}>
-                          {username}
-                        </option>
-                      );
-                    })}
                   </Select>
                 </FormControl>
               </Tooltip>
@@ -464,4 +455,4 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
       </Formik>
     </>
   );
-};
+}

@@ -9,7 +9,6 @@ import {
   useToast,
 } from '@chakra-ui/react';
 import {HomeQuery} from '@src/generated/graphql';
-import {LeagueCardFooter} from '../LeagueCardFooter';
 
 export type AdminNotStartedLeagueCardProps = {
   member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
@@ -62,7 +61,6 @@ export function AdminNotStartedLeagueCard({member}: AdminNotStartedLeagueCardPro
           </FormControl>
         </Flex>
       </Flex>
-      <LeagueCardFooter member={member} />
     </Flex>
   );
 }

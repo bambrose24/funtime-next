@@ -16,7 +16,6 @@ export function RegularNotStartedLeagueCard({member}: RegularNotStartedLeagueCar
           value={member.leagues.aggregateLeagueMember.count ?? 0}
         />
       </Flex>
-      <LeagueCardFooter member={member} />
     </Flex>
   );
 }

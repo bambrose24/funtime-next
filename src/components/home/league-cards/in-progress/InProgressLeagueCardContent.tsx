@@ -49,7 +49,6 @@ export function InProgressLeagueCardContent({
         />
         {/* Idea: put a small graph of standing by week? y axis is 1 -> count of members */}
       </VStack>
-      <LeagueCardFooter member={member} />
     </Flex>
   );
 }

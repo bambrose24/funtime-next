@@ -23,13 +23,14 @@ import {
   ModalOverlay,
   Radio,
   Select,
+  Tooltip,
   VStack,
 } from '@chakra-ui/react';
 import {Typography} from '../Typography';
 import {TeamLogo} from '../shared/TeamLogo';
 import moment from 'moment-timezone';
 import {useState} from 'react';
-import {useSession, useUser} from '@supabase/auth-helpers-react';
+import {useUser} from '@supabase/auth-helpers-react';
 
 interface PicksFormProps {
   week: number;
@@ -46,21 +47,11 @@ interface GameEntry {
 
 export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}) => {
   const supabaseUser = useUser();
-  const session = useSession();
   const [submitPicks, {data, error, client}] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
 
   const validationSchema = Yup.object().shape({
-    user1: Yup.string()
-      .oneOf(
-        users.map(u => u.membership_id.toString()),
-        'Please choose your username'
-      )
-      .required(),
-    user2: Yup.string()
-      .oneOf([Yup.ref('user1'), null], 'Your username selections must match')
-      .required(),
     games: Yup.array()
       .of(
         Yup.object().shape({
@@ -93,7 +84,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
           <ModalHeader>
             <Flex justify="center">
               {!error && data ? (
-                <Typography.H2>You're in!</Typography.H2>
+                <Typography.H2>You are in!</Typography.H2>
               ) : (
                 <Typography.H2>Oh no!</Typography.H2>
               )}
@@ -105,12 +96,13 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
               <>
                 <Typography.H4>Congrats, {data.makePicks.user.username}!</Typography.H4>
                 <Typography.H4 mt={8} mb="8px">
-                  Your picks are in for week {week}, {season}. You should have receieved an email
-                  with your picks, but if not, here's the summary:
+                  Your picks are in for Week {week}, {season}. You should have receieved an email
+                  with your picks, but if not, here is the summary. You can come back to this page
+                  and alter your picks at any time.
                 </Typography.H4>
                 <Flex align="center" w="100%">
                   <VStack spacing={3} w="100%">
-                    {modalPicks.map(p => {
+                    {modalPicks.map((p, i) => {
                       const game = games.find(g => g.gid === p.game_id)!;
 
                       const away = game.teams_games_awayToteams.abbrev;
@@ -118,7 +110,7 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
                       const choseAway = p.winner === game.teams_games_awayToteams.teamid;
 
                       return (
-                        <Grid templateColumns="repeat(12, 1fr)" gap="4px" w="100%">
+                        <Grid key={i} templateColumns="repeat(12, 1fr)" gap="4px" w="100%">
                           <GridItem colStart={4} colSpan={2}>
                             <Flex
                               justify="center"
@@ -161,7 +153,12 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
                         const choseAway = p.winner === game.teams_games_awayToteams.teamid;
                         const score = p.score;
                         return (
-                          <Grid templateColumns="repeat(12, 1fr)" gap="4px" w="100%">
+                          <Grid
+                            key={p.game_id}
+                            templateColumns="repeat(12, 1fr)"
+                            gap="4px"
+                            w="100%"
+                          >
                             <GridItem colStart={3} colSpan={8}>
                               <Flex justify="center" align="center">
                                 <Typography.H5>
@@ -186,8 +183,6 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
       </Modal>
       <Formik
         initialValues={{
-          user1: maybeLoggedInUser?.membership_id?.toString() || '', // test
-          user2: maybeLoggedInUser?.membership_id?.toString() || '',
           games: games.map(
             (g): GameEntry => {
               return {
@@ -202,7 +197,6 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
         }}
         validationSchema={validationSchema}
         onSubmit={async (values, {resetForm}) => {
-          const memberId = values.user1;
           const picks = values.games.map(g => {
             const res: GamePick = {
               game_id: g.gameId,
@@ -224,25 +218,33 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
         {formik => (
           <Form onSubmit={formik.handleSubmit}>
             <VStack spacing={4} align="flex-start">
-              <FormControl>
-                <FormLabel>Select your Username</FormLabel>
-                <Select
-                  id="user1"
-                  name="user1"
-                  onChange={formik.handleChange}
-                  value={formik.values.user1}
-                  bgColor="gray.100"
-                >
-                  <option value={undefined} />
-                  {users.map(({membership_id, people: {username}}) => {
-                    return (
-                      <option key={membership_id} value={membership_id}>
-                        {username}
-                      </option>
-                    );
-                  })}
-                </Select>
-              </FormControl>
+              <Tooltip
+                hasArrow
+                placement="top"
+                label="If you want to make picks as a different user, please log in as them"
+              >
+                <FormControl>
+                  <FormLabel>Username</FormLabel>
+
+                  <Select
+                    disabled
+                    id="user1"
+                    name="user1"
+                    onChange={formik.handleChange}
+                    value={formik.values.user1}
+                    bgColor="gray.100"
+                  >
+                    <option value={undefined} />
+                    {users.map(({membership_id, people: {username}}) => {
+                      return (
+                        <option key={membership_id} value={membership_id}>
+                          {username}
+                        </option>
+                      );
+                    })}
+                  </Select>
+                </FormControl>
+              </Tooltip>
               <Button
                 width="full"
                 variant="solid"
@@ -427,28 +429,6 @@ export const PicksForm: React.FC<PicksFormProps> = ({week, season, games, users}
                   </Box>
                 );
               })}
-              <FormControl>
-                <FormLabel>Confirm your Username</FormLabel>
-                <Select
-                  id="user2"
-                  name="user2"
-                  onChange={formik.handleChange}
-                  value={formik.values.user2}
-                  bgColor="gray.100"
-                >
-                  <option value={undefined} />
-                  {users.map(({membership_id, people: {username}}) => {
-                    return (
-                      <option key={membership_id} value={membership_id}>
-                        {username}
-                      </option>
-                    );
-                  })}
-                </Select>
-                {formik.errors.user2 && formik.values.user2 && (
-                  <Typography.Subtitle2 color="red">{formik.errors.user2}</Typography.Subtitle2>
-                )}
-              </FormControl>
               <FormControl>
                 <FormLabel>
                   Total Score of {tiebreakerGame.teams_games_awayToteams.abbrev} @{' '}

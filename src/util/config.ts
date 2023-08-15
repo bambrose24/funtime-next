@@ -1,5 +1,5 @@
-export const SEASON = 2022;
-export const LEAGUE_ID = 7;
+export const SEASON = 2023;
+export const LEAGUE_ID = 8;
 
 type Env = 'development' | 'preview' | 'production';
 

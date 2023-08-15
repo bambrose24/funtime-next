@@ -1,0 +1,10 @@
+query League($leagueId: Int!) {
+  league(where: {league_id: $leagueId}) {
+    id
+    name
+    league_id
+    pick_policy
+    late_policy
+    isViewerMember
+  }
+}

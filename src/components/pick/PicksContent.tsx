@@ -1,9 +1,8 @@
-import {Alert, AlertDescription, AlertIcon, AlertTitle, Box, Flex} from '@chakra-ui/react';
+import {Box, Flex} from '@chakra-ui/react';
 import {PicksForm} from '@src/components/pick/PicksForm';
 import {Typography} from '@src/components/Typography';
-import {useFindLeagueMembersQuery, useFirstNotStartedWeekQuery} from '@src/generated/graphql';
-import {LEAGUE_ID, SEASON} from '@src/util/config';
-import {useUser} from '@supabase/auth-helpers-react';
+import {useLeagueQuery, useWeekForPicksQuery} from '@src/generated/graphql';
+import {LEAGUE_ID} from '@src/util/config';
 import _ from 'lodash';
 import {useRouter} from 'next/router';
 import {FuntimeError} from '../shared/FuntimeError';
@@ -14,53 +13,38 @@ export const PicksContent: React.FC = () => {
   const router = useRouter();
   const weekParam = router.query['week'];
   const overrideParam = router.query['override'];
-  const {
-    data: games,
-    loading: gamesLoading,
-    error: gamesError,
-  } = useFirstNotStartedWeekQuery({
+  const league_id = Number(router.query['league_id']) || LEAGUE_ID;
+  const {data: games, loading: gamesLoading, error: gamesError} = useWeekForPicksQuery({
     variables: {
+      leagueId: league_id,
       ...(typeof weekParam === 'string' ? {week: parseInt(weekParam)} : {}),
       ...(typeof overrideParam === 'string' && overrideParam === 'true' ? {override: true} : {}),
     },
   });
+  const {loading: leagueLoading} = useLeagueQuery({variables: {leagueId: league_id}});
 
-  const {
-    data: people,
-    loading: peopleLoading,
-    error: peopleError,
-  } = useFindLeagueMembersQuery({
-    variables: {
-      league_id: LEAGUE_ID,
-    },
-  });
-
-  if (gamesLoading || peopleLoading) {
+  if (gamesLoading || leagueLoading) {
     return <FuntimeLoading />;
   }
 
-  if (!games || !people || gamesError || peopleError) {
+  if (!games || gamesError) {
     return <FuntimeError />;
   }
 
   if (
-    !games.firstNotStartedWeek.week ||
-    !games.firstNotStartedWeek.season ||
-    !(games.firstNotStartedWeek.games.length > 0)
+    !games.weekForPicks.week ||
+    !games.weekForPicks.season ||
+    !(games.weekForPicks.games.length > 0)
   ) {
     // TODO show a "the season is over" page
     return <FuntimeSeasonOver />;
   }
-  const week = games.firstNotStartedWeek.games[0].week;
-  const season = games.firstNotStartedWeek.games[0].season;
+  const week = games.weekForPicks.games[0].week;
+  const season = games.weekForPicks.games[0].season;
 
-  const gamesSorted = _([...games.firstNotStartedWeek.games])
+  const gamesSorted = _([...games.weekForPicks.games])
     .sortBy('gid')
     .sortBy('ts')
-    .value();
-
-  const peopleSorted = _([...people.leagueMembers])
-    .orderBy(x => x.people.username.toUpperCase())
     .value();
 
   return (
@@ -71,18 +55,7 @@ export const PicksContent: React.FC = () => {
             Make Your Picks for Week {week}, {season}
           </Typography.H2>
           <Flex direction="column" w="100%" justify="center" bgColor="white" py={8} px={4}>
-            {week === 18 && season === SEASON && (
-              <Box py="8px">
-                <Alert status="warning">
-                  <AlertIcon />
-                  <AlertDescription>
-                    Game times have changed, and some players have made picks already. We are
-                    keeping the tiebreaker game as ARI @ SF even though it's not the final game.
-                  </AlertDescription>
-                </Alert>
-              </Box>
-            )}
-            <PicksForm week={week} season={season} games={gamesSorted} users={peopleSorted} />
+            <PicksForm week={week} season={season} games={gamesSorted} leagueId={league_id} />
           </Flex>
         </Box>
       </Box>

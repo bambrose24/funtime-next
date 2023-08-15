@@ -287,13 +287,6 @@ export type EnumScoringTypeNullableWithAggregatesFilter = {
   notIn?: InputMaybe<Array<ScoringType>>;
 };
 
-export type FirstNotStartedWeekResponse = {
-  __typename?: 'FirstNotStartedWeekResponse';
-  games: Array<Game>;
-  season?: Maybe<Scalars['Int']>;
-  week?: Maybe<Scalars['Int']>;
-};
-
 export type Game = {
   __typename?: 'Game';
   _count?: Maybe<GameCount>;
@@ -2740,7 +2733,7 @@ export type MutationDeleteOneWeekWinnersArgs = {
 
 
 export type MutationMakePicksArgs = {
-  member_id: Scalars['Int'];
+  league_id: Scalars['Int'];
   picks: Array<GamePick>;
 };
 
@@ -3972,7 +3965,6 @@ export type Query = {
   findManyWeekWinners: Array<WeekWinners>;
   findUniqueWeekWinners?: Maybe<WeekWinners>;
   findUniqueWeekWinnersOrThrow?: Maybe<WeekWinners>;
-  firstNotStartedWeek: FirstNotStartedWeekResponse;
   game?: Maybe<Game>;
   games: Array<Game>;
   getGame?: Maybe<Game>;
@@ -4009,6 +4001,7 @@ export type Query = {
   teams: Array<Team>;
   user?: Maybe<User>;
   users: Array<User>;
+  weekForPicks: WeekForPicksResponse;
 };
 
 
@@ -4293,12 +4286,6 @@ export type QueryFindUniqueWeekWinnersOrThrowArgs = {
 };
 
 
-export type QueryFirstNotStartedWeekArgs = {
-  override?: InputMaybe<Scalars['Boolean']>;
-  week?: InputMaybe<Scalars['Int']>;
-};
-
-
 export type QueryGameArgs = {
   where: GameWhereUniqueInput;
 };
@@ -4558,6 +4545,13 @@ export type QueryUsersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type QueryWeekForPicksArgs = {
+  leagueId: Scalars['Int'];
+  override?: InputMaybe<Scalars['Boolean']>;
+  week?: InputMaybe<Scalars['Int']>;
 };
 
 export enum QueryMode {
@@ -6341,6 +6335,14 @@ export type UserWhereUniqueInput = {
   uid?: InputMaybe<Scalars['Int']>;
 };
 
+export type WeekForPicksResponse = {
+  __typename?: 'WeekForPicksResponse';
+  existingPicks: Array<Pick>;
+  games: Array<Game>;
+  season?: Maybe<Scalars['Int']>;
+  week?: Maybe<Scalars['Int']>;
+};
+
 export type WeekWinners = {
   __typename?: 'WeekWinners';
   correct_count: Scalars['Int'];
@@ -6762,14 +6764,6 @@ export type SeasonCorrectPicksQueryVariables = Exact<{
 
 export type SeasonCorrectPicksQuery = { __typename?: 'Query', groupByPick: Array<{ __typename?: 'PickGroupBy', member_id?: number | null, _count?: { __typename?: 'PickCountAggregate', correct: number } | null }> };
 
-export type FirstNotStartedWeekQueryVariables = Exact<{
-  override?: InputMaybe<Scalars['Boolean']>;
-  week?: InputMaybe<Scalars['Int']>;
-}>;
-
-
-export type FirstNotStartedWeekQuery = { __typename?: 'Query', firstNotStartedWeek: { __typename?: 'FirstNotStartedWeekResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> } };
-
 export type GamesByLeagueQueryVariables = Exact<{
   leagueId: Scalars['Int'];
   where?: InputMaybe<GameWhereInput>;
@@ -6793,6 +6787,13 @@ export type GamesByWeekQueryVariables = Exact<{
 
 export type GamesByWeekQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> };
 
+export type LeagueQueryVariables = Exact<{
+  leagueId: Scalars['Int'];
+}>;
+
+
+export type LeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, name: string, league_id: number, pick_policy?: PickPolicy | null, late_policy?: LatePolicy | null, isViewerMember: boolean } | null };
+
 export type FindLeagueMembersQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
@@ -6802,7 +6803,7 @@ export type FindLeagueMembersQuery = { __typename?: 'Query', leagueMembers: Arra
 
 export type MakePicksMutationVariables = Exact<{
   picks: Array<GamePick> | GamePick;
-  member_id: Scalars['Int'];
+  league_id: Scalars['Int'];
 }>;
 
 
@@ -6851,6 +6852,15 @@ export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type AllTeamsQuery = { __typename?: 'Query', teams: Array<{ __typename?: 'Team', teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
+
+export type WeekForPicksQueryVariables = Exact<{
+  leagueId: Scalars['Int'];
+  override?: InputMaybe<Scalars['Boolean']>;
+  week?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type WeekForPicksQuery = { __typename?: 'Query', weekForPicks: { __typename?: 'WeekForPicksResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> } };
 
 export type WinnersQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -7193,67 +7203,6 @@ export function useSeasonCorrectPicksLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type SeasonCorrectPicksQueryHookResult = ReturnType<typeof useSeasonCorrectPicksQuery>;
 export type SeasonCorrectPicksLazyQueryHookResult = ReturnType<typeof useSeasonCorrectPicksLazyQuery>;
 export type SeasonCorrectPicksQueryResult = Apollo.QueryResult<SeasonCorrectPicksQuery, SeasonCorrectPicksQueryVariables>;
-export const FirstNotStartedWeekDocument = gql`
-    query FirstNotStartedWeek($override: Boolean, $week: Int) {
-  firstNotStartedWeek(override: $override, week: $week) {
-    week
-    season
-    games {
-      id
-      gid
-      week
-      season
-      awayscore
-      homescore
-      ts
-      done
-      homerecord
-      awayrecord
-      winner
-      is_tiebreaker
-      teams_games_awayToteams {
-        id
-        teamid
-        abbrev
-      }
-      teams_games_homeToteams {
-        id
-        teamid
-        abbrev
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useFirstNotStartedWeekQuery__
- *
- * To run a query within a React component, call `useFirstNotStartedWeekQuery` and pass it any options that fit your needs.
- * When your component renders, `useFirstNotStartedWeekQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useFirstNotStartedWeekQuery({
- *   variables: {
- *      override: // value for 'override'
- *      week: // value for 'week'
- *   },
- * });
- */
-export function useFirstNotStartedWeekQuery(baseOptions?: Apollo.QueryHookOptions<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>(FirstNotStartedWeekDocument, options);
-      }
-export function useFirstNotStartedWeekLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>(FirstNotStartedWeekDocument, options);
-        }
-export type FirstNotStartedWeekQueryHookResult = ReturnType<typeof useFirstNotStartedWeekQuery>;
-export type FirstNotStartedWeekLazyQueryHookResult = ReturnType<typeof useFirstNotStartedWeekLazyQuery>;
-export type FirstNotStartedWeekQueryResult = Apollo.QueryResult<FirstNotStartedWeekQuery, FirstNotStartedWeekQueryVariables>;
 export const GamesByLeagueDocument = gql`
     query GamesByLeague($leagueId: Int!, $where: GameWhereInput) {
   league(where: {league_id: $leagueId}) {
@@ -7417,6 +7366,46 @@ export function useGamesByWeekLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type GamesByWeekQueryHookResult = ReturnType<typeof useGamesByWeekQuery>;
 export type GamesByWeekLazyQueryHookResult = ReturnType<typeof useGamesByWeekLazyQuery>;
 export type GamesByWeekQueryResult = Apollo.QueryResult<GamesByWeekQuery, GamesByWeekQueryVariables>;
+export const LeagueDocument = gql`
+    query League($leagueId: Int!) {
+  league(where: {league_id: $leagueId}) {
+    id
+    name
+    league_id
+    pick_policy
+    late_policy
+    isViewerMember
+  }
+}
+    `;
+
+/**
+ * __useLeagueQuery__
+ *
+ * To run a query within a React component, call `useLeagueQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLeagueQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLeagueQuery({
+ *   variables: {
+ *      leagueId: // value for 'leagueId'
+ *   },
+ * });
+ */
+export function useLeagueQuery(baseOptions: Apollo.QueryHookOptions<LeagueQuery, LeagueQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LeagueQuery, LeagueQueryVariables>(LeagueDocument, options);
+      }
+export function useLeagueLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeagueQuery, LeagueQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LeagueQuery, LeagueQueryVariables>(LeagueDocument, options);
+        }
+export type LeagueQueryHookResult = ReturnType<typeof useLeagueQuery>;
+export type LeagueLazyQueryHookResult = ReturnType<typeof useLeagueLazyQuery>;
+export type LeagueQueryResult = Apollo.QueryResult<LeagueQuery, LeagueQueryVariables>;
 export const FindLeagueMembersDocument = gql`
     query FindLeagueMembers($league_id: Int!) {
   leagueMembers(
@@ -7467,8 +7456,8 @@ export type FindLeagueMembersQueryHookResult = ReturnType<typeof useFindLeagueMe
 export type FindLeagueMembersLazyQueryHookResult = ReturnType<typeof useFindLeagueMembersLazyQuery>;
 export type FindLeagueMembersQueryResult = Apollo.QueryResult<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>;
 export const MakePicksDocument = gql`
-    mutation MakePicks($picks: [GamePick!]!, $member_id: Int!) {
-  makePicks(picks: $picks, member_id: $member_id) {
+    mutation MakePicks($picks: [GamePick!]!, $league_id: Int!) {
+  makePicks(picks: $picks, league_id: $league_id) {
     user {
       id
       username
@@ -7493,7 +7482,7 @@ export type MakePicksMutationFn = Apollo.MutationFunction<MakePicksMutation, Mak
  * const [makePicksMutation, { data, loading, error }] = useMakePicksMutation({
  *   variables: {
  *      picks: // value for 'picks'
- *      member_id: // value for 'member_id'
+ *      league_id: // value for 'league_id'
  *   },
  * });
  */
@@ -7823,6 +7812,68 @@ export function useAllTeamsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<A
 export type AllTeamsQueryHookResult = ReturnType<typeof useAllTeamsQuery>;
 export type AllTeamsLazyQueryHookResult = ReturnType<typeof useAllTeamsLazyQuery>;
 export type AllTeamsQueryResult = Apollo.QueryResult<AllTeamsQuery, AllTeamsQueryVariables>;
+export const WeekForPicksDocument = gql`
+    query weekForPicks($leagueId: Int!, $override: Boolean, $week: Int) {
+  weekForPicks(leagueId: $leagueId, override: $override, week: $week) {
+    week
+    season
+    games {
+      id
+      gid
+      week
+      season
+      awayscore
+      homescore
+      ts
+      done
+      homerecord
+      awayrecord
+      winner
+      is_tiebreaker
+      teams_games_awayToteams {
+        id
+        teamid
+        abbrev
+      }
+      teams_games_homeToteams {
+        id
+        teamid
+        abbrev
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useWeekForPicksQuery__
+ *
+ * To run a query within a React component, call `useWeekForPicksQuery` and pass it any options that fit your needs.
+ * When your component renders, `useWeekForPicksQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useWeekForPicksQuery({
+ *   variables: {
+ *      leagueId: // value for 'leagueId'
+ *      override: // value for 'override'
+ *      week: // value for 'week'
+ *   },
+ * });
+ */
+export function useWeekForPicksQuery(baseOptions: Apollo.QueryHookOptions<WeekForPicksQuery, WeekForPicksQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<WeekForPicksQuery, WeekForPicksQueryVariables>(WeekForPicksDocument, options);
+      }
+export function useWeekForPicksLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<WeekForPicksQuery, WeekForPicksQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<WeekForPicksQuery, WeekForPicksQueryVariables>(WeekForPicksDocument, options);
+        }
+export type WeekForPicksQueryHookResult = ReturnType<typeof useWeekForPicksQuery>;
+export type WeekForPicksLazyQueryHookResult = ReturnType<typeof useWeekForPicksLazyQuery>;
+export type WeekForPicksQueryResult = Apollo.QueryResult<WeekForPicksQuery, WeekForPicksQueryVariables>;
 export const WinnersDocument = gql`
     query Winners($league_id: Int!) {
   findManyWeekWinners(where: {league_id: {equals: $league_id}}) {

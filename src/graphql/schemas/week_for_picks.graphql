@@ -1,5 +1,5 @@
-query FirstNotStartedWeek($override: Boolean, $week: Int) {
-  firstNotStartedWeek(override: $override, week: $week) {
+query weekForPicks($leagueId: Int!, $override: Boolean, $week: Int) {
+  weekForPicks(leagueId: $leagueId, override: $override, week: $week) {
     week
     season
     games {

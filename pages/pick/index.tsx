@@ -1,19 +1,50 @@
 import FuntimePage from '@src/FuntimePage';
 import {PicksContent} from '@src/components/pick/PicksContent';
-import {GetStaticProps} from 'next';
+import {GetServerSideProps, GetStaticProps} from 'next';
+import {FuntimeLoading} from '@src/components/shared/FuntimeLoading';
+import {getApolloClient} from '@src/graphql';
+import {gql} from '@apollo/client';
+import {UserLeaguesQuery} from '@src/generated/graphql';
 
 const PickPage: React.FC = () => {
   return (
     <FuntimePage>
-      <PicksContent />
+      <FuntimeLoading />
     </FuntimePage>
   );
 };
 
-export const getStaticProps: GetStaticProps = () => {
+const UserLeagues = gql`
+  query UserLeagues {
+    me {
+      id
+      leagues(orderBy: {season: desc}) {
+        id
+        league_id
+      }
+    }
+  }
+`;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const client = getApolloClient();
+  const {data} = await client.query<UserLeaguesQuery>({
+    query: UserLeagues,
+  });
+  const firstLeagueId = data.me?.leagues.find(l => l.league_id);
+  if (!firstLeagueId) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/',
+      },
+    };
+  }
   return {
-    props: {},
-    revalidate: 60 * 5,
+    redirect: {
+      permanent: false,
+      destination: `/pick/${firstLeagueId}`,
+    },
   };
 };
 

@@ -9,26 +9,34 @@ import {FuntimeError} from '../shared/FuntimeError';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {FuntimeSeasonOver} from '../shared/FuntimeSeasonOver';
 
-export const PicksContent: React.FC = () => {
+type Props = {
+  leagueId: number;
+};
+
+export function PicksContent({leagueId}: Props) {
   const router = useRouter();
   const weekParam = router.query['week'];
   const overrideParam = router.query['override'];
-  const league_id = Number(router.query['league_id']) || LEAGUE_ID;
   const {data: games, loading: gamesLoading, error: gamesError} = useWeekForPicksQuery({
     variables: {
-      leagueId: league_id,
+      leagueId,
       ...(typeof weekParam === 'string' ? {week: parseInt(weekParam)} : {}),
       ...(typeof overrideParam === 'string' && overrideParam === 'true' ? {override: true} : {}),
     },
   });
-  const {loading: leagueLoading} = useLeagueQuery({variables: {leagueId: league_id}});
+  const {loading: leagueLoading, data: leagueData} = useLeagueQuery({variables: {leagueId}});
 
   if (gamesLoading || leagueLoading) {
     return <FuntimeLoading />;
   }
 
-  if (!games || gamesError) {
+  if (!games || gamesError || !leagueData) {
     return <FuntimeError />;
+  }
+
+  if (!leagueData?.league?.viewer?.membership_id) {
+    router.push('/');
+    return <FuntimeLoading />;
   }
 
   if (
@@ -55,10 +63,10 @@ export const PicksContent: React.FC = () => {
             Make Your Picks for Week {week}, {season}
           </Typography.H2>
           <Flex direction="column" w="100%" justify="center" bgColor="white" py={8} px={4}>
-            <PicksForm week={week} season={season} games={gamesSorted} leagueId={league_id} />
+            <PicksForm week={week} season={season} games={gamesSorted} leagueId={leagueId} />
           </Flex>
         </Box>
       </Box>
     </Flex>
   );
-};
+}

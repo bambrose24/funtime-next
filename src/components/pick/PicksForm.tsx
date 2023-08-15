@@ -232,7 +232,9 @@ export function PicksForm({week, season, games, leagueId}: PicksFormProps) {
                   <FormLabel>Username</FormLabel>
 
                   <Select disabled>
-                    <option value={undefined} />
+                    <option value={undefined}>
+                      {leagueData?.league?.viewer?.people?.username}
+                    </option>
                   </Select>
                 </FormControl>
               </Tooltip>

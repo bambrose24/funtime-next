@@ -1134,7 +1134,6 @@ export type League = {
   created_time: Scalars['DateTimeBetterSerialization'];
   games: Array<Game>;
   id: Scalars['ID'];
-  isViewerMember: Scalars['Boolean'];
   late_policy?: Maybe<LatePolicy>;
   league_id: Scalars['Int'];
   leaguemembers: Array<LeagueMember>;
@@ -6722,6 +6721,18 @@ export type WeekWinnersWhereUniqueInput = {
   id?: InputMaybe<Scalars['Int']>;
 };
 
+export type UnfinishedLeaguesQueryVariables = Exact<{
+  currentSeason: Scalars['Int'];
+}>;
+
+
+export type UnfinishedLeaguesQuery = { __typename?: 'Query', leagues: Array<{ __typename?: 'League', id: string, league_id: number, season: number, status: LeagueStatus }> };
+
+export type UserLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type UserLeaguesQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leagues: Array<{ __typename?: 'League', id: string, league_id: number }> } | null };
+
 export type AllLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6871,6 +6882,82 @@ export type WinnersQueryVariables = Exact<{
 export type WinnersQuery = { __typename?: 'Query', findManyWeekWinners: Array<{ __typename?: 'WeekWinners', id: number, week: number, correct_count: number, member: { __typename?: 'LeagueMember', id: string, people: { __typename?: 'User', id: string, uid: number, username: string } } }> };
 
 
+export const UnfinishedLeaguesDocument = gql`
+    query UnfinishedLeagues($currentSeason: Int!) {
+  leagues(where: {season: {gte: $currentSeason}}) {
+    id
+    league_id
+    season
+    status
+  }
+}
+    `;
+
+/**
+ * __useUnfinishedLeaguesQuery__
+ *
+ * To run a query within a React component, call `useUnfinishedLeaguesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUnfinishedLeaguesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUnfinishedLeaguesQuery({
+ *   variables: {
+ *      currentSeason: // value for 'currentSeason'
+ *   },
+ * });
+ */
+export function useUnfinishedLeaguesQuery(baseOptions: Apollo.QueryHookOptions<UnfinishedLeaguesQuery, UnfinishedLeaguesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UnfinishedLeaguesQuery, UnfinishedLeaguesQueryVariables>(UnfinishedLeaguesDocument, options);
+      }
+export function useUnfinishedLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UnfinishedLeaguesQuery, UnfinishedLeaguesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UnfinishedLeaguesQuery, UnfinishedLeaguesQueryVariables>(UnfinishedLeaguesDocument, options);
+        }
+export type UnfinishedLeaguesQueryHookResult = ReturnType<typeof useUnfinishedLeaguesQuery>;
+export type UnfinishedLeaguesLazyQueryHookResult = ReturnType<typeof useUnfinishedLeaguesLazyQuery>;
+export type UnfinishedLeaguesQueryResult = Apollo.QueryResult<UnfinishedLeaguesQuery, UnfinishedLeaguesQueryVariables>;
+export const UserLeaguesDocument = gql`
+    query UserLeagues {
+  me {
+    id
+    leagues(orderBy: {season: desc}) {
+      id
+      league_id
+    }
+  }
+}
+    `;
+
+/**
+ * __useUserLeaguesQuery__
+ *
+ * To run a query within a React component, call `useUserLeaguesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserLeaguesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserLeaguesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserLeaguesQuery(baseOptions?: Apollo.QueryHookOptions<UserLeaguesQuery, UserLeaguesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<UserLeaguesQuery, UserLeaguesQueryVariables>(UserLeaguesDocument, options);
+      }
+export function useUserLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserLeaguesQuery, UserLeaguesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<UserLeaguesQuery, UserLeaguesQueryVariables>(UserLeaguesDocument, options);
+        }
+export type UserLeaguesQueryHookResult = ReturnType<typeof useUserLeaguesQuery>;
+export type UserLeaguesLazyQueryHookResult = ReturnType<typeof useUserLeaguesLazyQuery>;
+export type UserLeaguesQueryResult = Apollo.QueryResult<UserLeaguesQuery, UserLeaguesQueryVariables>;
 export const AllLeaguesDocument = gql`
     query AllLeagues {
   leagues {

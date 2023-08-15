@@ -14,12 +14,14 @@ import {
 import {HomeQuery, LeagueStatus, MemberRole} from '@src/generated/graphql';
 import moment from 'moment';
 import Link from 'next/link';
+import {useRouter} from 'next/router';
 
 export type LeagueCardFooterProps = {
   member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
 };
 
 export function LeagueCardFooter({member}: LeagueCardFooterProps) {
+  const router = useRouter();
   const nextGame = member.nextGame;
 
   const needsToMakePicks = nextGame && !member.hasPickedNextGame;
@@ -56,7 +58,15 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
           <MenuList>
             {member.role === MemberRole.Admin && <MenuItem>Manage League (admin only)</MenuItem>}
             <MenuItem>Standings</MenuItem>
-            {member.leagues.status !== LeagueStatus.Done && <MenuItem>Make Picks</MenuItem>}
+            {member.leagues.status !== LeagueStatus.Done && (
+              <MenuItem
+                onClick={() => {
+                  router.push(`/pick/${member.leagues.league_id}`);
+                }}
+              >
+                Make Picks
+              </MenuItem>
+            )}
           </MenuList>
         </Menu>
       </Flex>

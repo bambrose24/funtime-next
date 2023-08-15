@@ -1151,6 +1151,7 @@ export type League = {
   share_code?: Maybe<Scalars['String']>;
   status: LeagueStatus;
   superbowl_competition?: Maybe<Scalars['Boolean']>;
+  viewer?: Maybe<LeagueMember>;
 };
 
 
@@ -6743,7 +6744,7 @@ export type LeagueRegistrationQueryVariables = Exact<{
 }>;
 
 
-export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, isViewerMember: boolean, superbowl_competition?: boolean | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
+export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
 
 export type MyLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6792,7 +6793,7 @@ export type LeagueQueryVariables = Exact<{
 }>;
 
 
-export type LeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, name: string, league_id: number, pick_policy?: PickPolicy | null, late_policy?: LatePolicy | null, isViewerMember: boolean } | null };
+export type LeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, name: string, league_id: number, pick_policy?: PickPolicy | null, late_policy?: LatePolicy | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, uid: number, username: string } } | null } | null };
 
 export type FindLeagueMembersQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -7026,7 +7027,10 @@ export const LeagueRegistrationDocument = gql`
     late_policy
     pick_policy
     scoring_type
-    isViewerMember
+    viewer {
+      id
+      membership_id
+    }
     superbowl_competition
     _count {
       leaguemembers
@@ -7374,7 +7378,15 @@ export const LeagueDocument = gql`
     league_id
     pick_policy
     late_policy
-    isViewerMember
+    viewer {
+      id
+      membership_id
+      people {
+        id
+        uid
+        username
+      }
+    }
   }
 }
     `;

@@ -5,6 +5,14 @@ query League($leagueId: Int!) {
     league_id
     pick_policy
     late_policy
-    isViewerMember
+    viewer {
+      id
+      membership_id
+      people {
+        id
+        uid
+        username
+      }
+    }
   }
 }

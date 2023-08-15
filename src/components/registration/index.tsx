@@ -50,7 +50,10 @@ const LeagueRegistrationQuery = gql`
       late_policy
       pick_policy
       scoring_type
-      isViewerMember
+      viewer {
+        id
+        membership_id
+      }
       superbowl_competition
       _count {
         leaguemembers
@@ -117,7 +120,9 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
 
   return (
     <>
-      {league.isViewerMember && <AlreadyExistingUserModal leagueName={league.name} />}
+      {Boolean(league.viewer?.membership_id) && (
+        <AlreadyExistingUserModal leagueName={league.name} />
+      )}
       <Flex w="100%" justify="center">
         <Flex maxW="xl" justify="center" layerStyle="funtime-card">
           <Stack dir="column" gap="16px" divider={<Divider />} direction="column" w="100%">

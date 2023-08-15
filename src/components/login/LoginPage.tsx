@@ -1,6 +1,6 @@
 import {Auth} from '@supabase/auth-ui-react';
 import {useSupabaseClient} from '@supabase/auth-helpers-react';
-import {Alert, AlertDescription, AlertIcon, AlertTitle, Box, Divider, Flex} from '@chakra-ui/react';
+import {Alert, AlertDescription, AlertIcon, Box, Divider, Flex} from '@chakra-ui/react';
 import FuntimePage from '@src/FuntimePage';
 import {useAuthTheme} from './util';
 import {Typography} from '../Typography';
@@ -22,7 +22,11 @@ const LoginPage = () => {
           </Typography.Body1>
           <Divider my="20px" />
           <Auth
-            redirectTo={window.location.href}
+            redirectTo={
+              window && window.location && window.location.href
+                ? window.location.href
+                : `https://www.play-funtime.com${router.asPath}`
+            }
             supabaseClient={supabase}
             appearance={{theme: authTheme}}
             view={env === 'development' ? 'sign_in' : 'magic_link'}
@@ -34,7 +38,11 @@ const LoginPage = () => {
             <>
               <Typography.H3>Dev Only -- Signup</Typography.H3>
               <Auth
-                redirectTo={window.location.href}
+                redirectTo={
+                  window && window.location && window.location.href
+                    ? window.location.href
+                    : `https://www.play-funtime.com${router.asPath}`
+                }
                 supabaseClient={supabase}
                 appearance={{theme: authTheme}}
                 view="sign_up"

@@ -11,7 +11,7 @@ import {
   MenuItem,
   MenuList,
 } from '@chakra-ui/react';
-import {HomeQuery, MemberRole} from '@src/generated/graphql';
+import {HomeQuery, LeagueStatus, MemberRole} from '@src/generated/graphql';
 import moment from 'moment';
 import Link from 'next/link';
 
@@ -56,7 +56,7 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
           <MenuList>
             {member.role === MemberRole.Admin && <MenuItem>Manage League (admin only)</MenuItem>}
             <MenuItem>Standings</MenuItem>
-            <MenuItem>Make Picks</MenuItem>
+            {member.leagues.status !== LeagueStatus.Done && <MenuItem>Make Picks</MenuItem>}
           </MenuList>
         </Menu>
       </Flex>

@@ -11,7 +11,6 @@ const LoginPage = () => {
   const supabase = useSupabaseClient();
   const authTheme = useAuthTheme();
   const router = useRouter();
-
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
@@ -23,7 +22,7 @@ const LoginPage = () => {
           </Typography.Body1>
           <Divider my="20px" />
           <Auth
-            redirectTo={router.asPath}
+            redirectTo={window.location.href}
             supabaseClient={supabase}
             appearance={{theme: authTheme}}
             view={env === 'development' ? 'sign_in' : 'magic_link'}
@@ -35,7 +34,7 @@ const LoginPage = () => {
             <>
               <Typography.H3>Dev Only -- Signup</Typography.H3>
               <Auth
-                redirectTo={router.asPath}
+                redirectTo={window.location.href}
                 supabaseClient={supabase}
                 appearance={{theme: authTheme}}
                 view="sign_up"

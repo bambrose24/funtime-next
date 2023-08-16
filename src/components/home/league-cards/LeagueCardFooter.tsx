@@ -61,7 +61,7 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
             {member.leagues.status !== LeagueStatus.Done && (
               <MenuItem
                 onClick={() => {
-                  router.push(`/pick/${member.leagues.league_id}`);
+                  router.push(`/league/${member.leagues.league_id}/pick`);
                 }}
               >
                 Make Picks

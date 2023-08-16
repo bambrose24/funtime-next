@@ -1,5 +1,5 @@
-query PicksByWeek($league_id: Int!, $week: Int, $override: Boolean) {
-  picksByWeek(league_id: $league_id, week: $week, override: $override) {
+query PicksByWeek($league_id: Int!, $week: Int) {
+  picksByWeek(league_id: $league_id, week: $week) {
     week
     season
     canView

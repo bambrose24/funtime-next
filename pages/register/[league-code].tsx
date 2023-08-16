@@ -11,7 +11,7 @@ import {GetServerSideProps} from 'next';
 import {useRouter} from 'next/router';
 
 type Props = {
-  league: LeagueRegistrationQuery;
+  league: LeagueRegistrationQuery | undefined;
 };
 
 export default function LeagueRegister({league}: Props) {
@@ -31,7 +31,7 @@ export default function LeagueRegister({league}: Props) {
     <FuntimePage
       meta={{
         title: `${
-          league.league?.name
+          league?.league?.name
             ? `Register for ${league.league.name} on Funtime`
             : `Register for a league on Funtime`
         }`,
@@ -53,7 +53,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({params}) =>
       notFound: true,
     };
   }
-  console.log('leagueCode in getServerSideProps', leagueCode);
   const client = getApolloClient();
   const {data: league} = await client.query<
     LeagueRegistrationQuery,
@@ -64,7 +63,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({params}) =>
       leagueCode,
     },
   });
-  console.log('result from LeagueRegistrationQuery', league);
 
   return {
     props: {league},

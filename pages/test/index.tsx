@@ -1,6 +1,6 @@
 import {Box, Button, Fade, Flex, Slide, SlideFade, useDisclosure} from '@chakra-ui/react';
 import {motion} from 'framer-motion';
-import FuntimePage from '@src/FuntimePage';
+import {FuntimePage} from '@src/FuntimePage';
 import {useState} from 'react';
 
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'];

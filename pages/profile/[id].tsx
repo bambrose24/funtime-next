@@ -1,4 +1,4 @@
-import FuntimePage from '../../src/FuntimePage';
+import {FuntimePage} from '../../src/FuntimePage';
 import {useRouter} from 'next/router';
 import React from 'react';
 import {Typography} from '../../src/components/Typography';

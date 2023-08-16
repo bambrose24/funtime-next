@@ -1,4 +1,4 @@
-import FuntimePage from '@src/FuntimePage';
+import {FuntimePage} from '@src/FuntimePage';
 import {PicksContent} from '@src/components/pick/PicksContent';
 import {gql} from '@apollo/client';
 import {useRouter} from 'next/router';

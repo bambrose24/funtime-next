@@ -1,5 +1,5 @@
 import {Flex} from '@chakra-ui/react';
-import FuntimePage from '@src/FuntimePage';
+import {FuntimePage} from '@src/FuntimePage';
 import {CreateLeagueForm} from './form/CreateLeagueForm';
 
 export const CreateLeaguePage = () => {

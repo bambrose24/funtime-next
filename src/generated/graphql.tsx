@@ -4483,7 +4483,6 @@ export type QueryPicksArgs = {
 
 export type QueryPicksByWeekArgs = {
   league_id: Scalars['Int'];
-  override?: InputMaybe<Scalars['Boolean']>;
   week?: InputMaybe<Scalars['Int']>;
 };
 
@@ -6728,11 +6727,6 @@ export type UnfinishedLeaguesQueryVariables = Exact<{
 
 export type UnfinishedLeaguesQuery = { __typename?: 'Query', leagues: Array<{ __typename?: 'League', id: string, league_id: number, season: number, status: LeagueStatus }> };
 
-export type AllLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AllLeaguesQuery = { __typename?: 'Query', leagues: Array<{ __typename?: 'League', id: string, league_id: number }> };
-
 export type CreateLeagueMutationVariables = Exact<{
   data: CreateLeagueInput;
 }>;
@@ -6914,41 +6908,6 @@ export function useUnfinishedLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type UnfinishedLeaguesQueryHookResult = ReturnType<typeof useUnfinishedLeaguesQuery>;
 export type UnfinishedLeaguesLazyQueryHookResult = ReturnType<typeof useUnfinishedLeaguesLazyQuery>;
 export type UnfinishedLeaguesQueryResult = Apollo.QueryResult<UnfinishedLeaguesQuery, UnfinishedLeaguesQueryVariables>;
-export const AllLeaguesDocument = gql`
-    query AllLeagues {
-  leagues {
-    id
-    league_id
-  }
-}
-    `;
-
-/**
- * __useAllLeaguesQuery__
- *
- * To run a query within a React component, call `useAllLeaguesQuery` and pass it any options that fit your needs.
- * When your component renders, `useAllLeaguesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAllLeaguesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAllLeaguesQuery(baseOptions?: Apollo.QueryHookOptions<AllLeaguesQuery, AllLeaguesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<AllLeaguesQuery, AllLeaguesQueryVariables>(AllLeaguesDocument, options);
-      }
-export function useAllLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AllLeaguesQuery, AllLeaguesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<AllLeaguesQuery, AllLeaguesQueryVariables>(AllLeaguesDocument, options);
-        }
-export type AllLeaguesQueryHookResult = ReturnType<typeof useAllLeaguesQuery>;
-export type AllLeaguesLazyQueryHookResult = ReturnType<typeof useAllLeaguesLazyQuery>;
-export type AllLeaguesQueryResult = Apollo.QueryResult<AllLeaguesQuery, AllLeaguesQueryVariables>;
 export const CreateLeagueDocument = gql`
     mutation CreateLeague($data: CreateLeagueInput!) {
   createLeague(data: $data) {

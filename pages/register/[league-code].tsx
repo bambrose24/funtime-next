@@ -53,6 +53,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({params}) =>
       notFound: true,
     };
   }
+  console.log('leagueCode in getServerSideProps', leagueCode);
   const client = getApolloClient();
   const {data: league} = await client.query<
     LeagueRegistrationQuery,
@@ -63,6 +64,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({params}) =>
       leagueCode,
     },
   });
+  console.log('result from LeagueRegistrationQuery', league);
 
   return {
     props: {league},

@@ -58,6 +58,15 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
           <MenuList>
             {member.role === MemberRole.Admin && <MenuItem>Manage League (admin only)</MenuItem>}
             <MenuItem>Standings</MenuItem>
+            {member.leagues.status !== LeagueStatus.NotStarted && (
+              <MenuItem
+                onClick={() => {
+                  router.push(`/league/${member.leagues.league_id}/week`);
+                }}
+              >
+                Weekly Picks
+              </MenuItem>
+            )}
             {member.leagues.status !== LeagueStatus.Done && (
               <MenuItem
                 onClick={() => {

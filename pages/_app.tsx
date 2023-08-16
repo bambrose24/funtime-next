@@ -33,7 +33,6 @@ function MyApp({Component, pageProps}: AppProps<{initialSession: Session}>) {
   return (
     <SessionContextProvider supabaseClient={supabase} initialSession={pageProps?.initialSession}>
       <Providers>
-        <MetaTags />
         <Component {...pageProps} />
       </Providers>
     </SessionContextProvider>

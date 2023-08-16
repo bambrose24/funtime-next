@@ -17,6 +17,7 @@ type Props = {
 export default function LeagueRegister({league}: Props) {
   const router = useRouter();
   const leagueCode = router.query['league-code'];
+  console.log('league???', league);
 
   if (!(typeof leagueCode === 'string')) {
     return (

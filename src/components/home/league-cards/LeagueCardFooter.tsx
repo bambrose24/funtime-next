@@ -47,17 +47,20 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
           <AlertDescription>{alertDescription}</AlertDescription>
         </Alert>
       )}
-      <Flex w="100%" justify="space-between">
-        <Link href={`/season/${member.leagues.league_id}`}>
-          <Button variant="outline">Standings</Button>
-        </Link>
+      <Flex w="100%" justify="end">
         <Menu>
           <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
             League
           </MenuButton>
           <MenuList>
             {member.role === MemberRole.Admin && <MenuItem>Manage League (admin only)</MenuItem>}
-            <MenuItem>Standings</MenuItem>
+            <MenuItem
+              onClick={() => {
+                router.push(`/league/${member.leagues.league_id}/standings`);
+              }}
+            >
+              Standings
+            </MenuItem>
             {member.leagues.status !== LeagueStatus.NotStarted && (
               <MenuItem
                 onClick={() => {

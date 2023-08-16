@@ -17,8 +17,9 @@ import {
   usePicksByWeekQuery,
   useWinnersQuery,
 } from '@src/generated/graphql';
-import {env, LEAGUE_ID} from '@src/util/config';
+import {env} from '@src/util/config';
 import _ from 'lodash';
+import {useRouter} from 'next/router';
 import {useEffect, useState} from 'react';
 import UserTag from '../profile/UserTag';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
@@ -26,26 +27,32 @@ import {Typography} from '../Typography';
 import {WeekPicksGameCards} from './WeekPicksGameCards';
 import {WeekPicksTable} from './WeekPicksTable';
 
-const fetchedWeeks = new Set<number>();
+type WeekContentProps = {
+  leagueId: number;
+};
 
-export const WeekContent: React.FC = () => {
+export function WeekContent({leagueId}: WeekContentProps) {
   const [simulatedPicks, setSimulatedPicks] = useState<Record<number, number>>({});
+  const router = useRouter();
 
-  const [weekState, setWeekState] = useState<number | undefined>(undefined);
+  const [weekState, setWeekState] = useState<number | undefined>(
+    Number(router.query.week) || undefined
+  );
 
   const {data: defaultPicksByWeekData, loading: defaultPicksLoading} = usePicksByWeekQuery({
-    variables: {league_id: LEAGUE_ID},
+    variables: {league_id: leagueId},
   });
 
   const {data: winners, loading: winnersLoading} = useWinnersQuery({
-    variables: {league_id: LEAGUE_ID},
+    variables: {league_id: leagueId},
   });
 
   const {data: picksData, loading: picksLoading} = usePicksByWeekQuery({
     variables: {
-      league_id: LEAGUE_ID,
+      league_id: leagueId,
       // this is where you'd set the "week" from a dropdown
       ...(weekState ? {week: weekState} : {}),
+      // TODO just have this be derived api-side from the user's Role in the league
       ...(env === 'production' ? {override: true} : {}),
     },
     skip: weekState === undefined,
@@ -71,7 +78,7 @@ export const WeekContent: React.FC = () => {
 
   const {data: people, loading: peopleLoading} = useFindLeagueMembersQuery({
     variables: {
-      league_id: LEAGUE_ID,
+      league_id: leagueId,
     },
   });
 
@@ -92,6 +99,7 @@ export const WeekContent: React.FC = () => {
   }
 
   const picks = picksData || defaultPicksByWeekData;
+  console.log({picks});
 
   const pickTeam = (t: number) => {
     const g = picks.picksByWeek.games.find(g => g.home === t || g.away === t);
@@ -110,18 +118,17 @@ export const WeekContent: React.FC = () => {
 
   const {week: weekResponse, season} = picks.picksByWeek;
 
-  if (!picks.picksByWeek.canView) {
+  const week = weekResponse || weekState;
+
+  if (!picks.picksByWeek.canView || !week) {
     return (
       <Flex justify="center" w="100%">
         <Typography.H1 mt={2} mb={4}>
-          Picks are not yet available for Week {weekState}, {season} because the week has not
-          started yet.
+          Picks are not yet available for this week.
         </Typography.H1>
       </Flex>
     );
   }
-
-  const week = weekResponse || weekState;
 
   const currentWinners = winners.findManyWeekWinners.filter(winners => winners.week === week);
   const areMultipleWinners = currentWinners && currentWinners.length > 1;
@@ -163,7 +170,7 @@ export const WeekContent: React.FC = () => {
           simulatedPicks={simulatedPicks}
         />
       </div>
-      {currentWinners?.length &&
+      {currentWinners?.length !== undefined &&
         currentWinners.length > 0 &&
         Object.keys(simulatedPicks).length === 0 && (
           <Box px={{base: '2px', lg: '24px'}} py="16px">
@@ -198,6 +205,6 @@ export const WeekContent: React.FC = () => {
       />
     </Box>
   );
-};
+}
 
 export default WeekContent;

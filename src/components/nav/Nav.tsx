@@ -78,7 +78,9 @@ export const DesktopNav: React.FC = () => {
   );
 };
 
-const DesktopNavDrawer: React.FC<{isOpen: boolean; onClose: () => void}> = ({isOpen, onClose}) => {
+type DesktopNavDrawerProps = {isOpen: boolean; onClose: () => void};
+
+function DesktopNavDrawer({isOpen, onClose}: DesktopNavDrawerProps) {
   const selectedNavOption = useSelectedNavOption();
   return (
     <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
@@ -124,6 +126,7 @@ const DesktopNavDrawer: React.FC<{isOpen: boolean; onClose: () => void}> = ({isO
                 >
                   <HStack>
                     <Image
+                      alt={`Nav option - ${name}`}
                       cursor="pointer"
                       src={
                         '/nav_icons/' + name + (selected ? '_icon_white.png' : '_icon_black.png')
@@ -164,8 +167,8 @@ const DesktopNavDrawer: React.FC<{isOpen: boolean; onClose: () => void}> = ({isO
       </DrawerContent>
     </Drawer>
   );
-};
+}
 
-export const Nav: React.FC = () => {
+export function Nav() {
   return <DesktopNav />;
-};
+}

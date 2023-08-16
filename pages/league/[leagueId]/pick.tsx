@@ -1,10 +1,6 @@
 import FuntimePage from '@src/FuntimePage';
 import {PicksContent} from '@src/components/pick/PicksContent';
-import {GetStaticPaths, GetStaticProps} from 'next';
-import {getApolloClient} from '@src/graphql';
 import {gql} from '@apollo/client';
-import {UnfinishedLeaguesQuery, UnfinishedLeaguesQueryVariables} from '@src/generated/graphql';
-import {SEASON} from '@src/util/config';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {FuntimeLoading} from '@src/components/shared/FuntimeLoading';
@@ -20,7 +16,7 @@ const UnfinishedLeagues = gql`
   }
 `;
 
-function PickPage() {
+export default function PickPage() {
   const router = useRouter();
   const leagueId = router.query['leagueId'];
   console.log('router.query', router.query);
@@ -47,5 +43,3 @@ function PickPage() {
     </FuntimePage>
   );
 }
-
-export default PickPage;

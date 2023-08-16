@@ -6728,11 +6728,6 @@ export type UnfinishedLeaguesQueryVariables = Exact<{
 
 export type UnfinishedLeaguesQuery = { __typename?: 'Query', leagues: Array<{ __typename?: 'League', id: string, league_id: number, season: number, status: LeagueStatus }> };
 
-export type UserLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type UserLeaguesQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leagues: Array<{ __typename?: 'League', id: string, league_id: number }> } | null };
-
 export type AllLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6829,7 +6824,6 @@ export type PeopleWithLeaguesQuery = { __typename?: 'Query', leagueMembers: Arra
 export type PicksByWeekQueryVariables = Exact<{
   league_id: Scalars['Int'];
   week?: InputMaybe<Scalars['Int']>;
-  override?: InputMaybe<Scalars['Boolean']>;
 }>;
 
 
@@ -6920,44 +6914,6 @@ export function useUnfinishedLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHook
 export type UnfinishedLeaguesQueryHookResult = ReturnType<typeof useUnfinishedLeaguesQuery>;
 export type UnfinishedLeaguesLazyQueryHookResult = ReturnType<typeof useUnfinishedLeaguesLazyQuery>;
 export type UnfinishedLeaguesQueryResult = Apollo.QueryResult<UnfinishedLeaguesQuery, UnfinishedLeaguesQueryVariables>;
-export const UserLeaguesDocument = gql`
-    query UserLeagues {
-  me {
-    id
-    leagues(orderBy: {season: desc}) {
-      id
-      league_id
-    }
-  }
-}
-    `;
-
-/**
- * __useUserLeaguesQuery__
- *
- * To run a query within a React component, call `useUserLeaguesQuery` and pass it any options that fit your needs.
- * When your component renders, `useUserLeaguesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useUserLeaguesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useUserLeaguesQuery(baseOptions?: Apollo.QueryHookOptions<UserLeaguesQuery, UserLeaguesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<UserLeaguesQuery, UserLeaguesQueryVariables>(UserLeaguesDocument, options);
-      }
-export function useUserLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<UserLeaguesQuery, UserLeaguesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<UserLeaguesQuery, UserLeaguesQueryVariables>(UserLeaguesDocument, options);
-        }
-export type UserLeaguesQueryHookResult = ReturnType<typeof useUserLeaguesQuery>;
-export type UserLeaguesLazyQueryHookResult = ReturnType<typeof useUserLeaguesLazyQuery>;
-export type UserLeaguesQueryResult = Apollo.QueryResult<UserLeaguesQuery, UserLeaguesQueryVariables>;
 export const AllLeaguesDocument = gql`
     query AllLeagues {
   leagues {
@@ -7634,8 +7590,8 @@ export type PeopleWithLeaguesQueryHookResult = ReturnType<typeof usePeopleWithLe
 export type PeopleWithLeaguesLazyQueryHookResult = ReturnType<typeof usePeopleWithLeaguesLazyQuery>;
 export type PeopleWithLeaguesQueryResult = Apollo.QueryResult<PeopleWithLeaguesQuery, PeopleWithLeaguesQueryVariables>;
 export const PicksByWeekDocument = gql`
-    query PicksByWeek($league_id: Int!, $week: Int, $override: Boolean) {
-  picksByWeek(league_id: $league_id, week: $week, override: $override) {
+    query PicksByWeek($league_id: Int!, $week: Int) {
+  picksByWeek(league_id: $league_id, week: $week) {
     week
     season
     canView
@@ -7694,7 +7650,6 @@ export const PicksByWeekDocument = gql`
  *   variables: {
  *      league_id: // value for 'league_id'
  *      week: // value for 'week'
- *      override: // value for 'override'
  *   },
  * });
  */

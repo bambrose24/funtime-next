@@ -46,6 +46,7 @@ function FuntimePage({children, requiresAuth, meta}: Props) {
     <>
       <Head>
         <title>{meta?.title || META_DEFAULTS.title}</title>
+        <link rel="icon" href="/favicon.ico" />
         <meta name="description" content={meta?.description || META_DEFAULTS.description} />
       </Head>
       <Box bgColor="gray.100" w="100%" minH="100vh">

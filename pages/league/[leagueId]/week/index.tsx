@@ -1,4 +1,4 @@
-import FuntimePage from '@src/FuntimePage';
+import {FuntimePage} from '@src/FuntimePage';
 import WeekContent from '@src/components/week/WeekContent';
 import {GetStaticProps} from 'next';
 import {useRouter} from 'next/router';

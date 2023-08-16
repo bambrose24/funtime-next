@@ -1,5 +1,6 @@
 import {Box} from '@chakra-ui/react';
 import {useSession, useSessionContext} from '@supabase/auth-helpers-react';
+import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {ReactNode} from 'react';
@@ -7,11 +8,21 @@ import {Nav} from './components/nav/Nav';
 import {FuntimeLoading} from './components/shared/FuntimeLoading';
 import {useFullHeightWithoutNav} from './hooks/useFullHeightWithoutNav';
 
-type Props = {children: ReactNode; requiresAuth?: boolean};
+type Props = {children: ReactNode; requiresAuth?: boolean, meta?: Meta};
 
-const FuntimePage: React.FC<Props> = ({children, requiresAuth}) => {
+type Meta = {
+  title?: string;
+  description?: string;
+}
+
+const META_DEFAULTS = {
+  title: 'Funtime',
+  description: "An NFL Pick 'em pool",
+} satisfies Meta;
+
+function FuntimePage({children, requiresAuth, meta}: Props) {
   const router = useRouter();
-  const {error: authError, isLoading: authIsLoading, session} = useSessionContext();
+  const {isLoading: authIsLoading, session} = useSessionContext();
   const isAuthenticated = Boolean(session);
   const needsToLogIn = requiresAuth && !isAuthenticated;
   useEffect(() => {
@@ -32,13 +43,19 @@ const FuntimePage: React.FC<Props> = ({children, requiresAuth}) => {
   }
 
   return (
-    <Box bgColor="gray.100" w="100%" minH="100vh">
-      <Nav />
-      <Box minHeight={bodyHeight} py={4} w="100%" px="8px">
-        {children}
+    <>
+      <Head>
+        <title>{meta?.title || META_DEFAULTS.title}</title>
+        <meta name="description" content={meta?.description || META_DEFAULTS.description} />
+      </Head>
+      <Box bgColor="gray.100" w="100%" minH="100vh">
+        <Nav />
+        <Box minHeight={bodyHeight} py={4} w="100%" px="8px">
+          {children}
+        </Box>
       </Box>
-    </Box>
+    </>
   );
-};
+}
 
-export default FuntimePage;
+export {FuntimePage};

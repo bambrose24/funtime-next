@@ -53,18 +53,18 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({params}) =>
       notFound: true,
     };
   }
-  const client = getApolloClient();
-  const {data: league} = await client.query<
-    LeagueRegistrationQuery,
-    LeagueRegistrationQueryVariables
-  >({
-    query: LeagueRegistrationDocument,
-    variables: {
-      leagueCode,
-    },
-  });
+  // const client = getApolloClient();
+  // const {data: league} = await client.query<
+  //   LeagueRegistrationQuery,
+  //   LeagueRegistrationQueryVariables
+  // >({
+  //   query: LeagueRegistrationDocument,
+  //   variables: {
+  //     leagueCode,
+  //   },
+  // });
 
   return {
-    props: {league},
+    props: {league: undefined},
   };
 };

@@ -1,7 +1,6 @@
 import {ChakraProvider, ColorModeScript} from '@chakra-ui/react';
 import type {AppProps} from 'next/app';
 import {ReactNode} from 'react';
-import MetaTags from '@src/meta/MetaTags';
 
 import theme from '@src/util/theme';
 import {Session} from '@supabase/auth-helpers-nextjs';

@@ -92,12 +92,16 @@ export function Standings({leagueId}: {leagueId: number}) {
               <React.Fragment key={uid}>
                 <Tr transition={'all .3s ease'} _hover={{bgColor: 'gray.50'}}>
                   <Td pl={6} pr={0} py={0}>
-                    <Stat>{rank}</Stat>
+                    <Stat>
+                      <Typography.Body2>{rank}</Typography.Body2>
+                    </Stat>
                   </Td>
                   <Td pr={2} pl={4} py={2}>
                     <UserTag user_id={uid} username={username} />
                   </Td>
-                  <Td>{num_correct}</Td>
+                  <Td>
+                    <Typography.Body2>{num_correct}</Typography.Body2>
+                  </Td>
                 </Tr>
               </React.Fragment>
             ))}

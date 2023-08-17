@@ -5,6 +5,7 @@ query League($leagueId: Int!) {
     league_id
     pick_policy
     late_policy
+    superbowl_competition
     viewer {
       id
       membership_id

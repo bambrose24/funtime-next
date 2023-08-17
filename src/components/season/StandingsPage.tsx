@@ -1,11 +1,12 @@
 import {gql} from '@apollo/client';
 import {Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
-import {useLeagueNameQuery, useMyLeaguesQuery} from '@src/generated/graphql';
+import {useLeagueNameQuery, useLeagueQuery, useMyLeaguesQuery} from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
 import {FuntimeError} from '../shared/FuntimeError';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';
 import {Standings} from './Standings';
+import {SuperbowlPicks} from './SuperbowlPicks';
 import {WeeklyWinners} from './WeeklyWinners';
 
 export type StandingsPageProps = {
@@ -30,29 +31,16 @@ const MyLeaguesQuery = gql`
 
 export function StandingsPage({leagueId}: Partial<StandingsPageProps>) {
   const user = useUser();
-  if (!user) {
-    return <FuntimeError />;
-  }
-
-  if (!leagueId) {
+  if (!user || !leagueId) {
     return <FuntimeError />;
   }
 
   return <StandingsPageImpl leagueId={leagueId} />;
 }
 
-const LeagueNameQueryDoc = gql`
-  query LeagueName($leagueId: Int!) {
-    league(where: {league_id: $leagueId}) {
-      id
-      name
-    }
-  }
-`;
-
 function StandingsPageImpl({leagueId}: StandingsPageProps) {
   const user = useUser();
-  const {data, loading, error} = useLeagueNameQuery({variables: {leagueId}});
+  const {data, loading, error} = useLeagueQuery({variables: {leagueId}});
   if (!user || !leagueId || error) {
     return <FuntimeError />;
   }
@@ -71,6 +59,7 @@ function StandingsPageImpl({leagueId}: StandingsPageProps) {
           <TabList>
             <Tab>Season</Tab>
             <Tab>Weekly Winners</Tab>
+            {league.superbowl_competition ? <Tab>Super Bowl Picks</Tab> : null}
           </TabList>
           <TabPanels>
             <TabPanel>
@@ -79,6 +68,11 @@ function StandingsPageImpl({leagueId}: StandingsPageProps) {
             <TabPanel>
               <WeeklyWinners leagueId={leagueId} />
             </TabPanel>
+            {league.superbowl_competition ? (
+              <TabPanel>
+                <SuperbowlPicks leagueId={leagueId} />
+              </TabPanel>
+            ) : null}
           </TabPanels>
         </Tabs>
       </Box>

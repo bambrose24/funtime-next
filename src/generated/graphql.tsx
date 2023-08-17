@@ -6751,13 +6751,6 @@ export type MyLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type MyLeaguesQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, leagues: { __typename?: 'League', id: string, league_id: number, name: string } }> } | null };
 
-export type LeagueNameQueryVariables = Exact<{
-  leagueId: Scalars['Int'];
-}>;
-
-
-export type LeagueNameQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, name: string } | null };
-
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
@@ -6793,7 +6786,7 @@ export type LeagueQueryVariables = Exact<{
 }>;
 
 
-export type LeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, name: string, league_id: number, pick_policy?: PickPolicy | null, late_policy?: LatePolicy | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, uid: number, username: string } } | null } | null };
+export type LeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, name: string, league_id: number, pick_policy?: PickPolicy | null, late_policy?: LatePolicy | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, uid: number, username: string } } | null } | null };
 
 export type FindLeagueMembersQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -6841,12 +6834,14 @@ export type RegisterMutationVariables = Exact<{
 
 export type RegisterMutation = { __typename?: 'Mutation', register: { __typename?: 'RegisterResponse', success: boolean, user: { __typename?: 'User', id: string, username: string, uid: number }, membership: { __typename?: 'LeagueMember', id: string, league_id: number, leagues: { __typename?: 'League', id: string, name: string } } } };
 
+export type SuperbowlTeamFragment = { __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, loc: string, name: string, teamid: number };
+
 export type SuperbowlPicksQueryVariables = Exact<{
-  league_id: Scalars['Int'];
+  leagueId: Scalars['Int'];
 }>;
 
 
-export type SuperbowlPicksQuery = { __typename?: 'Query', superbowls: Array<{ __typename?: 'Superbowl', id: string, uid: number, score: number, leaguemembers?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, username: string } } | null, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, abbrev?: string | null, teamid: number }, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, abbrev?: string | null, teamid: number } }> };
+export type SuperbowlPicksQuery = { __typename?: 'Query', superbowls: Array<{ __typename?: 'Superbowl', id: string, score: number, season?: number | null, leaguemembers?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, uid: number, username: string } } | null, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, loc: string, name: string, teamid: number }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, loc: string, name: string, teamid: number } }> };
 
 export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -6869,7 +6864,16 @@ export type WinnersQueryVariables = Exact<{
 
 export type WinnersQuery = { __typename?: 'Query', findManyWeekWinners: Array<{ __typename?: 'WeekWinners', id: number, week: number, correct_count: number, member: { __typename?: 'LeagueMember', id: string, people: { __typename?: 'User', id: string, uid: number, username: string } } }> };
 
-
+export const SuperbowlTeamFragmentDoc = gql`
+    fragment SuperbowlTeam on Team {
+  id
+  abbrev
+  conference
+  loc
+  name
+  teamid
+}
+    `;
 export const UnfinishedLeaguesDocument = gql`
     query UnfinishedLeagues($currentSeason: Int!) {
   leagues(where: {season: {gte: $currentSeason}}) {
@@ -7132,42 +7136,6 @@ export function useMyLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type MyLeaguesQueryHookResult = ReturnType<typeof useMyLeaguesQuery>;
 export type MyLeaguesLazyQueryHookResult = ReturnType<typeof useMyLeaguesLazyQuery>;
 export type MyLeaguesQueryResult = Apollo.QueryResult<MyLeaguesQuery, MyLeaguesQueryVariables>;
-export const LeagueNameDocument = gql`
-    query LeagueName($leagueId: Int!) {
-  league(where: {league_id: $leagueId}) {
-    id
-    name
-  }
-}
-    `;
-
-/**
- * __useLeagueNameQuery__
- *
- * To run a query within a React component, call `useLeagueNameQuery` and pass it any options that fit your needs.
- * When your component renders, `useLeagueNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLeagueNameQuery({
- *   variables: {
- *      leagueId: // value for 'leagueId'
- *   },
- * });
- */
-export function useLeagueNameQuery(baseOptions: Apollo.QueryHookOptions<LeagueNameQuery, LeagueNameQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LeagueNameQuery, LeagueNameQueryVariables>(LeagueNameDocument, options);
-      }
-export function useLeagueNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeagueNameQuery, LeagueNameQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LeagueNameQuery, LeagueNameQueryVariables>(LeagueNameDocument, options);
-        }
-export type LeagueNameQueryHookResult = ReturnType<typeof useLeagueNameQuery>;
-export type LeagueNameLazyQueryHookResult = ReturnType<typeof useLeagueNameLazyQuery>;
-export type LeagueNameQueryResult = Apollo.QueryResult<LeagueNameQuery, LeagueNameQueryVariables>;
 export const SeasonCorrectPicksDocument = gql`
     query SeasonCorrectPicks($league_id: Int!) {
   leagueMembers(where: {league_id: {equals: $league_id}}) {
@@ -7380,6 +7348,7 @@ export const LeagueDocument = gql`
     league_id
     pick_policy
     late_policy
+    superbowl_competition
     viewer {
       id
       membership_id
@@ -7733,32 +7702,29 @@ export type RegisterMutationHookResult = ReturnType<typeof useRegisterMutation>;
 export type RegisterMutationResult = Apollo.MutationResult<RegisterMutation>;
 export type RegisterMutationOptions = Apollo.BaseMutationOptions<RegisterMutation, RegisterMutationVariables>;
 export const SuperbowlPicksDocument = gql`
-    query SuperbowlPicks($league_id: Int!) {
-  superbowls(where: {leaguemembers: {is: {league_id: {equals: $league_id}}}}) {
+    query SuperbowlPicks($leagueId: Int!) {
+  superbowls(where: {leaguemembers: {is: {league_id: {equals: $leagueId}}}}) {
     id
-    uid
+    score
+    season
     leaguemembers {
       id
       membership_id
       people {
         id
+        uid
         username
       }
     }
-    score
-    teams_superbowl_winnerToteams {
-      id
-      abbrev
-      teamid
-    }
     teams_superbowl_loserToteams {
-      id
-      abbrev
-      teamid
+      ...SuperbowlTeam
+    }
+    teams_superbowl_winnerToteams {
+      ...SuperbowlTeam
     }
   }
 }
-    `;
+    ${SuperbowlTeamFragmentDoc}`;
 
 /**
  * __useSuperbowlPicksQuery__
@@ -7772,7 +7738,7 @@ export const SuperbowlPicksDocument = gql`
  * @example
  * const { data, loading, error } = useSuperbowlPicksQuery({
  *   variables: {
- *      league_id: // value for 'league_id'
+ *      leagueId: // value for 'leagueId'
  *   },
  * });
  */

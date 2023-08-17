@@ -28,16 +28,10 @@ const MyLeaguesQuery = gql`
   }
 `;
 
-export function StandingsPage({leagueId: leagueIdProp}: Partial<StandingsPageProps>) {
+export function StandingsPage({leagueId}: Partial<StandingsPageProps>) {
   const user = useUser();
-  const {data} = useMyLeaguesQuery();
   if (!user) {
     return <FuntimeError />;
-  }
-
-  let leagueId = leagueIdProp;
-  if (!leagueId) {
-    leagueId = data?.me?.leaguemembers?.find(lm => lm.leagues.league_id)?.leagues.league_id;
   }
 
   if (!leagueId) {

@@ -49,7 +49,7 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
       )}
       <Flex w="100%" justify="end">
         <Menu>
-          <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+          <MenuButton as={Button} variant="outline" rightIcon={<ChevronDownIcon />}>
             League
           </MenuButton>
           <MenuList>

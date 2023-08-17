@@ -50,18 +50,17 @@ function sortedRanks(
   leagueMembers: FindLeagueMembersQuery,
   correctPicksData: SeasonCorrectPicksQuery
 ): Array<RankingEntry> {
-  // membership_id to member
   const memberIdToMember = _.keyBy(leagueMembers.leagueMembers, m => m.membership_id);
 
-  const sortedResult = _(correctPicksData.groupByPick)
-    .sortBy(x => memberIdToMember[x.member_id!].people.username)
-    .sortBy(x => -1 * x._count!.correct)
+  const sortedResult = _(correctPicksData.leagueMembers)
+    .sortBy(x => x.people.username)
+    .sortBy(x => -1 * x.aggregatePick.count)
     .value();
 
   let rankingTracker = 1;
   let prev = 0;
   return sortedResult.map((current, i) => {
-    const correct = current._count!.correct;
+    const correct = current.aggregatePick.count ?? 0;
     if (i === 0) {
       prev = correct;
     } else if (correct !== prev) {
@@ -70,7 +69,7 @@ function sortedRanks(
     }
     prev = correct;
     return {
-      member: memberIdToMember[current.member_id!],
+      member: memberIdToMember[current.membership_id],
       num_correct: correct,
       rank: rankingTracker,
     };

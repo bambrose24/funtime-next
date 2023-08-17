@@ -6763,7 +6763,7 @@ export type SeasonCorrectPicksQueryVariables = Exact<{
 }>;
 
 
-export type SeasonCorrectPicksQuery = { __typename?: 'Query', groupByPick: Array<{ __typename?: 'PickGroupBy', member_id?: number | null, _count?: { __typename?: 'PickCountAggregate', correct: number } | null }> };
+export type SeasonCorrectPicksQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', membership_id: number, people: { __typename?: 'User', username: string }, aggregatePick: { __typename?: 'AggregateResponse', count: number } }> };
 
 export type GamesByLeagueQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -7170,13 +7170,13 @@ export type LeagueNameLazyQueryHookResult = ReturnType<typeof useLeagueNameLazyQ
 export type LeagueNameQueryResult = Apollo.QueryResult<LeagueNameQuery, LeagueNameQueryVariables>;
 export const SeasonCorrectPicksDocument = gql`
     query SeasonCorrectPicks($league_id: Int!) {
-  groupByPick(
-    by: [member_id]
-    where: {correct: {equals: 1}, leaguemembers: {is: {league_id: {equals: $league_id}}}}
-  ) {
-    member_id
-    _count {
-      correct
+  leagueMembers(where: {league_id: {equals: $league_id}}) {
+    membership_id
+    people {
+      username
+    }
+    aggregatePick(where: {correct: {equals: 1}}) {
+      count
     }
   }
 }

@@ -77,7 +77,9 @@ export function WeeklyWinners({leagueId}: {leagueId: number}) {
                       ))}
                     </HStack>
                   </Td>
-                  <Td>{correct_count}</Td>
+                  <Td>
+                    <Typography.Body2>{correct_count}</Typography.Body2>
+                  </Td>
                 </Tr>
               );
             })}

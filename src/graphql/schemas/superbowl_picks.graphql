@@ -1,25 +1,31 @@
-query SuperbowlPicks($league_id: Int!) {
-  superbowls(where: {leaguemembers: {is: {league_id: {equals: $league_id}}}}) {
+fragment SuperbowlTeam on Team {
+  id
+  abbrev
+  conference
+  loc
+  name
+  teamid
+}
+
+query SuperbowlPicks($leagueId: Int!) {
+  superbowls(where: {leaguemembers: {is: {league_id: {equals: $leagueId}}}}) {
     id
-    uid
+    score
+    season
     leaguemembers {
       id
       membership_id
       people {
         id
+        uid
         username
       }
     }
-    score
-    teams_superbowl_winnerToteams {
-      id
-      abbrev
-      teamid
-    }
     teams_superbowl_loserToteams {
-      id
-      abbrev
-      teamid
+      ...SuperbowlTeam
+    }
+    teams_superbowl_winnerToteams {
+      ...SuperbowlTeam
     }
   }
 }

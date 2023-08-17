@@ -1,6 +1,6 @@
 import {gql} from '@apollo/client';
 import {Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
-import {useLeagueNameQuery, useLeagueQuery, useMyLeaguesQuery} from '@src/generated/graphql';
+import {useLeagueQuery} from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
 import {FuntimeError} from '../shared/FuntimeError';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
@@ -12,22 +12,6 @@ import {WeeklyWinners} from './WeeklyWinners';
 export type StandingsPageProps = {
   leagueId: number;
 };
-
-const MyLeaguesQuery = gql`
-  query MyLeagues {
-    me {
-      id
-      leaguemembers(orderBy: {leagues: {season: desc}}) {
-        id
-        leagues {
-          id
-          league_id
-          name
-        }
-      }
-    }
-  }
-`;
 
 export function StandingsPage({leagueId}: Partial<StandingsPageProps>) {
   const user = useUser();

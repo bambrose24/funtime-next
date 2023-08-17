@@ -6746,11 +6746,6 @@ export type LeagueRegistrationQueryVariables = Exact<{
 
 export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
 
-export type MyLeaguesQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type MyLeaguesQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, leagues: { __typename?: 'League', id: string, league_id: number, name: string } }> } | null };
-
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
@@ -7094,48 +7089,6 @@ export function useLeagueRegistrationLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type LeagueRegistrationQueryHookResult = ReturnType<typeof useLeagueRegistrationQuery>;
 export type LeagueRegistrationLazyQueryHookResult = ReturnType<typeof useLeagueRegistrationLazyQuery>;
 export type LeagueRegistrationQueryResult = Apollo.QueryResult<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>;
-export const MyLeaguesDocument = gql`
-    query MyLeagues {
-  me {
-    id
-    leaguemembers(orderBy: {leagues: {season: desc}}) {
-      id
-      leagues {
-        id
-        league_id
-        name
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useMyLeaguesQuery__
- *
- * To run a query within a React component, call `useMyLeaguesQuery` and pass it any options that fit your needs.
- * When your component renders, `useMyLeaguesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useMyLeaguesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useMyLeaguesQuery(baseOptions?: Apollo.QueryHookOptions<MyLeaguesQuery, MyLeaguesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<MyLeaguesQuery, MyLeaguesQueryVariables>(MyLeaguesDocument, options);
-      }
-export function useMyLeaguesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyLeaguesQuery, MyLeaguesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<MyLeaguesQuery, MyLeaguesQueryVariables>(MyLeaguesDocument, options);
-        }
-export type MyLeaguesQueryHookResult = ReturnType<typeof useMyLeaguesQuery>;
-export type MyLeaguesLazyQueryHookResult = ReturnType<typeof useMyLeaguesLazyQuery>;
-export type MyLeaguesQueryResult = Apollo.QueryResult<MyLeaguesQuery, MyLeaguesQueryVariables>;
 export const SeasonCorrectPicksDocument = gql`
     query SeasonCorrectPicks($league_id: Int!) {
   leagueMembers(where: {league_id: {equals: $league_id}}) {

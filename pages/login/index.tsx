@@ -12,10 +12,10 @@ const Login = () => {
         const redirectTo = router.query['redirectTo'];
         router.push({pathname: redirectTo as string});
       } else {
-        router.push('/pick');
+        router.push('/');
       }
     }
-  }, [router.query, session]);
+  }, [router, router.query, session]);
 
   if (!session) {
     return <LoginPage />;

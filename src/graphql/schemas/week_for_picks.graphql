@@ -1,4 +1,4 @@
-query weekForPicks($leagueId: Int!, $override: Boolean, $week: Int) {
+query WeekForPicks($leagueId: Int!, $override: Boolean, $week: Int) {
   weekForPicks(leagueId: $leagueId, override: $override, week: $week) {
     week
     season
@@ -25,6 +25,11 @@ query weekForPicks($leagueId: Int!, $override: Boolean, $week: Int) {
         teamid
         abbrev
       }
+    }
+  }
+  me {
+    picks(where: {week: {equals: $week}, leaguemembers: {is: {league_id: {equals: $leagueId}}}}) {
+      winner
     }
   }
 }

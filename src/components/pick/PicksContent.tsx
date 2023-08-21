@@ -5,6 +5,7 @@ import {useLeagueQuery, useWeekForPicksQuery} from '@src/generated/graphql';
 import {LEAGUE_ID} from '@src/util/config';
 import _ from 'lodash';
 import {useRouter} from 'next/router';
+import {useMemo} from 'react';
 import {FuntimeError} from '../shared/FuntimeError';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {FuntimeSeasonOver} from '../shared/FuntimeSeasonOver';
@@ -25,6 +26,15 @@ export function PicksContent({leagueId}: Props) {
     },
   });
   const {loading: leagueLoading, data: leagueData} = useLeagueQuery({variables: {leagueId}});
+
+  const existingWinners = useMemo(() => {
+    const s = new Set(
+      games?.me?.picks
+        ?.map(p => (typeof p.winner === 'number' ? p.winner : undefined))
+        .filter(Boolean) ?? []
+    ) as Set<number>;
+    return s;
+  }, [games]);
 
   if (gamesLoading || leagueLoading) {
     return <FuntimeLoading />;
@@ -63,7 +73,13 @@ export function PicksContent({leagueId}: Props) {
             Make Your Picks for Week {week}, {season}
           </Typography.H2>
           <Flex direction="column" w="100%" justify="center" bgColor="white" py={8} px={4}>
-            <PicksForm week={week} season={season} games={gamesSorted} leagueId={leagueId} />
+            <PicksForm
+              week={week}
+              season={season}
+              games={gamesSorted}
+              leagueId={leagueId}
+              existingWinners={existingWinners}
+            />
           </Flex>
         </Box>
       </Box>

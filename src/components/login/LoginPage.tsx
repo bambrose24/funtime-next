@@ -31,6 +31,7 @@ export function LoginPage() {
             supabaseClient={supabase}
             appearance={{theme: authTheme}}
             view="sign_in"
+            magicLink
             providers={[]}
           />
         </Box>

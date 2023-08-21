@@ -38,6 +38,7 @@ interface PicksFormProps {
   season: number;
   games: GamesByWeekQuery['games'];
   leagueId: number;
+  existingWinners: Set<number>;
 }
 
 interface GameEntry {
@@ -46,7 +47,7 @@ interface GameEntry {
   winner: number | undefined;
 }
 
-export function PicksForm({week, season, games, leagueId}: PicksFormProps) {
+export function PicksForm({week, season, games, leagueId, existingWinners}: PicksFormProps) {
   const [submitPicks, {data, error, client}] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
@@ -193,7 +194,11 @@ export function PicksForm({week, season, games, leagueId}: PicksFormProps) {
               return {
                 gameId: g.gid,
                 random: false,
-                winner: undefined,
+                winner: existingWinners.has(g.teams_games_homeToteams.teamid)
+                  ? g.teams_games_homeToteams.teamid
+                  : existingWinners.has(g.teams_games_awayToteams.teamid)
+                  ? g.teams_games_awayToteams.teamid
+                  : undefined,
               };
             }
           ),

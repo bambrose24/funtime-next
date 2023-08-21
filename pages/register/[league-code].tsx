@@ -17,7 +17,6 @@ type Props = {
 export default function LeagueRegister({league}: Props) {
   const router = useRouter();
   const leagueCode = router.query['league-code'];
-  console.log('league???', league);
 
   if (!(typeof leagueCode === 'string')) {
     return (
@@ -44,27 +43,3 @@ export default function LeagueRegister({league}: Props) {
     </FuntimePage>
   );
 }
-
-export const getServerSideProps: GetServerSideProps<Props> = async ({params}) => {
-  const leagueCode = params?.['league-code'];
-
-  if (!leagueCode || !(typeof leagueCode === 'string')) {
-    return {
-      notFound: true,
-    };
-  }
-  // const client = getApolloClient();
-  // const {data: league} = await client.query<
-  //   LeagueRegistrationQuery,
-  //   LeagueRegistrationQueryVariables
-  // >({
-  //   query: LeagueRegistrationDocument,
-  //   variables: {
-  //     leagueCode,
-  //   },
-  // });
-
-  return {
-    props: {league: undefined},
-  };
-};

@@ -1,6 +1,6 @@
 import {useSession} from '@supabase/auth-helpers-react';
 import {useRouter} from 'next/router';
-import LoginPage from '@src/components/login/LoginPage';
+import {LoginPage} from '@src/components/login/LoginPage';
 import {useEffect} from 'react';
 
 const Login = () => {

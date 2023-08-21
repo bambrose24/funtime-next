@@ -6,50 +6,38 @@ import {useAuthTheme} from './util';
 import {Typography} from '../Typography';
 import {useRouter} from 'next/router';
 import {env} from '@src/util/config';
+import {useState} from 'react';
 
-const LoginPage = () => {
+type AuthProps = Parameters<typeof Auth>[0];
+
+export function LoginPage() {
   const supabase = useSupabaseClient();
   const authTheme = useAuthTheme();
   const router = useRouter();
   const authRedirect = `https://www.play-funtime.com${router.asPath}`;
+
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
         <Box w={{base: '80vw', md: '400px'}} layerStyle="funtime-card">
           <LoginBanner />
-          <Typography.H1>Login</Typography.H1>
+          <Typography.H1>Log In</Typography.H1>
           <Typography.Body1 mt="20px">
-            Login with your email below. You will get an email with a link to sign in.
+            {`Login with your email below. If you are new, click the "sign up" link below.`}
           </Typography.Body1>
           <Divider my="20px" />
           <Auth
             redirectTo={authRedirect}
             supabaseClient={supabase}
             appearance={{theme: authTheme}}
-            view={env === 'development' ? 'sign_in' : 'magic_link'}
-            showLinks={false}
+            view="sign_in"
             providers={[]}
-            magicLink
           />
-          {env === 'development' && (
-            <>
-              <Typography.H3>Dev Only -- Signup</Typography.H3>
-              <Auth
-                redirectTo={authRedirect}
-                supabaseClient={supabase}
-                appearance={{theme: authTheme}}
-                view="sign_up"
-                showLinks={false}
-                providers={[]}
-                magicLink
-              />
-            </>
-          )}
         </Box>
       </Flex>
     </FuntimePage>
   );
-};
+}
 
 function LoginBanner() {
   const router = useRouter();
@@ -71,5 +59,3 @@ function LoginBanner() {
   }
   return null;
 }
-
-export default LoginPage;

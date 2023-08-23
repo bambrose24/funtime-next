@@ -9,9 +9,6 @@ export default function AdminPickPage() {
 
   const leagueId = Number(leagueIdParam);
   const memberId = Number(memberIdParam);
-  if (!leagueId || !memberId) {
-    throw new Error('Didnt get correct types for admin pick page params');
-  }
 
   const {data, loading, error} = useWeekForPicksQuery({
     variables: {

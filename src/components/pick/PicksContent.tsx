@@ -12,15 +12,17 @@ import {FuntimeSeasonOver} from '../shared/FuntimeSeasonOver';
 
 type Props = {
   leagueId: number;
+  memberId?: number;
 };
 
-export function PicksContent({leagueId}: Props) {
+export function PicksContent({leagueId, memberId}: Props) {
   const router = useRouter();
   const weekParam = router.query['week'];
   const overrideParam = router.query['override'];
   const {data: games, loading: gamesLoading, error: gamesError} = useWeekForPicksQuery({
     variables: {
       leagueId,
+      ...(memberId !== undefined ? {memberId} : {}),
       ...(typeof weekParam === 'string' ? {week: parseInt(weekParam)} : {}),
       ...(typeof overrideParam === 'string' && overrideParam === 'true' ? {override: true} : {}),
     },

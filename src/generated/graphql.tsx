@@ -4549,6 +4549,7 @@ export type QueryUsersArgs = {
 
 export type QueryWeekForPicksArgs = {
   leagueId: Scalars['Int'];
+  memberId?: InputMaybe<Scalars['Int']>;
   override?: InputMaybe<Scalars['Boolean']>;
   week?: InputMaybe<Scalars['Int']>;
 };
@@ -6838,6 +6839,7 @@ export type AllTeamsQuery = { __typename?: 'Query', teams: Array<{ __typename?: 
 
 export type WeekForPicksQueryVariables = Exact<{
   leagueId: Scalars['Int'];
+  memberId?: InputMaybe<Scalars['Int']>;
   override?: InputMaybe<Scalars['Boolean']>;
   week?: InputMaybe<Scalars['Int']>;
 }>;
@@ -7700,7 +7702,7 @@ export type AllTeamsQueryHookResult = ReturnType<typeof useAllTeamsQuery>;
 export type AllTeamsLazyQueryHookResult = ReturnType<typeof useAllTeamsLazyQuery>;
 export type AllTeamsQueryResult = Apollo.QueryResult<AllTeamsQuery, AllTeamsQueryVariables>;
 export const WeekForPicksDocument = gql`
-    query WeekForPicks($leagueId: Int!, $override: Boolean, $week: Int) {
+    query WeekForPicks($leagueId: Int!, $memberId: Int, $override: Boolean, $week: Int) {
   weekForPicks(leagueId: $leagueId, override: $override, week: $week) {
     week
     season
@@ -7752,6 +7754,7 @@ export const WeekForPicksDocument = gql`
  * const { data, loading, error } = useWeekForPicksQuery({
  *   variables: {
  *      leagueId: // value for 'leagueId'
+ *      memberId: // value for 'memberId'
  *      override: // value for 'override'
  *      week: // value for 'week'
  *   },

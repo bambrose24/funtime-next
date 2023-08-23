@@ -5,16 +5,13 @@ import {FuntimePage} from '@src/FuntimePage';
 import {useAuthTheme} from './util';
 import {Typography} from '../Typography';
 import {useRouter} from 'next/router';
-import {env} from '@src/util/config';
-import {useState} from 'react';
-
-type AuthProps = Parameters<typeof Auth>[0];
 
 export function LoginPage() {
   const supabase = useSupabaseClient();
   const authTheme = useAuthTheme();
   const router = useRouter();
   const authRedirect = `https://www.play-funtime.com${router.asPath}`;
+  const loginBanner = useLoginBanner();
 
   return (
     <FuntimePage>
@@ -30,7 +27,7 @@ export function LoginPage() {
             redirectTo={authRedirect}
             supabaseClient={supabase}
             appearance={{theme: authTheme}}
-            view="sign_in"
+            view={loginBanner === 'registration' ? 'sign_up' : 'sign_in'}
             magicLink
             providers={[]}
           />
@@ -40,12 +37,20 @@ export function LoginPage() {
   );
 }
 
-function LoginBanner() {
+const loginBanners = ['registration'] as const;
+type LoginBanner = typeof loginBanners[number];
+
+function useLoginBanner(): LoginBanner | null {
   const router = useRouter();
   const banner = router.query.banner;
-  if (!banner || typeof banner !== 'string') {
+  if (!banner || typeof banner !== 'string' || !loginBanners.includes(banner as LoginBanner)) {
     return null;
   }
+  return banner as LoginBanner;
+}
+
+function LoginBanner() {
+  const banner = useLoginBanner();
   switch (banner) {
     case 'registration':
       return (

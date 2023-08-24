@@ -31,18 +31,11 @@ const validationSchema = Yup.object({
 
 export default function ResetPassword() {
   const supabase = useSupabaseClient();
-  const session = useSession();
   const toaster = useToast();
   const router = useRouter();
   const redirectToParam = router.query['redirectTo'];
   const redirectTo = typeof redirectToParam === 'string' ? redirectToParam : undefined;
   const redirectToURL = `https://www.play-funtime.com${redirectTo ?? ''}`;
-
-  useEffect(() => {
-    if (!session) {
-      router.push(redirectToURL);
-    }
-  }, [session, router, redirectToURL]);
 
   return (
     <FuntimePage>

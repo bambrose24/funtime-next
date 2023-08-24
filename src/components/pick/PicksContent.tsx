@@ -19,7 +19,12 @@ export function PicksContent({leagueId, memberId}: Props) {
   const router = useRouter();
   const weekParam = router.query['week'];
   const overrideParam = router.query['override'];
-  const {data: games, loading: gamesLoading, error: gamesError} = useWeekForPicksQuery({
+  const {
+    data: games,
+    loading: gamesLoading,
+    error: gamesError,
+    refetch: gamesRefetch,
+  } = useWeekForPicksQuery({
     variables: {
       leagueId,
       ...(memberId !== undefined ? {memberId} : {}),
@@ -82,6 +87,9 @@ export function PicksContent({leagueId, memberId}: Props) {
               games={gamesSorted}
               leagueId={leagueId}
               existingWinners={existingWinners}
+              onSuccess={async () => {
+                await gamesRefetch();
+              }}
             />
           </Flex>
         </Box>

@@ -43,6 +43,7 @@ export function PicksContent({leagueId, memberId}: Props) {
   }
 
   if (!games || gamesError || !leagueData) {
+    console.error(gamesError);
     return <FuntimeError />;
   }
 

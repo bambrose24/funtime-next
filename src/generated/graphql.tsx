@@ -7703,7 +7703,12 @@ export type AllTeamsLazyQueryHookResult = ReturnType<typeof useAllTeamsLazyQuery
 export type AllTeamsQueryResult = Apollo.QueryResult<AllTeamsQuery, AllTeamsQueryVariables>;
 export const WeekForPicksDocument = gql`
     query WeekForPicks($leagueId: Int!, $memberId: Int, $override: Boolean, $week: Int) {
-  weekForPicks(leagueId: $leagueId, override: $override, week: $week) {
+  weekForPicks(
+    leagueId: $leagueId
+    memberId: $memberId
+    override: $override
+    week: $week
+  ) {
     week
     season
     games {

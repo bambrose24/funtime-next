@@ -1,6 +1,5 @@
 import {Form, Formik} from 'formik';
 import {
-  FindLeagueMembersQuery,
   GamePick,
   GamesByWeekQuery,
   useLeagueQuery,
@@ -31,7 +30,6 @@ import {Typography} from '../Typography';
 import {TeamLogo} from '../shared/TeamLogo';
 import moment from 'moment-timezone';
 import {useState} from 'react';
-import {useUser} from '@supabase/auth-helpers-react';
 
 interface PicksFormProps {
   week: number;
@@ -39,6 +37,7 @@ interface PicksFormProps {
   games: GamesByWeekQuery['games'];
   leagueId: number;
   existingWinners: Set<number>;
+  onSuccess: () => Promise<void>;
 }
 
 interface GameEntry {
@@ -47,7 +46,14 @@ interface GameEntry {
   winner: number | undefined;
 }
 
-export function PicksForm({week, season, games, leagueId, existingWinners}: PicksFormProps) {
+export function PicksForm({
+  week,
+  season,
+  games,
+  leagueId,
+  existingWinners,
+  onSuccess,
+}: PicksFormProps) {
   const [submitPicks, {data, error, client}] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
@@ -220,9 +226,10 @@ export function PicksForm({week, season, games, leagueId, existingWinners}: Pick
             variables: {picks, league_id: leagueId},
           });
           setModalPicks(picks);
-          resetForm();
-          client.resetStore();
-          setIsModalOpen(true);
+          onSuccess().then(() => {
+            resetForm();
+            setIsModalOpen(true);
+          });
         }}
       >
         {formik => (

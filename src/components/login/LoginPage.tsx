@@ -16,12 +16,18 @@ export function LoginPage() {
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
-        <Box w={{base: '80vw', md: '400px'}} layerStyle="funtime-card">
+        <Flex
+          direction="column"
+          w={{base: '80vw', md: '400px'}}
+          layerStyle="funtime-card"
+          gap="20px"
+        >
           <LoginBanner />
-          <Typography.H1>Log In</Typography.H1>
-          <Divider my="20px" />
-          <Auth redirectTo={authRedirect} />
-        </Box>
+          <Auth
+            redirectTo={authRedirect}
+            initialState={loginBanner === 'registration' ? 'signup' : undefined}
+          />
+        </Flex>
       </Flex>
     </FuntimePage>
   );

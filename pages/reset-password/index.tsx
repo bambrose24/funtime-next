@@ -70,14 +70,24 @@ export default function ResetPassword() {
                     isInvalid={formik.touched.password1 && Boolean(formik.values.password1)}
                   >
                     <FormLabel>New Password</FormLabel>
-                    <Input type="password" name="password1" value={formik.values.password1} />
+                    <Input
+                      type="password"
+                      name="password1"
+                      onChange={formik.handleChange}
+                      value={formik.values.password1}
+                    />
                     <FormErrorMessage>{formik.errors.password1}</FormErrorMessage>
                   </FormControl>
                   <FormControl
                     isInvalid={formik.touched.password2 && Boolean(formik.values.password2)}
                   >
                     <FormLabel>Confirm Your New Password</FormLabel>
-                    <Input type="password" name="password1" value={formik.values.password2} />
+                    <Input
+                      type="password"
+                      name="password2"
+                      onChange={formik.handleChange}
+                      value={formik.values.password2}
+                    />
                     <FormErrorMessage>{formik.errors.password2}</FormErrorMessage>
                   </FormControl>
                   <Button variant="solid" onClick={formik.submitForm} isDisabled={!formik.isValid}>

@@ -1,14 +1,9 @@
-import {useSupabaseClient} from '@supabase/auth-helpers-react';
-import {Alert, AlertDescription, AlertIcon, Box, Divider, Flex} from '@chakra-ui/react';
+import {Alert, AlertDescription, AlertIcon, Flex} from '@chakra-ui/react';
 import {FuntimePage} from '@src/FuntimePage';
-import {useAuthTheme} from './util';
-import {Typography} from '../Typography';
 import {useRouter} from 'next/router';
 import {Auth} from './Auth';
 
 export function LoginPage() {
-  const supabase = useSupabaseClient();
-  const authTheme = useAuthTheme();
   const router = useRouter();
   const authRedirect = `https://www.play-funtime.com${router.asPath}`;
   const loginBanner = useLoginBanner();
@@ -23,10 +18,7 @@ export function LoginPage() {
           gap="20px"
         >
           <LoginBanner />
-          <Auth
-            redirectTo={authRedirect}
-            initialState={loginBanner === 'registration' ? 'signup' : undefined}
-          />
+          <Auth initialState={loginBanner === 'registration' ? 'signup' : undefined} />
         </Flex>
       </Flex>
     </FuntimePage>

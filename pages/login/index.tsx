@@ -6,6 +6,7 @@ import {useEffect} from 'react';
 const Login = () => {
   const router = useRouter();
   const session = useSession();
+
   useEffect(() => {
     if (session) {
       if ('redirectTo' in router.query) {
@@ -15,6 +16,7 @@ const Login = () => {
         router.push('/');
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router, router.query, session]);
 
   if (!session) {

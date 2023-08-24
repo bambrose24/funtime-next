@@ -1,10 +1,10 @@
-import {Auth} from '@supabase/auth-ui-react';
 import {useSupabaseClient} from '@supabase/auth-helpers-react';
 import {Alert, AlertDescription, AlertIcon, Box, Divider, Flex} from '@chakra-ui/react';
 import {FuntimePage} from '@src/FuntimePage';
 import {useAuthTheme} from './util';
 import {Typography} from '../Typography';
 import {useRouter} from 'next/router';
+import {Auth} from './Auth';
 
 export function LoginPage() {
   const supabase = useSupabaseClient();
@@ -20,14 +20,7 @@ export function LoginPage() {
           <LoginBanner />
           <Typography.H1>Log In</Typography.H1>
           <Divider my="20px" />
-          <Auth
-            redirectTo={authRedirect}
-            supabaseClient={supabase}
-            appearance={{theme: authTheme}}
-            view={loginBanner === 'registration' ? 'sign_up' : 'sign_in'}
-            magicLink
-            providers={[]}
-          />
+          <Auth redirectTo={authRedirect} />
         </Box>
       </Flex>
     </FuntimePage>

@@ -20,7 +20,7 @@ export function Auth({redirectTo, initialState}: AuthProps) {
 
   console.log({authState});
   return (
-    <Tabs variant="solid-rounded" defaultIndex={authStates.indexOf(authState)}>
+    <Tabs variant="soft-rounded" defaultIndex={authStates.indexOf(authState)}>
       <TabList>
         <Tab>Log In</Tab>
         <Tab>Sign Up</Tab>

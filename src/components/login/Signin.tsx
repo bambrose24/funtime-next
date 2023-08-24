@@ -102,7 +102,8 @@ export function Signin() {
             >
               Log In
             </Button>
-            <Button
+            {/* https://supabase.com/docs/guides/auth/auth-password-reset */}
+            {/* <Button
               variant="outline"
               onClick={() => {
                 const email = formik.values.email;
@@ -110,7 +111,6 @@ export function Signin() {
                   console.log({resetRes: res});
                   toaster({
                     variant: 'solid',
-
                     position: 'top',
                     description: `A password reset email was sent to ${email}. Please check your email to reset your password.`,
                   });
@@ -120,7 +120,7 @@ export function Signin() {
               disabled={!formik.values.email || formik.values.email === resetPasswordEmailSubmitted}
             >
               Forgot Password
-            </Button>
+            </Button> */}
           </Flex>
         );
       }}

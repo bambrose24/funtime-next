@@ -43,6 +43,7 @@ export function Signin() {
             <FormControl isInvalid={formik.touched.email && Boolean(formik.errors.email)}>
               <FormLabel>Email</FormLabel>
               <Input
+                autoFocus={true}
                 variant="outline"
                 value={formik.values.email}
                 name="email"

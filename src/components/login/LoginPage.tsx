@@ -4,8 +4,6 @@ import {useRouter} from 'next/router';
 import {Auth} from './Auth';
 
 export function LoginPage() {
-  const router = useRouter();
-  const authRedirect = `https://www.play-funtime.com${router.asPath}`;
   const loginBanner = useLoginBanner();
 
   return (

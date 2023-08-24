@@ -1,6 +1,17 @@
-import {Box, Button, Flex, FormControl, FormLabel, FormErrorMessage, Input} from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Flex,
+  FormControl,
+  FormLabel,
+  FormErrorMessage,
+  Input,
+  useToast,
+} from '@chakra-ui/react';
+import {useFullURL} from '@src/hooks/useFullURL';
 import {useSupabaseClient} from '@supabase/auth-helpers-react';
 import {Formik} from 'formik';
+import {useState} from 'react';
 import * as Yup from 'yup';
 import {Typography} from '../Typography';
 
@@ -19,6 +30,9 @@ const validationSchema = Yup.object({
 
 export function Signin() {
   const supabase = useSupabaseClient();
+  const fullURL = useFullURL();
+  const [resetPasswordEmailSubmitted, setResetPasswordEmailSubmitted] = useState('');
+  const toaster = useToast();
   return (
     <Formik<SigninFormType>
       initialValues={{email: '', password: '', error: ''}}
@@ -87,6 +101,25 @@ export function Signin() {
               disabled={!formik.isValid}
             >
               Log In
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => {
+                const email = formik.values.email;
+                supabase.auth.resetPasswordForEmail(email, {redirectTo: fullURL}).then(res => {
+                  console.log({resetRes: res});
+                  toaster({
+                    variant: 'solid',
+
+                    position: 'top',
+                    description: `A password reset email was sent to ${email}. Please check your email to reset your password.`,
+                  });
+                  setResetPasswordEmailSubmitted(email);
+                });
+              }}
+              disabled={!formik.values.email || formik.values.email === resetPasswordEmailSubmitted}
+            >
+              Forgot Password
             </Button>
           </Flex>
         );

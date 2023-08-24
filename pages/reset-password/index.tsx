@@ -55,7 +55,7 @@ export default function ResetPassword() {
               const result = await supabase.auth.updateUser({password: values.password1});
               if (!result.error) {
                 toaster({
-                  description: `Your password has been updated! You can continue`,
+                  description: `Your password has been updated! You will be redirected momentarily.`,
                   onCloseComplete: () => {
                     router.push(redirectToURL);
                   },
@@ -67,7 +67,7 @@ export default function ResetPassword() {
               return (
                 <>
                   <FormControl
-                    isInvalid={formik.touched.password1 && Boolean(formik.values.password1)}
+                    isInvalid={formik.touched.password1 && Boolean(formik.errors.password1)}
                   >
                     <FormLabel>New Password</FormLabel>
                     <Input
@@ -79,7 +79,7 @@ export default function ResetPassword() {
                     <FormErrorMessage>{formik.errors.password1}</FormErrorMessage>
                   </FormControl>
                   <FormControl
-                    isInvalid={formik.touched.password2 && Boolean(formik.values.password2)}
+                    isInvalid={formik.touched.password2 && Boolean(formik.errors.password2)}
                   >
                     <FormLabel>Confirm Your New Password</FormLabel>
                     <Input

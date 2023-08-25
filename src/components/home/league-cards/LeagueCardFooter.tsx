@@ -31,7 +31,7 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
   if (needsToMakePicks) {
     const timeTilNextGame = moment(nextGame.ts);
     const timeTilNextGameFormatted = timeTilNextGame.fromNow();
-    alertDescription = `The next week starts in ${timeTilNextGameFormatted}.`;
+    alertDescription = `The next week starts in ${timeTilNextGameFormatted}. Don't forget to make your picks!`;
     if (timeTilNextGame.isBefore(moment().add(3, 'hour'))) {
       alertStatus = 'warning';
     } else if (timeTilNextGame.isBefore(moment().add(14, 'days'))) {

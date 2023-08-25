@@ -78,7 +78,7 @@ export function PicksContent({leagueId, memberId}: Props) {
       <Box maxWidth="min(100%, 800px)" bgColor="white" p={4}>
         <Box textAlign="center">
           <Typography.H2>
-            Make Your Picks for Week {week}, {season}
+            {existingWinners.size > 0 ? `Update` : `Make`} Your Picks for Week {week}, {season}
           </Typography.H2>
           <Flex direction="column" w="100%" justify="center" bgColor="white" py={8} px={4}>
             <PicksForm

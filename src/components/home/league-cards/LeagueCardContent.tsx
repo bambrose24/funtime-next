@@ -68,6 +68,7 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
       ) : (
         <NotStartedLeagueCardContent member={member} />
       )}
+      <Box pt="16px" />
       <LeagueCardFooter member={member} />
     </Flex>
   );

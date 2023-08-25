@@ -7,6 +7,9 @@ import {
 } from '../../generated/graphql';
 import * as Yup from 'yup';
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
   Box,
   Button,
   Flex,
@@ -36,6 +39,9 @@ interface PicksFormProps {
   season: number;
   games: GamesByWeekQuery['games'];
   leagueId: number;
+  memberId: number | null;
+  isImpersonating: boolean;
+  username: string;
   existingWinners: Set<number>;
   onSuccess: () => Promise<void>;
 }
@@ -51,14 +57,15 @@ export function PicksForm({
   season,
   games,
   leagueId,
+  memberId,
+  isImpersonating,
+  username,
   existingWinners,
   onSuccess,
 }: PicksFormProps) {
-  const [submitPicks, {data, error, client}] = useMakePicksMutation();
+  const [submitPicks, {data, error}] = useMakePicksMutation();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [modalPicks, setModalPicks] = useState<Array<GamePick>>([]);
-
-  const {data: leagueData} = useLeagueQuery({variables: {leagueId}});
 
   // TODO... query the "viewer" LeagueMember field on a League, and get it from useLeagueQuery
 
@@ -235,18 +242,27 @@ export function PicksForm({
         {formik => (
           <Form onSubmit={formik.handleSubmit}>
             <VStack spacing={4} align="flex-start">
+              {isImpersonating && (
+                <Alert status="info">
+                  <AlertIcon />
+                  <AlertDescription textAlign="start">
+                    You are making picks on behalf of {username} as an admin of the league.
+                  </AlertDescription>
+                </Alert>
+              )}
               <Tooltip
                 hasArrow
                 placement="top"
-                label="If you want to make picks as a different user, please log in as them"
+                label={
+                  isImpersonating
+                    ? `You're making picks on behalf of ${username} as an admin of the league`
+                    : 'If you want to make picks as a different user, please log in as them'
+                }
               >
                 <FormControl>
                   <FormLabel>Username</FormLabel>
-
                   <Select disabled>
-                    <option value={undefined}>
-                      {leagueData?.league?.viewer?.people?.username}
-                    </option>
+                    <option value={undefined}>{username}</option>
                   </Select>
                 </FormControl>
               </Tooltip>

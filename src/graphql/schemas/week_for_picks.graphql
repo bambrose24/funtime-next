@@ -26,10 +26,17 @@ query WeekForPicks($leagueId: Int!, $memberId: Int, $override: Boolean, $week: I
         abbrev
       }
     }
-  }
-  me {
-    picks(where: {week: {equals: $week}, leaguemembers: {is: {league_id: {equals: $leagueId}}}}) {
-      winner
+    leagueMember {
+      id
+      membership_id
+      people {
+        id
+        username
+      }
+      picks(where: {week: {equals: $week}}) {
+        id
+        winner
+      }
     }
   }
 }

@@ -20,7 +20,7 @@ export function PicksContent({leagueId, memberId}: Props) {
   const weekParam = router.query['week'];
   const overrideParam = router.query['override'];
   const {
-    data: games,
+    data: weekForPicks,
     loading: gamesLoading,
     error: gamesError,
     refetch: gamesRefetch,
@@ -36,18 +36,18 @@ export function PicksContent({leagueId, memberId}: Props) {
 
   const existingWinners = useMemo(() => {
     const s = new Set(
-      games?.me?.picks
+      weekForPicks?.weekForPicks?.leagueMember?.picks
         ?.map(p => (typeof p.winner === 'number' ? p.winner : undefined))
         .filter(Boolean) ?? []
     ) as Set<number>;
     return s;
-  }, [games]);
+  }, [weekForPicks]);
 
   if (gamesLoading || leagueLoading) {
     return <FuntimeLoading />;
   }
 
-  if (!games || gamesError || !leagueData) {
+  if (!weekForPicks || gamesError || !leagueData) {
     console.error(gamesError);
     return <FuntimeError />;
   }
@@ -58,24 +58,26 @@ export function PicksContent({leagueId, memberId}: Props) {
   }
 
   if (
-    !games.weekForPicks.week ||
-    !games.weekForPicks.season ||
-    !(games.weekForPicks.games.length > 0)
+    !weekForPicks.weekForPicks.week ||
+    !weekForPicks.weekForPicks.season ||
+    !(weekForPicks.weekForPicks.games.length > 0)
   ) {
     // TODO show a "the season is over" page
     return <FuntimeSeasonOver />;
   }
-  const week = games.weekForPicks.games[0].week;
-  const season = games.weekForPicks.games[0].season;
+  const week = weekForPicks.weekForPicks.games[0].week;
+  const season = weekForPicks.weekForPicks.games[0].season;
 
-  const gamesSorted = _([...games.weekForPicks.games])
+  const isImpersonating = Boolean(memberId);
+
+  const gamesSorted = _([...weekForPicks.weekForPicks.games])
     .sortBy('gid')
     .sortBy('ts')
     .value();
 
   return (
     <Flex justify="center">
-      <Box maxWidth="min(100%, 800px)" bgColor="white" p={4}>
+      <Box maxWidth="min(100%, 500px)" bgColor="white" p={4}>
         <Box textAlign="center">
           <Typography.H2>
             {existingWinners.size > 0 ? `Update` : `Make`} Your Picks for Week {week}, {season}
@@ -86,6 +88,9 @@ export function PicksContent({leagueId, memberId}: Props) {
               season={season}
               games={gamesSorted}
               leagueId={leagueId}
+              memberId={weekForPicks.weekForPicks.leagueMember?.membership_id ?? null}
+              isImpersonating={isImpersonating}
+              username={weekForPicks.weekForPicks.leagueMember?.people?.username ?? ''}
               existingWinners={existingWinners}
               onSuccess={async () => {
                 await gamesRefetch();

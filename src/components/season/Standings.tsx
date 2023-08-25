@@ -57,7 +57,7 @@ export function Standings({leagueId}: {leagueId: number}) {
   return (
     <Flex direction="column">
       <Box p="12px">
-        {gamesLeft > 0 && (
+        {gamesLeft > 0 && gamesLeft < 40 && (
           <Alert status="warning">
             <AlertIcon />
             <AlertTitle>There are {gamesLeft} games left!</AlertTitle>

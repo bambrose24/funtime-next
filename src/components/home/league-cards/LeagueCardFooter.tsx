@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import {HomeQuery, LeagueStatus, MemberRole} from '@src/generated/graphql';
 import moment from 'moment';
-import Link from 'next/link';
 import {useRouter} from 'next/router';
 
 export type LeagueCardFooterProps = {

@@ -9,10 +9,10 @@ import {
 } from '@chakra-ui/react';
 import {Typography} from '@src/components/Typography';
 import {FuntimePage} from '@src/FuntimePage';
-import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
+import {useFullURL} from '@src/hooks/useFullURL';
+import {useSupabaseClient} from '@supabase/auth-helpers-react';
 import {Formik} from 'formik';
 import {useRouter} from 'next/router';
-import {useEffect} from 'react';
 import * as Yup from 'yup';
 
 type ResetPasswordForm = {
@@ -33,9 +33,8 @@ export default function ResetPassword() {
   const supabase = useSupabaseClient();
   const toaster = useToast();
   const router = useRouter();
-  const redirectToParam = router.query['redirectTo'];
-  const redirectTo = typeof redirectToParam === 'string' ? redirectToParam : undefined;
-  const redirectToURL = `https://www.play-funtime.com${redirectTo ?? ''}`;
+
+  const redirectToURL = useFullURL();
 
   return (
     <FuntimePage>

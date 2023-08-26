@@ -1,10 +1,24 @@
-import {Box, Divider, Flex, VStack, Image} from '@chakra-ui/react';
+import {
+  Box,
+  Divider,
+  Flex,
+  VStack,
+  Image,
+  Alert,
+  AlertIcon,
+  AlertDescription,
+  Button,
+} from '@chakra-ui/react';
+import {SEASON} from '@src/util/config';
+import Link from 'next/link';
+import {useRouter} from 'next/router';
 import {Typography} from '../Typography';
 
 export function FuntimeStandardRules() {
+  const router = useRouter();
   return (
     <Flex justify="center">
-      <Box px={8} py={6} bgColor="white" rounded="lg" boxShadow="sm" maxWidth="1000px">
+      <Box px={8} py={6} bgColor="white" rounded="lg" boxShadow="sm" w="100%">
         <VStack>
           <Image src="/favicon.ico" width={50} alt="Favicon" />
           <Typography.H3 textAlign="center">
@@ -17,7 +31,7 @@ export function FuntimeStandardRules() {
               display="inline-block"
               alt="Funtime logo"
             />{' '}
-            2022!
+            {SEASON}!
           </Typography.H3>
           <Box px={10}>
             At its core, Funtime consists of 3 main competitions:

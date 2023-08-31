@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Flex,
   Stat,
@@ -29,8 +30,8 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
   const nextWeek = data.weekForPicks.week;
 
   return (
-    <TableContainer overflowY="auto" overflowX="auto" mt="12px">
-      <Table size="md" variant="simple" fontSize={[14, 16]}>
+    <TableContainer pt="12px" overflowX="auto">
+      <Table variant="simple">
         <Thead>
           <Tr>
             <Th />

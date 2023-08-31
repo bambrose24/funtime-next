@@ -1487,6 +1487,7 @@ export type LeagueMember = {
   leagues: League;
   membership_id: Scalars['Int'];
   nextGame?: Maybe<Game>;
+  paid?: Maybe<Scalars['Boolean']>;
   people: User;
   picks: Array<Pick>;
   role?: Maybe<MemberRole>;
@@ -1555,6 +1556,7 @@ export type LeagueMemberCountAggregate = {
   _all: Scalars['Int'];
   league_id: Scalars['Int'];
   membership_id: Scalars['Int'];
+  paid: Scalars['Int'];
   role: Scalars['Int'];
   ts: Scalars['Int'];
   user_id: Scalars['Int'];
@@ -1563,6 +1565,7 @@ export type LeagueMemberCountAggregate = {
 export type LeagueMemberCountOrderByAggregateInput = {
   league_id?: InputMaybe<SortOrder>;
   membership_id?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
   user_id?: InputMaybe<SortOrder>;
@@ -1571,6 +1574,7 @@ export type LeagueMemberCountOrderByAggregateInput = {
 export type LeagueMemberCreateInput = {
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
+  paid?: InputMaybe<Scalars['Boolean']>;
   people: UserCreateNestedOneWithoutLeaguemembersInput;
   picks?: InputMaybe<PickCreateNestedManyWithoutLeaguemembersInput>;
   role?: InputMaybe<MemberRole>;
@@ -1581,6 +1585,7 @@ export type LeagueMemberCreateInput = {
 export type LeagueMemberCreateManyInput = {
   league_id: Scalars['Int'];
   membership_id?: InputMaybe<Scalars['Int']>;
+  paid?: InputMaybe<Scalars['Boolean']>;
   role?: InputMaybe<MemberRole>;
   ts?: InputMaybe<Scalars['DateTime']>;
   user_id: Scalars['Int'];
@@ -1588,6 +1593,7 @@ export type LeagueMemberCreateManyInput = {
 
 export type LeagueMemberCreateManyLeaguesInput = {
   membership_id?: InputMaybe<Scalars['Int']>;
+  paid?: InputMaybe<Scalars['Boolean']>;
   role?: InputMaybe<MemberRole>;
   ts?: InputMaybe<Scalars['DateTime']>;
   user_id: Scalars['Int'];
@@ -1601,6 +1607,7 @@ export type LeagueMemberCreateManyLeaguesInputEnvelope = {
 export type LeagueMemberCreateManyPeopleInput = {
   league_id: Scalars['Int'];
   membership_id?: InputMaybe<Scalars['Int']>;
+  paid?: InputMaybe<Scalars['Boolean']>;
   role?: InputMaybe<MemberRole>;
   ts?: InputMaybe<Scalars['DateTime']>;
 };
@@ -1669,6 +1676,7 @@ export type LeagueMemberCreateOrConnectWithoutWeekWinnersInput = {
 
 export type LeagueMemberCreateWithoutLeaguesInput = {
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
+  paid?: InputMaybe<Scalars['Boolean']>;
   people: UserCreateNestedOneWithoutLeaguemembersInput;
   picks?: InputMaybe<PickCreateNestedManyWithoutLeaguemembersInput>;
   role?: InputMaybe<MemberRole>;
@@ -1679,6 +1687,7 @@ export type LeagueMemberCreateWithoutLeaguesInput = {
 export type LeagueMemberCreateWithoutPeopleInput = {
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
+  paid?: InputMaybe<Scalars['Boolean']>;
   picks?: InputMaybe<PickCreateNestedManyWithoutLeaguemembersInput>;
   role?: InputMaybe<MemberRole>;
   superbowl?: InputMaybe<SuperbowlCreateNestedManyWithoutLeaguemembersInput>;
@@ -1688,6 +1697,7 @@ export type LeagueMemberCreateWithoutPeopleInput = {
 export type LeagueMemberCreateWithoutPicksInput = {
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
+  paid?: InputMaybe<Scalars['Boolean']>;
   people: UserCreateNestedOneWithoutLeaguemembersInput;
   role?: InputMaybe<MemberRole>;
   superbowl?: InputMaybe<SuperbowlCreateNestedManyWithoutLeaguemembersInput>;
@@ -1697,6 +1707,7 @@ export type LeagueMemberCreateWithoutPicksInput = {
 export type LeagueMemberCreateWithoutSuperbowlInput = {
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
+  paid?: InputMaybe<Scalars['Boolean']>;
   people: UserCreateNestedOneWithoutLeaguemembersInput;
   picks?: InputMaybe<PickCreateNestedManyWithoutLeaguemembersInput>;
   role?: InputMaybe<MemberRole>;
@@ -1705,6 +1716,7 @@ export type LeagueMemberCreateWithoutSuperbowlInput = {
 
 export type LeagueMemberCreateWithoutWeekWinnersInput = {
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
+  paid?: InputMaybe<Scalars['Boolean']>;
   people: UserCreateNestedOneWithoutLeaguemembersInput;
   picks?: InputMaybe<PickCreateNestedManyWithoutLeaguemembersInput>;
   role?: InputMaybe<MemberRole>;
@@ -1721,6 +1733,7 @@ export type LeagueMemberGroupBy = {
   _sum?: Maybe<LeagueMemberSumAggregate>;
   league_id: Scalars['Int'];
   membership_id: Scalars['Int'];
+  paid?: Maybe<Scalars['Boolean']>;
   role?: Maybe<MemberRole>;
   ts: Scalars['DateTime'];
   user_id: Scalars['Int'];
@@ -1736,6 +1749,7 @@ export type LeagueMemberMaxAggregate = {
   __typename?: 'LeagueMemberMaxAggregate';
   league_id?: Maybe<Scalars['Int']>;
   membership_id?: Maybe<Scalars['Int']>;
+  paid?: Maybe<Scalars['Boolean']>;
   role?: Maybe<MemberRole>;
   ts?: Maybe<Scalars['DateTime']>;
   user_id?: Maybe<Scalars['Int']>;
@@ -1744,6 +1758,7 @@ export type LeagueMemberMaxAggregate = {
 export type LeagueMemberMaxOrderByAggregateInput = {
   league_id?: InputMaybe<SortOrder>;
   membership_id?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
   user_id?: InputMaybe<SortOrder>;
@@ -1753,6 +1768,7 @@ export type LeagueMemberMinAggregate = {
   __typename?: 'LeagueMemberMinAggregate';
   league_id?: Maybe<Scalars['Int']>;
   membership_id?: Maybe<Scalars['Int']>;
+  paid?: Maybe<Scalars['Boolean']>;
   role?: Maybe<MemberRole>;
   ts?: Maybe<Scalars['DateTime']>;
   user_id?: Maybe<Scalars['Int']>;
@@ -1761,6 +1777,7 @@ export type LeagueMemberMinAggregate = {
 export type LeagueMemberMinOrderByAggregateInput = {
   league_id?: InputMaybe<SortOrder>;
   membership_id?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
   user_id?: InputMaybe<SortOrder>;
@@ -1778,6 +1795,7 @@ export type LeagueMemberOrderByWithAggregationInput = {
   _sum?: InputMaybe<LeagueMemberSumOrderByAggregateInput>;
   league_id?: InputMaybe<SortOrder>;
   membership_id?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrder>;
   role?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
   user_id?: InputMaybe<SortOrder>;
@@ -1788,6 +1806,7 @@ export type LeagueMemberOrderByWithRelationInput = {
   league_id?: InputMaybe<SortOrder>;
   leagues?: InputMaybe<LeagueOrderByWithRelationInput>;
   membership_id?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrder>;
   people?: InputMaybe<UserOrderByWithRelationInput>;
   picks?: InputMaybe<PickOrderByRelationAggregateInput>;
   role?: InputMaybe<SortOrder>;
@@ -1804,6 +1823,7 @@ export type LeagueMemberRelationFilter = {
 export enum LeagueMemberScalarFieldEnum {
   LeagueId = 'league_id',
   MembershipId = 'membership_id',
+  Paid = 'paid',
   Role = 'role',
   Ts = 'ts',
   UserId = 'user_id'
@@ -1815,6 +1835,7 @@ export type LeagueMemberScalarWhereInput = {
   OR?: InputMaybe<Array<LeagueMemberScalarWhereInput>>;
   league_id?: InputMaybe<IntFilter>;
   membership_id?: InputMaybe<IntFilter>;
+  paid?: InputMaybe<BoolNullableFilter>;
   role?: InputMaybe<EnumMemberRoleNullableFilter>;
   ts?: InputMaybe<DateTimeFilter>;
   user_id?: InputMaybe<IntFilter>;
@@ -1826,6 +1847,7 @@ export type LeagueMemberScalarWhereWithAggregatesInput = {
   OR?: InputMaybe<Array<LeagueMemberScalarWhereWithAggregatesInput>>;
   league_id?: InputMaybe<IntWithAggregatesFilter>;
   membership_id?: InputMaybe<IntWithAggregatesFilter>;
+  paid?: InputMaybe<BoolNullableWithAggregatesFilter>;
   role?: InputMaybe<EnumMemberRoleNullableWithAggregatesFilter>;
   ts?: InputMaybe<DateTimeWithAggregatesFilter>;
   user_id?: InputMaybe<IntWithAggregatesFilter>;
@@ -1847,6 +1869,7 @@ export type LeagueMemberSumOrderByAggregateInput = {
 export type LeagueMemberUpdateInput = {
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
+  paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   picks?: InputMaybe<PickUpdateManyWithoutLeaguemembersNestedInput>;
   role?: InputMaybe<NullableEnumMemberRoleFieldUpdateOperationsInput>;
@@ -1855,6 +1878,7 @@ export type LeagueMemberUpdateInput = {
 };
 
 export type LeagueMemberUpdateManyMutationInput = {
+  paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   role?: InputMaybe<NullableEnumMemberRoleFieldUpdateOperationsInput>;
   ts?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
 };
@@ -1937,6 +1961,7 @@ export type LeagueMemberUpdateWithWhereUniqueWithoutPeopleInput = {
 
 export type LeagueMemberUpdateWithoutLeaguesInput = {
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
+  paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   picks?: InputMaybe<PickUpdateManyWithoutLeaguemembersNestedInput>;
   role?: InputMaybe<NullableEnumMemberRoleFieldUpdateOperationsInput>;
@@ -1947,6 +1972,7 @@ export type LeagueMemberUpdateWithoutLeaguesInput = {
 export type LeagueMemberUpdateWithoutPeopleInput = {
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
+  paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   picks?: InputMaybe<PickUpdateManyWithoutLeaguemembersNestedInput>;
   role?: InputMaybe<NullableEnumMemberRoleFieldUpdateOperationsInput>;
   superbowl?: InputMaybe<SuperbowlUpdateManyWithoutLeaguemembersNestedInput>;
@@ -1956,6 +1982,7 @@ export type LeagueMemberUpdateWithoutPeopleInput = {
 export type LeagueMemberUpdateWithoutPicksInput = {
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
+  paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   role?: InputMaybe<NullableEnumMemberRoleFieldUpdateOperationsInput>;
   superbowl?: InputMaybe<SuperbowlUpdateManyWithoutLeaguemembersNestedInput>;
@@ -1965,6 +1992,7 @@ export type LeagueMemberUpdateWithoutPicksInput = {
 export type LeagueMemberUpdateWithoutSuperbowlInput = {
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
+  paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   picks?: InputMaybe<PickUpdateManyWithoutLeaguemembersNestedInput>;
   role?: InputMaybe<NullableEnumMemberRoleFieldUpdateOperationsInput>;
@@ -1973,6 +2001,7 @@ export type LeagueMemberUpdateWithoutSuperbowlInput = {
 
 export type LeagueMemberUpdateWithoutWeekWinnersInput = {
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
+  paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   picks?: InputMaybe<PickUpdateManyWithoutLeaguemembersNestedInput>;
   role?: InputMaybe<NullableEnumMemberRoleFieldUpdateOperationsInput>;
@@ -2015,6 +2044,7 @@ export type LeagueMemberWhereInput = {
   league_id?: InputMaybe<IntFilter>;
   leagues?: InputMaybe<LeagueRelationFilter>;
   membership_id?: InputMaybe<IntFilter>;
+  paid?: InputMaybe<BoolNullableFilter>;
   people?: InputMaybe<UserRelationFilter>;
   picks?: InputMaybe<PickListRelationFilter>;
   role?: InputMaybe<EnumMemberRoleNullableFilter>;
@@ -6494,6 +6524,21 @@ export type WeekWinnersWhereUniqueInput = {
   id?: InputMaybe<Scalars['Int']>;
 };
 
+export type LeagueAdminQueryVariables = Exact<{
+  leagueId: Scalars['Int'];
+}>;
+
+
+export type LeagueAdminQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, uid: number, username: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, role?: MemberRole | null }> } | null, league?: { __typename?: 'League', id: string, name: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, paid?: boolean | null, membership_id: number, hasPickedNextGame: boolean, picks: Array<{ __typename?: 'Pick', id: string, week: number, correct?: number | null }>, people: { __typename?: 'User', id: string, uid: number, username: string, email: string } }> } | null, weekForPicks: { __typename?: 'WeekForPicksResponse', week?: number | null } };
+
+export type MarkAsPaidMutationVariables = Exact<{
+  membership_id: Scalars['Int'];
+  paid: Scalars['Boolean'];
+}>;
+
+
+export type MarkAsPaidMutation = { __typename?: 'Mutation', updateOneLeagueMember?: { __typename?: 'LeagueMember', id: string, paid?: boolean | null } | null };
+
 export type CreateLeagueMutationVariables = Exact<{
   data: CreateLeagueInput;
 }>;
@@ -6637,6 +6682,109 @@ export const SuperbowlTeamFragmentDoc = gql`
   teamid
 }
     `;
+export const LeagueAdminDocument = gql`
+    query LeagueAdmin($leagueId: Int!) {
+  me {
+    id
+    uid
+    username
+    leaguemembers(where: {league_id: {equals: $leagueId}}) {
+      id
+      role
+    }
+  }
+  league(where: {league_id: $leagueId}) {
+    id
+    name
+    leaguemembers {
+      id
+      paid
+      membership_id
+      hasPickedNextGame
+      picks {
+        id
+        week
+        correct
+      }
+      people {
+        id
+        uid
+        username
+        email
+      }
+    }
+  }
+  weekForPicks(leagueId: $leagueId) {
+    week
+  }
+}
+    `;
+
+/**
+ * __useLeagueAdminQuery__
+ *
+ * To run a query within a React component, call `useLeagueAdminQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLeagueAdminQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLeagueAdminQuery({
+ *   variables: {
+ *      leagueId: // value for 'leagueId'
+ *   },
+ * });
+ */
+export function useLeagueAdminQuery(baseOptions: Apollo.QueryHookOptions<LeagueAdminQuery, LeagueAdminQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LeagueAdminQuery, LeagueAdminQueryVariables>(LeagueAdminDocument, options);
+      }
+export function useLeagueAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeagueAdminQuery, LeagueAdminQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LeagueAdminQuery, LeagueAdminQueryVariables>(LeagueAdminDocument, options);
+        }
+export type LeagueAdminQueryHookResult = ReturnType<typeof useLeagueAdminQuery>;
+export type LeagueAdminLazyQueryHookResult = ReturnType<typeof useLeagueAdminLazyQuery>;
+export type LeagueAdminQueryResult = Apollo.QueryResult<LeagueAdminQuery, LeagueAdminQueryVariables>;
+export const MarkAsPaidDocument = gql`
+    mutation MarkAsPaid($membership_id: Int!, $paid: Boolean!) {
+  updateOneLeagueMember(
+    data: {paid: {set: $paid}}
+    where: {membership_id: $membership_id}
+  ) {
+    id
+    paid
+  }
+}
+    `;
+export type MarkAsPaidMutationFn = Apollo.MutationFunction<MarkAsPaidMutation, MarkAsPaidMutationVariables>;
+
+/**
+ * __useMarkAsPaidMutation__
+ *
+ * To run a mutation, you first call `useMarkAsPaidMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkAsPaidMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markAsPaidMutation, { data, loading, error }] = useMarkAsPaidMutation({
+ *   variables: {
+ *      membership_id: // value for 'membership_id'
+ *      paid: // value for 'paid'
+ *   },
+ * });
+ */
+export function useMarkAsPaidMutation(baseOptions?: Apollo.MutationHookOptions<MarkAsPaidMutation, MarkAsPaidMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkAsPaidMutation, MarkAsPaidMutationVariables>(MarkAsPaidDocument, options);
+      }
+export type MarkAsPaidMutationHookResult = ReturnType<typeof useMarkAsPaidMutation>;
+export type MarkAsPaidMutationResult = Apollo.MutationResult<MarkAsPaidMutation>;
+export type MarkAsPaidMutationOptions = Apollo.BaseMutationOptions<MarkAsPaidMutation, MarkAsPaidMutationVariables>;
 export const CreateLeagueDocument = gql`
     mutation CreateLeague($data: CreateLeagueInput!) {
   createLeague(data: $data) {

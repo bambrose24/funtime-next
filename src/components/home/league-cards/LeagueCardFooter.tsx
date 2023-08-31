@@ -52,7 +52,15 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
             League
           </MenuButton>
           <MenuList>
-            {member.role === MemberRole.Admin && <MenuItem>Manage League (admin only)</MenuItem>}
+            {member.role === MemberRole.Admin && (
+              <MenuItem
+                onClick={() => {
+                  router.push(`/league/${member.leagues.league_id}/admin`);
+                }}
+              >
+                Manage League (admin only)
+              </MenuItem>
+            )}
             <MenuItem
               onClick={() => {
                 router.push(`/league/${member.leagues.league_id}/standings`);

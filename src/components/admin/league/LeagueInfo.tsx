@@ -33,13 +33,14 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
       <Table size="md" variant="simple" fontSize={[14, 16]}>
         <Thead>
           <Tr>
+            <Th />
             <Th>User</Th>
             <Th>Paid?</Th>
             <Th>Picked Next Week {nextWeek ? `(Week ${nextWeek})` : ''}</Th>
           </Tr>
         </Thead>
         <Tbody>
-          {data.league?.leaguemembers.map(member => {
+          {data.league?.leaguemembers.map((member, index) => {
             const pickedWeeks = new Set(member.picks.map(p => p.week));
             const didPickNextWeek = nextWeek ? pickedWeeks.has(nextWeek) : true;
             return (
@@ -48,6 +49,9 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
                 transition={'all .3s ease'}
                 _hover={{bgColor: 'gray.50'}}
               >
+                <Td>
+                  <Typography.Body2>{index + 1}</Typography.Body2>
+                </Td>
                 <Td>
                   <UserTag user_id={member.people.uid} username={member.people.username} />
                 </Td>

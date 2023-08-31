@@ -1,17 +1,4 @@
-import {
-  Box,
-  Button,
-  Flex,
-  Stat,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-} from '@chakra-ui/react';
-import {Check, MonetizationOnOutlined, MoneyOffOutlined, MoneyOutlined} from '@mui/icons-material';
+import {Flex, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
 import UserTag from '@src/components/profile/UserTag';
 import {Typography} from '@src/components/Typography';
 import {useLeagueAdminQuery} from '@src/generated/graphql';
@@ -31,7 +18,7 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
 
   return (
     <TableContainer pt="12px" overflowX="auto">
-      <Table variant="simple">
+      <Table variant="simple" size="sm">
         <Thead>
           <Tr>
             <Th />

@@ -1,6 +1,7 @@
 import {Button, HStack, Tooltip, useBreakpointValue} from '@chakra-ui/react';
 import ProfilePicture from './ProfilePicture';
 import {Typography} from '../Typography';
+import Link from 'next/link';
 
 const UserTag = (props: {user_id: number; username: string}) => {
   const profile_url = '/profile/' + props.user_id;
@@ -8,8 +9,8 @@ const UserTag = (props: {user_id: number; username: string}) => {
   const isMobile = useBreakpointValue({base: true, lg: false});
 
   return (
-    <Tooltip label={props.username} aria-label="A tooltip">
-      <a href={profile_url}>
+    <Tooltip label={props.username} aria-label="A user badge">
+      <Link href={profile_url}>
         <Button
           size="sm"
           borderRadius="25px"
@@ -34,7 +35,7 @@ const UserTag = (props: {user_id: number; username: string}) => {
             </Typography.Subtitle1>
           </HStack>
         </Button>
-      </a>
+      </Link>
     </Tooltip>
   );
 };

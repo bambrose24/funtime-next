@@ -68,6 +68,13 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
             >
               Standings
             </MenuItem>
+            {/* <MenuItem
+              onClick={() => {
+                router.push(`/league/${member.leagues.league_id}/edit-profile`);
+              }}
+            >
+              Edit Profile
+            </MenuItem> */}
             {member.leagues.status !== LeagueStatus.NotStarted && (
               <MenuItem
                 onClick={() => {

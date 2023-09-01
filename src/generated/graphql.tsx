@@ -5665,13 +5665,26 @@ export type User = {
   google_photo_url?: Maybe<Scalars['String']>;
   google_userid?: Maybe<Scalars['String']>;
   id: Scalars['ID'];
+  league?: Maybe<League>;
+  leagueMember?: Maybe<LeagueMember>;
   leaguemembers: Array<LeagueMember>;
   leagues: Array<League>;
   lname: Scalars['String'];
   picks: Array<Pick>;
   season: Scalars['Int'];
+  supabase_id?: Maybe<Scalars['String']>;
   uid: Scalars['Int'];
   username: Scalars['String'];
+};
+
+
+export type UserLeagueArgs = {
+  league_id: Scalars['Int'];
+};
+
+
+export type UserLeagueMemberArgs = {
+  league_id: Scalars['Int'];
 };
 
 
@@ -5733,6 +5746,7 @@ export type UserCountAggregate = {
   google_userid: Scalars['Int'];
   lname: Scalars['Int'];
   season: Scalars['Int'];
+  supabase_id: Scalars['Int'];
   uid: Scalars['Int'];
   username: Scalars['Int'];
 };
@@ -5746,6 +5760,7 @@ export type UserCountOrderByAggregateInput = {
   google_userid?: InputMaybe<SortOrder>;
   lname?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
@@ -5762,6 +5777,7 @@ export type UserCreateInput = {
   lname: Scalars['String'];
   picks?: InputMaybe<PickCreateNestedManyWithoutPeopleInput>;
   season: Scalars['Int'];
+  supabase_id?: InputMaybe<Scalars['String']>;
   username: Scalars['String'];
 };
 
@@ -5774,6 +5790,7 @@ export type UserCreateManyInput = {
   google_userid?: InputMaybe<Scalars['String']>;
   lname: Scalars['String'];
   season: Scalars['Int'];
+  supabase_id?: InputMaybe<Scalars['String']>;
   uid?: InputMaybe<Scalars['Int']>;
   username: Scalars['String'];
 };
@@ -5822,6 +5839,7 @@ export type UserCreateWithoutLeaguemembersInput = {
   lname: Scalars['String'];
   picks?: InputMaybe<PickCreateNestedManyWithoutPeopleInput>;
   season: Scalars['Int'];
+  supabase_id?: InputMaybe<Scalars['String']>;
   username: Scalars['String'];
 };
 
@@ -5836,6 +5854,7 @@ export type UserCreateWithoutLeaguesInput = {
   lname: Scalars['String'];
   picks?: InputMaybe<PickCreateNestedManyWithoutPeopleInput>;
   season: Scalars['Int'];
+  supabase_id?: InputMaybe<Scalars['String']>;
   username: Scalars['String'];
 };
 
@@ -5850,6 +5869,7 @@ export type UserCreateWithoutPicksInput = {
   leagues?: InputMaybe<LeagueCreateNestedManyWithoutPeopleInput>;
   lname: Scalars['String'];
   season: Scalars['Int'];
+  supabase_id?: InputMaybe<Scalars['String']>;
   username: Scalars['String'];
 };
 
@@ -5868,6 +5888,7 @@ export type UserGroupBy = {
   google_userid?: Maybe<Scalars['String']>;
   lname: Scalars['String'];
   season: Scalars['Int'];
+  supabase_id?: Maybe<Scalars['String']>;
   uid: Scalars['Int'];
   username: Scalars['String'];
 };
@@ -5882,6 +5903,7 @@ export type UserMaxAggregate = {
   google_userid?: Maybe<Scalars['String']>;
   lname?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['Int']>;
+  supabase_id?: Maybe<Scalars['String']>;
   uid?: Maybe<Scalars['Int']>;
   username?: Maybe<Scalars['String']>;
 };
@@ -5895,6 +5917,7 @@ export type UserMaxOrderByAggregateInput = {
   google_userid?: InputMaybe<SortOrder>;
   lname?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
@@ -5909,6 +5932,7 @@ export type UserMinAggregate = {
   google_userid?: Maybe<Scalars['String']>;
   lname?: Maybe<Scalars['String']>;
   season?: Maybe<Scalars['Int']>;
+  supabase_id?: Maybe<Scalars['String']>;
   uid?: Maybe<Scalars['Int']>;
   username?: Maybe<Scalars['String']>;
 };
@@ -5922,6 +5946,7 @@ export type UserMinOrderByAggregateInput = {
   google_userid?: InputMaybe<SortOrder>;
   lname?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
@@ -5940,6 +5965,7 @@ export type UserOrderByWithAggregationInput = {
   google_userid?: InputMaybe<SortOrder>;
   lname?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
@@ -5956,6 +5982,7 @@ export type UserOrderByWithRelationInput = {
   lname?: InputMaybe<SortOrder>;
   picks?: InputMaybe<PickOrderByRelationAggregateInput>;
   season?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
@@ -5974,6 +6001,7 @@ export enum UserScalarFieldEnum {
   GoogleUserid = 'google_userid',
   Lname = 'lname',
   Season = 'season',
+  SupabaseId = 'supabase_id',
   Uid = 'uid',
   Username = 'username'
 }
@@ -5990,6 +6018,7 @@ export type UserScalarWhereWithAggregatesInput = {
   google_userid?: InputMaybe<StringNullableWithAggregatesFilter>;
   lname?: InputMaybe<StringWithAggregatesFilter>;
   season?: InputMaybe<IntWithAggregatesFilter>;
+  supabase_id?: InputMaybe<StringNullableWithAggregatesFilter>;
   uid?: InputMaybe<IntWithAggregatesFilter>;
   username?: InputMaybe<StringWithAggregatesFilter>;
 };
@@ -6017,6 +6046,7 @@ export type UserUpdateInput = {
   lname?: InputMaybe<StringFieldUpdateOperationsInput>;
   picks?: InputMaybe<PickUpdateManyWithoutPeopleNestedInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
+  supabase_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
@@ -6029,6 +6059,7 @@ export type UserUpdateManyMutationInput = {
   google_userid?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   lname?: InputMaybe<StringFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
+  supabase_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
@@ -6067,6 +6098,7 @@ export type UserUpdateWithoutLeaguemembersInput = {
   lname?: InputMaybe<StringFieldUpdateOperationsInput>;
   picks?: InputMaybe<PickUpdateManyWithoutPeopleNestedInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
+  supabase_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
@@ -6081,6 +6113,7 @@ export type UserUpdateWithoutLeaguesInput = {
   lname?: InputMaybe<StringFieldUpdateOperationsInput>;
   picks?: InputMaybe<PickUpdateManyWithoutPeopleNestedInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
+  supabase_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
@@ -6095,6 +6128,7 @@ export type UserUpdateWithoutPicksInput = {
   leagues?: InputMaybe<LeagueUpdateManyWithoutPeopleNestedInput>;
   lname?: InputMaybe<StringFieldUpdateOperationsInput>;
   season?: InputMaybe<IntFieldUpdateOperationsInput>;
+  supabase_id?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
   username?: InputMaybe<StringFieldUpdateOperationsInput>;
 };
 
@@ -6128,12 +6162,14 @@ export type UserWhereInput = {
   lname?: InputMaybe<StringFilter>;
   picks?: InputMaybe<PickListRelationFilter>;
   season?: InputMaybe<IntFilter>;
+  supabase_id?: InputMaybe<StringNullableFilter>;
   uid?: InputMaybe<IntFilter>;
   username?: InputMaybe<StringFilter>;
 };
 
 export type UserWhereUniqueInput = {
   email?: InputMaybe<Scalars['String']>;
+  supabase_id?: InputMaybe<Scalars['String']>;
   uid?: InputMaybe<Scalars['Int']>;
 };
 
@@ -6531,6 +6567,13 @@ export type LeagueAdminQueryVariables = Exact<{
 
 export type LeagueAdminQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, uid: number, username: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, role?: MemberRole | null }> } | null, league?: { __typename?: 'League', id: string, name: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, paid?: boolean | null, membership_id: number, hasPickedNextGame: boolean, picks: Array<{ __typename?: 'Pick', id: string, week: number, correct?: number | null }>, people: { __typename?: 'User', id: string, uid: number, username: string, email: string } }> } | null, weekForPicks: { __typename?: 'WeekForPicksResponse', week?: number | null } };
 
+export type EditProfileQueryVariables = Exact<{
+  leagueId: Scalars['Int'];
+}>;
+
+
+export type EditProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, leagueMember?: { __typename?: 'LeagueMember', id: string, superbowl: Array<{ __typename?: 'Superbowl', id: string, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null } }>, leagues: { __typename?: 'League', id: string, name: string } } | null } | null };
+
 export type MarkAsPaidMutationVariables = Exact<{
   membership_id: Scalars['Int'];
   paid: Scalars['Boolean'];
@@ -6747,6 +6790,68 @@ export function useLeagueAdminLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type LeagueAdminQueryHookResult = ReturnType<typeof useLeagueAdminQuery>;
 export type LeagueAdminLazyQueryHookResult = ReturnType<typeof useLeagueAdminLazyQuery>;
 export type LeagueAdminQueryResult = Apollo.QueryResult<LeagueAdminQuery, LeagueAdminQueryVariables>;
+export const EditProfileDocument = gql`
+    query EditProfile($leagueId: Int!) {
+  me {
+    id
+    username
+    leagueMember(league_id: $leagueId) {
+      id
+      superbowl {
+        id
+        teams_superbowl_loserToteams {
+          id
+          teamid
+          loc
+          name
+          abbrev
+          conference
+        }
+        teams_superbowl_winnerToteams {
+          id
+          teamid
+          loc
+          name
+          abbrev
+          conference
+        }
+      }
+      leagues {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useEditProfileQuery__
+ *
+ * To run a query within a React component, call `useEditProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useEditProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useEditProfileQuery({
+ *   variables: {
+ *      leagueId: // value for 'leagueId'
+ *   },
+ * });
+ */
+export function useEditProfileQuery(baseOptions: Apollo.QueryHookOptions<EditProfileQuery, EditProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<EditProfileQuery, EditProfileQueryVariables>(EditProfileDocument, options);
+      }
+export function useEditProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<EditProfileQuery, EditProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<EditProfileQuery, EditProfileQueryVariables>(EditProfileDocument, options);
+        }
+export type EditProfileQueryHookResult = ReturnType<typeof useEditProfileQuery>;
+export type EditProfileLazyQueryHookResult = ReturnType<typeof useEditProfileLazyQuery>;
+export type EditProfileQueryResult = Apollo.QueryResult<EditProfileQuery, EditProfileQueryVariables>;
 export const MarkAsPaidDocument = gql`
     mutation MarkAsPaid($membership_id: Int!, $paid: Boolean!) {
   updateOneLeagueMember(

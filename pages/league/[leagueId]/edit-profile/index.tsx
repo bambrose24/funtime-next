@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {Box, Button, Divider, Flex, Stack} from '@chakra-ui/react';
+import {Box, Button, Divider, Flex, Stack, Tooltip} from '@chakra-ui/react';
 import {FuntimeError} from '@src/modules/shared/FuntimeError';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 import {Typography} from '@src/modules/Typography';
@@ -100,6 +100,8 @@ export default function EditProfilePage() {
     );
   }
 
+  const disableEditButton = !league || league.status !== LeagueStatus.NotStarted;
+
   return (
     <FuntimePage>
       <Flex w="100%" justify="center">
@@ -122,15 +124,20 @@ export default function EditProfilePage() {
                   </Box>
                 </Flex>
                 <Flex alignItems="center">
-                  <Button
-                    variant="outline"
-                    disabled={!league || league.status !== LeagueStatus.NotStarted}
-                    onClick={() => {
-                      setSuperbowlSettingsModalOpen(true);
-                    }}
+                  <Tooltip
+                    isDisabled={!disableEditButton}
+                    label="The season has started, you cannot edit your Super Bowl pick anymore"
                   >
-                    Edit
-                  </Button>
+                    <Button
+                      variant="outline"
+                      disabled={!league || league.status !== LeagueStatus.NotStarted}
+                      onClick={() => {
+                        setSuperbowlSettingsModalOpen(true);
+                      }}
+                    >
+                      Edit
+                    </Button>
+                  </Tooltip>
                 </Flex>
               </Flex>
             )}

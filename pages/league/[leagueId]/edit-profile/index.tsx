@@ -4,7 +4,12 @@ import {FuntimeError} from '@src/modules/shared/FuntimeError';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 import {Typography} from '@src/modules/Typography';
 import {FuntimePage} from '@src/FuntimePage';
-import {LeagueStatus, useAllTeamsQuery, useEditProfileQuery} from '@src/generated/graphql';
+import {
+  LeagueStatus,
+  useAllTeamsQuery,
+  useEditProfileQuery,
+  useSuperbowlPickQuery,
+} from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
 import {useRouter} from 'next/router';
 import {useState} from 'react';
@@ -19,6 +24,7 @@ const _EditProfileQuery = gql`
         id
         superbowl {
           id
+          pickid
           score
           teams_superbowl_loserToteams {
             id
@@ -63,6 +69,18 @@ export default function EditProfilePage() {
     skip: !leagueId,
   });
 
+  const superbowlPick = data?.me?.leagueMember?.superbowl?.[0];
+  const superbowlPickId = superbowlPick?.pickid;
+  const league = data?.me?.leagueMember?.leagues;
+
+  // preload the superbowl pick
+  useSuperbowlPickQuery({
+    variables: {
+      superbowlPickId: superbowlPickId ?? 0,
+    },
+    skip: !superbowlPickId,
+  });
+
   if (loading) {
     return (
       <FuntimePage>
@@ -81,9 +99,6 @@ export default function EditProfilePage() {
       </FuntimePage>
     );
   }
-
-  const superbowlPick = data.me.leagueMember.superbowl?.[0];
-  const league = data.me.leagueMember?.leagues;
 
   return (
     <FuntimePage>
@@ -122,12 +137,17 @@ export default function EditProfilePage() {
           </Stack>
         </Flex>
       </Flex>
-      <SuperbowlSettingsModal
-        isOpen={superbowlSettingsModalOpen}
-        onClose={() => {
-          setSuperbowlSettingsModalOpen(false);
-        }}
-      />
+      {superbowlPick && (
+        <SuperbowlSettingsModal
+          modal={{
+            isOpen: superbowlSettingsModalOpen,
+            onClose: () => {
+              setSuperbowlSettingsModalOpen(false);
+            },
+          }}
+          superbowlPickId={superbowlPick.pickid}
+        />
+      )}
     </FuntimePage>
   );
 }

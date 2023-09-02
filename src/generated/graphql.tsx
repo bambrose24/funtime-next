@@ -6572,7 +6572,7 @@ export type EditProfileQueryVariables = Exact<{
 }>;
 
 
-export type EditProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, leagueMember?: { __typename?: 'LeagueMember', id: string, superbowl: Array<{ __typename?: 'Superbowl', id: string, score: number, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null } }>, leagues: { __typename?: 'League', id: string, name: string, status: LeagueStatus } } | null } | null };
+export type EditProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, leagueMember?: { __typename?: 'LeagueMember', id: string, superbowl: Array<{ __typename?: 'Superbowl', id: string, pickid: number, score: number, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null } }>, leagues: { __typename?: 'League', id: string, name: string, status: LeagueStatus } } | null } | null };
 
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -6703,6 +6703,21 @@ export type CreateLeagueMutationVariables = Exact<{
 
 export type CreateLeagueMutation = { __typename?: 'Mutation', createLeague: { __typename?: 'League', id: string, league_id: number, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, reminder_policy?: ReminderPolicy | null, superbowl_competition?: boolean | null, scoring_type?: ScoringType | null, name: string, share_code?: string | null } };
 
+export type SuperbowlPickQueryVariables = Exact<{
+  superbowlPickId: Scalars['Int'];
+}>;
+
+
+export type SuperbowlPickQuery = { __typename?: 'Query', superbowl?: { __typename?: 'Superbowl', id: string, pickid: number, member_id?: number | null, winner: number, loser: number, score: number } | null };
+
+export type UpdateSuperbowlMutationVariables = Exact<{
+  data: SuperbowlUpdateInput;
+  where: SuperbowlWhereUniqueInput;
+}>;
+
+
+export type UpdateSuperbowlMutation = { __typename?: 'Mutation', updateOneSuperbowl?: { __typename?: 'Superbowl', id: string, pickid: number, member_id?: number | null, winner: number, loser: number, score: number } | null };
+
 export type HomeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -6799,6 +6814,7 @@ export const EditProfileDocument = gql`
       id
       superbowl {
         id
+        pickid
         score
         teams_superbowl_loserToteams {
           id
@@ -7714,6 +7730,85 @@ export function useCreateLeagueMutation(baseOptions?: Apollo.MutationHookOptions
 export type CreateLeagueMutationHookResult = ReturnType<typeof useCreateLeagueMutation>;
 export type CreateLeagueMutationResult = Apollo.MutationResult<CreateLeagueMutation>;
 export type CreateLeagueMutationOptions = Apollo.BaseMutationOptions<CreateLeagueMutation, CreateLeagueMutationVariables>;
+export const SuperbowlPickDocument = gql`
+    query SuperbowlPick($superbowlPickId: Int!) {
+  superbowl(where: {pickid: $superbowlPickId}) {
+    id
+    pickid
+    member_id
+    winner
+    loser
+    score
+  }
+}
+    `;
+
+/**
+ * __useSuperbowlPickQuery__
+ *
+ * To run a query within a React component, call `useSuperbowlPickQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSuperbowlPickQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSuperbowlPickQuery({
+ *   variables: {
+ *      superbowlPickId: // value for 'superbowlPickId'
+ *   },
+ * });
+ */
+export function useSuperbowlPickQuery(baseOptions: Apollo.QueryHookOptions<SuperbowlPickQuery, SuperbowlPickQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SuperbowlPickQuery, SuperbowlPickQueryVariables>(SuperbowlPickDocument, options);
+      }
+export function useSuperbowlPickLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SuperbowlPickQuery, SuperbowlPickQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SuperbowlPickQuery, SuperbowlPickQueryVariables>(SuperbowlPickDocument, options);
+        }
+export type SuperbowlPickQueryHookResult = ReturnType<typeof useSuperbowlPickQuery>;
+export type SuperbowlPickLazyQueryHookResult = ReturnType<typeof useSuperbowlPickLazyQuery>;
+export type SuperbowlPickQueryResult = Apollo.QueryResult<SuperbowlPickQuery, SuperbowlPickQueryVariables>;
+export const UpdateSuperbowlDocument = gql`
+    mutation UpdateSuperbowl($data: SuperbowlUpdateInput!, $where: SuperbowlWhereUniqueInput!) {
+  updateOneSuperbowl(data: $data, where: $where) {
+    id
+    pickid
+    member_id
+    winner
+    loser
+    score
+  }
+}
+    `;
+export type UpdateSuperbowlMutationFn = Apollo.MutationFunction<UpdateSuperbowlMutation, UpdateSuperbowlMutationVariables>;
+
+/**
+ * __useUpdateSuperbowlMutation__
+ *
+ * To run a mutation, you first call `useUpdateSuperbowlMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateSuperbowlMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateSuperbowlMutation, { data, loading, error }] = useUpdateSuperbowlMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *      where: // value for 'where'
+ *   },
+ * });
+ */
+export function useUpdateSuperbowlMutation(baseOptions?: Apollo.MutationHookOptions<UpdateSuperbowlMutation, UpdateSuperbowlMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateSuperbowlMutation, UpdateSuperbowlMutationVariables>(UpdateSuperbowlDocument, options);
+      }
+export type UpdateSuperbowlMutationHookResult = ReturnType<typeof useUpdateSuperbowlMutation>;
+export type UpdateSuperbowlMutationResult = Apollo.MutationResult<UpdateSuperbowlMutation>;
+export type UpdateSuperbowlMutationOptions = Apollo.BaseMutationOptions<UpdateSuperbowlMutation, UpdateSuperbowlMutationVariables>;
 export const HomeDocument = gql`
     query Home {
   me {

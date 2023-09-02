@@ -1,5 +1,5 @@
-import {Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
-import {useRouter} from 'next/router';
+import {TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
+import {useTabsConfig} from '@src/hooks/useTabsConfig';
 import {useState} from 'react';
 import {Signin} from './Signin';
 import {Signup} from './Signup';
@@ -13,6 +13,7 @@ type AuthState = typeof authStates[number];
 
 export function Auth({initialState}: AuthProps) {
   const [tabIndex, setTabIndex] = useState(authStates.indexOf(initialState ?? 'sign_in'));
+  const {TabName} = useTabsConfig();
 
   return (
     <Tabs
@@ -23,8 +24,8 @@ export function Auth({initialState}: AuthProps) {
       }}
     >
       <TabList>
-        <Tab>Log In</Tab>
-        <Tab>Sign Up</Tab>
+        <TabName>Log In</TabName>
+        <TabName>Sign Up</TabName>
       </TabList>
       <TabPanels>
         <TabPanel>

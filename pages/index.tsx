@@ -1,7 +1,7 @@
 import {Alert, AlertDescription, AlertIcon, Button, Flex} from '@chakra-ui/react';
-import {LeaguesHome} from '@src/components/home/LeaguesHome';
-import {FuntimeStandardRules} from '@src/components/shared/FuntimeStandardRules';
-import {Typography} from '@src/components/Typography';
+import {LeaguesHome} from '@src/modules/home/LeaguesHome';
+import {FuntimeStandardRules} from '@src/modules/shared/FuntimeStandardRules';
+import {Typography} from '@src/modules/Typography';
 import {FuntimePage} from '@src/FuntimePage';
 import {useUser} from '@supabase/auth-helpers-react';
 import Link from 'next/link';

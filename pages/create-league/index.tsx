@@ -1,4 +1,4 @@
-import {CreateLeaguePage} from '@src/components/create-league';
+import {CreateLeaguePage} from '@src/modules/create-league';
 
 const CreateLeague = () => {
   return <CreateLeaguePage />;

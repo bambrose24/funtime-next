@@ -1,4 +1,4 @@
-import {PicksContent} from '@src/components/pick/PicksContent';
+import {PicksContent} from '@src/modules/pick/PicksContent';
 import {FuntimePage} from '@src/FuntimePage';
 import {useRouter} from 'next/router';
 

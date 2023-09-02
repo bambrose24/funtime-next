@@ -1,13 +1,14 @@
 import {gql} from '@apollo/client';
-import {Flex, Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
-import {LeagueInfo} from '@src/components/admin/league/LeagueInfo';
-import {ManagePlayers} from '@src/components/admin/league/ManagePlayers';
-import {FuntimeError} from '@src/components/shared/FuntimeError';
-import {FuntimeLoading} from '@src/components/shared/FuntimeLoading';
-import {Typography} from '@src/components/Typography';
+import {Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
+import {LeagueInfo} from '@src/modules/admin/league/LeagueInfo';
+import {ManagePlayers} from '@src/modules/admin/league/ManagePlayers';
+import {FuntimeError} from '@src/modules/shared/FuntimeError';
+import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
+import {Typography} from '@src/modules/Typography';
 import {FuntimePage} from '@src/FuntimePage';
 import {MemberRole, useLeagueAdminQuery} from '@src/generated/graphql';
 import {useRouter} from 'next/router';
+import {useTabsConfig} from '@src/hooks/useTabsConfig';
 
 const _LeagueAdminQuery = gql`
   query LeagueAdmin($leagueId: Int!) {
@@ -51,6 +52,8 @@ export default function LeagueAdminPage() {
   const router = useRouter();
   const leagueId = Number(router.query['leagueId']?.toString() || '');
 
+  const {TabsHeader, TabName} = useTabsConfig();
+
   const {data, loading, error} = useLeagueAdminQuery({variables: {leagueId}});
   if (loading) {
     return (
@@ -78,14 +81,11 @@ export default function LeagueAdminPage() {
     <FuntimePage>
       <Flex justify="center" w="100%">
         <Flex direction="column" maxW="3xl" w="100%" layerStyle="funtime-card">
-          <Typography.H2>{data.league?.name}</Typography.H2>
-          <Typography.H5 pt="4px" pb="8px">
-            Admin Page
-          </Typography.H5>
+          <TabsHeader title={data.league?.name || ''} subtitle={'Admin Page'} />
           <Tabs variant="soft-rounded">
             <TabList>
-              <Tab>League Info</Tab>
-              <Tab>Manage Players</Tab>
+              <TabName>League Info</TabName>
+              <TabName>Manage Players</TabName>
             </TabList>
             <TabPanels>
               <TabPanel>

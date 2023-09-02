@@ -1,5 +1,5 @@
 import {Flex} from '@chakra-ui/react';
-import {CardStatRow} from '@src/components/shared/CardStatRow';
+import {CardStatRow} from '@src/modules/shared/CardStatRow';
 import {HomeQuery} from '@src/generated/graphql';
 import {LeagueCardFooter} from '../LeagueCardFooter';
 

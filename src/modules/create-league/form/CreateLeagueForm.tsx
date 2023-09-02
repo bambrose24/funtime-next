@@ -1,6 +1,6 @@
 import {gql} from '@apollo/client';
 import {useToast} from '@chakra-ui/react';
-import {SequentialWizard} from '@src/components/forms/wizard/SequentialWizard';
+import {SequentialWizard} from '@src/modules/forms/wizard/SequentialWizard';
 import {LatePolicy, useCreateLeagueMutation} from '@src/generated/graphql';
 import {Formik} from 'formik';
 import * as Yup from 'yup';

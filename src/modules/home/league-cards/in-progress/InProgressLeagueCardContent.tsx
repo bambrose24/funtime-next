@@ -1,6 +1,6 @@
 import {Badge, Divider, Flex, HStack, VStack} from '@chakra-ui/react';
-import {CardStatRow} from '@src/components/shared/CardStatRow';
-import {Typography} from '@src/components/Typography';
+import {CardStatRow} from '@src/modules/shared/CardStatRow';
+import {Typography} from '@src/modules/Typography';
 import {HomeQuery} from '@src/generated/graphql';
 import {RankingEntry} from '@src/hooks/useLeagueRankings';
 import {getOrdinal} from '@src/util/ordinals';

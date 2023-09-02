@@ -78,7 +78,8 @@ export default function LeagueAdminPage() {
     <FuntimePage>
       <Flex justify="center" w="100%">
         <Flex direction="column" maxW="3xl" w="100%" layerStyle="funtime-card">
-          <Typography.H2>{data.league?.name} - Admin Page</Typography.H2>
+          <Typography.H2>{data.league?.name}</Typography.H2>
+          <Typography.Subtitle2 pt="4px">Admin Page</Typography.Subtitle2>
           <Tabs variant="soft-rounded">
             <TabList>
               <Tab>League Info</Tab>

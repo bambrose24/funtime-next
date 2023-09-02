@@ -6574,33 +6574,6 @@ export type EditProfileQueryVariables = Exact<{
 
 export type EditProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, leagueMember?: { __typename?: 'LeagueMember', id: string, superbowl: Array<{ __typename?: 'Superbowl', id: string, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null } }>, leagues: { __typename?: 'League', id: string, name: string } } | null } | null };
 
-export type MarkAsPaidMutationVariables = Exact<{
-  membership_id: Scalars['Int'];
-  paid: Scalars['Boolean'];
-}>;
-
-
-export type MarkAsPaidMutation = { __typename?: 'Mutation', updateOneLeagueMember?: { __typename?: 'LeagueMember', id: string, paid?: boolean | null } | null };
-
-export type CreateLeagueMutationVariables = Exact<{
-  data: CreateLeagueInput;
-}>;
-
-
-export type CreateLeagueMutation = { __typename?: 'Mutation', createLeague: { __typename?: 'League', id: string, league_id: number, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, reminder_policy?: ReminderPolicy | null, superbowl_competition?: boolean | null, scoring_type?: ScoringType | null, name: string, share_code?: string | null } };
-
-export type HomeQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type HomeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, membership_id: number, role?: MemberRole | null, hasPickedNextGame: boolean, nextGame?: { __typename?: 'Game', id: string, week: number, ts: any } | null, leagues: { __typename?: 'League', id: string, league_id: number, name: string, season: number, status: LeagueStatus, share_code?: string | null, aggregateLeagueMember: { __typename?: 'AggregateResponse', count: number } }, WeekWinners: Array<{ __typename?: 'WeekWinners', id: number, correct_count: number, membership_id: number, week: number, score_diff: number }>, correctPicks: { __typename?: 'AggregateResponse', count: number }, wrongPicks: { __typename?: 'AggregateResponse', count: number } }> } | null };
-
-export type LeagueRegistrationQueryVariables = Exact<{
-  leagueCode: Scalars['String'];
-}>;
-
-
-export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
-
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
 }>;
@@ -6714,6 +6687,33 @@ export type WinnersQueryVariables = Exact<{
 
 
 export type WinnersQuery = { __typename?: 'Query', findManyWeekWinners: Array<{ __typename?: 'WeekWinners', id: number, week: number, correct_count: number, member: { __typename?: 'LeagueMember', id: string, people: { __typename?: 'User', id: string, uid: number, username: string } } }> };
+
+export type MarkAsPaidMutationVariables = Exact<{
+  membership_id: Scalars['Int'];
+  paid: Scalars['Boolean'];
+}>;
+
+
+export type MarkAsPaidMutation = { __typename?: 'Mutation', updateOneLeagueMember?: { __typename?: 'LeagueMember', id: string, paid?: boolean | null } | null };
+
+export type CreateLeagueMutationVariables = Exact<{
+  data: CreateLeagueInput;
+}>;
+
+
+export type CreateLeagueMutation = { __typename?: 'Mutation', createLeague: { __typename?: 'League', id: string, league_id: number, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, reminder_policy?: ReminderPolicy | null, superbowl_competition?: boolean | null, scoring_type?: ScoringType | null, name: string, share_code?: string | null } };
+
+export type HomeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type HomeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, membership_id: number, role?: MemberRole | null, hasPickedNextGame: boolean, nextGame?: { __typename?: 'Game', id: string, week: number, ts: any } | null, leagues: { __typename?: 'League', id: string, league_id: number, name: string, season: number, status: LeagueStatus, share_code?: string | null, aggregateLeagueMember: { __typename?: 'AggregateResponse', count: number } }, WeekWinners: Array<{ __typename?: 'WeekWinners', id: number, correct_count: number, membership_id: number, week: number, score_diff: number }>, correctPicks: { __typename?: 'AggregateResponse', count: number }, wrongPicks: { __typename?: 'AggregateResponse', count: number } }> } | null };
+
+export type LeagueRegistrationQueryVariables = Exact<{
+  leagueCode: Scalars['String'];
+}>;
+
+
+export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
 
 export const SuperbowlTeamFragmentDoc = gql`
     fragment SuperbowlTeam on Team {
@@ -6852,226 +6852,6 @@ export function useEditProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOption
 export type EditProfileQueryHookResult = ReturnType<typeof useEditProfileQuery>;
 export type EditProfileLazyQueryHookResult = ReturnType<typeof useEditProfileLazyQuery>;
 export type EditProfileQueryResult = Apollo.QueryResult<EditProfileQuery, EditProfileQueryVariables>;
-export const MarkAsPaidDocument = gql`
-    mutation MarkAsPaid($membership_id: Int!, $paid: Boolean!) {
-  updateOneLeagueMember(
-    data: {paid: {set: $paid}}
-    where: {membership_id: $membership_id}
-  ) {
-    id
-    paid
-  }
-}
-    `;
-export type MarkAsPaidMutationFn = Apollo.MutationFunction<MarkAsPaidMutation, MarkAsPaidMutationVariables>;
-
-/**
- * __useMarkAsPaidMutation__
- *
- * To run a mutation, you first call `useMarkAsPaidMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useMarkAsPaidMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [markAsPaidMutation, { data, loading, error }] = useMarkAsPaidMutation({
- *   variables: {
- *      membership_id: // value for 'membership_id'
- *      paid: // value for 'paid'
- *   },
- * });
- */
-export function useMarkAsPaidMutation(baseOptions?: Apollo.MutationHookOptions<MarkAsPaidMutation, MarkAsPaidMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<MarkAsPaidMutation, MarkAsPaidMutationVariables>(MarkAsPaidDocument, options);
-      }
-export type MarkAsPaidMutationHookResult = ReturnType<typeof useMarkAsPaidMutation>;
-export type MarkAsPaidMutationResult = Apollo.MutationResult<MarkAsPaidMutation>;
-export type MarkAsPaidMutationOptions = Apollo.BaseMutationOptions<MarkAsPaidMutation, MarkAsPaidMutationVariables>;
-export const CreateLeagueDocument = gql`
-    mutation CreateLeague($data: CreateLeagueInput!) {
-  createLeague(data: $data) {
-    id
-    league_id
-    late_policy
-    pick_policy
-    reminder_policy
-    superbowl_competition
-    scoring_type
-    name
-    share_code
-  }
-}
-    `;
-export type CreateLeagueMutationFn = Apollo.MutationFunction<CreateLeagueMutation, CreateLeagueMutationVariables>;
-
-/**
- * __useCreateLeagueMutation__
- *
- * To run a mutation, you first call `useCreateLeagueMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateLeagueMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createLeagueMutation, { data, loading, error }] = useCreateLeagueMutation({
- *   variables: {
- *      data: // value for 'data'
- *   },
- * });
- */
-export function useCreateLeagueMutation(baseOptions?: Apollo.MutationHookOptions<CreateLeagueMutation, CreateLeagueMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateLeagueMutation, CreateLeagueMutationVariables>(CreateLeagueDocument, options);
-      }
-export type CreateLeagueMutationHookResult = ReturnType<typeof useCreateLeagueMutation>;
-export type CreateLeagueMutationResult = Apollo.MutationResult<CreateLeagueMutation>;
-export type CreateLeagueMutationOptions = Apollo.BaseMutationOptions<CreateLeagueMutation, CreateLeagueMutationVariables>;
-export const HomeDocument = gql`
-    query Home {
-  me {
-    id
-    leaguemembers(orderBy: {leagues: {season: desc}}) {
-      id
-      membership_id
-      role
-      nextGame {
-        id
-        week
-        ts
-      }
-      hasPickedNextGame
-      leagues {
-        id
-        league_id
-        name
-        season
-        status
-        share_code
-        aggregateLeagueMember {
-          count
-        }
-      }
-      WeekWinners {
-        id
-        correct_count
-        membership_id
-        week
-        score_diff
-      }
-      correctPicks: aggregatePick(where: {correct: {equals: 1}}) {
-        count
-      }
-      wrongPicks: aggregatePick(where: {correct: {equals: 0}}) {
-        count
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useHomeQuery__
- *
- * To run a query within a React component, call `useHomeQuery` and pass it any options that fit your needs.
- * When your component renders, `useHomeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useHomeQuery({
- *   variables: {
- *   },
- * });
- */
-export function useHomeQuery(baseOptions?: Apollo.QueryHookOptions<HomeQuery, HomeQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<HomeQuery, HomeQueryVariables>(HomeDocument, options);
-      }
-export function useHomeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HomeQuery, HomeQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<HomeQuery, HomeQueryVariables>(HomeDocument, options);
-        }
-export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>;
-export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>;
-export type HomeQueryResult = Apollo.QueryResult<HomeQuery, HomeQueryVariables>;
-export const LeagueRegistrationDocument = gql`
-    query LeagueRegistration($leagueCode: String!) {
-  league(where: {share_code: $leagueCode}) {
-    id
-    share_code
-    name
-    status
-    reminder_policy
-    late_policy
-    pick_policy
-    scoring_type
-    viewer {
-      id
-      membership_id
-    }
-    superbowl_competition
-    _count {
-      leaguemembers
-    }
-    rules {
-      id
-      name
-      description
-    }
-    priorLeague {
-      leaguemembers {
-        people {
-          username
-          email
-          uid
-        }
-      }
-    }
-  }
-  teams {
-    id
-    abbrev
-    conference
-    teamid
-    loc
-    name
-  }
-}
-    `;
-
-/**
- * __useLeagueRegistrationQuery__
- *
- * To run a query within a React component, call `useLeagueRegistrationQuery` and pass it any options that fit your needs.
- * When your component renders, `useLeagueRegistrationQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useLeagueRegistrationQuery({
- *   variables: {
- *      leagueCode: // value for 'leagueCode'
- *   },
- * });
- */
-export function useLeagueRegistrationQuery(baseOptions: Apollo.QueryHookOptions<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>(LeagueRegistrationDocument, options);
-      }
-export function useLeagueRegistrationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>(LeagueRegistrationDocument, options);
-        }
-export type LeagueRegistrationQueryHookResult = ReturnType<typeof useLeagueRegistrationQuery>;
-export type LeagueRegistrationLazyQueryHookResult = ReturnType<typeof useLeagueRegistrationLazyQuery>;
-export type LeagueRegistrationQueryResult = Apollo.QueryResult<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>;
 export const SeasonCorrectPicksDocument = gql`
     query SeasonCorrectPicks($league_id: Int!) {
   leagueMembers(where: {league_id: {equals: $league_id}}) {
@@ -7852,3 +7632,223 @@ export function useWinnersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Wi
 export type WinnersQueryHookResult = ReturnType<typeof useWinnersQuery>;
 export type WinnersLazyQueryHookResult = ReturnType<typeof useWinnersLazyQuery>;
 export type WinnersQueryResult = Apollo.QueryResult<WinnersQuery, WinnersQueryVariables>;
+export const MarkAsPaidDocument = gql`
+    mutation MarkAsPaid($membership_id: Int!, $paid: Boolean!) {
+  updateOneLeagueMember(
+    data: {paid: {set: $paid}}
+    where: {membership_id: $membership_id}
+  ) {
+    id
+    paid
+  }
+}
+    `;
+export type MarkAsPaidMutationFn = Apollo.MutationFunction<MarkAsPaidMutation, MarkAsPaidMutationVariables>;
+
+/**
+ * __useMarkAsPaidMutation__
+ *
+ * To run a mutation, you first call `useMarkAsPaidMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useMarkAsPaidMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [markAsPaidMutation, { data, loading, error }] = useMarkAsPaidMutation({
+ *   variables: {
+ *      membership_id: // value for 'membership_id'
+ *      paid: // value for 'paid'
+ *   },
+ * });
+ */
+export function useMarkAsPaidMutation(baseOptions?: Apollo.MutationHookOptions<MarkAsPaidMutation, MarkAsPaidMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<MarkAsPaidMutation, MarkAsPaidMutationVariables>(MarkAsPaidDocument, options);
+      }
+export type MarkAsPaidMutationHookResult = ReturnType<typeof useMarkAsPaidMutation>;
+export type MarkAsPaidMutationResult = Apollo.MutationResult<MarkAsPaidMutation>;
+export type MarkAsPaidMutationOptions = Apollo.BaseMutationOptions<MarkAsPaidMutation, MarkAsPaidMutationVariables>;
+export const CreateLeagueDocument = gql`
+    mutation CreateLeague($data: CreateLeagueInput!) {
+  createLeague(data: $data) {
+    id
+    league_id
+    late_policy
+    pick_policy
+    reminder_policy
+    superbowl_competition
+    scoring_type
+    name
+    share_code
+  }
+}
+    `;
+export type CreateLeagueMutationFn = Apollo.MutationFunction<CreateLeagueMutation, CreateLeagueMutationVariables>;
+
+/**
+ * __useCreateLeagueMutation__
+ *
+ * To run a mutation, you first call `useCreateLeagueMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateLeagueMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createLeagueMutation, { data, loading, error }] = useCreateLeagueMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateLeagueMutation(baseOptions?: Apollo.MutationHookOptions<CreateLeagueMutation, CreateLeagueMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateLeagueMutation, CreateLeagueMutationVariables>(CreateLeagueDocument, options);
+      }
+export type CreateLeagueMutationHookResult = ReturnType<typeof useCreateLeagueMutation>;
+export type CreateLeagueMutationResult = Apollo.MutationResult<CreateLeagueMutation>;
+export type CreateLeagueMutationOptions = Apollo.BaseMutationOptions<CreateLeagueMutation, CreateLeagueMutationVariables>;
+export const HomeDocument = gql`
+    query Home {
+  me {
+    id
+    leaguemembers(orderBy: {leagues: {season: desc}}) {
+      id
+      membership_id
+      role
+      nextGame {
+        id
+        week
+        ts
+      }
+      hasPickedNextGame
+      leagues {
+        id
+        league_id
+        name
+        season
+        status
+        share_code
+        aggregateLeagueMember {
+          count
+        }
+      }
+      WeekWinners {
+        id
+        correct_count
+        membership_id
+        week
+        score_diff
+      }
+      correctPicks: aggregatePick(where: {correct: {equals: 1}}) {
+        count
+      }
+      wrongPicks: aggregatePick(where: {correct: {equals: 0}}) {
+        count
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useHomeQuery__
+ *
+ * To run a query within a React component, call `useHomeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useHomeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useHomeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useHomeQuery(baseOptions?: Apollo.QueryHookOptions<HomeQuery, HomeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<HomeQuery, HomeQueryVariables>(HomeDocument, options);
+      }
+export function useHomeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<HomeQuery, HomeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<HomeQuery, HomeQueryVariables>(HomeDocument, options);
+        }
+export type HomeQueryHookResult = ReturnType<typeof useHomeQuery>;
+export type HomeLazyQueryHookResult = ReturnType<typeof useHomeLazyQuery>;
+export type HomeQueryResult = Apollo.QueryResult<HomeQuery, HomeQueryVariables>;
+export const LeagueRegistrationDocument = gql`
+    query LeagueRegistration($leagueCode: String!) {
+  league(where: {share_code: $leagueCode}) {
+    id
+    share_code
+    name
+    status
+    reminder_policy
+    late_policy
+    pick_policy
+    scoring_type
+    viewer {
+      id
+      membership_id
+    }
+    superbowl_competition
+    _count {
+      leaguemembers
+    }
+    rules {
+      id
+      name
+      description
+    }
+    priorLeague {
+      leaguemembers {
+        people {
+          username
+          email
+          uid
+        }
+      }
+    }
+  }
+  teams {
+    id
+    abbrev
+    conference
+    teamid
+    loc
+    name
+  }
+}
+    `;
+
+/**
+ * __useLeagueRegistrationQuery__
+ *
+ * To run a query within a React component, call `useLeagueRegistrationQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLeagueRegistrationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLeagueRegistrationQuery({
+ *   variables: {
+ *      leagueCode: // value for 'leagueCode'
+ *   },
+ * });
+ */
+export function useLeagueRegistrationQuery(baseOptions: Apollo.QueryHookOptions<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>(LeagueRegistrationDocument, options);
+      }
+export function useLeagueRegistrationLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>(LeagueRegistrationDocument, options);
+        }
+export type LeagueRegistrationQueryHookResult = ReturnType<typeof useLeagueRegistrationQuery>;
+export type LeagueRegistrationLazyQueryHookResult = ReturnType<typeof useLeagueRegistrationLazyQuery>;
+export type LeagueRegistrationQueryResult = Apollo.QueryResult<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>;

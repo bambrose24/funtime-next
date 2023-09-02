@@ -1,8 +1,8 @@
 import {FuntimePage} from '../../src/FuntimePage';
 import {useRouter} from 'next/router';
 import React from 'react';
-import {Typography} from '../../src/components/Typography';
-import ProfilePicture from '../../src/components/profile/ProfilePicture';
+import {Typography} from '../../src/modules/Typography';
+import ProfilePicture from '../../src/modules/profile/ProfilePicture';
 import {
   PeopleWithLeaguesDocument,
   PeopleWithLeaguesQuery,
@@ -20,12 +20,12 @@ import {
   Td,
   TableContainer,
 } from '@chakra-ui/react';
-import {FuntimeLoading} from '@src/components/shared/FuntimeLoading';
+import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 import {GetStaticPaths, GetStaticProps} from 'next';
 import {getApolloClient} from '@src/graphql';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 import {LEAGUE_ID} from '@src/util/config';
-import {FuntimeError} from '@src/components/shared/FuntimeError';
+import {FuntimeError} from '@src/modules/shared/FuntimeError';
 import {SECONDS_IN_DAY} from '@src/util/constants';
 
 type IDParam = {

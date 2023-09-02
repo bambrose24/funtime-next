@@ -1,6 +1,6 @@
 import {Flex, Table, TableContainer, Tbody, Td, Th, Thead, Tr} from '@chakra-ui/react';
-import UserTag from '@src/components/profile/UserTag';
-import {Typography} from '@src/components/Typography';
+import UserTag from '@src/modules/profile/UserTag';
+import {Typography} from '@src/modules/Typography';
 import {useLeagueAdminQuery} from '@src/generated/graphql';
 import {MarkAsPaidButton} from './MarkAsPaidButton';
 

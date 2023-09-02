@@ -4,8 +4,8 @@ import Head from 'next/head';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
 import {ReactNode} from 'react';
-import {Nav} from './components/nav/Nav';
-import {FuntimeLoading} from './components/shared/FuntimeLoading';
+import {Nav} from './modules/nav/Nav';
+import {FuntimeLoading} from './modules/shared/FuntimeLoading';
 import {useFullHeightWithoutNav} from './hooks/useFullHeightWithoutNav';
 
 type Props = {children: ReactNode; requiresAuth?: boolean, meta?: Meta};

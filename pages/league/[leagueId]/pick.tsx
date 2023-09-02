@@ -1,9 +1,9 @@
 import {FuntimePage} from '@src/FuntimePage';
-import {PicksContent} from '@src/components/pick/PicksContent';
+import {PicksContent} from '@src/modules/pick/PicksContent';
 import {gql} from '@apollo/client';
 import {useRouter} from 'next/router';
 import {useEffect} from 'react';
-import {FuntimeLoading} from '@src/components/shared/FuntimeLoading';
+import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 
 export default function PickPage() {
   const router = useRouter();

@@ -1,8 +1,8 @@
 import {FuntimePage} from '@src/FuntimePage';
-import WeekContent from '@src/components/week/WeekContent';
+import WeekContent from '@src/modules/week/WeekContent';
 import {GetStaticProps} from 'next';
 import {useRouter} from 'next/router';
-import {FuntimeError} from '@src/components/shared/FuntimeError';
+import {FuntimeError} from '@src/modules/shared/FuntimeError';
 
 export default function LeagueWeekPage() {
   const router = useRouter();

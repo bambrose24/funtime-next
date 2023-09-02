@@ -1,5 +1,5 @@
-import {LeagueRegistration} from '@src/components/registration';
-import {FuntimeError} from '@src/components/shared/FuntimeError';
+import {LeagueRegistration} from '@src/modules/registration';
+import {FuntimeError} from '@src/modules/shared/FuntimeError';
 import {
   LeagueRegistrationDocument,
   LeagueRegistrationQuery,

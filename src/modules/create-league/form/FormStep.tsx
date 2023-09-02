@@ -10,8 +10,8 @@ import {
   Select,
   VStack,
 } from '@chakra-ui/react';
-import {useWizard} from '@src/components/forms/wizard/SequentialWizardTypes';
-import {Typography} from '@src/components/Typography';
+import {useWizard} from '@src/modules/forms/wizard/SequentialWizardTypes';
+import {Typography} from '@src/modules/Typography';
 import {FormikProps} from 'formik';
 import {CreateLeagueFormType} from './CreateLeagueForm';
 import {SequentialWizardLayout} from '../../forms/wizard/SequentialWizardLayout';

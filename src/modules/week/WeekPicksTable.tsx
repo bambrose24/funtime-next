@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import {AllTeamsQuery, FindLeagueMembersQuery, PicksByWeekQuery} from '@src/generated/graphql';
 import {useState} from 'react';
-import UserTag from '@src/components/profile/UserTag';
+import UserTag from '@src/modules/profile/UserTag';
 import moment from 'moment';
 
 type WeekPicksTableProps = {

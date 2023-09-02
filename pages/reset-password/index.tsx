@@ -7,7 +7,7 @@ import {
   Input,
   useToast,
 } from '@chakra-ui/react';
-import {Typography} from '@src/components/Typography';
+import {Typography} from '@src/modules/Typography';
 import {FuntimePage} from '@src/FuntimePage';
 import {useFullURL} from '@src/hooks/useFullURL';
 import {useSupabaseClient} from '@supabase/auth-helpers-react';

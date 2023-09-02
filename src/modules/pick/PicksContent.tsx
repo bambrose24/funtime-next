@@ -1,6 +1,6 @@
 import {Box, Flex} from '@chakra-ui/react';
-import {PicksForm} from '@src/components/pick/PicksForm';
-import {Typography} from '@src/components/Typography';
+import {PicksForm} from '@src/modules/pick/PicksForm';
+import {Typography} from '@src/modules/Typography';
 import {useLeagueQuery, useWeekForPicksQuery} from '@src/generated/graphql';
 import {LEAGUE_ID} from '@src/util/config';
 import _ from 'lodash';

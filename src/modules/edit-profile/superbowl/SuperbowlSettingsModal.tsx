@@ -28,31 +28,63 @@ import {Typography} from '@src/modules/Typography';
 import {Formik, FormikErrors, FormikHelpers} from 'formik';
 import * as Yup from 'yup';
 
-const _SuperBowlPickQuery = gql(`
-query SuperbowlPick($superbowlPickId: Int!) {
-  superbowl(where: {pickid: $superbowlPickId}) {
-    id
-    pickid
-    member_id
-    winner
-    loser
-    score
+const _SuperBowlPickQuery = gql`
+  query SuperbowlPick($superbowlPickId: Int!) {
+    superbowl(where: {pickid: $superbowlPickId}) {
+      id
+      pickid
+      member_id
+      winner
+      loser
+      score
+      teams_superbowl_loserToteams {
+        id
+        teamid
+        loc
+        name
+        abbrev
+        conference
+      }
+      teams_superbowl_winnerToteams {
+        id
+        teamid
+        loc
+        name
+        abbrev
+        conference
+      }
+    }
   }
-}
-`);
+`;
 
-const _UpdateSuperbowlMutation = gql(`
-mutation UpdateSuperbowl($data: SuperbowlUpdateInput!, $where: SuperbowlWhereUniqueInput!) {
-  updateOneSuperbowl(data: $data, where: $where) {
-    id
-    pickid
-    member_id
-    winner
-    loser
-    score
+const _UpdateSuperbowlMutation = gql`
+  mutation UpdateSuperbowl($data: SuperbowlUpdateInput!, $where: SuperbowlWhereUniqueInput!) {
+    updateOneSuperbowl(data: $data, where: $where) {
+      id
+      pickid
+      member_id
+      winner
+      loser
+      score
+      teams_superbowl_loserToteams {
+        id
+        teamid
+        loc
+        name
+        abbrev
+        conference
+      }
+      teams_superbowl_winnerToteams {
+        id
+        teamid
+        loc
+        name
+        abbrev
+        conference
+      }
+    }
   }
-}
-`);
+`;
 
 type SuperbowlSettingsModalProps = {
   modal: Omit<ModalProps, 'children'>;

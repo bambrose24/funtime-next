@@ -78,9 +78,9 @@ export function SuperbowlSettingsModal({superbowlPickId, modal}: SuperbowlSettin
   return (
     <Formik<SuperbowlFormType>
       initialValues={{
-        winner: superbowlPick.winner ?? 0,
-        loser: superbowlPick.loser ?? 0,
-        score: superbowlPick.score ?? 0,
+        winner: superbowlPick.winner ? superbowlPick.winner.toString() : '',
+        loser: superbowlPick.loser ? superbowlPick.loser.toString() : '',
+        score: superbowlPick.score ? superbowlPick.score.toString() : '',
       }}
       validate={async values => {
         const {winner, loser, score} = values;
@@ -92,7 +92,7 @@ export function SuperbowlSettingsModal({superbowlPickId, modal}: SuperbowlSettin
         if (!loser) {
           errors['loser'] = 'Please enter a Super Bowl loser';
         }
-        if (!score || score < 1) {
+        if (!score || Number(score) < 1) {
           errors['score'] = 'Please enter a valid total score for the Super Bowl';
         }
         const winnerTeam = teams?.teams.find(t => t.teamid === Number(winner));
@@ -105,28 +105,38 @@ export function SuperbowlSettingsModal({superbowlPickId, modal}: SuperbowlSettin
         return errors;
       }}
       onSubmit={async values => {
-        await updateSuperBowl({
-          variables: {
-            data: {
-              teams_superbowl_winnerToteams: {
-                connect: {
-                  teamid: Number(values.winner),
+        try {
+          await updateSuperBowl({
+            variables: {
+              data: {
+                teams_superbowl_winnerToteams: {
+                  connect: {
+                    teamid: Number(values.winner),
+                  },
                 },
-              },
-              teams_superbowl_loserToteams: {
-                connect: {
-                  teamid: Number(values.loser),
+                teams_superbowl_loserToteams: {
+                  connect: {
+                    teamid: Number(values.loser),
+                  },
                 },
+                score: {set: Number(values.score)},
               },
-              score: {set: Number(values.score)},
+              where: {
+                pickid: superbowlPickId,
+              },
             },
-            where: {
-              pickid: superbowlPickId,
-            },
-          },
-        });
-        toaster({position: 'top', description: `Successfully updated your Super Bowl pick`});
-        modal.onClose();
+          });
+          toaster({position: 'top', description: `Successfully updated your Super Bowl pick`});
+          modal.onClose();
+        } catch (e) {
+          console.error(e);
+          toaster({
+            position: 'top',
+            colorScheme: 'red',
+            description: `There was an error updating your Super Bowl pick. Please try again or contact Bob (bambrose24@gmail.com)`,
+            duration: 10 * 1000,
+          });
+        }
       }}
     >
       {formik => {

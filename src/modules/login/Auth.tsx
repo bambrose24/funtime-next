@@ -1,4 +1,4 @@
-import {TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
+import {Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
 import {useTabsConfig} from '@src/hooks/useTabsConfig';
 import {useState} from 'react';
 import {Signin} from './Signin';
@@ -24,8 +24,12 @@ export function Auth({initialState}: AuthProps) {
       }}
     >
       <TabList>
-        <TabName>Log In</TabName>
-        <TabName>Sign Up</TabName>
+        <Tab>
+          <TabName>Log In</TabName>
+        </Tab>
+        <Tab>
+          <TabName>Sign Up</TabName>
+        </Tab>
       </TabList>
       <TabPanels>
         <TabPanel>

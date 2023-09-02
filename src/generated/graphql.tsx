@@ -6572,7 +6572,7 @@ export type EditProfileQueryVariables = Exact<{
 }>;
 
 
-export type EditProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, leagueMember?: { __typename?: 'LeagueMember', id: string, superbowl: Array<{ __typename?: 'Superbowl', id: string, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null } }>, leagues: { __typename?: 'League', id: string, name: string } } | null } | null };
+export type EditProfileQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, username: string, leagueMember?: { __typename?: 'LeagueMember', id: string, superbowl: Array<{ __typename?: 'Superbowl', id: string, score: number, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null } }>, leagues: { __typename?: 'League', id: string, name: string, status: LeagueStatus } } | null } | null };
 
 export type SeasonCorrectPicksQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -6669,7 +6669,7 @@ export type SuperbowlPicksQuery = { __typename?: 'Query', superbowls: Array<{ __
 export type AllTeamsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type AllTeamsQuery = { __typename?: 'Query', teams: Array<{ __typename?: 'Team', teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
+export type AllTeamsQuery = { __typename?: 'Query', teams: Array<{ __typename?: 'Team', id: string, teamid: number, abbrev?: string | null, loc: string, name: string, conference?: string | null }> };
 
 export type WeekForPicksQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -6799,6 +6799,7 @@ export const EditProfileDocument = gql`
       id
       superbowl {
         id
+        score
         teams_superbowl_loserToteams {
           id
           teamid
@@ -6819,6 +6820,7 @@ export const EditProfileDocument = gql`
       leagues {
         id
         name
+        status
       }
     }
   }
@@ -7471,7 +7473,8 @@ export type SuperbowlPicksLazyQueryHookResult = ReturnType<typeof useSuperbowlPi
 export type SuperbowlPicksQueryResult = Apollo.QueryResult<SuperbowlPicksQuery, SuperbowlPicksQueryVariables>;
 export const AllTeamsDocument = gql`
     query AllTeams {
-  teams(where: {teamid: {gt: 0}}) {
+  teams {
+    id
     teamid
     abbrev
     loc

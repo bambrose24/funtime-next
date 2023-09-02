@@ -8,7 +8,7 @@ type UseTabsConfigResponse = {
 
 const defaultTabConfig: UseTabsConfigResponse = {
   TabsHeader,
-  TabName: Typography.Subtitle2,
+  TabName: Typography.Subtitle1,
 };
 
 function TabsHeader({title, subtitle}: {title: string; subtitle?: string}) {

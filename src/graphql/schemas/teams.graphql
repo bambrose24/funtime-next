@@ -1,5 +1,6 @@
 query AllTeams {
-  teams(where: {teamid: {gt: 0}}) {
+  teams {
+    id
     teamid
     abbrev
     loc

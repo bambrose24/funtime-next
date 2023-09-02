@@ -1,10 +1,9 @@
 import {gql} from '@apollo/client';
-import {Box, Flex, Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
+import {Flex, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
 import {LeagueInfo} from '@src/modules/admin/league/LeagueInfo';
 import {ManagePlayers} from '@src/modules/admin/league/ManagePlayers';
 import {FuntimeError} from '@src/modules/shared/FuntimeError';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
-import {Typography} from '@src/modules/Typography';
 import {FuntimePage} from '@src/FuntimePage';
 import {MemberRole, useLeagueAdminQuery} from '@src/generated/graphql';
 import {useRouter} from 'next/router';

@@ -1,12 +1,13 @@
 import {gql} from '@apollo/client';
-import {Flex} from '@chakra-ui/react';
+import {Box, Button, Divider, Flex, Stack} from '@chakra-ui/react';
 import {FuntimeError} from '@src/modules/shared/FuntimeError';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 import {Typography} from '@src/modules/Typography';
 import {FuntimePage} from '@src/FuntimePage';
-import {useEditProfileQuery} from '@src/generated/graphql';
+import {LeagueStatus, useAllTeamsQuery, useEditProfileQuery} from '@src/generated/graphql';
 import {useUser} from '@supabase/auth-helpers-react';
 import {useRouter} from 'next/router';
+import {useState} from 'react';
 
 const _EditProfileQuery = gql`
   query EditProfile($leagueId: Int!) {
@@ -17,6 +18,7 @@ const _EditProfileQuery = gql`
         id
         superbowl {
           id
+          score
           teams_superbowl_loserToteams {
             id
             teamid
@@ -37,6 +39,7 @@ const _EditProfileQuery = gql`
         leagues {
           id
           name
+          status
         }
       }
     }
@@ -47,9 +50,17 @@ export default function EditProfilePage() {
   const router = useRouter();
   const leagueId = router.query['leagueId'] as string;
 
+  const [superbowlSettingsModalOpen, setSuperbowlSettingsModalOpen] = useState(false);
+
+  // preload teams
+  useAllTeamsQuery();
+
   const supabaseUser = useUser();
 
-  const {data, loading, error} = useEditProfileQuery({variables: {leagueId: Number(leagueId)}});
+  const {data, loading, error} = useEditProfileQuery({
+    variables: {leagueId: Number(leagueId)},
+    skip: !leagueId,
+  });
 
   if (loading) {
     return (
@@ -70,13 +81,52 @@ export default function EditProfilePage() {
     );
   }
 
+  const superbowlPick = data.me.leagueMember.superbowl?.[0];
+  const league = data.me.leagueMember?.leagues;
+
   return (
     <FuntimePage>
       <Flex w="100%" justify="center">
-        <Flex direction="column" maxW="3xl" layerStyle="funtime-card">
+        <Flex w={{base: '100%', md: 'xl'}} direction="column" layerStyle="funtime-card">
           <Typography.H2>Edit Profile for {data.me.leagueMember?.leagues.name}</Typography.H2>
+          <Box pt="32px" />
+          <Stack direction="column" divider={<Divider />} spacing="20px">
+            {superbowlPick && (
+              <Flex justify="space-between" gap="20px">
+                <Flex direction="column" alignItems="start" w="100%">
+                  <Box>
+                    <Typography.Body2 fontWeight="bold">Super Bowl Pick</Typography.Body2>
+                  </Box>
+                  <Box>
+                    <Typography.Body1>
+                      {superbowlPick.teams_superbowl_winnerToteams.abbrev} over{' '}
+                      {superbowlPick.teams_superbowl_loserToteams.abbrev} (score{' '}
+                      {superbowlPick.score})
+                    </Typography.Body1>
+                  </Box>
+                </Flex>
+                <Flex alignItems="center">
+                  <Button
+                    variant="outline"
+                    disabled={!league || league.status !== LeagueStatus.NotStarted}
+                    onClick={() => {
+                      setSuperbowlSettingsModalOpen(true);
+                    }}
+                  >
+                    Edit
+                  </Button>
+                </Flex>
+              </Flex>
+            )}
+          </Stack>
         </Flex>
       </Flex>
+      <SuperbowlSettingsModal
+        isOpen={superbowlSettingsModalOpen}
+        onClose={() => {
+          setSuperbowlSettingsModalOpen(false);
+        }}
+      />
     </FuntimePage>
   );
 }

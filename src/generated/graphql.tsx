@@ -6708,7 +6708,7 @@ export type SuperbowlPickQueryVariables = Exact<{
 }>;
 
 
-export type SuperbowlPickQuery = { __typename?: 'Query', superbowl?: { __typename?: 'Superbowl', id: string, pickid: number, member_id?: number | null, winner: number, loser: number, score: number } | null };
+export type SuperbowlPickQuery = { __typename?: 'Query', superbowl?: { __typename?: 'Superbowl', id: string, pickid: number, member_id?: number | null, winner: number, loser: number, score: number, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null } } | null };
 
 export type UpdateSuperbowlMutationVariables = Exact<{
   data: SuperbowlUpdateInput;
@@ -6716,7 +6716,7 @@ export type UpdateSuperbowlMutationVariables = Exact<{
 }>;
 
 
-export type UpdateSuperbowlMutation = { __typename?: 'Mutation', updateOneSuperbowl?: { __typename?: 'Superbowl', id: string, pickid: number, member_id?: number | null, winner: number, loser: number, score: number } | null };
+export type UpdateSuperbowlMutation = { __typename?: 'Mutation', updateOneSuperbowl?: { __typename?: 'Superbowl', id: string, pickid: number, member_id?: number | null, winner: number, loser: number, score: number, teams_superbowl_loserToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null }, teams_superbowl_winnerToteams: { __typename?: 'Team', id: string, teamid: number, loc: string, name: string, abbrev?: string | null, conference?: string | null } } | null };
 
 export type HomeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -7739,6 +7739,22 @@ export const SuperbowlPickDocument = gql`
     winner
     loser
     score
+    teams_superbowl_loserToteams {
+      id
+      teamid
+      loc
+      name
+      abbrev
+      conference
+    }
+    teams_superbowl_winnerToteams {
+      id
+      teamid
+      loc
+      name
+      abbrev
+      conference
+    }
   }
 }
     `;
@@ -7779,6 +7795,22 @@ export const UpdateSuperbowlDocument = gql`
     winner
     loser
     score
+    teams_superbowl_loserToteams {
+      id
+      teamid
+      loc
+      name
+      abbrev
+      conference
+    }
+    teams_superbowl_winnerToteams {
+      id
+      teamid
+      loc
+      name
+      abbrev
+      conference
+    }
   }
 }
     `;

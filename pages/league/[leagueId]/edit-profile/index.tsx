@@ -8,6 +8,7 @@ import {LeagueStatus, useAllTeamsQuery, useEditProfileQuery} from '@src/generate
 import {useUser} from '@supabase/auth-helpers-react';
 import {useRouter} from 'next/router';
 import {useState} from 'react';
+import {SuperbowlSettingsModal} from '@src/modules/edit-profile/superbowl/SuperbowlSettingsModal';
 
 const _EditProfileQuery = gql`
   query EditProfile($leagueId: Int!) {

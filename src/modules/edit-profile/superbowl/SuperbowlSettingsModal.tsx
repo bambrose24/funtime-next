@@ -60,9 +60,9 @@ type SuperbowlSettingsModalProps = {
 };
 
 type SuperbowlFormType = {
-  loser: number;
-  winner: number;
-  score: number;
+  loser: string;
+  winner: string;
+  score: string;
 };
 
 export function SuperbowlSettingsModal({superbowlPickId, modal}: SuperbowlSettingsModalProps) {
@@ -110,15 +110,15 @@ export function SuperbowlSettingsModal({superbowlPickId, modal}: SuperbowlSettin
             data: {
               teams_superbowl_winnerToteams: {
                 connect: {
-                  teamid: values.winner,
+                  teamid: Number(values.winner),
                 },
               },
               teams_superbowl_loserToteams: {
                 connect: {
-                  teamid: values.loser,
+                  teamid: Number(values.loser),
                 },
               },
-              score: {set: values.score},
+              score: {set: Number(values.score)},
             },
             where: {
               pickid: superbowlPickId,

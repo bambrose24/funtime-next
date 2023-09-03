@@ -1,5 +1,5 @@
 import {gql} from '@apollo/client';
-import {Flex, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
+import {Flex, Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
 import {LeagueInfo} from '@src/modules/admin/league/LeagueInfo';
 import {ManagePlayers} from '@src/modules/admin/league/ManagePlayers';
 import {FuntimeError} from '@src/modules/shared/FuntimeError';
@@ -79,12 +79,16 @@ export default function LeagueAdminPage() {
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
-        <Flex direction="column" maxW="3xl" w="100%" layerStyle="funtime-card">
+        <Flex direction="column" w="100%" layerStyle="funtime-card">
           <TabsHeader title={data.league?.name || ''} subtitle={'Admin Page'} />
           <Tabs variant="soft-rounded">
             <TabList>
-              <TabName>League Info</TabName>
-              <TabName>Manage Players</TabName>
+              <Tab>
+                <TabName>League Info</TabName>
+              </Tab>
+              <Tab>
+                <TabName>Manage Players</TabName>
+              </Tab>
             </TabList>
             <TabPanels>
               <TabPanel>

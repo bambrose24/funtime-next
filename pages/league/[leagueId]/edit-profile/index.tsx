@@ -74,12 +74,12 @@ export default function EditProfilePage() {
   const league = data?.me?.leagueMember?.leagues;
 
   // preload the superbowl pick
-  useSuperbowlPickQuery({
-    variables: {
-      superbowlPickId: superbowlPickId ?? 0,
-    },
-    skip: !superbowlPickId,
-  });
+  // useSuperbowlPickQuery({
+  //   variables: {
+  //     superbowlPickId: superbowlPickId ?? 0,
+  //   },
+  //   skip: !superbowlPickId,
+  // });
 
   if (loading) {
     return (

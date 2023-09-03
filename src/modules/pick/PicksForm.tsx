@@ -291,12 +291,12 @@ export function PicksForm({
                 return (
                   <Box
                     key={game.gid}
-                    height="90px"
+                    minHeight="90px"
                     width={'100%'}
                     border="1px solid"
                     borderColor="gray.300"
-                    px={4}
-                    py={4}
+                    px="12px"
+                    py="12px"
                     borderRadius={4}
                   >
                     <FormControl>
@@ -435,8 +435,8 @@ export function PicksForm({
                           </Flex>
                         </GridItem>
                         <GridItem
-                          colStart={{base: 3, lg: 5}}
-                          colSpan={{base: 8, lg: 4}}
+                          colStart={{base: 3, lg: 4}}
+                          colSpan={{base: 8, lg: 6}}
                           rowStart={2}
                         >
                           <Typography.Subtitle2>

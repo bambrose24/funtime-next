@@ -101,6 +101,7 @@ export function SuperbowlSettingsModal({superbowlPickId, modal}: SuperbowlSettin
   const {data: teams, loading} = useAllTeamsQuery();
   const {data: superbowlPickData} = useSuperbowlPickQuery({variables: {superbowlPickId}});
   const [updateSuperBowl] = useUpdateSuperbowlMutation();
+  console.log(superbowlPickData);
 
   const toaster = useToast();
   if (!superbowlPickData || !superbowlPickData.superbowl) {

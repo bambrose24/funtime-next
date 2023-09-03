@@ -22,6 +22,15 @@ export type AffectedRowsOutput = {
   count: Scalars['Int'];
 };
 
+export type AggregateEmailLogs = {
+  __typename?: 'AggregateEmailLogs';
+  _avg?: Maybe<EmailLogsAvgAggregate>;
+  _count?: Maybe<EmailLogsCountAggregate>;
+  _max?: Maybe<EmailLogsMaxAggregate>;
+  _min?: Maybe<EmailLogsMinAggregate>;
+  _sum?: Maybe<EmailLogsSumAggregate>;
+};
+
 export type AggregateGame = {
   __typename?: 'AggregateGame';
   _avg?: Maybe<GameAvgAggregate>;
@@ -202,6 +211,432 @@ export type DateTimeWithAggregatesFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
 };
 
+export type EmailLogs = {
+  __typename?: 'EmailLogs';
+  email?: Maybe<ResendEmail>;
+  email_log_id: Scalars['String'];
+  email_type: EmailType;
+  id: Scalars['ID'];
+  league: League;
+  league_id: Scalars['Int'];
+  member: LeagueMember;
+  member_id: Scalars['Int'];
+  resend_id: Scalars['String'];
+  ts: Scalars['DateTime'];
+  week?: Maybe<Scalars['Int']>;
+};
+
+export type EmailLogsAvgAggregate = {
+  __typename?: 'EmailLogsAvgAggregate';
+  league_id?: Maybe<Scalars['Float']>;
+  member_id?: Maybe<Scalars['Float']>;
+  week?: Maybe<Scalars['Float']>;
+};
+
+export type EmailLogsAvgOrderByAggregateInput = {
+  league_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrder>;
+};
+
+export type EmailLogsCountAggregate = {
+  __typename?: 'EmailLogsCountAggregate';
+  _all: Scalars['Int'];
+  email_log_id: Scalars['Int'];
+  email_type: Scalars['Int'];
+  league_id: Scalars['Int'];
+  member_id: Scalars['Int'];
+  resend_id: Scalars['Int'];
+  ts: Scalars['Int'];
+  week: Scalars['Int'];
+};
+
+export type EmailLogsCountOrderByAggregateInput = {
+  email_log_id?: InputMaybe<SortOrder>;
+  email_type?: InputMaybe<SortOrder>;
+  league_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
+  resend_id?: InputMaybe<SortOrder>;
+  ts?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrder>;
+};
+
+export type EmailLogsCreateInput = {
+  email_log_id?: InputMaybe<Scalars['String']>;
+  email_type: EmailType;
+  league: LeagueCreateNestedOneWithoutEmailLogsInput;
+  member: LeagueMemberCreateNestedOneWithoutEmailLogsInput;
+  resend_id: Scalars['String'];
+  ts?: InputMaybe<Scalars['DateTime']>;
+  week?: InputMaybe<Scalars['Int']>;
+};
+
+export type EmailLogsCreateManyInput = {
+  email_log_id?: InputMaybe<Scalars['String']>;
+  email_type: EmailType;
+  league_id: Scalars['Int'];
+  member_id: Scalars['Int'];
+  resend_id: Scalars['String'];
+  ts?: InputMaybe<Scalars['DateTime']>;
+  week?: InputMaybe<Scalars['Int']>;
+};
+
+export type EmailLogsCreateManyLeagueInput = {
+  email_log_id?: InputMaybe<Scalars['String']>;
+  email_type: EmailType;
+  member_id: Scalars['Int'];
+  resend_id: Scalars['String'];
+  ts?: InputMaybe<Scalars['DateTime']>;
+  week?: InputMaybe<Scalars['Int']>;
+};
+
+export type EmailLogsCreateManyLeagueInputEnvelope = {
+  data: Array<EmailLogsCreateManyLeagueInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type EmailLogsCreateManyMemberInput = {
+  email_log_id?: InputMaybe<Scalars['String']>;
+  email_type: EmailType;
+  league_id: Scalars['Int'];
+  resend_id: Scalars['String'];
+  ts?: InputMaybe<Scalars['DateTime']>;
+  week?: InputMaybe<Scalars['Int']>;
+};
+
+export type EmailLogsCreateManyMemberInputEnvelope = {
+  data: Array<EmailLogsCreateManyMemberInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type EmailLogsCreateNestedManyWithoutLeagueInput = {
+  connect?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<EmailLogsCreateOrConnectWithoutLeagueInput>>;
+  create?: InputMaybe<Array<EmailLogsCreateWithoutLeagueInput>>;
+  createMany?: InputMaybe<EmailLogsCreateManyLeagueInputEnvelope>;
+};
+
+export type EmailLogsCreateNestedManyWithoutMemberInput = {
+  connect?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<EmailLogsCreateOrConnectWithoutMemberInput>>;
+  create?: InputMaybe<Array<EmailLogsCreateWithoutMemberInput>>;
+  createMany?: InputMaybe<EmailLogsCreateManyMemberInputEnvelope>;
+};
+
+export type EmailLogsCreateOrConnectWithoutLeagueInput = {
+  create: EmailLogsCreateWithoutLeagueInput;
+  where: EmailLogsWhereUniqueInput;
+};
+
+export type EmailLogsCreateOrConnectWithoutMemberInput = {
+  create: EmailLogsCreateWithoutMemberInput;
+  where: EmailLogsWhereUniqueInput;
+};
+
+export type EmailLogsCreateWithoutLeagueInput = {
+  email_log_id?: InputMaybe<Scalars['String']>;
+  email_type: EmailType;
+  member: LeagueMemberCreateNestedOneWithoutEmailLogsInput;
+  resend_id: Scalars['String'];
+  ts?: InputMaybe<Scalars['DateTime']>;
+  week?: InputMaybe<Scalars['Int']>;
+};
+
+export type EmailLogsCreateWithoutMemberInput = {
+  email_log_id?: InputMaybe<Scalars['String']>;
+  email_type: EmailType;
+  league: LeagueCreateNestedOneWithoutEmailLogsInput;
+  resend_id: Scalars['String'];
+  ts?: InputMaybe<Scalars['DateTime']>;
+  week?: InputMaybe<Scalars['Int']>;
+};
+
+export type EmailLogsGroupBy = {
+  __typename?: 'EmailLogsGroupBy';
+  _avg?: Maybe<EmailLogsAvgAggregate>;
+  _count?: Maybe<EmailLogsCountAggregate>;
+  _max?: Maybe<EmailLogsMaxAggregate>;
+  _min?: Maybe<EmailLogsMinAggregate>;
+  _sum?: Maybe<EmailLogsSumAggregate>;
+  email_log_id: Scalars['String'];
+  email_type: EmailType;
+  league_id: Scalars['Int'];
+  member_id: Scalars['Int'];
+  resend_id: Scalars['String'];
+  ts: Scalars['DateTime'];
+  week?: Maybe<Scalars['Int']>;
+};
+
+export type EmailLogsListRelationFilter = {
+  every?: InputMaybe<EmailLogsWhereInput>;
+  none?: InputMaybe<EmailLogsWhereInput>;
+  some?: InputMaybe<EmailLogsWhereInput>;
+};
+
+export type EmailLogsMaxAggregate = {
+  __typename?: 'EmailLogsMaxAggregate';
+  email_log_id?: Maybe<Scalars['String']>;
+  email_type?: Maybe<EmailType>;
+  league_id?: Maybe<Scalars['Int']>;
+  member_id?: Maybe<Scalars['Int']>;
+  resend_id?: Maybe<Scalars['String']>;
+  ts?: Maybe<Scalars['DateTime']>;
+  week?: Maybe<Scalars['Int']>;
+};
+
+export type EmailLogsMaxOrderByAggregateInput = {
+  email_log_id?: InputMaybe<SortOrder>;
+  email_type?: InputMaybe<SortOrder>;
+  league_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
+  resend_id?: InputMaybe<SortOrder>;
+  ts?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrder>;
+};
+
+export type EmailLogsMinAggregate = {
+  __typename?: 'EmailLogsMinAggregate';
+  email_log_id?: Maybe<Scalars['String']>;
+  email_type?: Maybe<EmailType>;
+  league_id?: Maybe<Scalars['Int']>;
+  member_id?: Maybe<Scalars['Int']>;
+  resend_id?: Maybe<Scalars['String']>;
+  ts?: Maybe<Scalars['DateTime']>;
+  week?: Maybe<Scalars['Int']>;
+};
+
+export type EmailLogsMinOrderByAggregateInput = {
+  email_log_id?: InputMaybe<SortOrder>;
+  email_type?: InputMaybe<SortOrder>;
+  league_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
+  resend_id?: InputMaybe<SortOrder>;
+  ts?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrder>;
+};
+
+export type EmailLogsOrderByRelationAggregateInput = {
+  _count?: InputMaybe<SortOrder>;
+};
+
+export type EmailLogsOrderByWithAggregationInput = {
+  _avg?: InputMaybe<EmailLogsAvgOrderByAggregateInput>;
+  _count?: InputMaybe<EmailLogsCountOrderByAggregateInput>;
+  _max?: InputMaybe<EmailLogsMaxOrderByAggregateInput>;
+  _min?: InputMaybe<EmailLogsMinOrderByAggregateInput>;
+  _sum?: InputMaybe<EmailLogsSumOrderByAggregateInput>;
+  email_log_id?: InputMaybe<SortOrder>;
+  email_type?: InputMaybe<SortOrder>;
+  league_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
+  resend_id?: InputMaybe<SortOrder>;
+  ts?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrderInput>;
+};
+
+export type EmailLogsOrderByWithRelationInput = {
+  email_log_id?: InputMaybe<SortOrder>;
+  email_type?: InputMaybe<SortOrder>;
+  league?: InputMaybe<LeagueOrderByWithRelationInput>;
+  league_id?: InputMaybe<SortOrder>;
+  member?: InputMaybe<LeagueMemberOrderByWithRelationInput>;
+  member_id?: InputMaybe<SortOrder>;
+  resend_id?: InputMaybe<SortOrder>;
+  ts?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrderInput>;
+};
+
+export enum EmailLogsScalarFieldEnum {
+  EmailLogId = 'email_log_id',
+  EmailType = 'email_type',
+  LeagueId = 'league_id',
+  MemberId = 'member_id',
+  ResendId = 'resend_id',
+  Ts = 'ts',
+  Week = 'week'
+}
+
+export type EmailLogsScalarWhereInput = {
+  AND?: InputMaybe<Array<EmailLogsScalarWhereInput>>;
+  NOT?: InputMaybe<Array<EmailLogsScalarWhereInput>>;
+  OR?: InputMaybe<Array<EmailLogsScalarWhereInput>>;
+  email_log_id?: InputMaybe<StringFilter>;
+  email_type?: InputMaybe<EnumEmailTypeFilter>;
+  league_id?: InputMaybe<IntFilter>;
+  member_id?: InputMaybe<IntFilter>;
+  resend_id?: InputMaybe<StringFilter>;
+  ts?: InputMaybe<DateTimeFilter>;
+  week?: InputMaybe<IntNullableFilter>;
+};
+
+export type EmailLogsScalarWhereWithAggregatesInput = {
+  AND?: InputMaybe<Array<EmailLogsScalarWhereWithAggregatesInput>>;
+  NOT?: InputMaybe<Array<EmailLogsScalarWhereWithAggregatesInput>>;
+  OR?: InputMaybe<Array<EmailLogsScalarWhereWithAggregatesInput>>;
+  email_log_id?: InputMaybe<StringWithAggregatesFilter>;
+  email_type?: InputMaybe<EnumEmailTypeWithAggregatesFilter>;
+  league_id?: InputMaybe<IntWithAggregatesFilter>;
+  member_id?: InputMaybe<IntWithAggregatesFilter>;
+  resend_id?: InputMaybe<StringWithAggregatesFilter>;
+  ts?: InputMaybe<DateTimeWithAggregatesFilter>;
+  week?: InputMaybe<IntNullableWithAggregatesFilter>;
+};
+
+export type EmailLogsSumAggregate = {
+  __typename?: 'EmailLogsSumAggregate';
+  league_id?: Maybe<Scalars['Int']>;
+  member_id?: Maybe<Scalars['Int']>;
+  week?: Maybe<Scalars['Int']>;
+};
+
+export type EmailLogsSumOrderByAggregateInput = {
+  league_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrder>;
+};
+
+export type EmailLogsUpdateInput = {
+  email_log_id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  email_type?: InputMaybe<EnumEmailTypeFieldUpdateOperationsInput>;
+  league?: InputMaybe<LeagueUpdateOneRequiredWithoutEmailLogsNestedInput>;
+  member?: InputMaybe<LeagueMemberUpdateOneRequiredWithoutEmailLogsNestedInput>;
+  resend_id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  ts?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  week?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+};
+
+export type EmailLogsUpdateManyMutationInput = {
+  email_log_id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  email_type?: InputMaybe<EnumEmailTypeFieldUpdateOperationsInput>;
+  resend_id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  ts?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  week?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+};
+
+export type EmailLogsUpdateManyWithWhereWithoutLeagueInput = {
+  data: EmailLogsUpdateManyMutationInput;
+  where: EmailLogsScalarWhereInput;
+};
+
+export type EmailLogsUpdateManyWithWhereWithoutMemberInput = {
+  data: EmailLogsUpdateManyMutationInput;
+  where: EmailLogsScalarWhereInput;
+};
+
+export type EmailLogsUpdateManyWithoutLeagueNestedInput = {
+  connect?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<EmailLogsCreateOrConnectWithoutLeagueInput>>;
+  create?: InputMaybe<Array<EmailLogsCreateWithoutLeagueInput>>;
+  createMany?: InputMaybe<EmailLogsCreateManyLeagueInputEnvelope>;
+  delete?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<EmailLogsScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  set?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  update?: InputMaybe<Array<EmailLogsUpdateWithWhereUniqueWithoutLeagueInput>>;
+  updateMany?: InputMaybe<Array<EmailLogsUpdateManyWithWhereWithoutLeagueInput>>;
+  upsert?: InputMaybe<Array<EmailLogsUpsertWithWhereUniqueWithoutLeagueInput>>;
+};
+
+export type EmailLogsUpdateManyWithoutMemberNestedInput = {
+  connect?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  connectOrCreate?: InputMaybe<Array<EmailLogsCreateOrConnectWithoutMemberInput>>;
+  create?: InputMaybe<Array<EmailLogsCreateWithoutMemberInput>>;
+  createMany?: InputMaybe<EmailLogsCreateManyMemberInputEnvelope>;
+  delete?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  deleteMany?: InputMaybe<Array<EmailLogsScalarWhereInput>>;
+  disconnect?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  set?: InputMaybe<Array<EmailLogsWhereUniqueInput>>;
+  update?: InputMaybe<Array<EmailLogsUpdateWithWhereUniqueWithoutMemberInput>>;
+  updateMany?: InputMaybe<Array<EmailLogsUpdateManyWithWhereWithoutMemberInput>>;
+  upsert?: InputMaybe<Array<EmailLogsUpsertWithWhereUniqueWithoutMemberInput>>;
+};
+
+export type EmailLogsUpdateWithWhereUniqueWithoutLeagueInput = {
+  data: EmailLogsUpdateWithoutLeagueInput;
+  where: EmailLogsWhereUniqueInput;
+};
+
+export type EmailLogsUpdateWithWhereUniqueWithoutMemberInput = {
+  data: EmailLogsUpdateWithoutMemberInput;
+  where: EmailLogsWhereUniqueInput;
+};
+
+export type EmailLogsUpdateWithoutLeagueInput = {
+  email_log_id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  email_type?: InputMaybe<EnumEmailTypeFieldUpdateOperationsInput>;
+  member?: InputMaybe<LeagueMemberUpdateOneRequiredWithoutEmailLogsNestedInput>;
+  resend_id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  ts?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  week?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+};
+
+export type EmailLogsUpdateWithoutMemberInput = {
+  email_log_id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  email_type?: InputMaybe<EnumEmailTypeFieldUpdateOperationsInput>;
+  league?: InputMaybe<LeagueUpdateOneRequiredWithoutEmailLogsNestedInput>;
+  resend_id?: InputMaybe<StringFieldUpdateOperationsInput>;
+  ts?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  week?: InputMaybe<NullableIntFieldUpdateOperationsInput>;
+};
+
+export type EmailLogsUpsertWithWhereUniqueWithoutLeagueInput = {
+  create: EmailLogsCreateWithoutLeagueInput;
+  update: EmailLogsUpdateWithoutLeagueInput;
+  where: EmailLogsWhereUniqueInput;
+};
+
+export type EmailLogsUpsertWithWhereUniqueWithoutMemberInput = {
+  create: EmailLogsCreateWithoutMemberInput;
+  update: EmailLogsUpdateWithoutMemberInput;
+  where: EmailLogsWhereUniqueInput;
+};
+
+export type EmailLogsWhereInput = {
+  AND?: InputMaybe<Array<EmailLogsWhereInput>>;
+  NOT?: InputMaybe<Array<EmailLogsWhereInput>>;
+  OR?: InputMaybe<Array<EmailLogsWhereInput>>;
+  email_log_id?: InputMaybe<StringFilter>;
+  email_type?: InputMaybe<EnumEmailTypeFilter>;
+  league?: InputMaybe<LeagueRelationFilter>;
+  league_id?: InputMaybe<IntFilter>;
+  member?: InputMaybe<LeagueMemberRelationFilter>;
+  member_id?: InputMaybe<IntFilter>;
+  resend_id?: InputMaybe<StringFilter>;
+  ts?: InputMaybe<DateTimeFilter>;
+  week?: InputMaybe<IntNullableFilter>;
+};
+
+export type EmailLogsWhereUniqueInput = {
+  email_log_id?: InputMaybe<Scalars['String']>;
+};
+
+export enum EmailType {
+  WeekPicks = 'week_picks',
+  WeekReminder = 'week_reminder',
+  WeekSummary = 'week_summary'
+}
+
+export type EnumEmailTypeFieldUpdateOperationsInput = {
+  set?: InputMaybe<EmailType>;
+};
+
+export type EnumEmailTypeFilter = {
+  equals?: InputMaybe<EmailType>;
+  in?: InputMaybe<Array<EmailType>>;
+  not?: InputMaybe<NestedEnumEmailTypeFilter>;
+  notIn?: InputMaybe<Array<EmailType>>;
+};
+
+export type EnumEmailTypeWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumEmailTypeFilter>;
+  _min?: InputMaybe<NestedEnumEmailTypeFilter>;
+  equals?: InputMaybe<EmailType>;
+  in?: InputMaybe<Array<EmailType>>;
+  not?: InputMaybe<NestedEnumEmailTypeWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<EmailType>>;
+};
+
 export type EnumLatePolicyNullableFilter = {
   equals?: InputMaybe<LatePolicy>;
   in?: InputMaybe<Array<LatePolicy>>;
@@ -354,6 +789,11 @@ export type GameAvgOrderByAggregateInput = {
 export type GameCount = {
   __typename?: 'GameCount';
   picks: Scalars['Int'];
+};
+
+
+export type GameCountPicksArgs = {
+  where?: InputMaybe<PickWhereInput>;
 };
 
 export type GameCountAggregate = {
@@ -710,45 +1150,45 @@ export type GameOrderByWithAggregationInput = {
   _min?: InputMaybe<GameMinOrderByAggregateInput>;
   _sum?: InputMaybe<GameSumOrderByAggregateInput>;
   away?: InputMaybe<SortOrder>;
-  awayrecord?: InputMaybe<SortOrder>;
-  awayscore?: InputMaybe<SortOrder>;
-  current_record?: InputMaybe<SortOrder>;
-  done?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrderInput>;
+  awayscore?: InputMaybe<SortOrderInput>;
+  current_record?: InputMaybe<SortOrderInput>;
+  done?: InputMaybe<SortOrderInput>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
-  homerecord?: InputMaybe<SortOrder>;
-  homescore?: InputMaybe<SortOrder>;
-  international?: InputMaybe<SortOrder>;
-  is_tiebreaker?: InputMaybe<SortOrder>;
-  msf_id?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrderInput>;
+  homescore?: InputMaybe<SortOrderInput>;
+  international?: InputMaybe<SortOrderInput>;
+  is_tiebreaker?: InputMaybe<SortOrderInput>;
+  msf_id?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
-  seconds?: InputMaybe<SortOrder>;
+  seconds?: InputMaybe<SortOrderInput>;
   ts?: InputMaybe<SortOrder>;
   week?: InputMaybe<SortOrder>;
-  winner?: InputMaybe<SortOrder>;
+  winner?: InputMaybe<SortOrderInput>;
 };
 
 export type GameOrderByWithRelationInput = {
   away?: InputMaybe<SortOrder>;
-  awayrecord?: InputMaybe<SortOrder>;
-  awayscore?: InputMaybe<SortOrder>;
-  current_record?: InputMaybe<SortOrder>;
-  done?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrderInput>;
+  awayscore?: InputMaybe<SortOrderInput>;
+  current_record?: InputMaybe<SortOrderInput>;
+  done?: InputMaybe<SortOrderInput>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
-  homerecord?: InputMaybe<SortOrder>;
-  homescore?: InputMaybe<SortOrder>;
-  international?: InputMaybe<SortOrder>;
-  is_tiebreaker?: InputMaybe<SortOrder>;
-  msf_id?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrderInput>;
+  homescore?: InputMaybe<SortOrderInput>;
+  international?: InputMaybe<SortOrderInput>;
+  is_tiebreaker?: InputMaybe<SortOrderInput>;
+  msf_id?: InputMaybe<SortOrderInput>;
   picks?: InputMaybe<PickOrderByRelationAggregateInput>;
   season?: InputMaybe<SortOrder>;
-  seconds?: InputMaybe<SortOrder>;
+  seconds?: InputMaybe<SortOrderInput>;
   teams_games_awayToteams?: InputMaybe<TeamOrderByWithRelationInput>;
   teams_games_homeToteams?: InputMaybe<TeamOrderByWithRelationInput>;
   ts?: InputMaybe<SortOrder>;
   week?: InputMaybe<SortOrder>;
-  winner?: InputMaybe<SortOrder>;
+  winner?: InputMaybe<SortOrderInput>;
 };
 
 export type GamePick = {
@@ -1122,6 +1562,7 @@ export enum LatePolicy {
 
 export type League = {
   __typename?: 'League';
+  EmailLogs: Array<EmailLogs>;
   WeekWinners: Array<WeekWinners>;
   _count?: Maybe<LeagueCount>;
   aggregateLeagueMember: AggregateResponse;
@@ -1146,6 +1587,16 @@ export type League = {
   status: LeagueStatus;
   superbowl_competition?: Maybe<Scalars['Boolean']>;
   viewer?: Maybe<LeagueMember>;
+};
+
+
+export type LeagueEmailLogsArgs = {
+  cursor?: InputMaybe<EmailLogsWhereUniqueInput>;
+  distinct?: InputMaybe<Array<EmailLogsScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<EmailLogsOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EmailLogsWhereInput>;
 };
 
 
@@ -1195,8 +1646,24 @@ export type LeagueAvgOrderByAggregateInput = {
 
 export type LeagueCount = {
   __typename?: 'LeagueCount';
+  EmailLogs: Scalars['Int'];
   WeekWinners: Scalars['Int'];
   leaguemembers: Scalars['Int'];
+};
+
+
+export type LeagueCountEmailLogsArgs = {
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
+export type LeagueCountWeekWinnersArgs = {
+  where?: InputMaybe<WeekWinnersWhereInput>;
+};
+
+
+export type LeagueCountLeaguemembersArgs = {
+  where?: InputMaybe<LeagueMemberWhereInput>;
 };
 
 export type LeagueCountAggregate = {
@@ -1232,6 +1699,7 @@ export type LeagueCountOrderByAggregateInput = {
 };
 
 export type LeagueCreateInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutLeagueInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutLeagueInput>;
   created_time?: InputMaybe<Scalars['DateTime']>;
   late_policy?: InputMaybe<LatePolicy>;
@@ -1289,6 +1757,12 @@ export type LeagueCreateNestedManyWithoutPeopleInput = {
   createMany?: InputMaybe<LeagueCreateManyPeopleInputEnvelope>;
 };
 
+export type LeagueCreateNestedOneWithoutEmailLogsInput = {
+  connect?: InputMaybe<LeagueWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutEmailLogsInput>;
+  create?: InputMaybe<LeagueCreateWithoutEmailLogsInput>;
+};
+
 export type LeagueCreateNestedOneWithoutLeaguemembersInput = {
   connect?: InputMaybe<LeagueWhereUniqueInput>;
   connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutLeaguemembersInput>;
@@ -1311,6 +1785,11 @@ export type LeagueCreateNestedOneWithoutWeekWinnersInput = {
   connect?: InputMaybe<LeagueWhereUniqueInput>;
   connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutWeekWinnersInput>;
   create?: InputMaybe<LeagueCreateWithoutWeekWinnersInput>;
+};
+
+export type LeagueCreateOrConnectWithoutEmailLogsInput = {
+  create: LeagueCreateWithoutEmailLogsInput;
+  where: LeagueWhereUniqueInput;
 };
 
 export type LeagueCreateOrConnectWithoutLeaguemembersInput = {
@@ -1338,7 +1817,25 @@ export type LeagueCreateOrConnectWithoutWeekWinnersInput = {
   where: LeagueWhereUniqueInput;
 };
 
+export type LeagueCreateWithoutEmailLogsInput = {
+  WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutLeagueInput>;
+  created_time?: InputMaybe<Scalars['DateTime']>;
+  late_policy?: InputMaybe<LatePolicy>;
+  leaguemembers?: InputMaybe<LeagueMemberCreateNestedManyWithoutLeaguesInput>;
+  name: Scalars['String'];
+  nextLeague?: InputMaybe<LeagueCreateNestedOneWithoutPriorLeagueInput>;
+  people: UserCreateNestedOneWithoutLeaguesInput;
+  pick_policy?: InputMaybe<PickPolicy>;
+  priorLeague?: InputMaybe<LeagueCreateNestedOneWithoutNextLeagueInput>;
+  reminder_policy?: InputMaybe<ReminderPolicy>;
+  scoring_type?: InputMaybe<ScoringType>;
+  season: Scalars['Int'];
+  share_code?: InputMaybe<Scalars['String']>;
+  superbowl_competition?: InputMaybe<Scalars['Boolean']>;
+};
+
 export type LeagueCreateWithoutLeaguemembersInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutLeagueInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutLeagueInput>;
   created_time?: InputMaybe<Scalars['DateTime']>;
   late_policy?: InputMaybe<LatePolicy>;
@@ -1355,6 +1852,7 @@ export type LeagueCreateWithoutLeaguemembersInput = {
 };
 
 export type LeagueCreateWithoutNextLeagueInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutLeagueInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutLeagueInput>;
   created_time?: InputMaybe<Scalars['DateTime']>;
   late_policy?: InputMaybe<LatePolicy>;
@@ -1371,6 +1869,7 @@ export type LeagueCreateWithoutNextLeagueInput = {
 };
 
 export type LeagueCreateWithoutPeopleInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutLeagueInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutLeagueInput>;
   created_time?: InputMaybe<Scalars['DateTime']>;
   late_policy?: InputMaybe<LatePolicy>;
@@ -1387,6 +1886,7 @@ export type LeagueCreateWithoutPeopleInput = {
 };
 
 export type LeagueCreateWithoutPriorLeagueInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutLeagueInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutLeagueInput>;
   created_time?: InputMaybe<Scalars['DateTime']>;
   late_policy?: InputMaybe<LatePolicy>;
@@ -1403,6 +1903,7 @@ export type LeagueCreateWithoutPriorLeagueInput = {
 };
 
 export type LeagueCreateWithoutWeekWinnersInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutLeagueInput>;
   created_time?: InputMaybe<Scalars['DateTime']>;
   late_policy?: InputMaybe<LatePolicy>;
   leaguemembers?: InputMaybe<LeagueMemberCreateNestedManyWithoutLeaguesInput>;
@@ -1478,6 +1979,7 @@ export type LeagueMaxOrderByAggregateInput = {
 
 export type LeagueMember = {
   __typename?: 'LeagueMember';
+  EmailLogs: Array<EmailLogs>;
   WeekWinners: Array<WeekWinners>;
   _count?: Maybe<LeagueMemberCount>;
   aggregatePick: AggregateResponse;
@@ -1494,6 +1996,16 @@ export type LeagueMember = {
   superbowl: Array<Superbowl>;
   ts: Scalars['DateTimeBetterSerialization'];
   user_id: Scalars['Int'];
+};
+
+
+export type LeagueMemberEmailLogsArgs = {
+  cursor?: InputMaybe<EmailLogsWhereUniqueInput>;
+  distinct?: InputMaybe<Array<EmailLogsScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<EmailLogsOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EmailLogsWhereInput>;
 };
 
 
@@ -1546,9 +2058,30 @@ export type LeagueMemberAvgOrderByAggregateInput = {
 
 export type LeagueMemberCount = {
   __typename?: 'LeagueMemberCount';
+  EmailLogs: Scalars['Int'];
   WeekWinners: Scalars['Int'];
   picks: Scalars['Int'];
   superbowl: Scalars['Int'];
+};
+
+
+export type LeagueMemberCountEmailLogsArgs = {
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
+export type LeagueMemberCountWeekWinnersArgs = {
+  where?: InputMaybe<WeekWinnersWhereInput>;
+};
+
+
+export type LeagueMemberCountPicksArgs = {
+  where?: InputMaybe<PickWhereInput>;
+};
+
+
+export type LeagueMemberCountSuperbowlArgs = {
+  where?: InputMaybe<SuperbowlWhereInput>;
 };
 
 export type LeagueMemberCountAggregate = {
@@ -1572,6 +2105,7 @@ export type LeagueMemberCountOrderByAggregateInput = {
 };
 
 export type LeagueMemberCreateInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutMemberInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
   paid?: InputMaybe<Scalars['Boolean']>;
@@ -1631,6 +2165,12 @@ export type LeagueMemberCreateNestedManyWithoutPeopleInput = {
   createMany?: InputMaybe<LeagueMemberCreateManyPeopleInputEnvelope>;
 };
 
+export type LeagueMemberCreateNestedOneWithoutEmailLogsInput = {
+  connect?: InputMaybe<LeagueMemberWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<LeagueMemberCreateOrConnectWithoutEmailLogsInput>;
+  create?: InputMaybe<LeagueMemberCreateWithoutEmailLogsInput>;
+};
+
 export type LeagueMemberCreateNestedOneWithoutPicksInput = {
   connect?: InputMaybe<LeagueMemberWhereUniqueInput>;
   connectOrCreate?: InputMaybe<LeagueMemberCreateOrConnectWithoutPicksInput>;
@@ -1647,6 +2187,11 @@ export type LeagueMemberCreateNestedOneWithoutWeekWinnersInput = {
   connect?: InputMaybe<LeagueMemberWhereUniqueInput>;
   connectOrCreate?: InputMaybe<LeagueMemberCreateOrConnectWithoutWeekWinnersInput>;
   create?: InputMaybe<LeagueMemberCreateWithoutWeekWinnersInput>;
+};
+
+export type LeagueMemberCreateOrConnectWithoutEmailLogsInput = {
+  create: LeagueMemberCreateWithoutEmailLogsInput;
+  where: LeagueMemberWhereUniqueInput;
 };
 
 export type LeagueMemberCreateOrConnectWithoutLeaguesInput = {
@@ -1674,7 +2219,19 @@ export type LeagueMemberCreateOrConnectWithoutWeekWinnersInput = {
   where: LeagueMemberWhereUniqueInput;
 };
 
+export type LeagueMemberCreateWithoutEmailLogsInput = {
+  WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
+  leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
+  paid?: InputMaybe<Scalars['Boolean']>;
+  people: UserCreateNestedOneWithoutLeaguemembersInput;
+  picks?: InputMaybe<PickCreateNestedManyWithoutLeaguemembersInput>;
+  role?: InputMaybe<MemberRole>;
+  superbowl?: InputMaybe<SuperbowlCreateNestedManyWithoutLeaguemembersInput>;
+  ts?: InputMaybe<Scalars['DateTime']>;
+};
+
 export type LeagueMemberCreateWithoutLeaguesInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutMemberInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   paid?: InputMaybe<Scalars['Boolean']>;
   people: UserCreateNestedOneWithoutLeaguemembersInput;
@@ -1685,6 +2242,7 @@ export type LeagueMemberCreateWithoutLeaguesInput = {
 };
 
 export type LeagueMemberCreateWithoutPeopleInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutMemberInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
   paid?: InputMaybe<Scalars['Boolean']>;
@@ -1695,6 +2253,7 @@ export type LeagueMemberCreateWithoutPeopleInput = {
 };
 
 export type LeagueMemberCreateWithoutPicksInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutMemberInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
   paid?: InputMaybe<Scalars['Boolean']>;
@@ -1705,6 +2264,7 @@ export type LeagueMemberCreateWithoutPicksInput = {
 };
 
 export type LeagueMemberCreateWithoutSuperbowlInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutMemberInput>;
   WeekWinners?: InputMaybe<WeekWinnersCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
   paid?: InputMaybe<Scalars['Boolean']>;
@@ -1715,6 +2275,7 @@ export type LeagueMemberCreateWithoutSuperbowlInput = {
 };
 
 export type LeagueMemberCreateWithoutWeekWinnersInput = {
+  EmailLogs?: InputMaybe<EmailLogsCreateNestedManyWithoutMemberInput>;
   leagues: LeagueCreateNestedOneWithoutLeaguemembersInput;
   paid?: InputMaybe<Scalars['Boolean']>;
   people: UserCreateNestedOneWithoutLeaguemembersInput;
@@ -1795,21 +2356,22 @@ export type LeagueMemberOrderByWithAggregationInput = {
   _sum?: InputMaybe<LeagueMemberSumOrderByAggregateInput>;
   league_id?: InputMaybe<SortOrder>;
   membership_id?: InputMaybe<SortOrder>;
-  paid?: InputMaybe<SortOrder>;
-  role?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrderInput>;
+  role?: InputMaybe<SortOrderInput>;
   ts?: InputMaybe<SortOrder>;
   user_id?: InputMaybe<SortOrder>;
 };
 
 export type LeagueMemberOrderByWithRelationInput = {
+  EmailLogs?: InputMaybe<EmailLogsOrderByRelationAggregateInput>;
   WeekWinners?: InputMaybe<WeekWinnersOrderByRelationAggregateInput>;
   league_id?: InputMaybe<SortOrder>;
   leagues?: InputMaybe<LeagueOrderByWithRelationInput>;
   membership_id?: InputMaybe<SortOrder>;
-  paid?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrderInput>;
   people?: InputMaybe<UserOrderByWithRelationInput>;
   picks?: InputMaybe<PickOrderByRelationAggregateInput>;
-  role?: InputMaybe<SortOrder>;
+  role?: InputMaybe<SortOrderInput>;
   superbowl?: InputMaybe<SuperbowlOrderByRelationAggregateInput>;
   ts?: InputMaybe<SortOrder>;
   user_id?: InputMaybe<SortOrder>;
@@ -1867,6 +2429,7 @@ export type LeagueMemberSumOrderByAggregateInput = {
 };
 
 export type LeagueMemberUpdateInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutMemberNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -1921,6 +2484,14 @@ export type LeagueMemberUpdateManyWithoutPeopleNestedInput = {
   upsert?: InputMaybe<Array<LeagueMemberUpsertWithWhereUniqueWithoutPeopleInput>>;
 };
 
+export type LeagueMemberUpdateOneRequiredWithoutEmailLogsNestedInput = {
+  connect?: InputMaybe<LeagueMemberWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<LeagueMemberCreateOrConnectWithoutEmailLogsInput>;
+  create?: InputMaybe<LeagueMemberCreateWithoutEmailLogsInput>;
+  update?: InputMaybe<LeagueMemberUpdateWithoutEmailLogsInput>;
+  upsert?: InputMaybe<LeagueMemberUpsertWithoutEmailLogsInput>;
+};
+
 export type LeagueMemberUpdateOneRequiredWithoutWeekWinnersNestedInput = {
   connect?: InputMaybe<LeagueMemberWhereUniqueInput>;
   connectOrCreate?: InputMaybe<LeagueMemberCreateOrConnectWithoutWeekWinnersInput>;
@@ -1959,7 +2530,19 @@ export type LeagueMemberUpdateWithWhereUniqueWithoutPeopleInput = {
   where: LeagueMemberWhereUniqueInput;
 };
 
+export type LeagueMemberUpdateWithoutEmailLogsInput = {
+  WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
+  leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
+  paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+  people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguemembersNestedInput>;
+  picks?: InputMaybe<PickUpdateManyWithoutLeaguemembersNestedInput>;
+  role?: InputMaybe<NullableEnumMemberRoleFieldUpdateOperationsInput>;
+  superbowl?: InputMaybe<SuperbowlUpdateManyWithoutLeaguemembersNestedInput>;
+  ts?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+};
+
 export type LeagueMemberUpdateWithoutLeaguesInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutMemberNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguemembersNestedInput>;
@@ -1970,6 +2553,7 @@ export type LeagueMemberUpdateWithoutLeaguesInput = {
 };
 
 export type LeagueMemberUpdateWithoutPeopleInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutMemberNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -1980,6 +2564,7 @@ export type LeagueMemberUpdateWithoutPeopleInput = {
 };
 
 export type LeagueMemberUpdateWithoutPicksInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutMemberNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -1990,6 +2575,7 @@ export type LeagueMemberUpdateWithoutPicksInput = {
 };
 
 export type LeagueMemberUpdateWithoutSuperbowlInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutMemberNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
@@ -2000,6 +2586,7 @@ export type LeagueMemberUpdateWithoutSuperbowlInput = {
 };
 
 export type LeagueMemberUpdateWithoutWeekWinnersInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutMemberNestedInput>;
   leagues?: InputMaybe<LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput>;
   paid?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
   people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguemembersNestedInput>;
@@ -2021,6 +2608,11 @@ export type LeagueMemberUpsertWithWhereUniqueWithoutPeopleInput = {
   where: LeagueMemberWhereUniqueInput;
 };
 
+export type LeagueMemberUpsertWithoutEmailLogsInput = {
+  create: LeagueMemberCreateWithoutEmailLogsInput;
+  update: LeagueMemberUpdateWithoutEmailLogsInput;
+};
+
 export type LeagueMemberUpsertWithoutPicksInput = {
   create: LeagueMemberCreateWithoutPicksInput;
   update: LeagueMemberUpdateWithoutPicksInput;
@@ -2038,6 +2630,7 @@ export type LeagueMemberUpsertWithoutWeekWinnersInput = {
 
 export type LeagueMemberWhereInput = {
   AND?: InputMaybe<Array<LeagueMemberWhereInput>>;
+  EmailLogs?: InputMaybe<EmailLogsListRelationFilter>;
   NOT?: InputMaybe<Array<LeagueMemberWhereInput>>;
   OR?: InputMaybe<Array<LeagueMemberWhereInput>>;
   WeekWinners?: InputMaybe<WeekWinnersListRelationFilter>;
@@ -2100,36 +2693,37 @@ export type LeagueOrderByWithAggregationInput = {
   _sum?: InputMaybe<LeagueSumOrderByAggregateInput>;
   created_by_user_id?: InputMaybe<SortOrder>;
   created_time?: InputMaybe<SortOrder>;
-  late_policy?: InputMaybe<SortOrder>;
+  late_policy?: InputMaybe<SortOrderInput>;
   league_id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
-  pick_policy?: InputMaybe<SortOrder>;
-  prior_league_id?: InputMaybe<SortOrder>;
-  reminder_policy?: InputMaybe<SortOrder>;
-  scoring_type?: InputMaybe<SortOrder>;
+  pick_policy?: InputMaybe<SortOrderInput>;
+  prior_league_id?: InputMaybe<SortOrderInput>;
+  reminder_policy?: InputMaybe<SortOrderInput>;
+  scoring_type?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
-  share_code?: InputMaybe<SortOrder>;
-  superbowl_competition?: InputMaybe<SortOrder>;
+  share_code?: InputMaybe<SortOrderInput>;
+  superbowl_competition?: InputMaybe<SortOrderInput>;
 };
 
 export type LeagueOrderByWithRelationInput = {
+  EmailLogs?: InputMaybe<EmailLogsOrderByRelationAggregateInput>;
   WeekWinners?: InputMaybe<WeekWinnersOrderByRelationAggregateInput>;
   created_by_user_id?: InputMaybe<SortOrder>;
   created_time?: InputMaybe<SortOrder>;
-  late_policy?: InputMaybe<SortOrder>;
+  late_policy?: InputMaybe<SortOrderInput>;
   league_id?: InputMaybe<SortOrder>;
   leaguemembers?: InputMaybe<LeagueMemberOrderByRelationAggregateInput>;
   name?: InputMaybe<SortOrder>;
   nextLeague?: InputMaybe<LeagueOrderByWithRelationInput>;
   people?: InputMaybe<UserOrderByWithRelationInput>;
-  pick_policy?: InputMaybe<SortOrder>;
+  pick_policy?: InputMaybe<SortOrderInput>;
   priorLeague?: InputMaybe<LeagueOrderByWithRelationInput>;
-  prior_league_id?: InputMaybe<SortOrder>;
-  reminder_policy?: InputMaybe<SortOrder>;
-  scoring_type?: InputMaybe<SortOrder>;
+  prior_league_id?: InputMaybe<SortOrderInput>;
+  reminder_policy?: InputMaybe<SortOrderInput>;
+  scoring_type?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
-  share_code?: InputMaybe<SortOrder>;
-  superbowl_competition?: InputMaybe<SortOrder>;
+  share_code?: InputMaybe<SortOrderInput>;
+  superbowl_competition?: InputMaybe<SortOrderInput>;
 };
 
 export type LeagueRelationFilter = {
@@ -2217,6 +2811,7 @@ export type LeagueSumOrderByAggregateInput = {
 };
 
 export type LeagueUpdateInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutLeagueNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutLeagueNestedInput>;
   created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
@@ -2264,6 +2859,14 @@ export type LeagueUpdateManyWithoutPeopleNestedInput = {
   upsert?: InputMaybe<Array<LeagueUpsertWithWhereUniqueWithoutPeopleInput>>;
 };
 
+export type LeagueUpdateOneRequiredWithoutEmailLogsNestedInput = {
+  connect?: InputMaybe<LeagueWhereUniqueInput>;
+  connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutEmailLogsInput>;
+  create?: InputMaybe<LeagueCreateWithoutEmailLogsInput>;
+  update?: InputMaybe<LeagueUpdateWithoutEmailLogsInput>;
+  upsert?: InputMaybe<LeagueUpsertWithoutEmailLogsInput>;
+};
+
 export type LeagueUpdateOneRequiredWithoutLeaguemembersNestedInput = {
   connect?: InputMaybe<LeagueWhereUniqueInput>;
   connectOrCreate?: InputMaybe<LeagueCreateOrConnectWithoutLeaguemembersInput>;
@@ -2305,7 +2908,25 @@ export type LeagueUpdateWithWhereUniqueWithoutPeopleInput = {
   where: LeagueWhereUniqueInput;
 };
 
+export type LeagueUpdateWithoutEmailLogsInput = {
+  WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutLeagueNestedInput>;
+  created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
+  late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
+  leaguemembers?: InputMaybe<LeagueMemberUpdateManyWithoutLeaguesNestedInput>;
+  name?: InputMaybe<StringFieldUpdateOperationsInput>;
+  nextLeague?: InputMaybe<LeagueUpdateOneWithoutPriorLeagueNestedInput>;
+  people?: InputMaybe<UserUpdateOneRequiredWithoutLeaguesNestedInput>;
+  pick_policy?: InputMaybe<NullableEnumPickPolicyFieldUpdateOperationsInput>;
+  priorLeague?: InputMaybe<LeagueUpdateOneWithoutNextLeagueNestedInput>;
+  reminder_policy?: InputMaybe<NullableEnumReminderPolicyFieldUpdateOperationsInput>;
+  scoring_type?: InputMaybe<NullableEnumScoringTypeFieldUpdateOperationsInput>;
+  season?: InputMaybe<IntFieldUpdateOperationsInput>;
+  share_code?: InputMaybe<NullableStringFieldUpdateOperationsInput>;
+  superbowl_competition?: InputMaybe<NullableBoolFieldUpdateOperationsInput>;
+};
+
 export type LeagueUpdateWithoutLeaguemembersInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutLeagueNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutLeagueNestedInput>;
   created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
@@ -2322,6 +2943,7 @@ export type LeagueUpdateWithoutLeaguemembersInput = {
 };
 
 export type LeagueUpdateWithoutNextLeagueInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutLeagueNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutLeagueNestedInput>;
   created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
@@ -2338,6 +2960,7 @@ export type LeagueUpdateWithoutNextLeagueInput = {
 };
 
 export type LeagueUpdateWithoutPeopleInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutLeagueNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutLeagueNestedInput>;
   created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
@@ -2354,6 +2977,7 @@ export type LeagueUpdateWithoutPeopleInput = {
 };
 
 export type LeagueUpdateWithoutPriorLeagueInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutLeagueNestedInput>;
   WeekWinners?: InputMaybe<WeekWinnersUpdateManyWithoutLeagueNestedInput>;
   created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
@@ -2370,6 +2994,7 @@ export type LeagueUpdateWithoutPriorLeagueInput = {
 };
 
 export type LeagueUpdateWithoutWeekWinnersInput = {
+  EmailLogs?: InputMaybe<EmailLogsUpdateManyWithoutLeagueNestedInput>;
   created_time?: InputMaybe<DateTimeFieldUpdateOperationsInput>;
   late_policy?: InputMaybe<NullableEnumLatePolicyFieldUpdateOperationsInput>;
   leaguemembers?: InputMaybe<LeagueMemberUpdateManyWithoutLeaguesNestedInput>;
@@ -2389,6 +3014,11 @@ export type LeagueUpsertWithWhereUniqueWithoutPeopleInput = {
   create: LeagueCreateWithoutPeopleInput;
   update: LeagueUpdateWithoutPeopleInput;
   where: LeagueWhereUniqueInput;
+};
+
+export type LeagueUpsertWithoutEmailLogsInput = {
+  create: LeagueCreateWithoutEmailLogsInput;
+  update: LeagueUpdateWithoutEmailLogsInput;
 };
 
 export type LeagueUpsertWithoutLeaguemembersInput = {
@@ -2413,6 +3043,7 @@ export type LeagueUpsertWithoutWeekWinnersInput = {
 
 export type LeagueWhereInput = {
   AND?: InputMaybe<Array<LeagueWhereInput>>;
+  EmailLogs?: InputMaybe<EmailLogsListRelationFilter>;
   NOT?: InputMaybe<Array<LeagueWhereInput>>;
   OR?: InputMaybe<Array<LeagueWhereInput>>;
   WeekWinners?: InputMaybe<WeekWinnersListRelationFilter>;
@@ -2470,6 +3101,7 @@ export type MostRecentStartedWeekResponse = {
 export type Mutation = {
   __typename?: 'Mutation';
   createLeague: League;
+  createManyEmailLogs: AffectedRowsOutput;
   createManyGame: AffectedRowsOutput;
   createManyLeague: AffectedRowsOutput;
   createManyLeagueMember: AffectedRowsOutput;
@@ -2479,6 +3111,7 @@ export type Mutation = {
   createManyTeam: AffectedRowsOutput;
   createManyUser: AffectedRowsOutput;
   createManyWeekWinners: AffectedRowsOutput;
+  createOneEmailLogs: EmailLogs;
   createOneGame: Game;
   createOneLeague: League;
   createOneLeagueMember: LeagueMember;
@@ -2488,6 +3121,7 @@ export type Mutation = {
   createOneTeam: Team;
   createOneUser: User;
   createOneWeekWinners: WeekWinners;
+  deleteManyEmailLogs: AffectedRowsOutput;
   deleteManyGame: AffectedRowsOutput;
   deleteManyLeague: AffectedRowsOutput;
   deleteManyLeagueMember: AffectedRowsOutput;
@@ -2497,6 +3131,7 @@ export type Mutation = {
   deleteManyTeam: AffectedRowsOutput;
   deleteManyUser: AffectedRowsOutput;
   deleteManyWeekWinners: AffectedRowsOutput;
+  deleteOneEmailLogs?: Maybe<EmailLogs>;
   deleteOneGame?: Maybe<Game>;
   deleteOneLeague?: Maybe<League>;
   deleteOneLeagueMember?: Maybe<LeagueMember>;
@@ -2508,6 +3143,7 @@ export type Mutation = {
   deleteOneWeekWinners?: Maybe<WeekWinners>;
   makePicks: MakePicksResponse;
   register: RegisterResponse;
+  updateManyEmailLogs: AffectedRowsOutput;
   updateManyGame: AffectedRowsOutput;
   updateManyLeague: AffectedRowsOutput;
   updateManyLeagueMember: AffectedRowsOutput;
@@ -2517,6 +3153,7 @@ export type Mutation = {
   updateManyTeam: AffectedRowsOutput;
   updateManyUser: AffectedRowsOutput;
   updateManyWeekWinners: AffectedRowsOutput;
+  updateOneEmailLogs?: Maybe<EmailLogs>;
   updateOneGame?: Maybe<Game>;
   updateOneLeague?: Maybe<League>;
   updateOneLeagueMember?: Maybe<LeagueMember>;
@@ -2526,6 +3163,7 @@ export type Mutation = {
   updateOneTeam?: Maybe<Team>;
   updateOneUser?: Maybe<User>;
   updateOneWeekWinners?: Maybe<WeekWinners>;
+  upsertOneEmailLogs: EmailLogs;
   upsertOneGame: Game;
   upsertOneLeague: League;
   upsertOneLeagueMember: LeagueMember;
@@ -2540,6 +3178,12 @@ export type Mutation = {
 
 export type MutationCreateLeagueArgs = {
   data: CreateLeagueInput;
+};
+
+
+export type MutationCreateManyEmailLogsArgs = {
+  data: Array<EmailLogsCreateManyInput>;
+  skipDuplicates?: InputMaybe<Scalars['Boolean']>;
 };
 
 
@@ -2597,6 +3241,11 @@ export type MutationCreateManyWeekWinnersArgs = {
 };
 
 
+export type MutationCreateOneEmailLogsArgs = {
+  data: EmailLogsCreateInput;
+};
+
+
 export type MutationCreateOneGameArgs = {
   data: GameCreateInput;
 };
@@ -2642,6 +3291,11 @@ export type MutationCreateOneWeekWinnersArgs = {
 };
 
 
+export type MutationDeleteManyEmailLogsArgs = {
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
 export type MutationDeleteManyGameArgs = {
   where?: InputMaybe<GameWhereInput>;
 };
@@ -2684,6 +3338,11 @@ export type MutationDeleteManyUserArgs = {
 
 export type MutationDeleteManyWeekWinnersArgs = {
   where?: InputMaybe<WeekWinnersWhereInput>;
+};
+
+
+export type MutationDeleteOneEmailLogsArgs = {
+  where: EmailLogsWhereUniqueInput;
 };
 
 
@@ -2747,6 +3406,12 @@ export type MutationRegisterArgs = {
 };
 
 
+export type MutationUpdateManyEmailLogsArgs = {
+  data: EmailLogsUpdateManyMutationInput;
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
 export type MutationUpdateManyGameArgs = {
   data: GameUpdateManyMutationInput;
   where?: InputMaybe<GameWhereInput>;
@@ -2801,6 +3466,12 @@ export type MutationUpdateManyWeekWinnersArgs = {
 };
 
 
+export type MutationUpdateOneEmailLogsArgs = {
+  data: EmailLogsUpdateInput;
+  where: EmailLogsWhereUniqueInput;
+};
+
+
 export type MutationUpdateOneGameArgs = {
   data: GameUpdateInput;
   where: GameWhereUniqueInput;
@@ -2852,6 +3523,13 @@ export type MutationUpdateOneUserArgs = {
 export type MutationUpdateOneWeekWinnersArgs = {
   data: WeekWinnersUpdateInput;
   where: WeekWinnersWhereUniqueInput;
+};
+
+
+export type MutationUpsertOneEmailLogsArgs = {
+  create: EmailLogsCreateInput;
+  update: EmailLogsUpdateInput;
+  where: EmailLogsWhereUniqueInput;
 };
 
 
@@ -2991,6 +3669,23 @@ export type NestedDateTimeWithAggregatesFilter = {
   lte?: InputMaybe<Scalars['DateTime']>;
   not?: InputMaybe<NestedDateTimeWithAggregatesFilter>;
   notIn?: InputMaybe<Array<Scalars['DateTime']>>;
+};
+
+export type NestedEnumEmailTypeFilter = {
+  equals?: InputMaybe<EmailType>;
+  in?: InputMaybe<Array<EmailType>>;
+  not?: InputMaybe<NestedEnumEmailTypeFilter>;
+  notIn?: InputMaybe<Array<EmailType>>;
+};
+
+export type NestedEnumEmailTypeWithAggregatesFilter = {
+  _count?: InputMaybe<NestedIntFilter>;
+  _max?: InputMaybe<NestedEnumEmailTypeFilter>;
+  _min?: InputMaybe<NestedEnumEmailTypeFilter>;
+  equals?: InputMaybe<EmailType>;
+  in?: InputMaybe<Array<EmailType>>;
+  not?: InputMaybe<NestedEnumEmailTypeWithAggregatesFilter>;
+  notIn?: InputMaybe<Array<EmailType>>;
 };
 
 export type NestedEnumLatePolicyNullableFilter = {
@@ -3255,6 +3950,11 @@ export type NullableIntFieldUpdateOperationsInput = {
 export type NullableStringFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['String']>;
 };
+
+export enum NullsOrder {
+  First = 'first',
+  Last = 'last'
+}
 
 export type Pick = {
   __typename?: 'Pick';
@@ -3613,38 +4313,38 @@ export type PickOrderByWithAggregationInput = {
   _max?: InputMaybe<PickMaxOrderByAggregateInput>;
   _min?: InputMaybe<PickMinOrderByAggregateInput>;
   _sum?: InputMaybe<PickSumOrderByAggregateInput>;
-  correct?: InputMaybe<SortOrder>;
-  done?: InputMaybe<SortOrder>;
+  correct?: InputMaybe<SortOrderInput>;
+  done?: InputMaybe<SortOrderInput>;
   gid?: InputMaybe<SortOrder>;
-  is_random?: InputMaybe<SortOrder>;
-  loser?: InputMaybe<SortOrder>;
-  member_id?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrderInput>;
+  loser?: InputMaybe<SortOrderInput>;
+  member_id?: InputMaybe<SortOrderInput>;
   pickid?: InputMaybe<SortOrder>;
-  score?: InputMaybe<SortOrder>;
+  score?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   week?: InputMaybe<SortOrder>;
-  winner?: InputMaybe<SortOrder>;
+  winner?: InputMaybe<SortOrderInput>;
 };
 
 export type PickOrderByWithRelationInput = {
-  correct?: InputMaybe<SortOrder>;
-  done?: InputMaybe<SortOrder>;
+  correct?: InputMaybe<SortOrderInput>;
+  done?: InputMaybe<SortOrderInput>;
   games?: InputMaybe<GameOrderByWithRelationInput>;
   gid?: InputMaybe<SortOrder>;
-  is_random?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrderInput>;
   leaguemembers?: InputMaybe<LeagueMemberOrderByWithRelationInput>;
-  loser?: InputMaybe<SortOrder>;
-  member_id?: InputMaybe<SortOrder>;
+  loser?: InputMaybe<SortOrderInput>;
+  member_id?: InputMaybe<SortOrderInput>;
   people?: InputMaybe<UserOrderByWithRelationInput>;
   pickid?: InputMaybe<SortOrder>;
-  score?: InputMaybe<SortOrder>;
+  score?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   week?: InputMaybe<SortOrder>;
-  winner?: InputMaybe<SortOrder>;
+  winner?: InputMaybe<SortOrderInput>;
 };
 
 export enum PickPolicy {
@@ -3930,6 +4630,7 @@ export type PicksByWeekResponse = {
 
 export type Query = {
   __typename?: 'Query';
+  aggregateEmailLogs: AggregateEmailLogs;
   aggregateGame: AggregateGame;
   aggregateLeague: AggregateLeague;
   aggregateLeagueMember: AggregateLeagueMember;
@@ -3939,19 +4640,43 @@ export type Query = {
   aggregateTeam: AggregateTeam;
   aggregateUser: AggregateUser;
   aggregateWeekWinners: AggregateWeekWinners;
+  findFirstEmailLogs?: Maybe<EmailLogs>;
+  findFirstEmailLogsOrThrow?: Maybe<EmailLogs>;
   findFirstGame?: Maybe<Game>;
+  findFirstGameOrThrow?: Maybe<Game>;
   findFirstLeague?: Maybe<League>;
   findFirstLeagueMember?: Maybe<LeagueMember>;
+  findFirstLeagueMemberOrThrow?: Maybe<LeagueMember>;
+  findFirstLeagueOrThrow?: Maybe<League>;
   findFirstPick?: Maybe<Pick>;
+  findFirstPickOrThrow?: Maybe<Pick>;
   findFirstSuperbowl?: Maybe<Superbowl>;
+  findFirstSuperbowlOrThrow?: Maybe<Superbowl>;
   findFirstSuperbowlSquare?: Maybe<SuperbowlSquare>;
+  findFirstSuperbowlSquareOrThrow?: Maybe<SuperbowlSquare>;
   findFirstTeam?: Maybe<Team>;
+  findFirstTeamOrThrow?: Maybe<Team>;
   findFirstUser?: Maybe<User>;
+  findFirstUserOrThrow?: Maybe<User>;
   findFirstWeekWinners?: Maybe<WeekWinners>;
+  findFirstWeekWinnersOrThrow?: Maybe<WeekWinners>;
+  findManyEmailLogs: Array<EmailLogs>;
   findManyWeekWinners: Array<WeekWinners>;
+  findUniqueEmailLogs?: Maybe<EmailLogs>;
+  findUniqueEmailLogsOrThrow?: Maybe<EmailLogs>;
   findUniqueWeekWinners?: Maybe<WeekWinners>;
+  findUniqueWeekWinnersOrThrow?: Maybe<WeekWinners>;
   game?: Maybe<Game>;
   games: Array<Game>;
+  getGame?: Maybe<Game>;
+  getLeague?: Maybe<League>;
+  getLeagueMember?: Maybe<LeagueMember>;
+  getPick?: Maybe<Pick>;
+  getSuperbowl?: Maybe<Superbowl>;
+  getSuperbowlSquare?: Maybe<SuperbowlSquare>;
+  getTeam?: Maybe<Team>;
+  getUser?: Maybe<User>;
+  groupByEmailLogs: Array<EmailLogsGroupBy>;
   groupByGame: Array<GameGroupBy>;
   groupByLeague: Array<LeagueGroupBy>;
   groupByLeagueMember: Array<LeagueMemberGroupBy>;
@@ -3979,6 +4704,15 @@ export type Query = {
   user?: Maybe<User>;
   users: Array<User>;
   weekForPicks: WeekForPicksResponse;
+};
+
+
+export type QueryAggregateEmailLogsArgs = {
+  cursor?: InputMaybe<EmailLogsWhereUniqueInput>;
+  orderBy?: InputMaybe<Array<EmailLogsOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EmailLogsWhereInput>;
 };
 
 
@@ -4063,7 +4797,37 @@ export type QueryAggregateWeekWinnersArgs = {
 };
 
 
+export type QueryFindFirstEmailLogsArgs = {
+  cursor?: InputMaybe<EmailLogsWhereUniqueInput>;
+  distinct?: InputMaybe<Array<EmailLogsScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<EmailLogsOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
+export type QueryFindFirstEmailLogsOrThrowArgs = {
+  cursor?: InputMaybe<EmailLogsWhereUniqueInput>;
+  distinct?: InputMaybe<Array<EmailLogsScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<EmailLogsOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
 export type QueryFindFirstGameArgs = {
+  cursor?: InputMaybe<GameWhereUniqueInput>;
+  distinct?: InputMaybe<Array<GameScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<GameOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type QueryFindFirstGameOrThrowArgs = {
   cursor?: InputMaybe<GameWhereUniqueInput>;
   distinct?: InputMaybe<Array<GameScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<GameOrderByWithRelationInput>>;
@@ -4093,7 +4857,37 @@ export type QueryFindFirstLeagueMemberArgs = {
 };
 
 
+export type QueryFindFirstLeagueMemberOrThrowArgs = {
+  cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<LeagueMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<LeagueMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LeagueMemberWhereInput>;
+};
+
+
+export type QueryFindFirstLeagueOrThrowArgs = {
+  cursor?: InputMaybe<LeagueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<LeagueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<LeagueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LeagueWhereInput>;
+};
+
+
 export type QueryFindFirstPickArgs = {
+  cursor?: InputMaybe<PickWhereUniqueInput>;
+  distinct?: InputMaybe<Array<PickScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<PickOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PickWhereInput>;
+};
+
+
+export type QueryFindFirstPickOrThrowArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
   distinct?: InputMaybe<Array<PickScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<PickOrderByWithRelationInput>>;
@@ -4113,7 +4907,27 @@ export type QueryFindFirstSuperbowlArgs = {
 };
 
 
+export type QueryFindFirstSuperbowlOrThrowArgs = {
+  cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SuperbowlScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SuperbowlOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SuperbowlWhereInput>;
+};
+
+
 export type QueryFindFirstSuperbowlSquareArgs = {
+  cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SuperbowlSquareScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SuperbowlSquareOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SuperbowlSquareWhereInput>;
+};
+
+
+export type QueryFindFirstSuperbowlSquareOrThrowArgs = {
   cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
   distinct?: InputMaybe<Array<SuperbowlSquareScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<SuperbowlSquareOrderByWithRelationInput>>;
@@ -4133,7 +4947,27 @@ export type QueryFindFirstTeamArgs = {
 };
 
 
+export type QueryFindFirstTeamOrThrowArgs = {
+  cursor?: InputMaybe<TeamWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TeamWhereInput>;
+};
+
+
 export type QueryFindFirstUserArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
+  distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<UserOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
+export type QueryFindFirstUserOrThrowArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<UserOrderByWithRelationInput>>;
@@ -4153,6 +4987,26 @@ export type QueryFindFirstWeekWinnersArgs = {
 };
 
 
+export type QueryFindFirstWeekWinnersOrThrowArgs = {
+  cursor?: InputMaybe<WeekWinnersWhereUniqueInput>;
+  distinct?: InputMaybe<Array<WeekWinnersScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<WeekWinnersOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<WeekWinnersWhereInput>;
+};
+
+
+export type QueryFindManyEmailLogsArgs = {
+  cursor?: InputMaybe<EmailLogsWhereUniqueInput>;
+  distinct?: InputMaybe<Array<EmailLogsScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<EmailLogsOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
 export type QueryFindManyWeekWinnersArgs = {
   cursor?: InputMaybe<WeekWinnersWhereUniqueInput>;
   distinct?: InputMaybe<Array<WeekWinnersScalarFieldEnum>>;
@@ -4163,7 +5017,22 @@ export type QueryFindManyWeekWinnersArgs = {
 };
 
 
+export type QueryFindUniqueEmailLogsArgs = {
+  where: EmailLogsWhereUniqueInput;
+};
+
+
+export type QueryFindUniqueEmailLogsOrThrowArgs = {
+  where: EmailLogsWhereUniqueInput;
+};
+
+
 export type QueryFindUniqueWeekWinnersArgs = {
+  where: WeekWinnersWhereUniqueInput;
+};
+
+
+export type QueryFindUniqueWeekWinnersOrThrowArgs = {
   where: WeekWinnersWhereUniqueInput;
 };
 
@@ -4180,6 +5049,56 @@ export type QueryGamesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type QueryGetGameArgs = {
+  where: GameWhereUniqueInput;
+};
+
+
+export type QueryGetLeagueArgs = {
+  where: LeagueWhereUniqueInput;
+};
+
+
+export type QueryGetLeagueMemberArgs = {
+  where: LeagueMemberWhereUniqueInput;
+};
+
+
+export type QueryGetPickArgs = {
+  where: PickWhereUniqueInput;
+};
+
+
+export type QueryGetSuperbowlArgs = {
+  where: SuperbowlWhereUniqueInput;
+};
+
+
+export type QueryGetSuperbowlSquareArgs = {
+  where: SuperbowlSquareWhereUniqueInput;
+};
+
+
+export type QueryGetTeamArgs = {
+  where: TeamWhereUniqueInput;
+};
+
+
+export type QueryGetUserArgs = {
+  where: UserWhereUniqueInput;
+};
+
+
+export type QueryGroupByEmailLogsArgs = {
+  by: Array<EmailLogsScalarFieldEnum>;
+  having?: InputMaybe<EmailLogsScalarWhereWithAggregatesInput>;
+  orderBy?: InputMaybe<Array<EmailLogsOrderByWithAggregationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EmailLogsWhereInput>;
 };
 
 
@@ -4412,6 +5331,21 @@ export enum ReminderPolicy {
   ThreeHoursBefore = 'three_hours_before'
 }
 
+export type ResendEmail = {
+  __typename?: 'ResendEmail';
+  bcc?: Maybe<Array<Scalars['String']>>;
+  cc?: Maybe<Array<Scalars['String']>>;
+  created_at: Scalars['String'];
+  from: Scalars['String'];
+  html?: Maybe<Scalars['String']>;
+  id: Scalars['String'];
+  last_event: Scalars['String'];
+  reply_to?: Maybe<Array<Scalars['String']>>;
+  subject: Scalars['String'];
+  text?: Maybe<Scalars['String']>;
+  to: Array<Scalars['String']>;
+};
+
 export enum ScoringType {
   GameWinner = 'game_winner'
 }
@@ -4420,6 +5354,11 @@ export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
 }
+
+export type SortOrderInput = {
+  nulls?: InputMaybe<NullsOrder>;
+  sort: SortOrder;
+};
 
 export type StringFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['String']>;
@@ -4761,11 +5700,11 @@ export type SuperbowlOrderByWithAggregationInput = {
   _min?: InputMaybe<SuperbowlMinOrderByAggregateInput>;
   _sum?: InputMaybe<SuperbowlSumOrderByAggregateInput>;
   loser?: InputMaybe<SortOrder>;
-  member_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrderInput>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
-  season?: InputMaybe<SortOrder>;
-  ts?: InputMaybe<SortOrder>;
+  season?: InputMaybe<SortOrderInput>;
+  ts?: InputMaybe<SortOrderInput>;
   uid?: InputMaybe<SortOrder>;
   winner?: InputMaybe<SortOrder>;
 };
@@ -4773,13 +5712,13 @@ export type SuperbowlOrderByWithAggregationInput = {
 export type SuperbowlOrderByWithRelationInput = {
   leaguemembers?: InputMaybe<LeagueMemberOrderByWithRelationInput>;
   loser?: InputMaybe<SortOrder>;
-  member_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrderInput>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
-  season?: InputMaybe<SortOrder>;
+  season?: InputMaybe<SortOrderInput>;
   teams_superbowl_loserToteams?: InputMaybe<TeamOrderByWithRelationInput>;
   teams_superbowl_winnerToteams?: InputMaybe<TeamOrderByWithRelationInput>;
-  ts?: InputMaybe<SortOrder>;
+  ts?: InputMaybe<SortOrderInput>;
   uid?: InputMaybe<SortOrder>;
   winner?: InputMaybe<SortOrder>;
 };
@@ -5299,6 +6238,26 @@ export type TeamCount = {
   superbowl_superbowl_winnerToteams: Scalars['Int'];
 };
 
+
+export type TeamCountGames_Games_AwayToteamsArgs = {
+  where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type TeamCountGames_Games_HomeToteamsArgs = {
+  where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type TeamCountSuperbowl_Superbowl_LoserToteamsArgs = {
+  where?: InputMaybe<SuperbowlWhereInput>;
+};
+
+
+export type TeamCountSuperbowl_Superbowl_WinnerToteamsArgs = {
+  where?: InputMaybe<SuperbowlWhereInput>;
+};
+
 export type TeamCountAggregate = {
   __typename?: 'TeamCountAggregate';
   _all: Scalars['Int'];
@@ -5474,16 +6433,16 @@ export type TeamOrderByWithAggregationInput = {
   _max?: InputMaybe<TeamMaxOrderByAggregateInput>;
   _min?: InputMaybe<TeamMinOrderByAggregateInput>;
   _sum?: InputMaybe<TeamSumOrderByAggregateInput>;
-  abbrev?: InputMaybe<SortOrder>;
-  conference?: InputMaybe<SortOrder>;
+  abbrev?: InputMaybe<SortOrderInput>;
+  conference?: InputMaybe<SortOrderInput>;
   loc?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   teamid?: InputMaybe<SortOrder>;
 };
 
 export type TeamOrderByWithRelationInput = {
-  abbrev?: InputMaybe<SortOrder>;
-  conference?: InputMaybe<SortOrder>;
+  abbrev?: InputMaybe<SortOrderInput>;
+  conference?: InputMaybe<SortOrderInput>;
   games_games_awayToteams?: InputMaybe<GameOrderByRelationAggregateInput>;
   games_games_homeToteams?: InputMaybe<GameOrderByRelationAggregateInput>;
   loc?: InputMaybe<SortOrder>;
@@ -5735,6 +6694,21 @@ export type UserCount = {
   picks: Scalars['Int'];
 };
 
+
+export type UserCountLeaguemembersArgs = {
+  where?: InputMaybe<LeagueMemberWhereInput>;
+};
+
+
+export type UserCountLeaguesArgs = {
+  where?: InputMaybe<LeagueWhereInput>;
+};
+
+
+export type UserCountPicksArgs = {
+  where?: InputMaybe<PickWhereInput>;
+};
+
 export type UserCountAggregate = {
   __typename?: 'UserCountAggregate';
   _all: Scalars['Int'];
@@ -5958,31 +6932,31 @@ export type UserOrderByWithAggregationInput = {
   _min?: InputMaybe<UserMinOrderByAggregateInput>;
   _sum?: InputMaybe<UserSumOrderByAggregateInput>;
   email?: InputMaybe<SortOrder>;
-  email2?: InputMaybe<SortOrder>;
+  email2?: InputMaybe<SortOrderInput>;
   fname?: InputMaybe<SortOrder>;
-  google_email?: InputMaybe<SortOrder>;
-  google_photo_url?: InputMaybe<SortOrder>;
-  google_userid?: InputMaybe<SortOrder>;
+  google_email?: InputMaybe<SortOrderInput>;
+  google_photo_url?: InputMaybe<SortOrderInput>;
+  google_userid?: InputMaybe<SortOrderInput>;
   lname?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
-  supabase_id?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrderInput>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
 
 export type UserOrderByWithRelationInput = {
   email?: InputMaybe<SortOrder>;
-  email2?: InputMaybe<SortOrder>;
+  email2?: InputMaybe<SortOrderInput>;
   fname?: InputMaybe<SortOrder>;
-  google_email?: InputMaybe<SortOrder>;
-  google_photo_url?: InputMaybe<SortOrder>;
-  google_userid?: InputMaybe<SortOrder>;
+  google_email?: InputMaybe<SortOrderInput>;
+  google_photo_url?: InputMaybe<SortOrderInput>;
+  google_userid?: InputMaybe<SortOrderInput>;
   leaguemembers?: InputMaybe<LeagueMemberOrderByRelationAggregateInput>;
   leagues?: InputMaybe<LeagueOrderByRelationAggregateInput>;
   lname?: InputMaybe<SortOrder>;
   picks?: InputMaybe<PickOrderByRelationAggregateInput>;
   season?: InputMaybe<SortOrder>;
-  supabase_id?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrderInput>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
@@ -6695,6 +7669,13 @@ export type MarkAsPaidMutationVariables = Exact<{
 
 
 export type MarkAsPaidMutation = { __typename?: 'Mutation', updateOneLeagueMember?: { __typename?: 'LeagueMember', id: string, paid?: boolean | null } | null };
+
+export type MemberEmailsQueryVariables = Exact<{
+  member_id: Scalars['Int'];
+}>;
+
+
+export type MemberEmailsQuery = { __typename?: 'Query', leagueMember?: { __typename?: 'LeagueMember', EmailLogs: Array<{ __typename?: 'EmailLogs', email?: { __typename?: 'ResendEmail', bcc?: Array<string> | null, cc?: Array<string> | null, created_at: string, from: string, html?: string | null, id: string, last_event: string, reply_to?: Array<string> | null, subject: string, text?: string | null, to: Array<string> } | null }> } | null };
 
 export type CreateLeagueMutationVariables = Exact<{
   data: CreateLeagueInput;
@@ -7689,6 +8670,55 @@ export function useMarkAsPaidMutation(baseOptions?: Apollo.MutationHookOptions<M
 export type MarkAsPaidMutationHookResult = ReturnType<typeof useMarkAsPaidMutation>;
 export type MarkAsPaidMutationResult = Apollo.MutationResult<MarkAsPaidMutation>;
 export type MarkAsPaidMutationOptions = Apollo.BaseMutationOptions<MarkAsPaidMutation, MarkAsPaidMutationVariables>;
+export const MemberEmailsDocument = gql`
+    query MemberEmails($member_id: Int!) {
+  leagueMember(where: {membership_id: $member_id}) {
+    EmailLogs {
+      email {
+        bcc
+        cc
+        created_at
+        from
+        html
+        id
+        last_event
+        reply_to
+        subject
+        text
+        to
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMemberEmailsQuery__
+ *
+ * To run a query within a React component, call `useMemberEmailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMemberEmailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMemberEmailsQuery({
+ *   variables: {
+ *      member_id: // value for 'member_id'
+ *   },
+ * });
+ */
+export function useMemberEmailsQuery(baseOptions: Apollo.QueryHookOptions<MemberEmailsQuery, MemberEmailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<MemberEmailsQuery, MemberEmailsQueryVariables>(MemberEmailsDocument, options);
+      }
+export function useMemberEmailsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MemberEmailsQuery, MemberEmailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<MemberEmailsQuery, MemberEmailsQueryVariables>(MemberEmailsDocument, options);
+        }
+export type MemberEmailsQueryHookResult = ReturnType<typeof useMemberEmailsQuery>;
+export type MemberEmailsLazyQueryHookResult = ReturnType<typeof useMemberEmailsLazyQuery>;
+export type MemberEmailsQueryResult = Apollo.QueryResult<MemberEmailsQuery, MemberEmailsQueryVariables>;
 export const CreateLeagueDocument = gql`
     mutation CreateLeague($data: CreateLeagueInput!) {
   createLeague(data: $data) {

@@ -21,7 +21,7 @@ import {
 } from '@chakra-ui/react';
 import {useMemberEmailsQuery} from '@src/generated/graphql';
 import {Typography} from '@src/modules/Typography';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import {useState} from 'react';
 
 const _MemberEmails = gql`

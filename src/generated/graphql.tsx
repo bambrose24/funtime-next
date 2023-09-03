@@ -7682,7 +7682,7 @@ export type MemberEmailsQueryVariables = Exact<{
 }>;
 
 
-export type MemberEmailsQuery = { __typename?: 'Query', leagueMember?: { __typename?: 'LeagueMember', EmailLogs: Array<{ __typename?: 'EmailLogs', email?: { __typename?: 'ResendEmail', bcc?: Array<string> | null, cc?: Array<string> | null, created_at: string, from: string, html?: string | null, id: string, last_event: string, reply_to?: Array<string> | null, subject: string, text?: string | null, to: Array<string> } | null }> } | null };
+export type MemberEmailsQuery = { __typename?: 'Query', leagueMember?: { __typename?: 'LeagueMember', EmailLogs: Array<{ __typename?: 'EmailLogs', ts: any, email?: { __typename?: 'ResendEmail', bcc?: Array<string> | null, cc?: Array<string> | null, created_at: string, from: string, html?: string | null, id: string, last_event: string, reply_to?: Array<string> | null, subject: string, text?: string | null, to: Array<string> } | null }> } | null };
 
 export type CreateLeagueMutationVariables = Exact<{
   data: CreateLeagueInput;
@@ -8722,6 +8722,7 @@ export const MemberEmailsDocument = gql`
     query MemberEmails($member_id: Int!) {
   leagueMember(where: {membership_id: $member_id}) {
     EmailLogs {
+      ts
       email {
         bcc
         cc

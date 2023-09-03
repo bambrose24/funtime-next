@@ -84,9 +84,11 @@ export function MemberEmailsTable({
                     <Typography.Body1>{email.subject}</Typography.Body1>
                   </Td>
                   <Td>
-                    {moment(e.ts)
-                      .tz('America/New_York')
-                      .format('MMM D YYYY, h:mm A z')}
+                    {e.ts
+                      ? moment(e.ts)
+                          .tz('America/New_York')
+                          .format('MMM D YYYY, h:mm A z')
+                      : ''}
                   </Td>
                   <Td>
                     {emailHtml ? (

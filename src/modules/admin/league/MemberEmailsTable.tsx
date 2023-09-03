@@ -2,15 +2,12 @@ import {gql} from '@apollo/client';
 import {
   Box,
   Button,
-  Flex,
   Modal,
   ModalOverlay,
   ModalContent,
   ModalHeader,
   ModalCloseButton,
   ModalBody,
-  Skeleton,
-  Stack,
   Th,
   Tr,
   Thead,
@@ -47,13 +44,7 @@ const _MemberEmails = gql`
   }
 `;
 
-export function MemberEmailsTable({
-  memberId,
-  skeletonCount,
-}: {
-  memberId: number;
-  skeletonCount: number;
-}) {
+export function MemberEmailsTable({memberId}: {memberId: number}) {
   const {data} = useMemberEmailsQuery({
     variables: {member_id: memberId},
   });

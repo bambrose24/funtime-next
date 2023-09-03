@@ -45,13 +45,11 @@ export function MemberEmailsRows({
   memberId: number;
   skeletonCount: number;
 }) {
-  const {data, loading, error} = useMemberEmailsQuery({
+  const {data} = useMemberEmailsQuery({
     variables: {member_id: memberId},
   });
   const [html, setHtml] = useState<string | null>(null);
   const closeModal = () => setHtml(null);
-
-  console.log(data);
 
   return (
     <>

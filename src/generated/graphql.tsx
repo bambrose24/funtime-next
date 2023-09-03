@@ -7534,6 +7534,13 @@ export type WeekWinnersWhereUniqueInput = {
   id?: InputMaybe<Scalars['Int']>;
 };
 
+export type LeagueMemberQueryVariables = Exact<{
+  memberId: Scalars['Int'];
+}>;
+
+
+export type LeagueMemberQuery = { __typename?: 'Query', leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number, paid?: boolean | null, people: { __typename?: 'User', id: string, username: string } } | null };
+
 export type LeagueAdminQueryVariables = Exact<{
   leagueId: Scalars['Int'];
 }>;
@@ -7721,6 +7728,47 @@ export const SuperbowlTeamFragmentDoc = gql`
   teamid
 }
     `;
+export const LeagueMemberDocument = gql`
+    query LeagueMember($memberId: Int!) {
+  leagueMember(where: {membership_id: $memberId}) {
+    id
+    membership_id
+    paid
+    people {
+      id
+      username
+    }
+  }
+}
+    `;
+
+/**
+ * __useLeagueMemberQuery__
+ *
+ * To run a query within a React component, call `useLeagueMemberQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLeagueMemberQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLeagueMemberQuery({
+ *   variables: {
+ *      memberId: // value for 'memberId'
+ *   },
+ * });
+ */
+export function useLeagueMemberQuery(baseOptions: Apollo.QueryHookOptions<LeagueMemberQuery, LeagueMemberQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LeagueMemberQuery, LeagueMemberQueryVariables>(LeagueMemberDocument, options);
+      }
+export function useLeagueMemberLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeagueMemberQuery, LeagueMemberQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LeagueMemberQuery, LeagueMemberQueryVariables>(LeagueMemberDocument, options);
+        }
+export type LeagueMemberQueryHookResult = ReturnType<typeof useLeagueMemberQuery>;
+export type LeagueMemberLazyQueryHookResult = ReturnType<typeof useLeagueMemberLazyQuery>;
+export type LeagueMemberQueryResult = Apollo.QueryResult<LeagueMemberQuery, LeagueMemberQueryVariables>;
 export const LeagueAdminDocument = gql`
     query LeagueAdmin($leagueId: Int!) {
   me {

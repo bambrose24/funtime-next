@@ -17,6 +17,7 @@ import {
   Td,
 } from '@chakra-ui/react';
 import {useMemberEmailsQuery} from '@src/generated/graphql';
+import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 import {Typography} from '@src/modules/Typography';
 import moment from 'moment-timezone';
 import {useState} from 'react';
@@ -45,11 +46,15 @@ const _MemberEmails = gql`
 `;
 
 export function MemberEmailsTable({memberId}: {memberId: number}) {
-  const {data} = useMemberEmailsQuery({
+  const {data, loading} = useMemberEmailsQuery({
     variables: {member_id: memberId},
   });
   const [html, setHtml] = useState<string | null>(null);
   const closeModal = () => setHtml(null);
+
+  if (loading) {
+    return <FuntimeLoading />;
+  }
 
   return (
     <>

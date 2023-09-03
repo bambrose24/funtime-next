@@ -3,6 +3,7 @@ import {Flex} from '@chakra-ui/react';
 import {FuntimePage} from '@src/FuntimePage';
 import {useLeagueMemberQuery} from '@src/generated/graphql';
 import {MemberEmailsTable} from '@src/modules/admin/league/MemberEmailsTable';
+import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 import {Typography} from '@src/modules/Typography';
 import {useRouter} from 'next/router';
 
@@ -24,7 +25,7 @@ export default function MemberEmailsPage() {
   const router = useRouter();
   const memberIdString = router.query['memberId'] as string | undefined;
   const leagueIdString = router.query['leagueId'] as string | undefined;
-  const {data: member} = useLeagueMemberQuery({
+  const {data: member, loading} = useLeagueMemberQuery({
     variables: {memberId: Number(memberIdString)},
     skip: !Number(memberIdString),
   });
@@ -33,6 +34,10 @@ export default function MemberEmailsPage() {
   }
 
   const memberId = Number(memberIdString);
+
+  if (loading) {
+    return <FuntimeLoading />;
+  }
 
   return (
     <FuntimePage>

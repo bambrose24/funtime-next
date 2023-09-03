@@ -3,8 +3,7 @@ import UserTag from '@src/modules/profile/UserTag';
 import {Typography} from '@src/modules/Typography';
 import {useLeagueAdminQuery} from '@src/generated/graphql';
 import {MarkAsPaidButton} from './MarkAsPaidButton';
-import {useState} from 'react';
-import {MemberEmailsRows} from './MemberEmailsRows';
+import {useRouter} from 'next/router';
 
 type LeagueInfoProps = {
   leagueId: number;
@@ -12,7 +11,7 @@ type LeagueInfoProps = {
 
 export function LeagueInfo({leagueId}: LeagueInfoProps) {
   const {data} = useLeagueAdminQuery({variables: {leagueId}});
-  const [memberToShowEmails, setMemberToShowEmails] = useState(0);
+  const router = useRouter();
   if (!data) {
     return null;
   }
@@ -66,7 +65,7 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
                     <Button
                       variant="ghost"
                       onClick={() => {
-                        setMemberToShowEmails(member.membership_id);
+                        router.push(`/league/${leagueId}/admin/${member.membership_id}/emails`);
                       }}
                     >
                       Show Emails
@@ -78,9 +77,6 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
           </Tbody>
         </Table>
       </TableContainer>
-      {memberToShowEmails > 0 && (
-        <MemberEmailsRows memberId={memberToShowEmails} skeletonCount={3} />
-      )}
     </>
   );
 }

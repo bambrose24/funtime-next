@@ -2,7 +2,7 @@ import {gql} from '@apollo/client';
 import {Flex} from '@chakra-ui/react';
 import {FuntimePage} from '@src/FuntimePage';
 import {useLeagueMemberQuery} from '@src/generated/graphql';
-import {MemberEmailsRows} from '@src/modules/admin/league/MemberEmailsRows';
+import {MemberEmailsTable} from '@src/modules/admin/league/MemberEmailsTable';
 import {Typography} from '@src/modules/Typography';
 import {useRouter} from 'next/router';
 
@@ -37,9 +37,9 @@ export default function MemberEmailsPage() {
   return (
     <FuntimePage>
       <Flex w="100%" justify="center">
-        <Flex w="100%" layerStyle="funtime-card">
+        <Flex w="100%" direction="column" gap="20px" layerStyle="funtime-card">
           <Typography.H1>{member?.leagueMember?.people?.username} - Emails</Typography.H1>
-          <MemberEmailsRows memberId={memberId} skeletonCount={3} />
+          <MemberEmailsTable memberId={memberId} skeletonCount={3} />
         </Flex>
       </Flex>
     </FuntimePage>

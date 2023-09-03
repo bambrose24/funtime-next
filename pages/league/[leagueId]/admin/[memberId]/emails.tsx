@@ -36,7 +36,11 @@ export default function MemberEmailsPage() {
   const memberId = Number(memberIdString);
 
   if (loading) {
-    return <FuntimeLoading />;
+    return (
+      <FuntimePage>
+        <FuntimeLoading />
+      </FuntimePage>
+    );
   }
 
   return (

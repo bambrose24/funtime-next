@@ -42,14 +42,16 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
                   _hover={{bgColor: 'gray.50'}}
                 >
                   <Td>
-                    <Typography.Body2>{index + 1}</Typography.Body2>
+                    <Typography.Subtitle2>{index + 1}</Typography.Subtitle2>
                   </Td>
                   <Td>
                     <UserTag user_id={member.people.uid} username={member.people.username} />
                   </Td>
                   <Td>
                     <Flex alignItems="center" gap="8px">
-                      <Typography.H4 minWidth="40px">{member.paid ? 'Yes' : 'No'}</Typography.H4>
+                      <Typography.Subtitle1 minWidth="40px">
+                        {member.paid ? 'Yes' : 'No'}
+                      </Typography.Subtitle1>
                       <MarkAsPaidButton
                         memberId={member.membership_id}
                         username={member.people.username}
@@ -59,11 +61,12 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
                     </Flex>
                   </Td>
                   <Td>
-                    <Typography.H4>{!didPickNextWeek ? 'Yes' : 'No'}</Typography.H4>
+                    <Typography.Subtitle1>{!didPickNextWeek ? 'Yes' : 'No'}</Typography.Subtitle1>
                   </Td>
                   <Td>
                     <Button
                       variant="outline"
+                      size="sm"
                       onClick={() => {
                         router.push(`/league/${leagueId}/admin/${member.membership_id}/emails`);
                       }}

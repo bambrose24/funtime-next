@@ -27,7 +27,7 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
               <Th />
               <Th>User</Th>
               <Th>Paid?</Th>
-              <Th>Picked Next Week {nextWeek ? `(Week ${nextWeek})` : ''}</Th>
+              <Th>Picks Due?</Th>
               <Th>Emails</Th>
             </Tr>
           </Thead>
@@ -59,16 +59,16 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
                     </Flex>
                   </Td>
                   <Td>
-                    <Typography.H4>{didPickNextWeek ? 'Yes' : 'No'}</Typography.H4>
+                    <Typography.H4>{!didPickNextWeek ? 'Yes' : 'No'}</Typography.H4>
                   </Td>
                   <Td>
                     <Button
-                      variant="ghost"
+                      variant="outline"
                       onClick={() => {
                         router.push(`/league/${leagueId}/admin/${member.membership_id}/emails`);
                       }}
                     >
-                      Show Emails
+                      View Emails
                     </Button>
                   </Td>
                 </Tr>

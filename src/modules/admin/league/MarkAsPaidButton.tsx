@@ -26,6 +26,7 @@ export function MarkAsPaidButton({memberId, username, paid, leagueName}: MarkAsP
   return (
     <Button
       variant="outline"
+      size="xs"
       isLoading={loading}
       onClick={() => {
         markAsPaid().then(() => {

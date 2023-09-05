@@ -9,7 +9,7 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 import {useLogout} from '@src/util/logout';
-import {useSupabaseClient, useUser} from '@supabase/auth-helpers-react';
+import {useUser} from '@supabase/auth-helpers-react';
 import {useRouter} from 'next/router';
 import {Typography} from '../Typography';
 
@@ -20,13 +20,12 @@ type Props = {
 export function AlreadyExistingUserModal({leagueName}: Props) {
   const router = useRouter();
   const user = useUser();
-  const supabase = useSupabaseClient();
 
   const onClose = () => {
     router.push('/');
   };
 
-  const logout = useLogout();
+  const {logout} = useLogout();
 
   return (
     <Modal

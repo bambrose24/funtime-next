@@ -1,5 +1,4 @@
 import {Avatar, Button, HStack, Tooltip, useBreakpointValue} from '@chakra-ui/react';
-import ProfilePicture from './ProfilePicture';
 import {Typography} from '../Typography';
 import Link from 'next/link';
 

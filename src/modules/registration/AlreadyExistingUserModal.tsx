@@ -8,6 +8,7 @@ import {
   ModalHeader,
   ModalOverlay,
 } from '@chakra-ui/react';
+import {useLogout} from '@src/util/logout';
 import {useSupabaseClient, useUser} from '@supabase/auth-helpers-react';
 import {useRouter} from 'next/router';
 import {Typography} from '../Typography';
@@ -25,9 +26,7 @@ export function AlreadyExistingUserModal({leagueName}: Props) {
     router.push('/');
   };
 
-  const onLogout = () => {
-    supabase.auth.signOut();
-  };
+  const logout = useLogout();
 
   return (
     <Modal
@@ -60,7 +59,7 @@ export function AlreadyExistingUserModal({leagueName}: Props) {
             <Button
               variant="solid"
               onClick={() => {
-                onLogout();
+                logout();
               }}
             >
               Log Out

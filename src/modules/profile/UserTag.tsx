@@ -1,4 +1,4 @@
-import {Button, HStack, Tooltip, useBreakpointValue} from '@chakra-ui/react';
+import {Avatar, Button, HStack, Tooltip, useBreakpointValue} from '@chakra-ui/react';
 import ProfilePicture from './ProfilePicture';
 import {Typography} from '../Typography';
 import Link from 'next/link';
@@ -20,7 +20,7 @@ const UserTag = (props: {user_id: number; username: string}) => {
           bg="white"
         >
           <HStack>
-            <ProfilePicture id={props.user_id} username={props.username} size="xs" />
+            <Avatar size="xs" name={props.username} />;
             <Typography.Subtitle1
               overflow={{base: 'hidden', lg: 'initial'}}
               textOverflow={{base: 'ellipsis', lg: 'initial'}}

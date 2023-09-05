@@ -21,6 +21,7 @@ import {navOptions, useSelectedNavOption} from './types';
 import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
 import Link from 'next/link';
 import {useNavHeight} from '@src/hooks/useNavHeight';
+import {ProfileMenu} from './ProfileMenu';
 
 export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -57,20 +58,7 @@ export const DesktopNav: React.FC = () => {
               </Link>
             </HStack>
           </Box>
-          <Flex align="center">
-            <Button
-              variant="outline"
-              colorScheme="whiteAlpha"
-              onClick={async () => {
-                if (session) {
-                  await supabase.auth.signOut();
-                }
-                router.push({pathname: '/login', query: {}});
-              }}
-            >
-              <Typography.Body1 color="white">{session ? 'Log Out' : 'Log In'}</Typography.Body1>
-            </Button>
-          </Flex>
+          <ProfileMenu />
         </Flex>
       </Flex>
       <DesktopNavDrawer isOpen={isOpen} onClose={() => setIsOpen(false)} />

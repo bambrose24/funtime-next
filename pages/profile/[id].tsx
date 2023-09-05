@@ -1,8 +1,6 @@
 import {FuntimePage} from '../../src/FuntimePage';
-import {useRouter} from 'next/router';
 import React from 'react';
 import {Typography} from '../../src/modules/Typography';
-import ProfilePicture from '../../src/modules/profile/ProfilePicture';
 import {
   PeopleWithLeaguesDocument,
   PeopleWithLeaguesQuery,
@@ -13,12 +11,12 @@ import {
   Flex,
   Center,
   Stat,
-  StatArrow,
   Table,
   Tbody,
   Tr,
   Td,
   TableContainer,
+  Avatar,
 } from '@chakra-ui/react';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 import {GetStaticPaths, GetStaticProps} from 'next';
@@ -74,10 +72,10 @@ export default function Profile(props: Props) {
 
   const userId = parseInt(id);
 
-  const {data: rankings, loading: rankingsLoading, error: rankingsError} = useLeagueRankings({
+  const {data: rankings, loading: rankingsLoading} = useLeagueRankings({
     leagueId,
   });
-  const {data: profile, loading: profileLoading, error: profileError} = useProfileQuery({
+  const {data: profile, loading: profileLoading} = useProfileQuery({
     variables: {user_id: userId},
   });
 
@@ -121,7 +119,7 @@ export default function Profile(props: Props) {
           borderColor="green.600"
         >
           <Center>
-            <ProfilePicture id={userId} username={user.username || ''} size="xl" />
+            <Avatar name={user.username || ''} size="xl" />
           </Center>
           <Typography.H4 mt={2}>{user.username}</Typography.H4>
           <TableContainer>

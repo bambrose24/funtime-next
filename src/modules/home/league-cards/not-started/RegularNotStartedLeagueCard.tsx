@@ -1,7 +1,6 @@
 import {Flex} from '@chakra-ui/react';
 import {CardStatRow} from '@src/modules/shared/CardStatRow';
 import {HomeQuery} from '@src/generated/graphql';
-import {LeagueCardFooter} from '../LeagueCardFooter';
 
 export type RegularNotStartedLeagueCardProps = {
   member: NonNullable<HomeQuery['me']>['leaguemembers'][number];

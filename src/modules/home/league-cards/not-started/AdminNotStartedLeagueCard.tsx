@@ -8,7 +8,9 @@ import {
   useClipboard,
   useToast,
 } from '@chakra-ui/react';
-import {HomeQuery} from '@src/generated/graphql';
+import {HomeQuery, useHomeQuery} from '@src/generated/graphql';
+import {CardStatRow} from '@src/modules/shared/CardStatRow';
+import {Typography} from '@src/modules/Typography';
 
 export type AdminNotStartedLeagueCardProps = {
   member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
@@ -16,13 +18,18 @@ export type AdminNotStartedLeagueCardProps = {
 
 export function AdminNotStartedLeagueCard({member}: AdminNotStartedLeagueCardProps) {
   const toaster = useToast();
+  const memberCount = member.leagues?.aggregateLeagueMember?.count;
   const registrationLink = `${
     typeof window !== 'undefined' ? window.location.origin : 'https://www.play-funtime.com'
   }/register/${member.leagues.share_code}`;
   const {onCopy, hasCopied} = useClipboard(registrationLink);
   return (
     <Flex w="100%" direction="column" gap="20px" justify="space-between" h="100%">
-      <Flex direction="column">
+      <Flex direction="column" gap="12px">
+        <CardStatRow
+          label={`Registered Members`}
+          value={member.leagues.aggregateLeagueMember.count ?? 0}
+        />
         <Flex w="100%" justify="space-between">
           <FormControl>
             <FormLabel>Registration Link</FormLabel>

@@ -1,5 +1,5 @@
-mutation MakePicks($picks: [GamePick!]!, $league_id: Int!, $leagueId: Int!) {
-  makePicks(picks: $picks, league_id: $league_id) {
+mutation MakePicks($picks: [GamePick!]!, $leagueId: Int!) {
+  makePicks(picks: $picks, league_id: $leagueId) {
     user {
       id
       username

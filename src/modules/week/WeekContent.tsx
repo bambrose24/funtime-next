@@ -64,6 +64,8 @@ export function WeekContent({leagueId}: WeekContentProps) {
     variables: {league_id: leagueId},
   });
 
+  const [weekState, setWeekState] = useState<number | undefined>(weekParam);
+
   const date = useRef<Date>(new Date());
 
   const {
@@ -80,12 +82,18 @@ export function WeekContent({leagueId}: WeekContentProps) {
     variables: {
       league_id: leagueId,
       // this is where you'd set the "week" from a dropdown
-      ...(weekParam ? {week: weekParam} : {}),
+      ...(weekState ? {week: weekState} : {}),
       // TODO just have this be derived api-side from the user's Role in the league
       ...(env !== 'production' || overrideParam ? {override: true} : {}),
     },
     // pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
+
+  useEffect(() => {
+    if (picksData?.picksByWeek?.week && picksData.picksByWeek.week !== weekState) {
+      setWeekState(picksData.picksByWeek.week);
+    }
+  }, [picksData, weekState, setWeekState]);
 
   const availableWeeksSet = new Set(
     [

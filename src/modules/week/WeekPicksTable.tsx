@@ -9,6 +9,7 @@ import {
   Tbody,
   Td,
   useBreakpointValue,
+  Tooltip,
 } from '@chakra-ui/react';
 import {AllTeamsQuery, FindLeagueMembersQuery, PicksByWeekQuery} from '@src/generated/graphql';
 import {useState} from 'react';
@@ -150,6 +151,8 @@ const PicksTable: React.FC<PicksTableProps> = ({
     userRowId === selectedRow ? setSelectedRow(undefined) : setSelectedRow(userRowId);
   }
 
+  const now = new Date();
+
   const isMobile = useBreakpointValue({base: true, md: false});
 
   return (
@@ -212,6 +215,8 @@ const PicksTable: React.FC<PicksTableProps> = ({
                   const winnerTeam = teamIdToTeam[winner!];
                   const game = gameIdToGame[pick.gid];
 
+                  const isStarted = game.ts < now;
+
                   const bg =
                     !game.done && !simulatedPicks[game.gid]
                       ? undefined
@@ -219,10 +224,16 @@ const PicksTable: React.FC<PicksTableProps> = ({
                       ? 'green.300'
                       : 'red.300';
 
-                  return (
+                  const Row = (
                     <Td cursor="default" bg={bg} key={`${member.membership_id}_${game.gid}_pick`}>
-                      {winnerTeam.abbrev}
+                      {isStarted ? winnerTeam.abbrev : '--'}
                     </Td>
+                  );
+
+                  return isStarted ? (
+                    <Tooltip label="You can see this pick when the game starts">{Row}</Tooltip>
+                  ) : (
+                    Row
                   );
                 })}
               </Tr>

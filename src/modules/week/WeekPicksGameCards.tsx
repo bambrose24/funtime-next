@@ -103,11 +103,19 @@ export const GameCard: React.FC<{
               p="4px"
               borderRadius="4px"
               bg={awayBgColor}
-              _hover={{
-                cursor: 'pointer',
-                bg: awayBgColor ? undefined : 'gray.200',
+              _hover={
+                g.ts < new Date()
+                  ? {
+                      cursor: 'pointer',
+                      bg: awayBgColor ? undefined : 'gray.200',
+                    }
+                  : {}
+              }
+              onClick={() => {
+                if (g.ts < new Date()) {
+                  pickTeam(awayTeam.teamid);
+                }
               }}
-              onClick={() => pickTeam(awayTeam.teamid)}
             >
               <Typography.Body1 fontWeight="500" color={awayColor}>
                 {awayTeam.abbrev}

@@ -184,7 +184,7 @@ const GameLiveState: React.FC<{
         return <Typography.Body2>Final</Typography.Body2>;
       case MsfGamePlayedStatus.CompletedPendingReview:
         return <Typography.Body2>Final Pending Review</Typography.Body2>;
-      case MsfGamePlayedStatus.Live:
+      case MsfGamePlayedStatus.Live: {
         const quarter = game.liveStatus.currentQuarter;
         const secondsRemaining = game.liveStatus.currentQuarterSecondsRemaining;
         if (!secondsRemaining) {
@@ -207,6 +207,7 @@ const GameLiveState: React.FC<{
             Q{quarter} {minutesStr}:{secondsStr}
           </Typography.Body2>
         );
+      }
     }
   }
   return <GameTS ts={game.ts} />;

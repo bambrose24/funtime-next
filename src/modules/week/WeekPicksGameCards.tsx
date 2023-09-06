@@ -2,6 +2,7 @@ import {Box, Flex, HStack, VStack} from '@chakra-ui/react';
 import {AllTeamsQuery, MsfGamePlayedStatus, PicksByWeekQuery} from '@src/generated/graphql';
 import _ from 'lodash';
 import moment from 'moment-timezone';
+import {useMemo} from 'react';
 import {TeamLogo} from '../shared/TeamLogo';
 import {Typography} from '../Typography';
 
@@ -89,6 +90,11 @@ export const GameCard: React.FC<{
     return [undefined, undefined];
   };
 
+  const isGameStarted = useMemo(() => {
+    const now = new Date();
+    return g.ts < now;
+  }, [g.ts]);
+
   const [awayColor, awayBgColor] = getColors(game, game.away, simulatedPicks[game.gid]);
 
   const [homeColor, homeBgColor] = getColors(game, game.home, simulatedPicks[game.gid]);
@@ -104,7 +110,7 @@ export const GameCard: React.FC<{
               borderRadius="4px"
               bg={awayBgColor}
               _hover={
-                g.ts < new Date()
+                isGameStarted
                   ? {
                       cursor: 'pointer',
                       bg: awayBgColor ? undefined : 'gray.200',
@@ -112,7 +118,7 @@ export const GameCard: React.FC<{
                   : {}
               }
               onClick={() => {
-                if (g.ts < new Date()) {
+                if (isGameStarted) {
                   pickTeam(awayTeam.teamid);
                 }
               }}
@@ -131,11 +137,19 @@ export const GameCard: React.FC<{
               p="4px"
               borderRadius="4px"
               bg={homeBgColor}
-              _hover={{
-                cursor: 'pointer',
-                bg: homeBgColor ? undefined : 'gray.200',
+              _hover={
+                isGameStarted
+                  ? {
+                      cursor: 'pointer',
+                      bg: homeBgColor ? undefined : 'gray.200',
+                    }
+                  : {}
+              }
+              onClick={() => {
+                if (isGameStarted) {
+                  pickTeam(homeTeam.teamid);
+                }
               }}
-              onClick={() => pickTeam(homeTeam.teamid)}
             >
               <Typography.Body1 fontWeight="500" color={homeColor}>
                 {homeTeam.abbrev}

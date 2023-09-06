@@ -86,7 +86,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
       // TODO just have this be derived api-side from the user's Role in the league
       ...(env !== 'production' || overrideParam ? {override: true} : {}),
     },
-    // pollInterval: 1000 * 60 * 3, // every 3 minutes
+    pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
 
   useEffect(() => {

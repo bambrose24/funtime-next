@@ -1,10 +1,5 @@
 import {Form, Formik} from 'formik';
-import {
-  GamePick,
-  GamesByWeekQuery,
-  useLeagueQuery,
-  useMakePicksMutation,
-} from '../../generated/graphql';
+import {GamePick, GamesByWeekQuery, useMakePicksMutation} from '../../generated/graphql';
 import * as Yup from 'yup';
 import {
   Alert,
@@ -230,7 +225,7 @@ export function PicksForm({
             return res;
           });
           const res = await submitPicks({
-            variables: {picks, league_id: leagueId},
+            variables: {picks, leagueId},
           });
           setModalPicks(picks);
           onSuccess().then(() => {

@@ -7602,7 +7602,6 @@ export type FindLeagueMembersQuery = { __typename?: 'Query', leagueMembers: Arra
 
 export type MakePicksMutationVariables = Exact<{
   picks: Array<GamePick> | GamePick;
-  league_id: Scalars['Int'];
   leagueId: Scalars['Int'];
 }>;
 
@@ -8217,8 +8216,8 @@ export type FindLeagueMembersQueryHookResult = ReturnType<typeof useFindLeagueMe
 export type FindLeagueMembersLazyQueryHookResult = ReturnType<typeof useFindLeagueMembersLazyQuery>;
 export type FindLeagueMembersQueryResult = Apollo.QueryResult<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>;
 export const MakePicksDocument = gql`
-    mutation MakePicks($picks: [GamePick!]!, $league_id: Int!, $leagueId: Int!) {
-  makePicks(picks: $picks, league_id: $league_id) {
+    mutation MakePicks($picks: [GamePick!]!, $leagueId: Int!) {
+  makePicks(picks: $picks, league_id: $leagueId) {
     user {
       id
       username
@@ -8247,7 +8246,6 @@ export type MakePicksMutationFn = Apollo.MutationFunction<MakePicksMutation, Mak
  * const [makePicksMutation, { data, loading, error }] = useMakePicksMutation({
  *   variables: {
  *      picks: // value for 'picks'
- *      league_id: // value for 'league_id'
  *      leagueId: // value for 'leagueId'
  *   },
  * });

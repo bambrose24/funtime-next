@@ -54,9 +54,22 @@ export function ProfileMenu() {
 function MenuPopover() {
   const {data} = useMeQuery();
   const {logout} = useLogout();
+  const supabase = useSupabaseClient();
+  const router = useRouter();
 
   if (!data || !data.me) {
-    return null;
+    return (
+      <Button
+        variant="outline"
+        colorScheme="whiteAlpha"
+        onClick={async () => {
+          await supabase.auth.signOut();
+          router.push({pathname: '/login', query: {}});
+        }}
+      >
+        <Typography.Body1 color="white">Log Out</Typography.Body1>
+      </Button>
+    );
   }
 
   console.log('username?', data.me.username);

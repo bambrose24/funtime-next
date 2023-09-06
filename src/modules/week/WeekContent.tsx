@@ -39,10 +39,6 @@ export function WeekContent({leagueId}: WeekContentProps) {
     Number(router.query.week) || undefined
   );
 
-  const {data: defaultPicksByWeekData, loading: defaultPicksLoading} = usePicksByWeekQuery({
-    variables: {league_id: leagueId},
-  });
-
   const {data: winners, loading: winnersLoading} = useWinnersQuery({
     variables: {league_id: leagueId},
   });
@@ -53,9 +49,8 @@ export function WeekContent({leagueId}: WeekContentProps) {
       // this is where you'd set the "week" from a dropdown
       ...(weekState ? {week: weekState} : {}),
       // TODO just have this be derived api-side from the user's Role in the league
-      ...(env === 'production' ? {override: true} : {}),
+      ...(env !== 'production' ? {override: true} : {}),
     },
-    skip: weekState === undefined,
     pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
 
@@ -69,7 +64,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
   const availableWeeksSet = new Set(
     [
       ...(winners?.findManyWeekWinners || []).map(w => w.week),
-      defaultPicksByWeekData?.picksByWeek.week || undefined,
+      picksData?.picksByWeek.week || undefined,
     ]
       .filter(Boolean)
       .map(x => parseInt((x as number)?.toString()))
@@ -86,11 +81,18 @@ export function WeekContent({leagueId}: WeekContentProps) {
 
   const Header = useBreakpointValue({base: Typography.H2, lg: Typography.H1}) || Typography.H1;
 
-  if (picksLoading || peopleLoading || teamsLoading || winnersLoading || defaultPicksLoading) {
-    return <FuntimeLoading />;
+  if (peopleLoading || teamsLoading || winnersLoading) {
+    console.log({
+      weekState,
+      picksLoading,
+      peopleLoading,
+      teamsLoading,
+      winnersLoading,
+    });
+    return <></>;
   }
 
-  if (!people || !teams || !winners || !defaultPicksByWeekData) {
+  if (!people || !teams || !winners || !picksData) {
     return (
       <Box w="100%">
         <Typography.H2>There was an error. Please refresh the page.</Typography.H2>

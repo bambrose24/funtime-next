@@ -1,3 +1,4 @@
+import {gql} from '@apollo/client';
 import {
   Alert,
   AlertDescription,
@@ -14,13 +15,14 @@ import {
 import {
   useAllTeamsQuery,
   useFindLeagueMembersQuery,
+  useLeagueMostRecentlyStartedGameQuery,
   usePicksByWeekQuery,
   useWinnersQuery,
 } from '@src/generated/graphql';
-import {env} from '@src/util/config';
+import {env, SEASON} from '@src/util/config';
 import _ from 'lodash';
 import {useRouter} from 'next/router';
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import UserTag from '../profile/UserTag';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';
@@ -31,35 +33,59 @@ type WeekContentProps = {
   leagueId: number;
 };
 
+const _LeagueMostRecentlyStartedGameQuery = gql`
+  query LeagueMostRecentlyStartedGame($season: Int!, $when: DateTime!) {
+    findFirstGame(where: {season: {equals: $season}, ts: {lte: $when}}, orderBy: {ts: asc}) {
+      id
+      gid
+      week
+      season
+      ts
+      teams_games_homeToteams {
+        id
+        abbrev
+      }
+      teams_games_awayToteams {
+        id
+        abbrev
+      }
+    }
+  }
+`;
+
 export function WeekContent({leagueId}: WeekContentProps) {
   const [simulatedPicks, setSimulatedPicks] = useState<Record<number, number>>({});
   const router = useRouter();
 
-  const [weekState, setWeekState] = useState<number | undefined>(
-    Number(router.query.week) || undefined
-  );
+  const weekParam = Number(router.query.week) || undefined;
+  const overrideParam = Boolean(router.query.override) ?? false;
 
   const {data: winners, loading: winnersLoading} = useWinnersQuery({
     variables: {league_id: leagueId},
+  });
+
+  const date = useRef<Date>(new Date());
+
+  const {
+    data: mostRecentStartedGame,
+    loading: mostRecentStartedGameLoading,
+  } = useLeagueMostRecentlyStartedGameQuery({
+    variables: {
+      season: SEASON,
+      when: date.current,
+    },
   });
 
   const {data: picksData, loading: picksLoading} = usePicksByWeekQuery({
     variables: {
       league_id: leagueId,
       // this is where you'd set the "week" from a dropdown
-      ...(weekState ? {week: weekState} : {}),
+      ...(weekParam ? {week: weekParam} : {}),
       // TODO just have this be derived api-side from the user's Role in the league
-      ...(env !== 'production' ? {override: true} : {}),
+      ...(env !== 'production' || overrideParam ? {override: true} : {}),
     },
-    pollInterval: 1000 * 60 * 3, // every 3 minutes
+    // pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
-
-  useEffect(() => {
-    const weekResponse = picksData?.picksByWeek?.week;
-    if (weekResponse && weekState !== weekResponse) {
-      setWeekState(weekResponse);
-    }
-  }, [picksData, weekState, setWeekState]);
 
   const availableWeeksSet = new Set(
     [
@@ -81,18 +107,17 @@ export function WeekContent({leagueId}: WeekContentProps) {
 
   const Header = useBreakpointValue({base: Typography.H2, lg: Typography.H1}) || Typography.H1;
 
-  if (peopleLoading || teamsLoading || winnersLoading) {
-    console.log({
-      weekState,
-      picksLoading,
-      peopleLoading,
-      teamsLoading,
-      winnersLoading,
-    });
-    return <></>;
+  if (
+    peopleLoading ||
+    teamsLoading ||
+    winnersLoading ||
+    picksLoading ||
+    mostRecentStartedGameLoading
+  ) {
+    return <FuntimeLoading />;
   }
 
-  if (!people || !teams || !winners || !picksData) {
+  if (!people || !teams || !winners || !picksData || !mostRecentStartedGame) {
     return (
       <Box w="100%">
         <Typography.H2>There was an error. Please refresh the page.</Typography.H2>
@@ -100,8 +125,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
     );
   }
 
-  const picks = picksData || defaultPicksByWeekData;
-  console.log({picks});
+  const picks = picksData;
 
   const pickTeam = (t: number) => {
     const g = picks.picksByWeek.games.find(g => g.home === t || g.away === t);
@@ -120,7 +144,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
 
   const {week: weekResponse, season} = picks.picksByWeek;
 
-  const week = weekResponse || weekState;
+  const week = weekResponse || mostRecentStartedGame?.findFirstGame?.week;
 
   if (!picks.picksByWeek.canView || !week) {
     return (

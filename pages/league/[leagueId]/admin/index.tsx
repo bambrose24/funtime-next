@@ -83,17 +83,17 @@ export default function LeagueAdminPage() {
           <TabsHeader title={data.league?.name || ''} subtitle={'Admin Page'} />
           <Tabs variant="soft-rounded">
             <TabList>
-              <Tab>
+              {/* <Tab>
                 <TabName>League Info</TabName>
-              </Tab>
+              </Tab> */}
               <Tab>
                 <TabName>Manage Players</TabName>
               </Tab>
             </TabList>
             <TabPanels>
-              <TabPanel>
+              {/* <TabPanel>
                 <LeagueInfo leagueId={leagueId} />
-              </TabPanel>
+              </TabPanel> */}
               <TabPanel>
                 <ManagePlayers leagueId={leagueId} />
               </TabPanel>

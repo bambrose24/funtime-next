@@ -221,7 +221,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
                     leagueViewer?.me?.leagueMember?.membership_id &&
                     leagueViewer.me.leagueMember.membership_id === pick.member_id;
 
-                  const shouldHide = game.ts < now && !isViewer;
+                  const shouldShow = game.ts < now || isViewer;
 
                   const bg =
                     !game.done && !simulatedPicks[game.gid]
@@ -232,11 +232,11 @@ const PicksTable: React.FC<PicksTableProps> = ({
 
                   const Row = (
                     <Td cursor="default" bg={bg} key={`${member.membership_id}_${game.gid}_pick`}>
-                      {!shouldHide ? winnerTeam.abbrev : '--'}
+                      {shouldShow ? winnerTeam.abbrev : '--'}
                     </Td>
                   );
 
-                  return !shouldHide ? (
+                  return shouldShow ? (
                     <Tooltip label="You can see this pick when the game starts">{Row}</Tooltip>
                   ) : (
                     Row

@@ -224,8 +224,8 @@ export function PicksForm({
             };
             return res;
           });
-          const res = await submitPicks({
-            variables: {picks, leagueId},
+          await submitPicks({
+            variables: {picks, leagueId, overrideMemberId: memberId},
           });
           setModalPicks(picks);
           onSuccess().then(() => {

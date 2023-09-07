@@ -3394,6 +3394,7 @@ export type MutationDeleteOneWeekWinnersArgs = {
 
 export type MutationMakePicksArgs = {
   league_id: Scalars['Int'];
+  override_member_id?: InputMaybe<Scalars['Int']>;
   picks: Array<GamePick>;
 };
 
@@ -7603,6 +7604,7 @@ export type FindLeagueMembersQuery = { __typename?: 'Query', leagueMembers: Arra
 export type MakePicksMutationVariables = Exact<{
   picks: Array<GamePick> | GamePick;
   leagueId: Scalars['Int'];
+  overrideMemberId?: InputMaybe<Scalars['Int']>;
 }>;
 
 
@@ -8218,8 +8220,12 @@ export type FindLeagueMembersQueryHookResult = ReturnType<typeof useFindLeagueMe
 export type FindLeagueMembersLazyQueryHookResult = ReturnType<typeof useFindLeagueMembersLazyQuery>;
 export type FindLeagueMembersQueryResult = Apollo.QueryResult<FindLeagueMembersQuery, FindLeagueMembersQueryVariables>;
 export const MakePicksDocument = gql`
-    mutation MakePicks($picks: [GamePick!]!, $leagueId: Int!) {
-  makePicks(picks: $picks, league_id: $leagueId) {
+    mutation MakePicks($picks: [GamePick!]!, $leagueId: Int!, $overrideMemberId: Int) {
+  makePicks(
+    picks: $picks
+    league_id: $leagueId
+    override_member_id: $overrideMemberId
+  ) {
     user {
       id
       username
@@ -8249,6 +8255,7 @@ export type MakePicksMutationFn = Apollo.MutationFunction<MakePicksMutation, Mak
  *   variables: {
  *      picks: // value for 'picks'
  *      leagueId: // value for 'leagueId'
+ *      overrideMemberId: // value for 'overrideMemberId'
  *   },
  * });
  */

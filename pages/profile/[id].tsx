@@ -1,11 +1,7 @@
 import {FuntimePage} from '../../src/FuntimePage';
 import React from 'react';
 import {Typography} from '../../src/modules/Typography';
-import {
-  PeopleWithLeaguesDocument,
-  PeopleWithLeaguesQuery,
-  useProfileQuery,
-} from '../../src/generated/graphql';
+import {useProfileQuery} from '../../src/generated/graphql';
 import {
   Box,
   Flex,
@@ -19,50 +15,15 @@ import {
   Avatar,
 } from '@chakra-ui/react';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
-import {GetStaticPaths, GetStaticProps} from 'next';
-import {getApolloClient} from '@src/graphql';
 import {useLeagueRankings} from '@src/hooks/useLeagueRankings';
 import {LEAGUE_ID} from '@src/util/config';
 import {FuntimeError} from '@src/modules/shared/FuntimeError';
-import {SECONDS_IN_DAY} from '@src/util/constants';
 
 type IDParam = {
   id: string;
 };
 
 type Props = IDParam;
-
-// TODO getStaticPaths and load all the users
-export const getStaticProps: GetStaticProps<Props, IDParam> = async context => {
-  // const client = getApolloClient();
-  // const data = await client.query<AllPeopleQuery>({ query: AllPeopleDocument });
-  const id = context.params?.id || '';
-
-  return {
-    props: {id},
-    revalidate: SECONDS_IN_DAY * 100,
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const client = getApolloClient();
-  const {data} = await client.query<PeopleWithLeaguesQuery>({
-    query: PeopleWithLeaguesDocument,
-  });
-
-  // could pick people by current season or something to prioritize, and if the amount of people kept growing
-  // this would need to grow also
-  const uids = data.leagueMembers.map(u => u.people.uid).slice(0, 10);
-
-  return {
-    paths: uids.map(uid => {
-      return {
-        params: {id: uid.toString()},
-      };
-    }),
-    fallback: 'blocking',
-  };
-};
 
 export default function Profile(props: Props) {
   const {id} = props;

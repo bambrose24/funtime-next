@@ -1,13 +1,7 @@
 import {LeagueRegistration} from '@src/modules/registration';
 import {FuntimeError} from '@src/modules/shared/FuntimeError';
-import {
-  LeagueRegistrationDocument,
-  LeagueRegistrationQuery,
-  LeagueRegistrationQueryVariables,
-} from '@src/generated/graphql';
+import {LeagueRegistrationQuery} from '@src/generated/graphql';
 import {FuntimePage} from '@src/FuntimePage';
-import {getApolloClient} from '@src/graphql';
-import {GetServerSideProps} from 'next';
 import {useRouter} from 'next/router';
 
 type Props = {

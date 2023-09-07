@@ -2,6 +2,8 @@ import {
   Box,
   Button,
   Flex,
+  FormControl,
+  FormLabel,
   Select,
   Table,
   TableContainer,
@@ -143,20 +145,22 @@ function MakePicksTableEntry({
 
   return (
     <Flex gap="4px">
-      <Select
-        value={week}
-        onChange={e => {
-          setWeek(parseInt(e.target.value));
-        }}
-      >
-        {Array.from(weeks).map(week => {
-          return (
-            <option key={`${memberId}_${week}`} value={week}>
-              {week}
-            </option>
-          );
-        })}
-      </Select>
+      <FormControl variant="floating">
+        <Select
+          value={week}
+          onChange={e => {
+            setWeek(parseInt(e.target.value));
+          }}
+        >
+          {Array.from(weeks).map(week => {
+            return (
+              <option key={`${memberId}_${week}`} value={week}>
+                Week {week}
+              </option>
+            );
+          })}
+        </Select>
+      </FormControl>
       <Link href={`/league/${leagueId}/admin/${memberId}/pick?week=${week}&override=true`}>
         <Button variant="outline" size="md">
           Make Picks

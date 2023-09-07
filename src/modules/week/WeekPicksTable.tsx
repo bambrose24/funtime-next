@@ -15,6 +15,7 @@ import {AllTeamsQuery, FindLeagueMembersQuery, PicksByWeekQuery} from '@src/gene
 import {useState} from 'react';
 import UserTag from '@src/modules/profile/UserTag';
 import moment from 'moment';
+import {useLeaguePageMemberViewer} from '@src/hooks/useLeaguePageMemberViewer';
 
 type WeekPicksTableProps = {
   teams: AllTeamsQuery;
@@ -135,6 +136,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
   teamIdToTeam,
   simulatedPicks,
 }) => {
+  const {data: leagueViewer} = useLeaguePageMemberViewer();
   const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
   const pickSort = (a: {gid: number}, b: {gid: number}) => {
     // get games from mapping and compare ts
@@ -215,7 +217,11 @@ const PicksTable: React.FC<PicksTableProps> = ({
                   const winnerTeam = teamIdToTeam[winner!];
                   const game = gameIdToGame[pick.gid];
 
-                  const isStarted = game.ts < now;
+                  const isViewer =
+                    leagueViewer?.me?.leagueMember?.membership_id &&
+                    leagueViewer.me.leagueMember.membership_id === pick.member_id;
+
+                  const shouldHide = game.ts < now && !isViewer;
 
                   const bg =
                     !game.done && !simulatedPicks[game.gid]
@@ -226,11 +232,11 @@ const PicksTable: React.FC<PicksTableProps> = ({
 
                   const Row = (
                     <Td cursor="default" bg={bg} key={`${member.membership_id}_${game.gid}_pick`}>
-                      {isStarted ? winnerTeam.abbrev : '--'}
+                      {!shouldHide ? winnerTeam.abbrev : '--'}
                     </Td>
                   );
 
-                  return isStarted ? (
+                  return !shouldHide ? (
                     <Tooltip label="You can see this pick when the game starts">{Row}</Tooltip>
                   ) : (
                     Row

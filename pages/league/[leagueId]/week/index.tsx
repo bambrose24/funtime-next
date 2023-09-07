@@ -1,6 +1,5 @@
 import {FuntimePage} from '@src/FuntimePage';
 import WeekContent from '@src/modules/week/WeekContent';
-import {GetStaticProps} from 'next';
 import {useRouter} from 'next/router';
 import {FuntimeError} from '@src/modules/shared/FuntimeError';
 

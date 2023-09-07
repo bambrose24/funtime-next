@@ -4,6 +4,7 @@ query GamesByWeek($season: Int!, $week: Int!) {
     gid
     week
     season
+    started
     awayscore
     homescore
     ts

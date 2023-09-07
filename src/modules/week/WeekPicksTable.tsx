@@ -237,9 +237,9 @@ const PicksTable: React.FC<PicksTableProps> = ({
                   );
 
                   return shouldShow ? (
-                    <Tooltip label="You can see this pick when the game starts">{Row}</Tooltip>
+                    {Row}
                   ) : (
-                    Row
+                    <Tooltip label="You can see this pick when the game starts">{Row}</Tooltip>
                   );
                 })}
               </Tr>

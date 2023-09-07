@@ -743,6 +743,7 @@ export type Game = {
   picks: Array<Pick>;
   season: Scalars['Int'];
   seconds?: Maybe<Scalars['Int']>;
+  started: Scalars['Boolean'];
   teams_games_awayToteams: Team;
   teams_games_homeToteams: Team;
   ts: Scalars['DateTimeBetterSerialization'];
@@ -7585,7 +7586,7 @@ export type GamesByWeekQueryVariables = Exact<{
 }>;
 
 
-export type GamesByWeekQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> };
+export type GamesByWeekQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, started: boolean, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> };
 
 export type LeagueQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -8072,6 +8073,7 @@ export const GamesByWeekDocument = gql`
     gid
     week
     season
+    started
     awayscore
     homescore
     ts

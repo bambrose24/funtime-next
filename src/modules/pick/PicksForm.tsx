@@ -1,4 +1,4 @@
-import {Form, Formik} from 'formik';
+import {Form, Formik, FormikErrors} from 'formik';
 import {GamePick, GamesByWeekQuery, useMakePicksMutation} from '../../generated/graphql';
 import * as Yup from 'yup';
 import {
@@ -27,7 +27,7 @@ import {
 import {Typography} from '../Typography';
 import {TeamLogo} from '../shared/TeamLogo';
 import moment from 'moment-timezone';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 
 interface PicksFormProps {
   week: number;
@@ -64,6 +64,19 @@ export function PicksForm({
 
   // TODO... query the "viewer" LeagueMember field on a League, and get it from useLeagueQuery
 
+  const gamesNeededToPick = useMemo(() => {
+    return games.filter(g => {
+      if (isImpersonating) {
+        return true;
+      }
+      return !g.started;
+    });
+  }, [games, isImpersonating]);
+
+  const neededGameIds = useMemo(() => {
+    return new Set(gamesNeededToPick.map(g => g.gid));
+  }, [gamesNeededToPick]);
+
   const validationSchema = Yup.object().shape({
     games: Yup.array()
       .of(
@@ -73,7 +86,7 @@ export function PicksForm({
           winner: Yup.number().required('Please pick a winner for this game.'),
         })
       )
-      .length(games.length, 'Please select a winner for every game'),
+      .length(gamesNeededToPick.length, 'Please select a winner for every game'),
     score: Yup.number()
       .required()
       .integer()
@@ -213,6 +226,23 @@ export function PicksForm({
           scoreGameId: tiebreakerGame.gid,
           score: '',
         }}
+        validate={async values => {
+          const errors: FormikErrors<any> = {};
+          const chosenGameIds = values.games.map(g => g.gameId);
+          Array.from(neededGameIds).forEach(gid => {
+            if (!chosenGameIds.includes(gid)) {
+              errors['games'] = 'Please choose all the required games';
+            }
+          });
+          if (
+            !values.score ||
+            !Number(values.score) ||
+            Number(values.score) <= 0 || Number(values.score) > 200
+          ) {
+            errors['score'] = 'Please choose a valid score between 1 and 200';
+          }
+          return errors;
+        }}
         validationSchema={validationSchema}
         onSubmit={async (values, {resetForm}) => {
           const picks = values.games.map(g => {
@@ -283,6 +313,8 @@ export function PicksForm({
               </Button>
               {games.map((game, index) => {
                 const formikVal = formik.values.games[index];
+                const isGameEnabled = isImpersonating || !game.started;
+                // const isGameEnabled = Math.random() < 0.5;
                 return (
                   <Box
                     key={game.gid}
@@ -290,23 +322,40 @@ export function PicksForm({
                     width={'100%'}
                     border="1px solid"
                     borderColor="gray.300"
+                    backgroundColor={isGameEnabled ? undefined : 'gray.200'}
                     px="12px"
                     py="12px"
                     borderRadius={4}
+                    cursor="not-allowed"
                   >
                     <FormControl>
                       <Grid templateColumns="repeat(12, 1fr)">
+                        {!isGameEnabled && (
+                          <GridItem colSpan={12} pb="8px">
+                            <Flex w="100%" justify="center">
+                              <Typography.Subtitle2>The game has started</Typography.Subtitle2>
+                            </Flex>
+                          </GridItem>
+                        )}
                         <GridItem colSpan={6}>
                           <Box
-                            _hover={{
-                              cursor: 'pointer',
-                            }}
-                            onClick={() => {
-                              formikVal.winner = game.teams_games_awayToteams.teamid;
-                              formikVal.random = false;
-                              formik.values.games[index] = formikVal;
-                              formik.setFieldValue('games', [...formik.values.games]);
-                            }}
+                            _hover={
+                              isGameEnabled
+                                ? {
+                                    cursor: 'pointer',
+                                  }
+                                : {}
+                            }
+                            onClick={
+                              isGameEnabled
+                                ? () => {
+                                    formikVal.winner = game.teams_games_awayToteams.teamid;
+                                    formikVal.random = false;
+                                    formik.values.games[index] = formikVal;
+                                    formik.setFieldValue('games', [...formik.values.games]);
+                                  }
+                                : undefined
+                            }
                           >
                             <Grid templateColumns="repeat(12, 1fr)">
                               <GridItem colStart={{base: 1, lg: 4}} colSpan={{base: 4, lg: 4}}>
@@ -331,6 +380,7 @@ export function PicksForm({
                                   justify="center"
                                 >
                                   <Radio
+                                    disabled={!isGameEnabled}
                                     isChecked={
                                       formikVal.winner === game.teams_games_awayToteams.teamid
                                     }
@@ -354,15 +404,23 @@ export function PicksForm({
                         </GridItem>
                         <GridItem colSpan={6}>
                           <Box
-                            _hover={{
-                              cursor: 'pointer',
-                            }}
-                            onClick={() => {
-                              formikVal.winner = game.teams_games_homeToteams.teamid;
-                              formikVal.random = false;
-                              formik.values.games[index] = formikVal;
-                              formik.setFieldValue('games', [...formik.values.games]);
-                            }}
+                            _hover={
+                              isGameEnabled
+                                ? {
+                                    cursor: 'pointer',
+                                  }
+                                : {}
+                            }
+                            onClick={
+                              isGameEnabled
+                                ? () => {
+                                    formikVal.winner = game.teams_games_homeToteams.teamid;
+                                    formikVal.random = false;
+                                    formik.values.games[index] = formikVal;
+                                    formik.setFieldValue('games', [...formik.values.games]);
+                                  }
+                                : undefined
+                            }
                           >
                             <Grid templateColumns="repeat(12, 1fr)">
                               <GridItem
@@ -389,6 +447,7 @@ export function PicksForm({
                                   justify="center"
                                 >
                                   <Radio
+                                    disabled={!isGameEnabled}
                                     isChecked={
                                       formikVal.winner === game.teams_games_homeToteams.teamid
                                     }

@@ -13,6 +13,7 @@ import {FuntimeSeasonOver} from '../shared/FuntimeSeasonOver';
 type Props = {
   leagueId: number;
   memberId?: number;
+  week?: number;
 };
 
 export function PicksContent({leagueId, memberId}: Props) {

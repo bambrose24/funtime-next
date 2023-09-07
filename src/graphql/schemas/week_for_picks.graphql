@@ -6,6 +6,7 @@ query WeekForPicks($leagueId: Int!, $memberId: Int, $override: Boolean, $week: I
       id
       gid
       week
+      started
       season
       awayscore
       homescore

@@ -7569,7 +7569,7 @@ export type GamesByLeagueQueryVariables = Exact<{
 }>;
 
 
-export type GamesByLeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', games: Array<{ __typename?: 'Game', id: string, gid: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> } | null };
+export type GamesByLeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> } | null };
 
 export type GamesBySeasonQueryVariables = Exact<{
   season: Scalars['Int'];
@@ -7960,6 +7960,8 @@ export const GamesByLeagueDocument = gql`
     games(where: $where) {
       id
       gid
+      week
+      season
       awayscore
       homescore
       ts

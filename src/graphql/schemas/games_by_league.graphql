@@ -3,6 +3,8 @@ query GamesByLeague($leagueId: Int!, $where: GameWhereInput) {
     games(where: $where) {
       id
       gid
+      week
+      season
       awayscore
       homescore
       ts

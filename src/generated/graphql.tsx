@@ -7673,6 +7673,13 @@ export type WinnersQueryVariables = Exact<{
 
 export type WinnersQuery = { __typename?: 'Query', findManyWeekWinners: Array<{ __typename?: 'WeekWinners', id: number, week: number, correct_count: number, member: { __typename?: 'LeagueMember', id: string, people: { __typename?: 'User', id: string, uid: number, username: string } } }> };
 
+export type LeaguePageMemberViewerQueryVariables = Exact<{
+  leagueId: Scalars['Int'];
+}>;
+
+
+export type LeaguePageMemberViewerQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null } | null };
+
 export type MarkAsPaidMutationVariables = Exact<{
   membership_id: Scalars['Int'];
   paid: Scalars['Boolean'];
@@ -8710,6 +8717,45 @@ export function useWinnersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<Wi
 export type WinnersQueryHookResult = ReturnType<typeof useWinnersQuery>;
 export type WinnersLazyQueryHookResult = ReturnType<typeof useWinnersLazyQuery>;
 export type WinnersQueryResult = Apollo.QueryResult<WinnersQuery, WinnersQueryVariables>;
+export const LeaguePageMemberViewerDocument = gql`
+    query LeaguePageMemberViewer($leagueId: Int!) {
+  me {
+    id
+    leagueMember(league_id: $leagueId) {
+      id
+      membership_id
+    }
+  }
+}
+    `;
+
+/**
+ * __useLeaguePageMemberViewerQuery__
+ *
+ * To run a query within a React component, call `useLeaguePageMemberViewerQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLeaguePageMemberViewerQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLeaguePageMemberViewerQuery({
+ *   variables: {
+ *      leagueId: // value for 'leagueId'
+ *   },
+ * });
+ */
+export function useLeaguePageMemberViewerQuery(baseOptions: Apollo.QueryHookOptions<LeaguePageMemberViewerQuery, LeaguePageMemberViewerQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LeaguePageMemberViewerQuery, LeaguePageMemberViewerQueryVariables>(LeaguePageMemberViewerDocument, options);
+      }
+export function useLeaguePageMemberViewerLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LeaguePageMemberViewerQuery, LeaguePageMemberViewerQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LeaguePageMemberViewerQuery, LeaguePageMemberViewerQueryVariables>(LeaguePageMemberViewerDocument, options);
+        }
+export type LeaguePageMemberViewerQueryHookResult = ReturnType<typeof useLeaguePageMemberViewerQuery>;
+export type LeaguePageMemberViewerLazyQueryHookResult = ReturnType<typeof useLeaguePageMemberViewerLazyQuery>;
+export type LeaguePageMemberViewerQueryResult = Apollo.QueryResult<LeaguePageMemberViewerQuery, LeaguePageMemberViewerQueryVariables>;
 export const MarkAsPaidDocument = gql`
     mutation MarkAsPaid($membership_id: Int!, $paid: Boolean!) {
   updateOneLeagueMember(

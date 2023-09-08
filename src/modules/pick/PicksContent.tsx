@@ -44,6 +44,10 @@ export function PicksContent({leagueId, memberId}: Props) {
     return s;
   }, [weekForPicks]);
 
+  const existingScore = useMemo(() => {
+    return weekForPicks?.weekForPicks?.leagueMember?.picks?.find(p => p.score)?.score ?? undefined;
+  }, [weekForPicks]);
+
   if (gamesLoading || leagueLoading) {
     return <FuntimeLoading />;
   }
@@ -93,6 +97,7 @@ export function PicksContent({leagueId, memberId}: Props) {
               isImpersonating={isImpersonating}
               username={weekForPicks.weekForPicks.leagueMember?.people?.username ?? ''}
               existingWinners={existingWinners}
+              existingScore={existingScore}
               onSuccess={async () => {
                 await gamesRefetch();
               }}

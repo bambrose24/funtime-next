@@ -7664,7 +7664,7 @@ export type WeekForPicksQueryVariables = Exact<{
 }>;
 
 
-export type WeekForPicksQuery = { __typename?: 'Query', weekForPicks: { __typename?: 'WeekForPicksResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, started: boolean, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }>, leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, username: string }, picks: Array<{ __typename?: 'Pick', id: string, winner?: number | null }> } | null } };
+export type WeekForPicksQuery = { __typename?: 'Query', weekForPicks: { __typename?: 'WeekForPicksResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, started: boolean, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }>, leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, username: string }, picks: Array<{ __typename?: 'Pick', id: string, winner?: number | null, score?: number | null }> } | null } };
 
 export type WinnersQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -8637,6 +8637,7 @@ export const WeekForPicksDocument = gql`
       picks(where: {week: {equals: $week}}) {
         id
         winner
+        score
       }
     }
   }

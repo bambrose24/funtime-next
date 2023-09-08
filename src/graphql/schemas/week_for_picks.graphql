@@ -37,6 +37,7 @@ query WeekForPicks($leagueId: Int!, $memberId: Int, $override: Boolean, $week: I
       picks(where: {week: {equals: $week}}) {
         id
         winner
+        score
       }
     }
   }

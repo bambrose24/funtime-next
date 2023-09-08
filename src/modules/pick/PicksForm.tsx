@@ -315,7 +315,7 @@ export function PicksForm({
                 Randomize Picks
               </Button>
               {games.map((game, index) => {
-                const formikVal = formik.values.games[index];
+                let formikVal: GameEntry | undefined = formik.values.games[index];
                 const isGameEnabled = isImpersonating || !game.started;
                 // const isGameEnabled = Math.random() < 0.5;
                 return (
@@ -352,8 +352,16 @@ export function PicksForm({
                             onClick={
                               isGameEnabled
                                 ? () => {
-                                    formikVal.winner = game.teams_games_awayToteams.teamid;
-                                    formikVal.random = false;
+                                    if (!formikVal) {
+                                      formikVal = {
+                                        gameId: game.gid,
+                                        winner: game.teams_games_awayToteams.teamid,
+                                        random: false,
+                                      };
+                                    } else {
+                                      formikVal.winner = game.teams_games_homeToteams.teamid;
+                                      formikVal.random = false;
+                                    }
                                     formik.values.games[index] = formikVal;
                                     formik.setFieldValue('games', [...formik.values.games]);
                                   }
@@ -417,8 +425,16 @@ export function PicksForm({
                             onClick={
                               isGameEnabled
                                 ? () => {
-                                    formikVal.winner = game.teams_games_homeToteams.teamid;
-                                    formikVal.random = false;
+                                    if (!formikVal) {
+                                      formikVal = {
+                                        gameId: game.gid,
+                                        winner: game.teams_games_homeToteams.teamid,
+                                        random: false,
+                                      };
+                                    } else {
+                                      formikVal.winner = game.teams_games_homeToteams.teamid;
+                                      formikVal.random = false;
+                                    }
                                     formik.values.games[index] = formikVal;
                                     formik.setFieldValue('games', [...formik.values.games]);
                                   }

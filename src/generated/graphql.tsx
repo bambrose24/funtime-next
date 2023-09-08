@@ -5338,15 +5338,15 @@ export type ResendEmail = {
   __typename?: 'ResendEmail';
   bcc?: Maybe<Array<Scalars['String']>>;
   cc?: Maybe<Array<Scalars['String']>>;
-  created_at: Scalars['String'];
-  from: Scalars['String'];
+  created_at?: Maybe<Scalars['String']>;
+  from?: Maybe<Scalars['String']>;
   html?: Maybe<Scalars['String']>;
-  id: Scalars['String'];
-  last_event: Scalars['String'];
+  id: Scalars['ID'];
+  last_event?: Maybe<Scalars['String']>;
   reply_to?: Maybe<Array<Scalars['String']>>;
-  subject: Scalars['String'];
+  subject?: Maybe<Scalars['String']>;
   text?: Maybe<Scalars['String']>;
-  to: Array<Scalars['String']>;
+  to?: Maybe<Array<Scalars['String']>>;
 };
 
 export enum ScoringType {
@@ -7693,7 +7693,7 @@ export type MemberEmailsQueryVariables = Exact<{
 }>;
 
 
-export type MemberEmailsQuery = { __typename?: 'Query', leagueMember?: { __typename?: 'LeagueMember', EmailLogs: Array<{ __typename?: 'EmailLogs', ts: any, email?: { __typename?: 'ResendEmail', bcc?: Array<string> | null, cc?: Array<string> | null, created_at: string, from: string, html?: string | null, id: string, last_event: string, reply_to?: Array<string> | null, subject: string, text?: string | null, to: Array<string> } | null }> } | null };
+export type MemberEmailsQuery = { __typename?: 'Query', leagueMember?: { __typename?: 'LeagueMember', EmailLogs: Array<{ __typename?: 'EmailLogs', ts: any, email?: { __typename?: 'ResendEmail', bcc?: Array<string> | null, cc?: Array<string> | null, created_at?: string | null, from?: string | null, html?: string | null, id: string, last_event?: string | null, reply_to?: Array<string> | null, subject?: string | null, text?: string | null, to?: Array<string> | null } | null }> } | null };
 
 export type CreateLeagueMutationVariables = Exact<{
   data: CreateLeagueInput;

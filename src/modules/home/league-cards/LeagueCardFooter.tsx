@@ -2,7 +2,6 @@ import {ChevronDownIcon} from '@chakra-ui/icons';
 import {
   Alert,
   AlertDescription,
-  AlertIcon,
   AlertProps,
   Button,
   Flex,
@@ -42,7 +41,6 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
     <Flex direction="column" gap="8px">
       {alertStatus && alertDescription && (
         <Alert status={alertStatus}>
-          <AlertIcon />
           <AlertDescription>{alertDescription}</AlertDescription>
         </Alert>
       )}

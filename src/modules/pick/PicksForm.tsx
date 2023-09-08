@@ -214,6 +214,7 @@ export function PicksForm({
           scoreGameId: tiebreakerGame.gid,
           score: existingScore?.toString() ?? '',
         }}
+        validateOnMount={true}
         validate={async values => {
           const errors: FormikErrors<any> = {};
           const chosenGameIds = values.games.map(g => g.gameId);

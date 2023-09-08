@@ -106,7 +106,6 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
           rankedMemberIds={rankedMemberIds}
           memberIdToMember={memberIdToMember}
           memberIdToCorrect={memberIdToCorrect}
-          gameIdToGame={gameIdToGame}
           teamIdToTeam={teamIdToTeam}
           simulatedPicks={simulatedPicks}
         />
@@ -121,7 +120,6 @@ type PicksTableProps = {
   memberIdToMember: Record<number, FindLeagueMembersQuery['leagueMembers'][number]>;
   memberIdToCorrect: Record<string, number>;
   rankedMemberIds: Array<number>;
-  gameIdToGame: Record<number, PicksByWeekQuery['picksByWeek']['games'][number]>;
   teamIdToTeam: Record<number, AllTeamsQuery['teams'][number]>;
   simulatedPicks: Record<number, number>;
 };
@@ -132,28 +130,15 @@ const PicksTable: React.FC<PicksTableProps> = ({
   memberIdToMember,
   memberIdToCorrect,
   rankedMemberIds,
-  gameIdToGame,
   teamIdToTeam,
   simulatedPicks,
 }) => {
   const {data: leagueViewer} = useLeaguePageMemberViewer();
   const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
-  const pickSort = (a: {gid: number}, b: {gid: number}) => {
-    // get games from mapping and compare ts
-    const aGame = gameIdToGame[a.gid];
-    const bGame = gameIdToGame[b.gid];
-
-    if (aGame.ts === bGame.ts) {
-      return aGame.gid - bGame.gid;
-    }
-    return moment(aGame.ts).diff(moment(bGame.ts));
-  };
 
   function selectRow(userRowId: number) {
     userRowId === selectedRow ? setSelectedRow(undefined) : setSelectedRow(userRowId);
   }
-
-  const now = new Date();
 
   const isMobile = useBreakpointValue({base: true, md: false});
 
@@ -177,10 +162,13 @@ const PicksTable: React.FC<PicksTableProps> = ({
           </Tr>
         </Thead>
         <Tbody>
-          {/* {Object.entries(memberIdToPicks).map((val) => { */}
           {rankedMemberIds.map(memberId => {
             const memberPicks = memberIdToPicks[memberId];
-            memberPicks.sort(pickSort);
+
+            const gidToMemberPick = memberPicks.reduce((prev, curr) => {
+              prev.set(curr.gid, curr);
+              return prev;
+            }, new Map<number, typeof memberPicks[number]>());
 
             const scoreTotal = memberPicks.find(p => p.score && p.score > 0)?.score;
 
@@ -212,27 +200,29 @@ const PicksTable: React.FC<PicksTableProps> = ({
                     </Flex>
                   )}
                 </Td>
-                {memberPicks.map(pick => {
-                  const {correct, winner} = pick;
-                  const winnerTeam = teamIdToTeam[winner!];
-                  const game = gameIdToGame[pick.gid];
+                {games.map(game => {
+                  const pick = gidToMemberPick.get(game.gid);
+                  const {correct, winner} = pick ?? {};
+                  const winnerTeam = winner ? teamIdToTeam[winner] : undefined;
 
                   const isViewer =
                     leagueViewer?.me?.leagueMember?.membership_id &&
-                    leagueViewer.me.leagueMember.membership_id === pick.member_id;
+                    leagueViewer.me.leagueMember.membership_id === pick?.member_id;
 
                   const shouldShow = game.started || isViewer;
 
                   const bg =
                     !game.done && !simulatedPicks[game.gid]
                       ? undefined
+                      : !winnerTeam?.abbrev
+                      ? 'yellow.300'
                       : correct
                       ? 'green.300'
                       : 'red.300';
 
                   const Row = (
                     <Td cursor="default" bg={bg} key={`${member.membership_id}_${game.gid}_pick`}>
-                      {shouldShow ? winnerTeam.abbrev : '--'}
+                      {shouldShow ? winnerTeam?.abbrev ?? 'N/A' : '--'}
                     </Td>
                   );
 

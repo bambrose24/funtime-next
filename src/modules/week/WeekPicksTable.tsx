@@ -221,7 +221,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
                     leagueViewer?.me?.leagueMember?.membership_id &&
                     leagueViewer.me.leagueMember.membership_id === pick.member_id;
 
-                  const shouldShow = game.ts < now || isViewer;
+                  const shouldShow = game.started || isViewer;
 
                   const bg =
                     !game.done && !simulatedPicks[game.gid]

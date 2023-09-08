@@ -34,7 +34,7 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
   );
 
   return (
-    <Flex direction="column" w={width} h={height} layerStyle="funtime-card">
+    <Flex direction="column" w={width} minH={height} layerStyle="funtime-card">
       <Flex justify="space-between">
         <Flex direction="column" alignItems="start">
           {member.role === MemberRole.Admin ? (

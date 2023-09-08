@@ -309,13 +309,18 @@ export function PicksForm({
                         random: true,
                       };
                     });
-                  formik.setFieldValue('games', gamePicks);
+                  const randomizedGids = new Set(gamePicks.map(g => g.gameId));
+                  const existingPicks = formik.values.games;
+                  const toKeep = existingPicks.filter(g => !randomizedGids.has(g.gameId));
+                  formik.setFieldValue('games', [...gamePicks, ...toKeep]);
                 }}
               >
                 Randomize Picks
               </Button>
-              {games.map((game, index) => {
-                let formikVal: GameEntry | undefined = formik.values.games[index];
+              {games.map(game => {
+                let formikVal: GameEntry | undefined = formik.values.games.find(
+                  g => g.gameId === game.gid
+                );
                 const isGameEnabled = isImpersonating || !game.started;
                 // const isGameEnabled = Math.random() < 0.5;
                 return (
@@ -359,11 +364,13 @@ export function PicksForm({
                                         random: false,
                                       };
                                     } else {
-                                      formikVal.winner = game.teams_games_homeToteams.teamid;
+                                      formikVal.winner = game.teams_games_awayToteams.teamid;
                                       formikVal.random = false;
                                     }
-                                    formik.values.games[index] = formikVal;
-                                    formik.setFieldValue('games', [...formik.values.games]);
+                                    const otherGames = formik.values.games.filter(
+                                      g => g.gameId !== game.gid
+                                    );
+                                    formik.setFieldValue('games', [...otherGames, formikVal]);
                                   }
                                 : undefined
                             }
@@ -435,8 +442,10 @@ export function PicksForm({
                                       formikVal.winner = game.teams_games_homeToteams.teamid;
                                       formikVal.random = false;
                                     }
-                                    formik.values.games[index] = formikVal;
-                                    formik.setFieldValue('games', [...formik.values.games]);
+                                    const otherGames = formik.values.games.filter(
+                                      g => g.gameId !== game.gid
+                                    );
+                                    formik.setFieldValue('games', [...otherGames, formikVal]);
                                   }
                                 : undefined
                             }

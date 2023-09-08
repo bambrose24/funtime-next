@@ -39,6 +39,7 @@ interface PicksFormProps {
   isImpersonating: boolean;
   username: string;
   existingWinners: Set<number>;
+  existingScore: number | undefined;
   onSuccess: () => Promise<void>;
 }
 
@@ -57,6 +58,7 @@ export function PicksForm({
   isImpersonating,
   username,
   existingWinners,
+  existingScore,
   onSuccess,
 }: PicksFormProps) {
   const [submitPicks, {data, error}] = useMakePicksMutation();
@@ -210,7 +212,7 @@ export function PicksForm({
             }
           ),
           scoreGameId: tiebreakerGame.gid,
-          score: '',
+          score: existingScore?.toString() ?? '',
         }}
         validate={async values => {
           const errors: FormikErrors<any> = {};

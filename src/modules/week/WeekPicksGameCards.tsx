@@ -90,10 +90,7 @@ export const GameCard: React.FC<{
     return [undefined, undefined];
   };
 
-  const isGameStarted = useMemo(() => {
-    const now = new Date();
-    return g.ts < now;
-  }, [g.ts]);
+  const isGameStarted = g.started;
 
   const [awayColor, awayBgColor] = getColors(game, game.away, simulatedPicks[game.gid]);
 

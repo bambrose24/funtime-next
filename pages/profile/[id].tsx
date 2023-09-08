@@ -47,7 +47,11 @@ export default function Profile(props: Props) {
   const user = profile?.user;
 
   if (!rankings || !profile || !user) {
-    return <FuntimeError />;
+    return (
+      <FuntimePage>
+        <FuntimeError />
+      </FuntimePage>
+    );
   }
 
   const memberId = profile.members.find(members => members.leagues.league_id === leagueId)

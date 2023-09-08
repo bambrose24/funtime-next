@@ -237,7 +237,8 @@ export function PicksForm({
           if (
             !values.score ||
             !Number(values.score) ||
-            Number(values.score) <= 0 || Number(values.score) > 200
+            Number(values.score) <= 0 ||
+            Number(values.score) > 200
           ) {
             errors['score'] = 'Please choose a valid score between 1 and 200';
           }
@@ -295,17 +296,19 @@ export function PicksForm({
                 width="full"
                 variant="solid"
                 onClick={() => {
-                  const gamePicks: Array<GameEntry> = games.map(g => {
-                    const winner =
-                      Math.random() < 0.5
-                        ? g.teams_games_awayToteams.teamid
-                        : g.teams_games_homeToteams.teamid;
-                    return {
-                      gameId: g.gid,
-                      winner,
-                      random: true,
-                    };
-                  });
+                  const gamePicks: Array<GameEntry> = games
+                    .filter(g => !g.started)
+                    .map(g => {
+                      const winner =
+                        Math.random() < 0.5
+                          ? g.teams_games_awayToteams.teamid
+                          : g.teams_games_homeToteams.teamid;
+                      return {
+                        gameId: g.gid,
+                        winner,
+                        random: true,
+                      };
+                    });
                   formik.setFieldValue('games', gamePicks);
                 }}
               >

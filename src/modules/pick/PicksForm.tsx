@@ -28,6 +28,7 @@ import {Typography} from '../Typography';
 import {TeamLogo} from '../shared/TeamLogo';
 import moment from 'moment-timezone';
 import {useMemo, useState} from 'react';
+import {Defined} from '@src/util/types';
 
 interface PicksFormProps {
   week: number;
@@ -77,22 +78,6 @@ export function PicksForm({
     return new Set(gamesNeededToPick.map(g => g.gid));
   }, [gamesNeededToPick]);
 
-  const validationSchema = Yup.object().shape({
-    games: Yup.array()
-      .of(
-        Yup.object().shape({
-          gameId: Yup.number().required(),
-          random: Yup.bool().required(),
-          winner: Yup.number().required('Please pick a winner for this game.'),
-        })
-      )
-      .length(gamesNeededToPick.length, 'Please select a winner for every game'),
-    score: Yup.number()
-      .required()
-      .integer()
-      .lessThan(150, 'Please enter a number below 150'),
-  });
-
   const tiebreakerGame = games.find(g => g.is_tiebreaker);
 
   if (!tiebreakerGame) {
@@ -129,12 +114,13 @@ export function PicksForm({
                 </Typography.H4>
                 <Flex align="center" w="100%">
                   <VStack spacing={3} w="100%">
-                    {modalPicks.map((p, i) => {
-                      const game = games.find(g => g.gid === p.game_id)!;
+                    {games.map((game, i) => {
+                      const pick = modalPicks.find(p => p.game_id === game.gid);
 
                       const away = game.teams_games_awayToteams.abbrev;
                       const home = game.teams_games_homeToteams.abbrev;
-                      const choseAway = p.winner === game.teams_games_awayToteams.teamid;
+                      const choseAway = pick?.winner === game.teams_games_awayToteams.teamid;
+                      const choseHome = pick?.winner === game.teams_games_homeToteams.teamid;
 
                       return (
                         <Grid key={i} templateColumns="repeat(12, 1fr)" gap="4px" w="100%">
@@ -161,8 +147,8 @@ export function PicksForm({
                               align="center"
                               p="4px"
                               borderRadius="8px"
-                              border={choseAway ? undefined : '3px solid'}
-                              borderColor={choseAway ? undefined : 'green.400'}
+                              border={choseHome ? '3px solid' : undefined}
+                              borderColor={choseHome ? 'green.400' : undefined}
                             >
                               <Typography.H4>{home}</Typography.H4>
                             </Flex>
@@ -244,17 +230,21 @@ export function PicksForm({
           }
           return errors;
         }}
-        validationSchema={validationSchema}
         onSubmit={async (values, {resetForm}) => {
-          const picks = values.games.map(g => {
-            const res: GamePick = {
-              game_id: g.gameId,
-              winner: g.winner!,
-              is_random: g.random,
-              score: values.scoreGameId === g.gameId ? parseInt(values.score) : undefined,
-            };
-            return res;
-          });
+          const picks = values.games
+            .map(g => {
+              if (!g.winner) {
+                return undefined;
+              }
+              const res: GamePick = {
+                game_id: g.gameId,
+                winner: g.winner,
+                is_random: g.random,
+                score: values.scoreGameId === g.gameId ? parseInt(values.score) : undefined,
+              };
+              return res;
+            })
+            .filter(Defined);
           await submitPicks({
             variables: {picks, leagueId, overrideMemberId: memberId},
           });

@@ -89,12 +89,6 @@ export function WeekContent({leagueId}: WeekContentProps) {
     pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
 
-  useEffect(() => {
-    if (picksData?.picksByWeek?.week && picksData.picksByWeek.week !== weekState) {
-      setWeekState(picksData.picksByWeek.week);
-    }
-  }, [picksData, weekState, setWeekState]);
-
   const availableWeeksSet = new Set(
     [
       ...(winners?.findManyWeekWinners || []).map(w => w.week),

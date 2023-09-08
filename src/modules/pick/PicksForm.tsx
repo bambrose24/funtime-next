@@ -393,7 +393,7 @@ export function PicksForm({
                                   <Radio
                                     disabled={!isGameEnabled}
                                     isChecked={
-                                      formikVal.winner === game.teams_games_awayToteams.teamid
+                                      formikVal?.winner === game.teams_games_awayToteams.teamid
                                     }
                                   />
                                 </Flex>
@@ -468,7 +468,7 @@ export function PicksForm({
                                   <Radio
                                     disabled={!isGameEnabled}
                                     isChecked={
-                                      formikVal.winner === game.teams_games_homeToteams.teamid
+                                      formikVal?.winner === game.teams_games_homeToteams.teamid
                                     }
                                   />
                                 </Flex>

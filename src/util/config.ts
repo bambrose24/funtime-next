@@ -5,6 +5,8 @@ export const LEAGUE_ID = 8;
 
 type Env = 'development' | 'preview' | 'production';
 
+type ServerPlatform = 'local' | 'railway' | 'vercel';
+
 export type Config = {
   graphqlEndpoint: string;
 };
@@ -31,6 +33,18 @@ if (process.env.NEXT_PUBLIC_ENV) {
 
 if (typeof window !== 'undefined') {
   console.log('env?', process.env.NEXT_PUBLIC_ENV);
+}
+
+let serverPlatform: ServerPlatform = 'local';
+
+if (process.env.VERCEL === '1') {
+  serverPlatform = 'vercel';
+} else if (process.env.RAILWAY_SERVICE_ID) {
+  serverPlatform = 'railway';
+}
+
+if (typeof window !== 'undefined') {
+  console.log('serverPlatform?', serverPlatform);
 }
 
 export const env = environment;

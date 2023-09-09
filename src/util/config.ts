@@ -35,10 +35,8 @@ if (typeof window !== 'undefined') {
 
 let serverPlatform: ServerPlatform = 'local';
 
-if (process.env.VERCEL === '1') {
-  serverPlatform = 'vercel';
-} else if (process.env.RAILWAY_SERVICE_ID) {
-  serverPlatform = 'railway';
+if (process.env.SERVER_PLATFORM) {
+  serverPlatform = process.env.SERVER_PLATFORM as ServerPlatform;
 }
 
 if (typeof window !== 'undefined') {

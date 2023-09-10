@@ -1578,6 +1578,7 @@ export type League = {
   leaguemembers: Array<LeagueMember>;
   /** A more efficient way to query for a member and the underlying person at the same time */
   memberpeople: Array<LeagueMemberPeople>;
+  mostRecentlyStartedGame?: Maybe<Game>;
   name: Scalars['String'];
   nextLeague?: Maybe<League>;
   people: User;
@@ -7759,12 +7760,11 @@ export type LeagueRegistrationQueryVariables = Exact<{
 export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, people: { __typename?: 'User', id: string, username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
 
 export type LeagueMostRecentlyStartedGameQueryVariables = Exact<{
-  season: Scalars['Int'];
-  when: Scalars['DateTime'];
+  league_id: Scalars['Int'];
 }>;
 
 
-export type LeagueMostRecentlyStartedGameQuery = { __typename?: 'Query', findFirstGame?: { __typename?: 'Game', id: string, gid: number, week: number, season: number, ts: any, teams_games_homeToteams: { __typename?: 'Team', id: string, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', id: string, abbrev?: string | null } } | null };
+export type LeagueMostRecentlyStartedGameQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, mostRecentlyStartedGame?: { __typename?: 'Game', id: string, gid: number, week: number, season: number, ts: any, teams_games_homeToteams: { __typename?: 'Team', id: string, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', id: string, abbrev?: string | null } } | null } | null };
 
 export const SuperbowlTeamFragmentDoc = gql`
     fragment SuperbowlTeam on Team {
@@ -9233,23 +9233,23 @@ export type LeagueRegistrationQueryHookResult = ReturnType<typeof useLeagueRegis
 export type LeagueRegistrationLazyQueryHookResult = ReturnType<typeof useLeagueRegistrationLazyQuery>;
 export type LeagueRegistrationQueryResult = Apollo.QueryResult<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>;
 export const LeagueMostRecentlyStartedGameDocument = gql`
-    query LeagueMostRecentlyStartedGame($season: Int!, $when: DateTime!) {
-  findFirstGame(
-    where: {season: {equals: $season}, ts: {lte: $when}}
-    orderBy: {ts: asc}
-  ) {
+    query LeagueMostRecentlyStartedGame($league_id: Int!) {
+  league(where: {league_id: $league_id}) {
     id
-    gid
-    week
-    season
-    ts
-    teams_games_homeToteams {
+    mostRecentlyStartedGame {
       id
-      abbrev
-    }
-    teams_games_awayToteams {
-      id
-      abbrev
+      gid
+      week
+      season
+      ts
+      teams_games_homeToteams {
+        id
+        abbrev
+      }
+      teams_games_awayToteams {
+        id
+        abbrev
+      }
     }
   }
 }
@@ -9267,8 +9267,7 @@ export const LeagueMostRecentlyStartedGameDocument = gql`
  * @example
  * const { data, loading, error } = useLeagueMostRecentlyStartedGameQuery({
  *   variables: {
- *      season: // value for 'season'
- *      when: // value for 'when'
+ *      league_id: // value for 'league_id'
  *   },
  * });
  */

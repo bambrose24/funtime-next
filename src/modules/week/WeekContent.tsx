@@ -19,10 +19,10 @@ import {
   usePicksByWeekQuery,
   useWinnersQuery,
 } from '@src/generated/graphql';
-import {env, SEASON} from '@src/util/config';
+import {env} from '@src/util/config';
 import _ from 'lodash';
 import {useRouter} from 'next/router';
-import {useEffect, useRef, useState} from 'react';
+import {useState} from 'react';
 import UserTag from '../profile/UserTag';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';
@@ -34,20 +34,23 @@ type WeekContentProps = {
 };
 
 const _LeagueMostRecentlyStartedGameQuery = gql`
-  query LeagueMostRecentlyStartedGame($season: Int!, $when: DateTime!) {
-    findFirstGame(where: {season: {equals: $season}, ts: {lte: $when}}, orderBy: {ts: asc}) {
+  query LeagueMostRecentlyStartedGame($league_id: Int!) {
+    league(where: {league_id: $league_id}) {
       id
-      gid
-      week
-      season
-      ts
-      teams_games_homeToteams {
+      mostRecentlyStartedGame {
         id
-        abbrev
-      }
-      teams_games_awayToteams {
-        id
-        abbrev
+        gid
+        week
+        season
+        ts
+        teams_games_homeToteams {
+          id
+          abbrev
+        }
+        teams_games_awayToteams {
+          id
+          abbrev
+        }
       }
     }
   }
@@ -66,15 +69,12 @@ export function WeekContent({leagueId}: WeekContentProps) {
 
   const [weekState, setWeekState] = useState<number | undefined>(weekParam);
 
-  const date = useRef<Date>(new Date());
-
   const {
     data: mostRecentStartedGame,
     loading: mostRecentStartedGameLoading,
   } = useLeagueMostRecentlyStartedGameQuery({
     variables: {
-      season: SEASON,
-      when: date.current,
+      league_id: leagueId,
     },
   });
 
@@ -146,7 +146,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
 
   const {week: weekResponse, season} = picks.picksByWeek;
 
-  const week = weekResponse || mostRecentStartedGame?.findFirstGame?.week;
+  const week = weekResponse || mostRecentStartedGame?.league?.mostRecentlyStartedGame?.week;
 
   if (!picks.picksByWeek.canView || !week) {
     return (

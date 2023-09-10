@@ -144,7 +144,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
 
   return (
     <TableContainer overflowY="unset" overflowX="unset">
-      <Table size="md" fontSize={14} variant="unstyled">
+      <Table size="sm" fontSize={14} variant="unstyled">
         <Thead>
           <Tr>
             <Th bg="white" left={0} position={'sticky'} zIndex={1}>

@@ -15,13 +15,28 @@ const HomeQuery = gql`
         id
         membership_id
         role
+        hasPickedNextGame
         nextGame {
           id
-          week
+          gid
           ts
         }
-        hasPickedNextGame
         leagues {
+          rankings {
+            id
+            correct
+            wrong
+            ranking
+            user {
+              id
+              uid
+              username
+            }
+            member {
+              id
+              membership_id
+            }
+          }
           id
           league_id
           name
@@ -31,13 +46,11 @@ const HomeQuery = gql`
           aggregateLeagueMember {
             count
           }
-        }
-        WeekWinners {
-          id
-          correct_count
-          membership_id
-          week
-          score_diff
+          WeekWinners {
+            id
+            membership_id
+            week
+          }
         }
         correctPicks: aggregatePick(where: {correct: {equals: 1}}) {
           count

@@ -1575,12 +1575,16 @@ export type League = {
   late_policy?: Maybe<LatePolicy>;
   league_id: Scalars['Int'];
   leaguemembers: Array<LeagueMember>;
+  /** A more efficient way to query for a member and the underlying person at the same time */
+  memberpeople: Array<LeagueMemberPeople>;
   name: Scalars['String'];
   nextLeague?: Maybe<League>;
   people: User;
   pick_policy?: Maybe<PickPolicy>;
   priorLeague?: Maybe<League>;
   prior_league_id?: Maybe<Scalars['Int']>;
+  /** A more efficient way to query for a member and the underlying person at the same time */
+  rankings: Array<LeagueRanking>;
   reminder_policy?: Maybe<ReminderPolicy>;
   rules: Array<LeagueRuleWithExplanation>;
   scoring_type?: Maybe<ScoringType>;
@@ -2379,6 +2383,13 @@ export type LeagueMemberOrderByWithRelationInput = {
   user_id?: InputMaybe<SortOrder>;
 };
 
+export type LeagueMemberPeople = {
+  __typename?: 'LeagueMemberPeople';
+  id: Scalars['ID'];
+  member: LeagueMember;
+  user: User;
+};
+
 export type LeagueMemberRelationFilter = {
   is?: InputMaybe<LeagueMemberWhereInput>;
   isNot?: InputMaybe<LeagueMemberWhereInput>;
@@ -2726,6 +2737,16 @@ export type LeagueOrderByWithRelationInput = {
   season?: InputMaybe<SortOrder>;
   share_code?: InputMaybe<SortOrderInput>;
   superbowl_competition?: InputMaybe<SortOrderInput>;
+};
+
+export type LeagueRanking = {
+  __typename?: 'LeagueRanking';
+  correct: Scalars['Int'];
+  id: Scalars['ID'];
+  member: LeagueMember;
+  ranking: Scalars['Int'];
+  user: User;
+  wrong: Scalars['Int'];
 };
 
 export type LeagueRelationFilter = {
@@ -7720,7 +7741,7 @@ export type UpdateSuperbowlMutation = { __typename?: 'Mutation', updateOneSuperb
 export type HomeQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type HomeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, membership_id: number, role?: MemberRole | null, hasPickedNextGame: boolean, nextGame?: { __typename?: 'Game', id: string, week: number, ts: any } | null, leagues: { __typename?: 'League', id: string, league_id: number, name: string, season: number, status: LeagueStatus, share_code?: string | null, aggregateLeagueMember: { __typename?: 'AggregateResponse', count: number } }, WeekWinners: Array<{ __typename?: 'WeekWinners', id: number, correct_count: number, membership_id: number, week: number, score_diff: number }>, correctPicks: { __typename?: 'AggregateResponse', count: number }, wrongPicks: { __typename?: 'AggregateResponse', count: number } }> } | null };
+export type HomeQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, membership_id: number, role?: MemberRole | null, hasPickedNextGame: boolean, nextGame?: { __typename?: 'Game', id: string, gid: number, ts: any } | null, leagues: { __typename?: 'League', id: string, league_id: number, name: string, season: number, status: LeagueStatus, share_code?: string | null, rankings: Array<{ __typename?: 'LeagueRanking', id: string, correct: number, wrong: number, ranking: number, user: { __typename?: 'User', id: string, uid: number, username: string }, member: { __typename?: 'LeagueMember', id: string, membership_id: number } }>, aggregateLeagueMember: { __typename?: 'AggregateResponse', count: number }, WeekWinners: Array<{ __typename?: 'WeekWinners', id: number, membership_id: number, week: number }> }, correctPicks: { __typename?: 'AggregateResponse', count: number }, wrongPicks: { __typename?: 'AggregateResponse', count: number } }> } | null };
 
 export type MeQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -9006,13 +9027,28 @@ export const HomeDocument = gql`
       id
       membership_id
       role
+      hasPickedNextGame
       nextGame {
         id
-        week
+        gid
         ts
       }
-      hasPickedNextGame
       leagues {
+        rankings {
+          id
+          correct
+          wrong
+          ranking
+          user {
+            id
+            uid
+            username
+          }
+          member {
+            id
+            membership_id
+          }
+        }
         id
         league_id
         name
@@ -9022,13 +9058,11 @@ export const HomeDocument = gql`
         aggregateLeagueMember {
           count
         }
-      }
-      WeekWinners {
-        id
-        correct_count
-        membership_id
-        week
-        score_diff
+        WeekWinners {
+          id
+          membership_id
+          week
+        }
       }
       correctPicks: aggregatePick(where: {correct: {equals: 1}}) {
         count

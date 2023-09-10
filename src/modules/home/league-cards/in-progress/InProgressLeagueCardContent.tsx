@@ -2,29 +2,30 @@ import {Badge, Divider, Flex, HStack, VStack} from '@chakra-ui/react';
 import {CardStatRow} from '@src/modules/shared/CardStatRow';
 import {Typography} from '@src/modules/Typography';
 import {HomeQuery} from '@src/generated/graphql';
-import {RankingEntry} from '@src/hooks/useLeagueRankings';
 import {getOrdinal} from '@src/util/ordinals';
-import {LeagueCardFooter} from '../LeagueCardFooter';
 
 export type InProgressLeagueCardContentProps = {
   member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
-  memberRanking: RankingEntry | undefined;
+  memberRanking:
+    | NonNullable<HomeQuery['me']>['leaguemembers'][number]['leagues']['rankings'][number]
+    | undefined;
 };
 
 export function InProgressLeagueCardContent({
   member,
   memberRanking,
 }: InProgressLeagueCardContentProps) {
+  const weeksWon = member.leagues.WeekWinners.filter(w => w.membership_id === member.membership_id);
   return (
     <Flex direction="column" h="100%" justify="space-between">
       <VStack divider={<Divider />} spacing="8px">
         <CardStatRow
           label={`Week Wins`}
           value={
-            member.WeekWinners.length && member.WeekWinners.length > 0 ? (
+            weeksWon.length && weeksWon.length > 0 ? (
               <>
                 <HStack>
-                  {member.WeekWinners.map((weekWinner, i) => {
+                  {weeksWon.map((weekWinner, i) => {
                     return (
                       <Badge key={i} colorScheme="green" variant="subtle">
                         Week {weekWinner.week}
@@ -40,7 +41,7 @@ export function InProgressLeagueCardContent({
         />
         <CardStatRow
           label={`League Rank`}
-          value={memberRanking?.rank ? getOrdinal(memberRanking.rank) : '--'}
+          value={memberRanking?.ranking ? getOrdinal(memberRanking.ranking) : '--'}
         />
         <CardStatRow
           label={`Number Correct`}

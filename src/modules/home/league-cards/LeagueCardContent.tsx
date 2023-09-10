@@ -12,24 +12,15 @@ export function LeagueCardContent({league_id, data}: {league_id: number; data: H
   const membership_id = member?.membership_id;
 
   const {width, height} = useLeagueCardDimensions();
-  const {
-    data: leagueRankings,
-    loading: leagueRankingsLoading,
-    error: leagueRankingsError,
-  } = useLeagueRankings({leagueId: league_id});
 
   if (!member || !membership_id) {
     return null;
   }
 
-  if (leagueRankingsLoading || leagueRankingsError || !leagueRankings) {
-    return <Skeleton w={width} h={height} />;
-  }
-
   const league = member.leagues;
   const status = league.status;
 
-  const memberRanking = leagueRankings.find(
+  const memberRanking = league.rankings.find(
     ranking => ranking.member.membership_id === membership_id
   );
 

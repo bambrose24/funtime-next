@@ -42,6 +42,7 @@ const _LeagueAdminQuery = gql`
       }
     }
     weekForPicks(leagueId: $leagueId) {
+      id
       week
     }
   }

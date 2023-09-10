@@ -7574,7 +7574,7 @@ export type LeagueAdminQueryVariables = Exact<{
 }>;
 
 
-export type LeagueAdminQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, uid: number, username: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, role?: MemberRole | null }> } | null, league?: { __typename?: 'League', id: string, name: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, paid?: boolean | null, membership_id: number, hasPickedNextGame: boolean, picks: Array<{ __typename?: 'Pick', id: string, week: number, correct?: number | null }>, people: { __typename?: 'User', id: string, uid: number, username: string, email: string } }> } | null, weekForPicks: { __typename?: 'WeekForPicksResponse', week?: number | null } };
+export type LeagueAdminQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, uid: number, username: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, role?: MemberRole | null }> } | null, league?: { __typename?: 'League', id: string, name: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, paid?: boolean | null, membership_id: number, hasPickedNextGame: boolean, picks: Array<{ __typename?: 'Pick', id: string, week: number, correct?: number | null }>, people: { __typename?: 'User', id: string, uid: number, username: string, email: string } }> } | null, weekForPicks: { __typename?: 'WeekForPicksResponse', id: string, week?: number | null } };
 
 export type EditProfileQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -7850,6 +7850,7 @@ export const LeagueAdminDocument = gql`
     }
   }
   weekForPicks(leagueId: $leagueId) {
+    id
     week
   }
 }

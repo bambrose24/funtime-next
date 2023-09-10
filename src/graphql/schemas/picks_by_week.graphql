@@ -1,5 +1,6 @@
 query PicksByWeek($league_id: Int!, $week: Int) {
   picksByWeek(league_id: $league_id, week: $week) {
+    id
     week
     season
     canView
@@ -13,6 +14,7 @@ query PicksByWeek($league_id: Int!, $week: Int) {
       started
       winner
       liveStatus {
+        id
         currentQuarter
         currentQuarterSecondsRemaining
         playedStatus

@@ -22,9 +22,11 @@ query SuperbowlPicks($leagueId: Int!) {
       }
     }
     teams_superbowl_loserToteams {
+      id
       ...SuperbowlTeam
     }
     teams_superbowl_winnerToteams {
+      id
       ...SuperbowlTeam
     }
   }

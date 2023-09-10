@@ -1,7 +1,10 @@
 query SeasonCorrectPicks($league_id: Int!) {
   leagueMembers(where: {league_id: {equals: $league_id}}) {
+    id
     membership_id
     people {
+      id
+      uid
       username
     }
     aggregatePick(where: {correct: {equals: 1}}) {

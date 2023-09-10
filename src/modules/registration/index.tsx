@@ -65,8 +65,11 @@ const LeagueRegistrationQuery = gql`
         description
       }
       priorLeague {
+        id
         leaguemembers {
+          id
           people {
+            id
             username
             email
             uid

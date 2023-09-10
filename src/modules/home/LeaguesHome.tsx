@@ -22,6 +22,7 @@ const HomeQuery = gql`
           ts
         }
         leagues {
+          id
           rankings {
             id
             correct

@@ -86,6 +86,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
       // TODO just have this be derived api-side from the user's Role in the league
       ...(env !== 'production' || overrideParam ? {override: true} : {}),
     },
+    fetchPolicy: 'cache-and-network',
     pollInterval: 1000 * 60 * 3, // every 3 minutes
   });
 

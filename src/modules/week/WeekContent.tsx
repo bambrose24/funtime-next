@@ -87,7 +87,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
       ...(env !== 'production' || overrideParam ? {override: true} : {}),
     },
     fetchPolicy: 'cache-and-network',
-    pollInterval: 1000 * 60 * 3, // every 3 minutes
+    pollInterval: 1000 * 60 * 1, // every 1 minute
   });
 
   const availableWeeksSet = new Set(

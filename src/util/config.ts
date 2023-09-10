@@ -35,8 +35,8 @@ if (typeof window !== 'undefined') {
 
 let serverPlatform: ServerPlatform = 'local';
 
-if (process.env.SERVER_PLATFORM) {
-  serverPlatform = process.env.SERVER_PLATFORM as ServerPlatform;
+if (process.env.NEXT_PUBLIC_SERVER_PLATFORM) {
+  serverPlatform = process.env.NEXT_PUBLIC_SERVER_PLATFORM as ServerPlatform;
 }
 
 if (typeof window !== 'undefined') {

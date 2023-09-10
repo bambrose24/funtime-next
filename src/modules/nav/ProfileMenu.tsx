@@ -72,7 +72,6 @@ function MenuPopover() {
     );
   }
 
-  console.log('username?', data.me.username);
   return (
     <Menu>
       <MenuButton

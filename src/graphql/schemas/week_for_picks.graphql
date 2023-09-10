@@ -1,5 +1,6 @@
 query WeekForPicks($leagueId: Int!, $memberId: Int, $override: Boolean, $week: Int) {
   weekForPicks(leagueId: $leagueId, memberId: $memberId, override: $override, week: $week) {
+    id
     week
     season
     games {

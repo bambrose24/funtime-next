@@ -1,5 +1,6 @@
 query GamesByLeague($leagueId: Int!, $where: GameWhereInput) {
   league(where: {league_id: $leagueId}) {
+    id
     games(where: $where) {
       id
       gid

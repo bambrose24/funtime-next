@@ -14,6 +14,7 @@ query GamesByWeek($season: Int!, $week: Int!) {
     winner
     is_tiebreaker
     teams_games_awayToteams {
+      id
       teamid
       abbrev
     }

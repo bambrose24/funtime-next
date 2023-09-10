@@ -1056,6 +1056,7 @@ export type GameLive = {
   __typename?: 'GameLive';
   currentQuarter?: Maybe<Scalars['Int']>;
   currentQuarterSecondsRemaining?: Maybe<Scalars['Int']>;
+  id: Scalars['ID'];
   playedStatus?: Maybe<MsfGamePlayedStatus>;
 };
 
@@ -4647,6 +4648,7 @@ export type PicksByWeekResponse = {
   __typename?: 'PicksByWeekResponse';
   canView: Scalars['Boolean'];
   games: Array<Game>;
+  id: Scalars['ID'];
   picks: Array<Pick>;
   season?: Maybe<Scalars['Int']>;
   week?: Maybe<Scalars['Int']>;
@@ -7175,6 +7177,7 @@ export type WeekForPicksResponse = {
   __typename?: 'WeekForPicksResponse';
   existingPicks: Array<Pick>;
   games: Array<Game>;
+  id: Scalars['ID'];
   leagueMember?: Maybe<LeagueMember>;
   season?: Maybe<Scalars['Int']>;
   week?: Maybe<Scalars['Int']>;
@@ -7584,7 +7587,7 @@ export type SeasonCorrectPicksQueryVariables = Exact<{
 }>;
 
 
-export type SeasonCorrectPicksQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', membership_id: number, people: { __typename?: 'User', username: string }, aggregatePick: { __typename?: 'AggregateResponse', count: number } }> };
+export type SeasonCorrectPicksQuery = { __typename?: 'Query', leagueMembers: Array<{ __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, uid: number, username: string }, aggregatePick: { __typename?: 'AggregateResponse', count: number } }> };
 
 export type GamesByLeagueQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -7592,7 +7595,7 @@ export type GamesByLeagueQueryVariables = Exact<{
 }>;
 
 
-export type GamesByLeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> } | null };
+export type GamesByLeagueQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> } | null };
 
 export type GamesBySeasonQueryVariables = Exact<{
   season: Scalars['Int'];
@@ -7607,7 +7610,7 @@ export type GamesByWeekQueryVariables = Exact<{
 }>;
 
 
-export type GamesByWeekQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, started: boolean, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> };
+export type GamesByWeekQuery = { __typename?: 'Query', games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, season: number, started: boolean, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }> };
 
 export type LeagueQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -7643,7 +7646,7 @@ export type PicksByWeekQueryVariables = Exact<{
 }>;
 
 
-export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', id: string, gid: number, ts: any, done?: boolean | null, home: number, away: number, started: boolean, winner?: number | null, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, liveStatus?: { __typename?: 'GameLive', currentQuarter?: number | null, currentQuarterSecondsRemaining?: number | null, playedStatus?: MsfGamePlayedStatus | null } | null, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', id: string, abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', id: string, gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null, score?: number | null }> } };
+export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', id: string, week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', id: string, gid: number, ts: any, done?: boolean | null, home: number, away: number, started: boolean, winner?: number | null, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, liveStatus?: { __typename?: 'GameLive', id: string, currentQuarter?: number | null, currentQuarterSecondsRemaining?: number | null, playedStatus?: MsfGamePlayedStatus | null } | null, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', id: string, abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', id: string, gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null, score?: number | null }> } };
 
 export type ProfileQueryVariables = Exact<{
   user_id: Scalars['Int'];
@@ -7685,7 +7688,7 @@ export type WeekForPicksQueryVariables = Exact<{
 }>;
 
 
-export type WeekForPicksQuery = { __typename?: 'Query', weekForPicks: { __typename?: 'WeekForPicksResponse', week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, started: boolean, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }>, leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, username: string }, picks: Array<{ __typename?: 'Pick', id: string, winner?: number | null, score?: number | null }> } | null } };
+export type WeekForPicksQuery = { __typename?: 'Query', weekForPicks: { __typename?: 'WeekForPicksResponse', id: string, week?: number | null, season?: number | null, games: Array<{ __typename?: 'Game', id: string, gid: number, week: number, started: boolean, season: number, awayscore?: number | null, homescore?: number | null, ts: any, done?: boolean | null, homerecord?: string | null, awayrecord?: string | null, winner?: number | null, is_tiebreaker?: boolean | null, teams_games_awayToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null } }>, leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number, people: { __typename?: 'User', id: string, username: string }, picks: Array<{ __typename?: 'Pick', id: string, winner?: number | null, score?: number | null }> } | null } };
 
 export type WinnersQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -7753,7 +7756,7 @@ export type LeagueRegistrationQueryVariables = Exact<{
 }>;
 
 
-export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', leaguemembers: Array<{ __typename?: 'LeagueMember', people: { __typename?: 'User', username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
+export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, people: { __typename?: 'User', id: string, username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
 
 export type LeagueMostRecentlyStartedGameQueryVariables = Exact<{
   season: Scalars['Int'];
@@ -7947,8 +7950,11 @@ export type EditProfileQueryResult = Apollo.QueryResult<EditProfileQuery, EditPr
 export const SeasonCorrectPicksDocument = gql`
     query SeasonCorrectPicks($league_id: Int!) {
   leagueMembers(where: {league_id: {equals: $league_id}}) {
+    id
     membership_id
     people {
+      id
+      uid
       username
     }
     aggregatePick(where: {correct: {equals: 1}}) {
@@ -7988,6 +7994,7 @@ export type SeasonCorrectPicksQueryResult = Apollo.QueryResult<SeasonCorrectPick
 export const GamesByLeagueDocument = gql`
     query GamesByLeague($leagueId: Int!, $where: GameWhereInput) {
   league(where: {league_id: $leagueId}) {
+    id
     games(where: $where) {
       id
       gid
@@ -8111,6 +8118,7 @@ export const GamesByWeekDocument = gql`
     winner
     is_tiebreaker
     teams_games_awayToteams {
+      id
       teamid
       abbrev
     }
@@ -8340,6 +8348,7 @@ export type PeopleWithLeaguesQueryResult = Apollo.QueryResult<PeopleWithLeaguesQ
 export const PicksByWeekDocument = gql`
     query PicksByWeek($league_id: Int!, $week: Int) {
   picksByWeek(league_id: $league_id, week: $week) {
+    id
     week
     season
     canView
@@ -8353,6 +8362,7 @@ export const PicksByWeekDocument = gql`
       started
       winner
       liveStatus {
+        id
         currentQuarter
         currentQuarterSecondsRemaining
         playedStatus
@@ -8538,9 +8548,11 @@ export const SuperbowlPicksDocument = gql`
       }
     }
     teams_superbowl_loserToteams {
+      id
       ...SuperbowlTeam
     }
     teams_superbowl_winnerToteams {
+      id
       ...SuperbowlTeam
     }
   }
@@ -8621,6 +8633,7 @@ export const WeekForPicksDocument = gql`
     override: $override
     week: $week
   ) {
+    id
     week
     season
     games {
@@ -9034,6 +9047,7 @@ export const HomeDocument = gql`
         ts
       }
       leagues {
+        id
         rankings {
           id
           correct
@@ -9168,8 +9182,11 @@ export const LeagueRegistrationDocument = gql`
       description
     }
     priorLeague {
+      id
       leaguemembers {
+        id
         people {
+          id
           username
           email
           uid

@@ -9079,10 +9079,10 @@ export const HomeDocument = gql`
           week
         }
       }
-      correctPicks: aggregatePick(where: {correct: {equals: 1}}) {
+      correctPicks: aggregatePick(where: {correct: {equals: 1}, done: {equals: 1}}) {
         count
       }
-      wrongPicks: aggregatePick(where: {correct: {equals: 0}}) {
+      wrongPicks: aggregatePick(where: {correct: {equals: 0}, done: {equals: 1}}) {
         count
       }
     }

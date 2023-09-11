@@ -144,7 +144,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
 
   return (
     <TableContainer overflowY="unset" overflowX="unset">
-      <Table size="sm" fontSize={14} variant="unstyled">
+      <Table size={{base: 'xs', sm: 'sm'}} fontSize={14} variant="simple">
         <Thead>
           <Tr>
             <Th bg="white" left={0} position={'sticky'} zIndex={1}>
@@ -182,6 +182,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
                 borderY={memberId === selectedRow ? '2px solid white' : ''}
                 bgColor={memberId === selectedRow ? 'white' : ''}
                 boxShadow={memberId === selectedRow ? '2px 2px 10px gray' : ''}
+                role="group"
               >
                 <Td py={1} left={0} position={'sticky'} zIndex={1} bgColor={'white'} pl={2} pr={2}>
                   {isMobile ? (
@@ -211,17 +212,31 @@ const PicksTable: React.FC<PicksTableProps> = ({
 
                   const shouldShow = game.started || isViewer;
 
-                  const bg =
+                  const baseBg: 'yellow' | 'red' | 'green' | undefined =
                     !game.done && !simulatedPicks[game.gid]
                       ? undefined
                       : !winnerTeam?.abbrev
-                      ? 'yellow.300'
+                      ? 'yellow'
                       : correct
-                      ? 'green.300'
-                      : 'red.300';
+                      ? 'green'
+                      : 'red';
 
                   const Row = (
-                    <Td cursor="default" bg={bg} key={`${member.membership_id}_${game.gid}_pick`}>
+                    <Td
+                      transition="0.3s"
+                      _groupHover={{
+                        bg: baseBg ? `${baseBg}.400` : undefined,
+                      }}
+                      cursor="default"
+                      bg={
+                        baseBg
+                          ? selectedRow === memberId
+                            ? `${baseBg}.400`
+                            : `${baseBg}.300`
+                          : undefined
+                      }
+                      key={`${member.membership_id}_${game.gid}_pick`}
+                    >
                       {shouldShow ? winnerTeam?.abbrev ?? 'N/A' : '--'}
                     </Td>
                   );

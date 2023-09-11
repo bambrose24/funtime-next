@@ -21,6 +21,7 @@ import {useState} from 'react';
 import UserTag from '@src/modules/profile/UserTag';
 import moment from 'moment';
 import {useLeaguePageMemberViewer} from '@src/hooks/useLeaguePageMemberViewer';
+import {showUnstartedLatePolicies} from '@src/util/constants';
 
 type WeekPicksTableProps = {
   teams: AllTeamsQuery;
@@ -130,11 +131,6 @@ type PicksTableProps = {
   teamIdToTeam: Record<number, AllTeamsQuery['teams'][number]>;
   simulatedPicks: Record<number, number>;
 };
-
-const showUnstartedLatePolicies: LatePolicy[] = [
-  LatePolicy.AllowLateAndLockAfterStart,
-  LatePolicy.CloseAtFirstGameStart,
-];
 
 const PicksTable: React.FC<PicksTableProps> = ({
   league,

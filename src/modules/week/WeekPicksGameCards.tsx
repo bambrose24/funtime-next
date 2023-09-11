@@ -1,5 +1,6 @@
 import {Box, Flex, HStack, VStack} from '@chakra-ui/react';
 import {AllTeamsQuery, MsfGamePlayedStatus, PicksByWeekQuery} from '@src/generated/graphql';
+import {showUnstartedLatePolicies} from '@src/util/constants';
 import _ from 'lodash';
 import moment from 'moment-timezone';
 import {useMemo} from 'react';
@@ -21,24 +22,34 @@ export const WeekPicksGameCards: React.FC<Props> = ({
   pickTeam,
   simulatedPicks,
 }) => {
-  const gamesSorted = _(picksData.picksByWeek.games)
-    .sortBy('ts')
-    .sortBy('gid')
-    .value();
+  const gamesSorted = useMemo(() => {
+    return _(picksData.picksByWeek.games)
+      .sortBy('ts')
+      .sortBy('gid')
+      .value();
+  }, [picksData]);
 
-  const teamIdMapping = teams.teams.reduce((prev, curr) => {
-    prev[curr.teamid] = curr;
-    return prev;
-  }, {} as TeamIDMapping);
+  const teamIdMapping = useMemo(() => {
+    return teams.teams.reduce((prev, curr) => {
+      prev[curr.teamid] = curr;
+      return prev;
+    }, {} as TeamIDMapping);
+  }, [teams]);
 
   return (
     <Flex justify="center">
       <HStack spacing="12px" my="12px" overflow="auto" paddingBottom="20px">
         {gamesSorted.map(g => {
+          const allowSimulation =
+            g.started ||
+            (picksData.league &&
+              picksData.league.late_policy &&
+              showUnstartedLatePolicies.includes(picksData.league.late_policy));
           return (
             <GameCard
               key={g.gid}
               g={g}
+              allowSimulation={allowSimulation ?? false}
               teams={teamIdMapping}
               pickTeam={pickTeam}
               simulatedPicks={simulatedPicks}
@@ -54,10 +65,11 @@ type Game = PicksByWeekQuery['picksByWeek']['games'][number];
 
 export const GameCard: React.FC<{
   g: Game;
+  allowSimulation: boolean;
   teams: TeamIDMapping;
   pickTeam: (t: number) => void;
   simulatedPicks: Record<number, number>;
-}> = ({g, teams, pickTeam, simulatedPicks}) => {
+}> = ({g, allowSimulation, teams, pickTeam, simulatedPicks}) => {
   const awayTeam = teams[g.away];
   const homeTeam = teams[g.home];
 
@@ -90,8 +102,6 @@ export const GameCard: React.FC<{
     return [undefined, undefined];
   };
 
-  const isGameStarted = g.started;
-
   const [awayColor, awayBgColor] = getColors(game, game.away, simulatedPicks[game.gid]);
 
   const [homeColor, homeBgColor] = getColors(game, game.home, simulatedPicks[game.gid]);
@@ -107,7 +117,7 @@ export const GameCard: React.FC<{
               borderRadius="4px"
               bg={awayBgColor}
               _hover={
-                isGameStarted
+                allowSimulation
                   ? {
                       cursor: 'pointer',
                       bg: awayBgColor ? undefined : 'gray.200',
@@ -115,7 +125,7 @@ export const GameCard: React.FC<{
                   : {}
               }
               onClick={() => {
-                if (isGameStarted) {
+                if (allowSimulation) {
                   pickTeam(awayTeam.teamid);
                 }
               }}
@@ -135,7 +145,7 @@ export const GameCard: React.FC<{
               borderRadius="4px"
               bg={homeBgColor}
               _hover={
-                isGameStarted
+                allowSimulation
                   ? {
                       cursor: 'pointer',
                       bg: homeBgColor ? undefined : 'gray.200',
@@ -143,7 +153,7 @@ export const GameCard: React.FC<{
                   : {}
               }
               onClick={() => {
-                if (isGameStarted) {
+                if (allowSimulation) {
                   pickTeam(homeTeam.teamid);
                 }
               }}

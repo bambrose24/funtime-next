@@ -153,7 +153,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
     return (
       <Flex justify="center" w="100%">
         <Typography.H1 mt={2} mb={4}>
-          Picks are not yet available for this week.
+          You cannot view picks for this week yet. Do you need to make your pick still?
         </Typography.H1>
       </Flex>
     );

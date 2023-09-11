@@ -37,7 +37,7 @@ export function PicksContent({leagueId, memberId}: Props) {
 
   const existingWinners = useMemo(() => {
     const s = new Set(
-      weekForPicks?.weekForPicks?.leagueMember?.picks
+      weekForPicks?.weekForPicks?.existingPicks
         ?.map(p => (typeof p.winner === 'number' ? p.winner : undefined))
         .filter(Boolean) ?? []
     ) as Set<number>;
@@ -45,7 +45,7 @@ export function PicksContent({leagueId, memberId}: Props) {
   }, [weekForPicks]);
 
   const existingScore = useMemo(() => {
-    return weekForPicks?.weekForPicks?.leagueMember?.picks?.find(p => p.score)?.score ?? undefined;
+    return weekForPicks?.weekForPicks?.existingPicks?.find(p => p.score)?.score ?? undefined;
   }, [weekForPicks]);
 
   if (gamesLoading || leagueLoading) {

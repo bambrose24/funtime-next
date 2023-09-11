@@ -11,7 +11,12 @@ import {
   useBreakpointValue,
   Tooltip,
 } from '@chakra-ui/react';
-import {AllTeamsQuery, FindLeagueMembersQuery, PicksByWeekQuery} from '@src/generated/graphql';
+import {
+  AllTeamsQuery,
+  FindLeagueMembersQuery,
+  LatePolicy,
+  PicksByWeekQuery,
+} from '@src/generated/graphql';
 import {useState} from 'react';
 import UserTag from '@src/modules/profile/UserTag';
 import moment from 'moment';
@@ -101,6 +106,7 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
     <Flex justify="center">
       <Box bg="white" borderRadius="10px" minWidth="300px" paddingBottom="5px" overflow="auto">
         <PicksTable
+          league={picksData?.league}
           games={games}
           memberIdToPicks={memberIdToPicks}
           rankedMemberIds={rankedMemberIds}
@@ -115,6 +121,7 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
 };
 
 type PicksTableProps = {
+  league: PicksByWeekQuery['league'];
   games: PicksByWeekQuery['picksByWeek']['games'];
   memberIdToPicks: Record<number, PicksByWeekQuery['picksByWeek']['picks']>;
   memberIdToMember: Record<number, FindLeagueMembersQuery['leagueMembers'][number]>;
@@ -124,7 +131,13 @@ type PicksTableProps = {
   simulatedPicks: Record<number, number>;
 };
 
+const showUnstartedLatePolicies: LatePolicy[] = [
+  LatePolicy.AllowLateAndLockAfterStart,
+  LatePolicy.CloseAtFirstGameStart,
+];
+
 const PicksTable: React.FC<PicksTableProps> = ({
+  league,
   games,
   memberIdToPicks,
   memberIdToMember,
@@ -210,7 +223,12 @@ const PicksTable: React.FC<PicksTableProps> = ({
                     leagueViewer?.me?.leagueMember?.membership_id &&
                     leagueViewer.me.leagueMember.membership_id === pick?.member_id;
 
-                  const shouldShow = game.started || isViewer;
+                  const shouldShow =
+                    game.started ||
+                    isViewer ||
+                    (league &&
+                      league.late_policy &&
+                      showUnstartedLatePolicies.includes(league?.late_policy));
 
                   const baseBg: 'yellow' | 'red' | 'green' | undefined =
                     !game.done && !simulatedPicks[game.gid]

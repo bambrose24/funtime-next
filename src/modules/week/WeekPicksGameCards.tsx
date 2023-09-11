@@ -113,6 +113,7 @@ export const GameCard: React.FC<{
           <HStack>
             <TeamLogo abbrev={awayTeam.abbrev!} height="25px" width="25px" />
             <Box
+              transition="0.3s"
               p="4px"
               borderRadius="4px"
               bg={awayBgColor}
@@ -130,7 +131,7 @@ export const GameCard: React.FC<{
                 }
               }}
             >
-              <Typography.Body1 fontWeight="500" color={awayColor}>
+              <Typography.Body1 transition="0.3s" fontWeight="500" color={awayColor}>
                 {awayTeam.abbrev}
               </Typography.Body1>
             </Box>
@@ -141,6 +142,7 @@ export const GameCard: React.FC<{
           <HStack>
             <TeamLogo abbrev={homeTeam.abbrev!} height="25px" width="25px" />
             <Box
+              transition="0.3s"
               p="4px"
               borderRadius="4px"
               bg={homeBgColor}
@@ -158,7 +160,7 @@ export const GameCard: React.FC<{
                 }
               }}
             >
-              <Typography.Body1 fontWeight="500" color={homeColor}>
+              <Typography.Body1 transition="0.3s" fontWeight="500" color={homeColor}>
                 {homeTeam.abbrev}
               </Typography.Body1>
             </Box>

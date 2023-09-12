@@ -12,7 +12,6 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
-import {CSVLink} from 'react-csv';
 import UserTag from '@src/modules/profile/UserTag';
 import {Typography} from '@src/modules/Typography';
 import {
@@ -26,6 +25,7 @@ import Link from 'next/link';
 import {useEffect, useMemo, useState} from 'react';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
 import _ from 'lodash';
+import {DownloadLeaguePlayersButton} from './DownloadLeaguePlayers';
 
 type ManagePlayers = {
   leagueId: number;
@@ -41,33 +41,19 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
 
   const {data: games} = useGamesByLeagueQuery({variables: {leagueId}});
 
-  const csvData = useMemo(() => {
-    return [
-      ['username', 'email'],
-      ...(data?.league?.leaguemembers.map(m => {
-        return [m.people.username, m.people.email];
-      }) ?? []),
-    ];
-  }, [data]);
-
   if (!data || !weekForPicks || !games) {
     return <FuntimeLoading />;
   }
 
   const nextWeek = data.weekForPicks.week;
 
-  const leagueFileName = data?.league?.name?.toLowerCase()?.replaceAll(' ', '-');
-
   return (
     <Flex direction="column" w="100%" alignItems="start">
-      <Button variant="outline">
-        <CSVLink
-          data={csvData}
-          filename={leagueFileName ? `${leagueFileName}-players.csv` : `league-players.csv`}
-        >
-          Download Players
-        </CSVLink>
-      </Button>
+      <Flex w="100%" justify="end">
+        {data?.league?.league_id && (
+          <DownloadLeaguePlayersButton leagueId={data.league.league_id} />
+        )}
+      </Flex>
       <TableContainer pt="12px" overflowX="auto">
         <Table variant="simple" size="sm">
           <Thead>

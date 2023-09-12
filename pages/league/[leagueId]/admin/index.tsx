@@ -82,7 +82,7 @@ export default function LeagueAdminPage() {
     <FuntimePage>
       <Flex justify="center" w="100%">
         <Flex>
-          <Flex direction="column" w="100%" layerStyle="funtime-card" minW="3xl">
+          <Flex direction="column" w="100%" layerStyle="funtime-card" maxW="3xl">
             <Flex>
               <TabsHeader title={data.league?.name || ''} subtitle={'Admin Page'} />
             </Flex>

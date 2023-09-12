@@ -1,6 +1,5 @@
 import {gql} from '@apollo/client';
 import {Flex, Tab, TabList, TabPanel, TabPanels, Tabs} from '@chakra-ui/react';
-import {LeagueInfo} from '@src/modules/admin/league/LeagueInfo';
 import {ManagePlayers} from '@src/modules/admin/league/ManagePlayers';
 import {FuntimeError} from '@src/modules/shared/FuntimeError';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
@@ -8,6 +7,7 @@ import {FuntimePage} from '@src/FuntimePage';
 import {MemberRole, useLeagueAdminQuery} from '@src/generated/graphql';
 import {useRouter} from 'next/router';
 import {useTabsConfig} from '@src/hooks/useTabsConfig';
+import {DownloadLeaguePlayersButton} from '@src/modules/admin/league/DownloadLeaguePlayers';
 
 const _LeagueAdminQuery = gql`
   query LeagueAdmin($leagueId: Int!) {
@@ -22,6 +22,7 @@ const _LeagueAdminQuery = gql`
     }
     league(where: {league_id: $leagueId}) {
       id
+      league_id
       name
       leaguemembers {
         id
@@ -80,26 +81,30 @@ export default function LeagueAdminPage() {
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
-        <Flex direction="column" w="100%" layerStyle="funtime-card">
-          <TabsHeader title={data.league?.name || ''} subtitle={'Admin Page'} />
-          <Tabs variant="soft-rounded">
-            <TabList>
-              {/* <Tab>
+        <Flex>
+          <Flex direction="column" w="100%" layerStyle="funtime-card">
+            <Flex>
+              <TabsHeader title={data.league?.name || ''} subtitle={'Admin Page'} />
+            </Flex>
+            <Tabs variant="soft-rounded">
+              <TabList>
+                {/* <Tab>
                 <TabName>League Info</TabName>
               </Tab> */}
-              <Tab>
-                <TabName>Manage Players</TabName>
-              </Tab>
-            </TabList>
-            <TabPanels>
-              {/* <TabPanel>
+                <Tab>
+                  <TabName>Manage Players</TabName>
+                </Tab>
+              </TabList>
+              <TabPanels>
+                {/* <TabPanel>
                 <LeagueInfo leagueId={leagueId} />
               </TabPanel> */}
-              <TabPanel>
-                <ManagePlayers leagueId={leagueId} />
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
+                <TabPanel px={0}>
+                  <ManagePlayers leagueId={leagueId} />
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </Flex>
         </Flex>
       </Flex>
     </FuntimePage>

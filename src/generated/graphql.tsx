@@ -431,7 +431,7 @@ export type EmailLogsOrderByWithAggregationInput = {
   member_id?: InputMaybe<SortOrder>;
   resend_id?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
-  week?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrderInput>;
 };
 
 export type EmailLogsOrderByWithRelationInput = {
@@ -443,7 +443,7 @@ export type EmailLogsOrderByWithRelationInput = {
   member_id?: InputMaybe<SortOrder>;
   resend_id?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
-  week?: InputMaybe<SortOrder>;
+  week?: InputMaybe<SortOrderInput>;
 };
 
 export enum EmailLogsScalarFieldEnum {
@@ -791,6 +791,11 @@ export type GameAvgOrderByAggregateInput = {
 export type GameCount = {
   __typename?: 'GameCount';
   picks: Scalars['Int'];
+};
+
+
+export type GameCountPicksArgs = {
+  where?: InputMaybe<PickWhereInput>;
 };
 
 export type GameCountAggregate = {
@@ -1148,45 +1153,45 @@ export type GameOrderByWithAggregationInput = {
   _min?: InputMaybe<GameMinOrderByAggregateInput>;
   _sum?: InputMaybe<GameSumOrderByAggregateInput>;
   away?: InputMaybe<SortOrder>;
-  awayrecord?: InputMaybe<SortOrder>;
-  awayscore?: InputMaybe<SortOrder>;
-  current_record?: InputMaybe<SortOrder>;
-  done?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrderInput>;
+  awayscore?: InputMaybe<SortOrderInput>;
+  current_record?: InputMaybe<SortOrderInput>;
+  done?: InputMaybe<SortOrderInput>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
-  homerecord?: InputMaybe<SortOrder>;
-  homescore?: InputMaybe<SortOrder>;
-  international?: InputMaybe<SortOrder>;
-  is_tiebreaker?: InputMaybe<SortOrder>;
-  msf_id?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrderInput>;
+  homescore?: InputMaybe<SortOrderInput>;
+  international?: InputMaybe<SortOrderInput>;
+  is_tiebreaker?: InputMaybe<SortOrderInput>;
+  msf_id?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
-  seconds?: InputMaybe<SortOrder>;
+  seconds?: InputMaybe<SortOrderInput>;
   ts?: InputMaybe<SortOrder>;
   week?: InputMaybe<SortOrder>;
-  winner?: InputMaybe<SortOrder>;
+  winner?: InputMaybe<SortOrderInput>;
 };
 
 export type GameOrderByWithRelationInput = {
   away?: InputMaybe<SortOrder>;
-  awayrecord?: InputMaybe<SortOrder>;
-  awayscore?: InputMaybe<SortOrder>;
-  current_record?: InputMaybe<SortOrder>;
-  done?: InputMaybe<SortOrder>;
+  awayrecord?: InputMaybe<SortOrderInput>;
+  awayscore?: InputMaybe<SortOrderInput>;
+  current_record?: InputMaybe<SortOrderInput>;
+  done?: InputMaybe<SortOrderInput>;
   gid?: InputMaybe<SortOrder>;
   home?: InputMaybe<SortOrder>;
-  homerecord?: InputMaybe<SortOrder>;
-  homescore?: InputMaybe<SortOrder>;
-  international?: InputMaybe<SortOrder>;
-  is_tiebreaker?: InputMaybe<SortOrder>;
-  msf_id?: InputMaybe<SortOrder>;
+  homerecord?: InputMaybe<SortOrderInput>;
+  homescore?: InputMaybe<SortOrderInput>;
+  international?: InputMaybe<SortOrderInput>;
+  is_tiebreaker?: InputMaybe<SortOrderInput>;
+  msf_id?: InputMaybe<SortOrderInput>;
   picks?: InputMaybe<PickOrderByRelationAggregateInput>;
   season?: InputMaybe<SortOrder>;
-  seconds?: InputMaybe<SortOrder>;
+  seconds?: InputMaybe<SortOrderInput>;
   teams_games_awayToteams?: InputMaybe<TeamOrderByWithRelationInput>;
   teams_games_homeToteams?: InputMaybe<TeamOrderByWithRelationInput>;
   ts?: InputMaybe<SortOrder>;
   week?: InputMaybe<SortOrder>;
-  winner?: InputMaybe<SortOrder>;
+  winner?: InputMaybe<SortOrderInput>;
 };
 
 export type GamePick = {
@@ -1655,6 +1660,21 @@ export type LeagueCount = {
   leaguemembers: Scalars['Int'];
 };
 
+
+export type LeagueCountEmailLogsArgs = {
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
+export type LeagueCountWeekWinnersArgs = {
+  where?: InputMaybe<WeekWinnersWhereInput>;
+};
+
+
+export type LeagueCountLeaguemembersArgs = {
+  where?: InputMaybe<LeagueMemberWhereInput>;
+};
+
 export type LeagueCountAggregate = {
   __typename?: 'LeagueCountAggregate';
   _all: Scalars['Int'];
@@ -2053,6 +2073,26 @@ export type LeagueMemberCount = {
   superbowl: Scalars['Int'];
 };
 
+
+export type LeagueMemberCountEmailLogsArgs = {
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
+export type LeagueMemberCountWeekWinnersArgs = {
+  where?: InputMaybe<WeekWinnersWhereInput>;
+};
+
+
+export type LeagueMemberCountPicksArgs = {
+  where?: InputMaybe<PickWhereInput>;
+};
+
+
+export type LeagueMemberCountSuperbowlArgs = {
+  where?: InputMaybe<SuperbowlWhereInput>;
+};
+
 export type LeagueMemberCountAggregate = {
   __typename?: 'LeagueMemberCountAggregate';
   _all: Scalars['Int'];
@@ -2325,8 +2365,8 @@ export type LeagueMemberOrderByWithAggregationInput = {
   _sum?: InputMaybe<LeagueMemberSumOrderByAggregateInput>;
   league_id?: InputMaybe<SortOrder>;
   membership_id?: InputMaybe<SortOrder>;
-  paid?: InputMaybe<SortOrder>;
-  role?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrderInput>;
+  role?: InputMaybe<SortOrderInput>;
   ts?: InputMaybe<SortOrder>;
   user_id?: InputMaybe<SortOrder>;
 };
@@ -2337,10 +2377,10 @@ export type LeagueMemberOrderByWithRelationInput = {
   league_id?: InputMaybe<SortOrder>;
   leagues?: InputMaybe<LeagueOrderByWithRelationInput>;
   membership_id?: InputMaybe<SortOrder>;
-  paid?: InputMaybe<SortOrder>;
+  paid?: InputMaybe<SortOrderInput>;
   people?: InputMaybe<UserOrderByWithRelationInput>;
   picks?: InputMaybe<PickOrderByRelationAggregateInput>;
-  role?: InputMaybe<SortOrder>;
+  role?: InputMaybe<SortOrderInput>;
   superbowl?: InputMaybe<SuperbowlOrderByRelationAggregateInput>;
   ts?: InputMaybe<SortOrder>;
   user_id?: InputMaybe<SortOrder>;
@@ -2669,16 +2709,16 @@ export type LeagueOrderByWithAggregationInput = {
   _sum?: InputMaybe<LeagueSumOrderByAggregateInput>;
   created_by_user_id?: InputMaybe<SortOrder>;
   created_time?: InputMaybe<SortOrder>;
-  late_policy?: InputMaybe<SortOrder>;
+  late_policy?: InputMaybe<SortOrderInput>;
   league_id?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
-  pick_policy?: InputMaybe<SortOrder>;
-  prior_league_id?: InputMaybe<SortOrder>;
-  reminder_policy?: InputMaybe<SortOrder>;
-  scoring_type?: InputMaybe<SortOrder>;
+  pick_policy?: InputMaybe<SortOrderInput>;
+  prior_league_id?: InputMaybe<SortOrderInput>;
+  reminder_policy?: InputMaybe<SortOrderInput>;
+  scoring_type?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
-  share_code?: InputMaybe<SortOrder>;
-  superbowl_competition?: InputMaybe<SortOrder>;
+  share_code?: InputMaybe<SortOrderInput>;
+  superbowl_competition?: InputMaybe<SortOrderInput>;
 };
 
 export type LeagueOrderByWithRelationInput = {
@@ -2686,20 +2726,20 @@ export type LeagueOrderByWithRelationInput = {
   WeekWinners?: InputMaybe<WeekWinnersOrderByRelationAggregateInput>;
   created_by_user_id?: InputMaybe<SortOrder>;
   created_time?: InputMaybe<SortOrder>;
-  late_policy?: InputMaybe<SortOrder>;
+  late_policy?: InputMaybe<SortOrderInput>;
   league_id?: InputMaybe<SortOrder>;
   leaguemembers?: InputMaybe<LeagueMemberOrderByRelationAggregateInput>;
   name?: InputMaybe<SortOrder>;
   nextLeague?: InputMaybe<LeagueOrderByWithRelationInput>;
   people?: InputMaybe<UserOrderByWithRelationInput>;
-  pick_policy?: InputMaybe<SortOrder>;
+  pick_policy?: InputMaybe<SortOrderInput>;
   priorLeague?: InputMaybe<LeagueOrderByWithRelationInput>;
-  prior_league_id?: InputMaybe<SortOrder>;
-  reminder_policy?: InputMaybe<SortOrder>;
-  scoring_type?: InputMaybe<SortOrder>;
+  prior_league_id?: InputMaybe<SortOrderInput>;
+  reminder_policy?: InputMaybe<SortOrderInput>;
+  scoring_type?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
-  share_code?: InputMaybe<SortOrder>;
-  superbowl_competition?: InputMaybe<SortOrder>;
+  share_code?: InputMaybe<SortOrderInput>;
+  superbowl_competition?: InputMaybe<SortOrderInput>;
 };
 
 export type LeagueRanking = {
@@ -3938,6 +3978,11 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['String']>;
 };
 
+export enum NullsOrder {
+  First = 'first',
+  Last = 'last'
+}
+
 export type Pick = {
   __typename?: 'Pick';
   correct?: Maybe<Scalars['Int']>;
@@ -4342,38 +4387,38 @@ export type PickOrderByWithAggregationInput = {
   _max?: InputMaybe<PickMaxOrderByAggregateInput>;
   _min?: InputMaybe<PickMinOrderByAggregateInput>;
   _sum?: InputMaybe<PickSumOrderByAggregateInput>;
-  correct?: InputMaybe<SortOrder>;
-  done?: InputMaybe<SortOrder>;
+  correct?: InputMaybe<SortOrderInput>;
+  done?: InputMaybe<SortOrderInput>;
   gid?: InputMaybe<SortOrder>;
-  is_random?: InputMaybe<SortOrder>;
-  loser?: InputMaybe<SortOrder>;
-  member_id?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrderInput>;
+  loser?: InputMaybe<SortOrderInput>;
+  member_id?: InputMaybe<SortOrderInput>;
   pickid?: InputMaybe<SortOrder>;
-  score?: InputMaybe<SortOrder>;
+  score?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   week?: InputMaybe<SortOrder>;
-  winner?: InputMaybe<SortOrder>;
+  winner?: InputMaybe<SortOrderInput>;
 };
 
 export type PickOrderByWithRelationInput = {
-  correct?: InputMaybe<SortOrder>;
-  done?: InputMaybe<SortOrder>;
+  correct?: InputMaybe<SortOrderInput>;
+  done?: InputMaybe<SortOrderInput>;
   games?: InputMaybe<GameOrderByWithRelationInput>;
   gid?: InputMaybe<SortOrder>;
-  is_random?: InputMaybe<SortOrder>;
+  is_random?: InputMaybe<SortOrderInput>;
   leaguemembers?: InputMaybe<LeagueMemberOrderByWithRelationInput>;
-  loser?: InputMaybe<SortOrder>;
-  member_id?: InputMaybe<SortOrder>;
+  loser?: InputMaybe<SortOrderInput>;
+  member_id?: InputMaybe<SortOrderInput>;
   people?: InputMaybe<UserOrderByWithRelationInput>;
   pickid?: InputMaybe<SortOrder>;
-  score?: InputMaybe<SortOrder>;
+  score?: InputMaybe<SortOrderInput>;
   season?: InputMaybe<SortOrder>;
   ts?: InputMaybe<SortOrder>;
   uid?: InputMaybe<SortOrder>;
   week?: InputMaybe<SortOrder>;
-  winner?: InputMaybe<SortOrder>;
+  winner?: InputMaybe<SortOrderInput>;
   winnerTeam?: InputMaybe<TeamOrderByWithRelationInput>;
 };
 
@@ -4716,21 +4761,41 @@ export type Query = {
   aggregateUser: AggregateUser;
   aggregateWeekWinners: AggregateWeekWinners;
   findFirstEmailLogs?: Maybe<EmailLogs>;
+  findFirstEmailLogsOrThrow?: Maybe<EmailLogs>;
   findFirstGame?: Maybe<Game>;
+  findFirstGameOrThrow?: Maybe<Game>;
   findFirstLeague?: Maybe<League>;
   findFirstLeagueMember?: Maybe<LeagueMember>;
+  findFirstLeagueMemberOrThrow?: Maybe<LeagueMember>;
+  findFirstLeagueOrThrow?: Maybe<League>;
   findFirstPick?: Maybe<Pick>;
+  findFirstPickOrThrow?: Maybe<Pick>;
   findFirstSuperbowl?: Maybe<Superbowl>;
+  findFirstSuperbowlOrThrow?: Maybe<Superbowl>;
   findFirstSuperbowlSquare?: Maybe<SuperbowlSquare>;
+  findFirstSuperbowlSquareOrThrow?: Maybe<SuperbowlSquare>;
   findFirstTeam?: Maybe<Team>;
+  findFirstTeamOrThrow?: Maybe<Team>;
   findFirstUser?: Maybe<User>;
+  findFirstUserOrThrow?: Maybe<User>;
   findFirstWeekWinners?: Maybe<WeekWinners>;
+  findFirstWeekWinnersOrThrow?: Maybe<WeekWinners>;
   findManyEmailLogs: Array<EmailLogs>;
   findManyWeekWinners: Array<WeekWinners>;
   findUniqueEmailLogs?: Maybe<EmailLogs>;
+  findUniqueEmailLogsOrThrow?: Maybe<EmailLogs>;
   findUniqueWeekWinners?: Maybe<WeekWinners>;
+  findUniqueWeekWinnersOrThrow?: Maybe<WeekWinners>;
   game?: Maybe<Game>;
   games: Array<Game>;
+  getGame?: Maybe<Game>;
+  getLeague?: Maybe<League>;
+  getLeagueMember?: Maybe<LeagueMember>;
+  getPick?: Maybe<Pick>;
+  getSuperbowl?: Maybe<Superbowl>;
+  getSuperbowlSquare?: Maybe<SuperbowlSquare>;
+  getTeam?: Maybe<Team>;
+  getUser?: Maybe<User>;
   groupByEmailLogs: Array<EmailLogsGroupBy>;
   groupByGame: Array<GameGroupBy>;
   groupByLeague: Array<LeagueGroupBy>;
@@ -4862,7 +4927,27 @@ export type QueryFindFirstEmailLogsArgs = {
 };
 
 
+export type QueryFindFirstEmailLogsOrThrowArgs = {
+  cursor?: InputMaybe<EmailLogsWhereUniqueInput>;
+  distinct?: InputMaybe<Array<EmailLogsScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<EmailLogsOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<EmailLogsWhereInput>;
+};
+
+
 export type QueryFindFirstGameArgs = {
+  cursor?: InputMaybe<GameWhereUniqueInput>;
+  distinct?: InputMaybe<Array<GameScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<GameOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type QueryFindFirstGameOrThrowArgs = {
   cursor?: InputMaybe<GameWhereUniqueInput>;
   distinct?: InputMaybe<Array<GameScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<GameOrderByWithRelationInput>>;
@@ -4892,7 +4977,37 @@ export type QueryFindFirstLeagueMemberArgs = {
 };
 
 
+export type QueryFindFirstLeagueMemberOrThrowArgs = {
+  cursor?: InputMaybe<LeagueMemberWhereUniqueInput>;
+  distinct?: InputMaybe<Array<LeagueMemberScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<LeagueMemberOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LeagueMemberWhereInput>;
+};
+
+
+export type QueryFindFirstLeagueOrThrowArgs = {
+  cursor?: InputMaybe<LeagueWhereUniqueInput>;
+  distinct?: InputMaybe<Array<LeagueScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<LeagueOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<LeagueWhereInput>;
+};
+
+
 export type QueryFindFirstPickArgs = {
+  cursor?: InputMaybe<PickWhereUniqueInput>;
+  distinct?: InputMaybe<Array<PickScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<PickOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<PickWhereInput>;
+};
+
+
+export type QueryFindFirstPickOrThrowArgs = {
   cursor?: InputMaybe<PickWhereUniqueInput>;
   distinct?: InputMaybe<Array<PickScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<PickOrderByWithRelationInput>>;
@@ -4912,7 +5027,27 @@ export type QueryFindFirstSuperbowlArgs = {
 };
 
 
+export type QueryFindFirstSuperbowlOrThrowArgs = {
+  cursor?: InputMaybe<SuperbowlWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SuperbowlScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SuperbowlOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SuperbowlWhereInput>;
+};
+
+
 export type QueryFindFirstSuperbowlSquareArgs = {
+  cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
+  distinct?: InputMaybe<Array<SuperbowlSquareScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<SuperbowlSquareOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<SuperbowlSquareWhereInput>;
+};
+
+
+export type QueryFindFirstSuperbowlSquareOrThrowArgs = {
   cursor?: InputMaybe<SuperbowlSquareWhereUniqueInput>;
   distinct?: InputMaybe<Array<SuperbowlSquareScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<SuperbowlSquareOrderByWithRelationInput>>;
@@ -4932,6 +5067,16 @@ export type QueryFindFirstTeamArgs = {
 };
 
 
+export type QueryFindFirstTeamOrThrowArgs = {
+  cursor?: InputMaybe<TeamWhereUniqueInput>;
+  distinct?: InputMaybe<Array<TeamScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<TeamOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<TeamWhereInput>;
+};
+
+
 export type QueryFindFirstUserArgs = {
   cursor?: InputMaybe<UserWhereUniqueInput>;
   distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
@@ -4942,7 +5087,27 @@ export type QueryFindFirstUserArgs = {
 };
 
 
+export type QueryFindFirstUserOrThrowArgs = {
+  cursor?: InputMaybe<UserWhereUniqueInput>;
+  distinct?: InputMaybe<Array<UserScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<UserOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<UserWhereInput>;
+};
+
+
 export type QueryFindFirstWeekWinnersArgs = {
+  cursor?: InputMaybe<WeekWinnersWhereUniqueInput>;
+  distinct?: InputMaybe<Array<WeekWinnersScalarFieldEnum>>;
+  orderBy?: InputMaybe<Array<WeekWinnersOrderByWithRelationInput>>;
+  skip?: InputMaybe<Scalars['Int']>;
+  take?: InputMaybe<Scalars['Int']>;
+  where?: InputMaybe<WeekWinnersWhereInput>;
+};
+
+
+export type QueryFindFirstWeekWinnersOrThrowArgs = {
   cursor?: InputMaybe<WeekWinnersWhereUniqueInput>;
   distinct?: InputMaybe<Array<WeekWinnersScalarFieldEnum>>;
   orderBy?: InputMaybe<Array<WeekWinnersOrderByWithRelationInput>>;
@@ -4977,7 +5142,17 @@ export type QueryFindUniqueEmailLogsArgs = {
 };
 
 
+export type QueryFindUniqueEmailLogsOrThrowArgs = {
+  where: EmailLogsWhereUniqueInput;
+};
+
+
 export type QueryFindUniqueWeekWinnersArgs = {
+  where: WeekWinnersWhereUniqueInput;
+};
+
+
+export type QueryFindUniqueWeekWinnersOrThrowArgs = {
   where: WeekWinnersWhereUniqueInput;
 };
 
@@ -4994,6 +5169,46 @@ export type QueryGamesArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type QueryGetGameArgs = {
+  where: GameWhereUniqueInput;
+};
+
+
+export type QueryGetLeagueArgs = {
+  where: LeagueWhereUniqueInput;
+};
+
+
+export type QueryGetLeagueMemberArgs = {
+  where: LeagueMemberWhereUniqueInput;
+};
+
+
+export type QueryGetPickArgs = {
+  where: PickWhereUniqueInput;
+};
+
+
+export type QueryGetSuperbowlArgs = {
+  where: SuperbowlWhereUniqueInput;
+};
+
+
+export type QueryGetSuperbowlSquareArgs = {
+  where: SuperbowlSquareWhereUniqueInput;
+};
+
+
+export type QueryGetTeamArgs = {
+  where: TeamWhereUniqueInput;
+};
+
+
+export type QueryGetUserArgs = {
+  where: UserWhereUniqueInput;
 };
 
 
@@ -5259,6 +5474,11 @@ export enum SortOrder {
   Asc = 'asc',
   Desc = 'desc'
 }
+
+export type SortOrderInput = {
+  nulls?: InputMaybe<NullsOrder>;
+  sort: SortOrder;
+};
 
 export type StringFieldUpdateOperationsInput = {
   set?: InputMaybe<Scalars['String']>;
@@ -5600,11 +5820,11 @@ export type SuperbowlOrderByWithAggregationInput = {
   _min?: InputMaybe<SuperbowlMinOrderByAggregateInput>;
   _sum?: InputMaybe<SuperbowlSumOrderByAggregateInput>;
   loser?: InputMaybe<SortOrder>;
-  member_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrderInput>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
-  season?: InputMaybe<SortOrder>;
-  ts?: InputMaybe<SortOrder>;
+  season?: InputMaybe<SortOrderInput>;
+  ts?: InputMaybe<SortOrderInput>;
   uid?: InputMaybe<SortOrder>;
   winner?: InputMaybe<SortOrder>;
 };
@@ -5612,13 +5832,13 @@ export type SuperbowlOrderByWithAggregationInput = {
 export type SuperbowlOrderByWithRelationInput = {
   leaguemembers?: InputMaybe<LeagueMemberOrderByWithRelationInput>;
   loser?: InputMaybe<SortOrder>;
-  member_id?: InputMaybe<SortOrder>;
+  member_id?: InputMaybe<SortOrderInput>;
   pickid?: InputMaybe<SortOrder>;
   score?: InputMaybe<SortOrder>;
-  season?: InputMaybe<SortOrder>;
+  season?: InputMaybe<SortOrderInput>;
   teams_superbowl_loserToteams?: InputMaybe<TeamOrderByWithRelationInput>;
   teams_superbowl_winnerToteams?: InputMaybe<TeamOrderByWithRelationInput>;
-  ts?: InputMaybe<SortOrder>;
+  ts?: InputMaybe<SortOrderInput>;
   uid?: InputMaybe<SortOrder>;
   winner?: InputMaybe<SortOrder>;
 };
@@ -6150,6 +6370,31 @@ export type TeamCount = {
   superbowl_superbowl_winnerToteams: Scalars['Int'];
 };
 
+
+export type TeamCountGames_Games_AwayToteamsArgs = {
+  where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type TeamCountGames_Games_HomeToteamsArgs = {
+  where?: InputMaybe<GameWhereInput>;
+};
+
+
+export type TeamCountPicks_ChosenArgs = {
+  where?: InputMaybe<PickWhereInput>;
+};
+
+
+export type TeamCountSuperbowl_Superbowl_LoserToteamsArgs = {
+  where?: InputMaybe<SuperbowlWhereInput>;
+};
+
+
+export type TeamCountSuperbowl_Superbowl_WinnerToteamsArgs = {
+  where?: InputMaybe<SuperbowlWhereInput>;
+};
+
 export type TeamCountAggregate = {
   __typename?: 'TeamCountAggregate';
   _all: Scalars['Int'];
@@ -6352,16 +6597,16 @@ export type TeamOrderByWithAggregationInput = {
   _max?: InputMaybe<TeamMaxOrderByAggregateInput>;
   _min?: InputMaybe<TeamMinOrderByAggregateInput>;
   _sum?: InputMaybe<TeamSumOrderByAggregateInput>;
-  abbrev?: InputMaybe<SortOrder>;
-  conference?: InputMaybe<SortOrder>;
+  abbrev?: InputMaybe<SortOrderInput>;
+  conference?: InputMaybe<SortOrderInput>;
   loc?: InputMaybe<SortOrder>;
   name?: InputMaybe<SortOrder>;
   teamid?: InputMaybe<SortOrder>;
 };
 
 export type TeamOrderByWithRelationInput = {
-  abbrev?: InputMaybe<SortOrder>;
-  conference?: InputMaybe<SortOrder>;
+  abbrev?: InputMaybe<SortOrderInput>;
+  conference?: InputMaybe<SortOrderInput>;
   games_games_awayToteams?: InputMaybe<GameOrderByRelationAggregateInput>;
   games_games_homeToteams?: InputMaybe<GameOrderByRelationAggregateInput>;
   loc?: InputMaybe<SortOrder>;
@@ -6646,6 +6891,21 @@ export type UserCount = {
   picks: Scalars['Int'];
 };
 
+
+export type UserCountLeaguemembersArgs = {
+  where?: InputMaybe<LeagueMemberWhereInput>;
+};
+
+
+export type UserCountLeaguesArgs = {
+  where?: InputMaybe<LeagueWhereInput>;
+};
+
+
+export type UserCountPicksArgs = {
+  where?: InputMaybe<PickWhereInput>;
+};
+
 export type UserCountAggregate = {
   __typename?: 'UserCountAggregate';
   _all: Scalars['Int'];
@@ -6869,31 +7129,31 @@ export type UserOrderByWithAggregationInput = {
   _min?: InputMaybe<UserMinOrderByAggregateInput>;
   _sum?: InputMaybe<UserSumOrderByAggregateInput>;
   email?: InputMaybe<SortOrder>;
-  email2?: InputMaybe<SortOrder>;
+  email2?: InputMaybe<SortOrderInput>;
   fname?: InputMaybe<SortOrder>;
-  google_email?: InputMaybe<SortOrder>;
-  google_photo_url?: InputMaybe<SortOrder>;
-  google_userid?: InputMaybe<SortOrder>;
+  google_email?: InputMaybe<SortOrderInput>;
+  google_photo_url?: InputMaybe<SortOrderInput>;
+  google_userid?: InputMaybe<SortOrderInput>;
   lname?: InputMaybe<SortOrder>;
   season?: InputMaybe<SortOrder>;
-  supabase_id?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrderInput>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
 
 export type UserOrderByWithRelationInput = {
   email?: InputMaybe<SortOrder>;
-  email2?: InputMaybe<SortOrder>;
+  email2?: InputMaybe<SortOrderInput>;
   fname?: InputMaybe<SortOrder>;
-  google_email?: InputMaybe<SortOrder>;
-  google_photo_url?: InputMaybe<SortOrder>;
-  google_userid?: InputMaybe<SortOrder>;
+  google_email?: InputMaybe<SortOrderInput>;
+  google_photo_url?: InputMaybe<SortOrderInput>;
+  google_userid?: InputMaybe<SortOrderInput>;
   leaguemembers?: InputMaybe<LeagueMemberOrderByRelationAggregateInput>;
   leagues?: InputMaybe<LeagueOrderByRelationAggregateInput>;
   lname?: InputMaybe<SortOrder>;
   picks?: InputMaybe<PickOrderByRelationAggregateInput>;
   season?: InputMaybe<SortOrder>;
-  supabase_id?: InputMaybe<SortOrder>;
+  supabase_id?: InputMaybe<SortOrderInput>;
   uid?: InputMaybe<SortOrder>;
   username?: InputMaybe<SortOrder>;
 };
@@ -7484,7 +7744,7 @@ export type LeagueAdminQueryVariables = Exact<{
 }>;
 
 
-export type LeagueAdminQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, uid: number, username: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, role?: MemberRole | null }> } | null, league?: { __typename?: 'League', id: string, name: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, paid?: boolean | null, membership_id: number, hasPickedNextGame: boolean, picks: Array<{ __typename?: 'Pick', id: string, week: number, correct?: number | null }>, people: { __typename?: 'User', id: string, uid: number, username: string, email: string } }> } | null, weekForPicks: { __typename?: 'WeekForPicksResponse', id: string, week?: number | null } };
+export type LeagueAdminQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, uid: number, username: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, role?: MemberRole | null }> } | null, league?: { __typename?: 'League', id: string, league_id: number, name: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, paid?: boolean | null, membership_id: number, hasPickedNextGame: boolean, picks: Array<{ __typename?: 'Pick', id: string, week: number, correct?: number | null }>, people: { __typename?: 'User', id: string, uid: number, username: string, email: string } }> } | null, weekForPicks: { __typename?: 'WeekForPicksResponse', id: string, week?: number | null } };
 
 export type EditProfileQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -7615,6 +7875,13 @@ export type LeaguePageMemberViewerQueryVariables = Exact<{
 
 export type LeaguePageMemberViewerQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null } | null };
 
+export type DownloadLeaguePlayersQueryVariables = Exact<{
+  leagueId: Scalars['Int'];
+}>;
+
+
+export type DownloadLeaguePlayersQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, name: string, memberpeople: Array<{ __typename?: 'LeagueMemberPeople', id: string, member: { __typename?: 'LeagueMember', id: string, paid?: boolean | null }, user: { __typename?: 'User', id: string, username: string, email: string } }> } | null };
+
 export type MarkAsPaidMutationVariables = Exact<{
   membership_id: Scalars['Int'];
   paid: Scalars['Boolean'];
@@ -7740,6 +8007,7 @@ export const LeagueAdminDocument = gql`
   }
   league(where: {league_id: $leagueId}) {
     id
+    league_id
     name
     leaguemembers {
       id
@@ -8707,6 +8975,54 @@ export function useLeaguePageMemberViewerLazyQuery(baseOptions?: Apollo.LazyQuer
 export type LeaguePageMemberViewerQueryHookResult = ReturnType<typeof useLeaguePageMemberViewerQuery>;
 export type LeaguePageMemberViewerLazyQueryHookResult = ReturnType<typeof useLeaguePageMemberViewerLazyQuery>;
 export type LeaguePageMemberViewerQueryResult = Apollo.QueryResult<LeaguePageMemberViewerQuery, LeaguePageMemberViewerQueryVariables>;
+export const DownloadLeaguePlayersDocument = gql`
+    query DownloadLeaguePlayers($leagueId: Int!) {
+  league(where: {league_id: $leagueId}) {
+    id
+    name
+    memberpeople {
+      id
+      member {
+        id
+        paid
+      }
+      user {
+        id
+        username
+        email
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useDownloadLeaguePlayersQuery__
+ *
+ * To run a query within a React component, call `useDownloadLeaguePlayersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDownloadLeaguePlayersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDownloadLeaguePlayersQuery({
+ *   variables: {
+ *      leagueId: // value for 'leagueId'
+ *   },
+ * });
+ */
+export function useDownloadLeaguePlayersQuery(baseOptions: Apollo.QueryHookOptions<DownloadLeaguePlayersQuery, DownloadLeaguePlayersQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DownloadLeaguePlayersQuery, DownloadLeaguePlayersQueryVariables>(DownloadLeaguePlayersDocument, options);
+      }
+export function useDownloadLeaguePlayersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DownloadLeaguePlayersQuery, DownloadLeaguePlayersQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DownloadLeaguePlayersQuery, DownloadLeaguePlayersQueryVariables>(DownloadLeaguePlayersDocument, options);
+        }
+export type DownloadLeaguePlayersQueryHookResult = ReturnType<typeof useDownloadLeaguePlayersQuery>;
+export type DownloadLeaguePlayersLazyQueryHookResult = ReturnType<typeof useDownloadLeaguePlayersLazyQuery>;
+export type DownloadLeaguePlayersQueryResult = Apollo.QueryResult<DownloadLeaguePlayersQuery, DownloadLeaguePlayersQueryVariables>;
 export const MarkAsPaidDocument = gql`
     mutation MarkAsPaid($membership_id: Int!, $paid: Boolean!) {
   updateOneLeagueMember(

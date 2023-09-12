@@ -21,6 +21,7 @@ import {
   Tooltip,
 } from '@chakra-ui/react';
 import {
+  LeagueStatus,
   useAllTeamsQuery,
   useLeagueRegistrationQuery,
   useRegisterMutation,
@@ -118,6 +119,10 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
 
   if (loading || !league || !user || !teams) {
     return <FuntimeLoading />;
+  }
+
+  if (league.status !== LeagueStatus.NotStarted) {
+    return <Typography.H3>The league has started, you cannot register anymore.</Typography.H3>;
   }
 
   const priorMember = league.priorLeague?.leaguemembers.find(m => m.people.email === user.email);

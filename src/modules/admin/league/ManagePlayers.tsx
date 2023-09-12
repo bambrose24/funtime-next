@@ -3,7 +3,6 @@ import {
   Button,
   Flex,
   FormControl,
-  FormLabel,
   Select,
   Table,
   TableContainer,
@@ -13,6 +12,7 @@ import {
   Thead,
   Tr,
 } from '@chakra-ui/react';
+import {CSVLink} from 'react-csv';
 import UserTag from '@src/modules/profile/UserTag';
 import {Typography} from '@src/modules/Typography';
 import {
@@ -22,10 +22,10 @@ import {
   useWeekForPicksQuery,
 } from '@src/generated/graphql';
 import {MarkAsPaidButton} from './MarkAsPaidButton';
-import {useRouter} from 'next/router';
 import Link from 'next/link';
 import {useEffect, useMemo, useState} from 'react';
 import {FuntimeLoading} from '@src/modules/shared/FuntimeLoading';
+import _ from 'lodash';
 
 type ManagePlayers = {
   leagueId: number;
@@ -38,16 +38,36 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
       leagueId,
     },
   });
+
   const {data: games} = useGamesByLeagueQuery({variables: {leagueId}});
-  const router = useRouter();
+
+  const csvData = useMemo(() => {
+    return [
+      ['username', 'email'],
+      ...(data?.league?.leaguemembers.map(m => {
+        return [m.people.username, m.people.email];
+      }) ?? []),
+    ];
+  }, [data]);
+
   if (!data || !weekForPicks || !games) {
     return <FuntimeLoading />;
   }
 
   const nextWeek = data.weekForPicks.week;
 
+  const leagueFileName = data?.league?.name?.toLowerCase()?.replaceAll(' ', '-');
+
   return (
-    <>
+    <Flex direction="column" w="100%" alignItems="start">
+      <Button variant="outline">
+        <CSVLink
+          data={csvData}
+          filename={leagueFileName ? `${leagueFileName}-players.csv` : `league-players.csv`}
+        >
+          Download Players
+        </CSVLink>
+      </Button>
       <TableContainer pt="12px" overflowX="auto">
         <Table variant="simple" size="sm">
           <Thead>
@@ -118,7 +138,7 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
           </Tbody>
         </Table>
       </TableContainer>
-    </>
+    </Flex>
   );
 }
 
@@ -140,7 +160,8 @@ function MakePicksTableEntry({
   }, [currentWeek]);
 
   const weeks = useMemo(() => {
-    return new Set(games.league?.games.map(g => g.week) ?? []);
+    const weekSet = new Set(games.league?.games.map(g => g.week) ?? []);
+    return _.orderBy([...Array.from(weekSet)], x => x);
   }, [games]);
 
   return (
@@ -152,7 +173,7 @@ function MakePicksTableEntry({
             setWeek(parseInt(e.target.value));
           }}
         >
-          {Array.from(weeks).map(week => {
+          {weeks.map(week => {
             return (
               <option key={`${memberId}_${week}`} value={week}>
                 Week {week}

@@ -249,7 +249,7 @@ export function PicksForm({
             })
             .filter(Defined);
           await submitPicks({
-            variables: {picks, leagueId, overrideMemberId: memberId},
+            variables: {picks, leagueId, overrideMemberId: isImpersonating ? memberId : null},
           });
           setModalPicks(picks);
           onSuccess().then(() => {

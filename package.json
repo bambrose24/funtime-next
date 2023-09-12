@@ -2,7 +2,7 @@
   "name": "funtime-next",
   "version": "0.1.0",
   "engines": {
-    "node": "18.x.x"
+    "node": "20.x.x"
   },
   "private": true,
   "scripts": {
@@ -43,6 +43,7 @@
     "next": "^13.1.6",
     "npm": "^8.19.3",
     "react": "^18.2.0",
+    "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.45.1",
     "yup": "^0.32.11"

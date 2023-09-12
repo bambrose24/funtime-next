@@ -152,7 +152,7 @@ function MakePicksTableEntry({
 
   return (
     <Flex gap="4px">
-      <FormControl variant="floating">
+      <FormControl variant="floating" minW="120px">
         <Select
           value={week}
           onChange={e => {

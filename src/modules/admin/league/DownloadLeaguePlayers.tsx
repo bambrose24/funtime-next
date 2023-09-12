@@ -29,9 +29,9 @@ export function DownloadLeaguePlayersButton({leagueId}: {leagueId: number}) {
   const {data, loading, error} = useDownloadLeaguePlayersQuery({variables: {leagueId}});
   const csvData = useMemo(() => {
     return [
-      ['username', 'email'],
+      ['username', 'email', 'paid'],
       ...(data?.league?.memberpeople.map(m => {
-        return [m.user.username, m.user.email];
+        return [m.user.username, m.user.email, m.member.paid ? 'Yes' : 'No'];
       }) ?? []),
     ];
   }, [data]);

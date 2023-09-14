@@ -7744,7 +7744,7 @@ export type LeagueAdminQueryVariables = Exact<{
 }>;
 
 
-export type LeagueAdminQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, uid: number, username: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, role?: MemberRole | null }> } | null, league?: { __typename?: 'League', id: string, league_id: number, name: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, paid?: boolean | null, membership_id: number, hasPickedNextGame: boolean, picks: Array<{ __typename?: 'Pick', id: string, week: number, correct?: number | null }>, people: { __typename?: 'User', id: string, uid: number, username: string, email: string } }> } | null, weekForPicks: { __typename?: 'WeekForPicksResponse', id: string, week?: number | null } };
+export type LeagueAdminQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, uid: number, username: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, role?: MemberRole | null }> } | null, league?: { __typename?: 'League', id: string, league_id: number, name: string, memberpeople: Array<{ __typename?: 'LeagueMemberPeople', id: string, member: { __typename?: 'LeagueMember', id: string, paid?: boolean | null, membership_id: number, hasPickedNextGame: boolean, picks: Array<{ __typename?: 'Pick', id: string, week: number, correct?: number | null }> }, user: { __typename?: 'User', id: string, uid: number, username: string, email: string } }> } | null, weekForPicks: { __typename?: 'WeekForPicksResponse', id: string, week?: number | null } };
 
 export type EditProfileQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -8009,17 +8009,20 @@ export const LeagueAdminDocument = gql`
     id
     league_id
     name
-    leaguemembers {
+    memberpeople {
       id
-      paid
-      membership_id
-      hasPickedNextGame
-      picks {
+      member {
         id
-        week
-        correct
+        paid
+        membership_id
+        hasPickedNextGame
+        picks {
+          id
+          week
+          correct
+        }
       }
-      people {
+      user {
         id
         uid
         username

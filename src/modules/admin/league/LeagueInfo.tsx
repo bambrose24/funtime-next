@@ -32,7 +32,7 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
             </Tr>
           </Thead>
           <Tbody>
-            {data.league?.leaguemembers.map((member, index) => {
+            {data.league?.memberpeople.map(({member, user}, index) => {
               const pickedWeeks = new Set(member.picks.map(p => p.week));
               const didPickNextWeek = nextWeek ? pickedWeeks.has(nextWeek) : true;
               return (
@@ -45,7 +45,7 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
                     <Typography.Subtitle2>{index + 1}</Typography.Subtitle2>
                   </Td>
                   <Td>
-                    <UserTag user_id={member.people.uid} username={member.people.username} />
+                    <UserTag user_id={user.uid} username={user.username} />
                   </Td>
                   <Td>
                     <Flex alignItems="center" gap="8px">
@@ -54,7 +54,7 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
                       </Typography.Subtitle1>
                       <MarkAsPaidButton
                         memberId={member.membership_id}
-                        username={member.people.username}
+                        username={user.username}
                         paid={member.paid ?? false}
                         leagueName={data.league?.name || ''}
                       />

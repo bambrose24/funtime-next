@@ -6,8 +6,8 @@ export function useLogout() {
   const graphqlClient = useApolloClient();
 
   const logout = async () => {
-    supabase.auth.signOut();
-    graphqlClient.clearStore();
+    await supabase.auth.signOut();
+    await graphqlClient.clearStore();
     window.location.href = '/login';
   };
 

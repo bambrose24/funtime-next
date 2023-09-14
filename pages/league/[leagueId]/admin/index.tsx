@@ -24,17 +24,20 @@ const _LeagueAdminQuery = gql`
       id
       league_id
       name
-      leaguemembers {
+      memberpeople {
         id
-        paid
-        membership_id
-        hasPickedNextGame
-        picks {
+        member {
           id
-          week
-          correct
+          paid
+          membership_id
+          hasPickedNextGame
+          picks {
+            id
+            week
+            correct
+          }
         }
-        people {
+        user {
           id
           uid
           username

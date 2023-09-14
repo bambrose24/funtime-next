@@ -67,7 +67,7 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
             </Tr>
           </Thead>
           <Tbody>
-            {data.league?.leaguemembers.map((member, index) => {
+            {data.league?.memberpeople.map(({member, user}, index) => {
               const pickedWeeks = new Set(member.picks.map(p => p.week));
               const didPickNextWeek = nextWeek ? pickedWeeks.has(nextWeek) : true;
               return (
@@ -82,9 +82,9 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
                   <Td>
                     <Flex w="100%" direction="column" gap="4px">
                       <Box>
-                        <UserTag user_id={member.people.uid} username={member.people.username} />
+                        <UserTag user_id={user.uid} username={user.username} />
                       </Box>
-                      <Typography.Subtitle2>{member.people.email}</Typography.Subtitle2>
+                      <Typography.Subtitle2>{user.email}</Typography.Subtitle2>
                     </Flex>
                   </Td>
                   <Td>
@@ -94,7 +94,7 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
                       </Typography.Subtitle1>
                       <MarkAsPaidButton
                         memberId={member.membership_id}
-                        username={member.people.username}
+                        username={user.username}
                         paid={member.paid ?? false}
                         leagueName={data.league?.name || ''}
                       />

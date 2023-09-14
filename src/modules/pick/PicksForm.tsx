@@ -327,7 +327,7 @@ export function PicksForm({
                     px="12px"
                     py="12px"
                     borderRadius={4}
-                    cursor="not-allowed"
+                    cursor={isGameEnabled ? 'not-allowed' : undefined}
                   >
                     <FormControl>
                       <Grid templateColumns="repeat(12, 1fr)">

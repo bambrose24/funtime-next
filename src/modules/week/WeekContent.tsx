@@ -165,7 +165,13 @@ export function WeekContent({leagueId}: WeekContentProps) {
   return (
     <Box mx="12px">
       <Flex w="100%" justify="center" px={{base: '4px', lg: '24px'}}>
-        <HStack spacing="24px" w="100%" px={{base: '4px', md: '24px'}}>
+        <HStack
+          spacing="24px"
+          justify="space-between"
+          w="100%"
+          px={{base: '4px', md: '24px'}}
+          layerStyle="funtime-z1"
+        >
           <Header mt={2} mb={4} w="100%">
             Week {week}, {season}
           </Header>

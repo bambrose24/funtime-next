@@ -17,11 +17,12 @@ import {
   LatePolicy,
   PicksByWeekQuery,
 } from '@src/generated/graphql';
-import {useState} from 'react';
+import {useMemo, useState} from 'react';
 import UserTag from '@src/modules/profile/UserTag';
 import moment from 'moment';
 import {useLeaguePageMemberViewer} from '@src/hooks/useLeaguePageMemberViewer';
 import {showUnstartedLatePolicies} from '@src/util/constants';
+import {Typography} from '../Typography';
 
 type WeekPicksTableProps = {
   teams: AllTeamsQuery;
@@ -107,8 +108,7 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
     <Flex justify="center">
       <Box bg="white" borderRadius="10px" minWidth="300px" paddingBottom="5px" overflow="auto">
         <PicksTable
-          league={picksData?.league}
-          games={games}
+          picksData={picksData}
           memberIdToPicks={memberIdToPicks}
           rankedMemberIds={rankedMemberIds}
           memberIdToMember={memberIdToMember}
@@ -122,8 +122,7 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
 };
 
 type PicksTableProps = {
-  league: PicksByWeekQuery['league'];
-  games: PicksByWeekQuery['picksByWeek']['games'];
+  picksData: PicksByWeekQuery;
   memberIdToPicks: Record<number, PicksByWeekQuery['picksByWeek']['picks']>;
   memberIdToMember: Record<number, FindLeagueMembersQuery['leagueMembers'][number]>;
   memberIdToCorrect: Record<string, number>;
@@ -132,9 +131,10 @@ type PicksTableProps = {
   simulatedPicks: Record<number, number>;
 };
 
+type PicksTableMessage = PicksByWeekQuery['picksByWeek']['messages'][number];
+
 const PicksTable: React.FC<PicksTableProps> = ({
-  league,
-  games,
+  picksData,
   memberIdToPicks,
   memberIdToMember,
   memberIdToCorrect,
@@ -142,8 +142,25 @@ const PicksTable: React.FC<PicksTableProps> = ({
   teamIdToTeam,
   simulatedPicks,
 }) => {
+  const league = picksData?.league;
+  const games = picksData?.picksByWeek?.games;
+
   const {data: leagueViewer} = useLeaguePageMemberViewer();
   const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
+
+  const memberIdToMessages = useMemo(() => {
+    const map = new Map<number, PicksTableMessage[]>();
+    picksData?.picksByWeek?.messages?.forEach(m => {
+      if (map.has(m.member_id)) {
+        map.set(m.member_id, []);
+      }
+      const l = map.get(m.member_id) ?? [];
+      l.push(m);
+      map.set(m.member_id, [...l]);
+    });
+    return map;
+  }, [picksData]);
+  console.log('memberIdToMessages', memberIdToMessages, picksData);
 
   function selectRow(userRowId: number) {
     userRowId === selectedRow ? setSelectedRow(undefined) : setSelectedRow(userRowId);
@@ -173,13 +190,24 @@ const PicksTable: React.FC<PicksTableProps> = ({
         <Tbody>
           {rankedMemberIds.map(memberId => {
             const memberPicks = memberIdToPicks[memberId];
+            const isSelectedRow = selectedRow === memberId;
 
             const gidToMemberPick = memberPicks.reduce((prev, curr) => {
               prev.set(curr.gid, curr);
               return prev;
             }, new Map<number, typeof memberPicks[number]>());
 
+            const memberMessages = memberIdToMessages.get(memberId);
+
             const scoreTotal = memberPicks.find(p => p.score && p.score > 0)?.score;
+
+            const Messages = (isSelectedRow && memberMessages && memberMessages.length > 0 && (
+              <Flex direction="column" gap="4px">
+                {memberMessages?.map((m, i) => {
+                  return <Typography.Subtitle2 key={i}>{m.content}</Typography.Subtitle2>;
+                })}
+              </Flex>
+            )) || <></>;
 
             const member = memberIdToMember[memberId!];
             return (
@@ -195,18 +223,27 @@ const PicksTable: React.FC<PicksTableProps> = ({
               >
                 <Td py={1} left={0} position={'sticky'} zIndex={1} bgColor={'white'} pl={2} pr={2}>
                   {isMobile ? (
-                    <>
+                    <Flex direction="column" gap="2px">
                       <UserTag user_id={member.people.uid} username={member.people.username} />
                       <strong style={{display: 'block', textAlign: 'center'}}>
                         {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
                       </strong>
-                    </>
+                      {Messages}
+                    </Flex>
                   ) : (
-                    <Flex justify="space-between" align="center" px={{base: 0, lg: '8px'}}>
-                      <UserTag user_id={member.people.uid} username={member.people.username} />
-                      <strong>
-                        {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
-                      </strong>
+                    <Flex direction="column">
+                      <Flex
+                        justify="space-between"
+                        align="center"
+                        px={{base: 0, lg: '8px'}}
+                        gap="2px"
+                      >
+                        <UserTag user_id={member.people.uid} username={member.people.username} />
+                        <strong>
+                          {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
+                        </strong>
+                      </Flex>
+                      {Messages}
                     </Flex>
                   )}
                 </Td>
@@ -242,13 +279,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
                         bg: baseBg ? `${baseBg}.400` : undefined,
                       }}
                       cursor="default"
-                      bg={
-                        baseBg
-                          ? selectedRow === memberId
-                            ? `${baseBg}.400`
-                            : `${baseBg}.300`
-                          : undefined
-                      }
+                      bg={baseBg ? (isSelectedRow ? `${baseBg}.400` : `${baseBg}.300`) : undefined}
                       key={`${member.membership_id}_${game.gid}_pick`}
                     >
                       {shouldShow ? winnerTeam?.abbrev ?? 'N/A' : '--'}

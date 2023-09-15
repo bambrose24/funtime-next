@@ -43,6 +43,13 @@ query PicksByWeek($league_id: Int!, $week: Int) {
       correct
       score
     }
+    messages {
+      id
+      league_id
+      member_id
+      content
+      createdAt
+    }
   }
   league(where: {league_id: $league_id}) {
     id

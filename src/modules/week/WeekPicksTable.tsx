@@ -233,7 +233,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
                   {isMobile ? (
                     <Flex direction="column" gap="2px">
                       <UserTag user_id={member.people.uid} username={member.people.username} />
-                      <Flex gap="4px">
+                      <Flex gap="4px" w="100%" justify="center" alignItems="center">
                         <strong style={{display: 'block', textAlign: 'center'}}>
                           {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
                         </strong>

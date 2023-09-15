@@ -45,6 +45,7 @@ query PicksByWeek($league_id: Int!, $week: Int) {
     }
     messages {
       id
+      message_id
       league_id
       member_id
       content

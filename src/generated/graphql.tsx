@@ -8565,7 +8565,7 @@ export type PicksByWeekQueryVariables = Exact<{
 }>;
 
 
-export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', id: string, week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', id: string, gid: number, ts: any, done?: boolean | null, home: number, away: number, started: boolean, winner?: number | null, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, liveStatus?: { __typename?: 'GameLive', id: string, currentQuarter?: number | null, currentQuarterSecondsRemaining?: number | null, playedStatus?: MsfGamePlayedStatus | null } | null, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', id: string, abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', id: string, gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null, score?: number | null }>, messages: Array<{ __typename?: 'LeagueMessage', id: string, league_id: number, member_id: number, content: string, createdAt: any }> }, league?: { __typename?: 'League', id: string, league_id: number, late_policy?: LatePolicy | null } | null };
+export type PicksByWeekQuery = { __typename?: 'Query', picksByWeek: { __typename?: 'PicksByWeekResponse', id: string, week?: number | null, season?: number | null, canView: boolean, games: Array<{ __typename?: 'Game', id: string, gid: number, ts: any, done?: boolean | null, home: number, away: number, started: boolean, winner?: number | null, homerecord?: string | null, awayrecord?: string | null, homescore?: number | null, awayscore?: number | null, liveStatus?: { __typename?: 'GameLive', id: string, currentQuarter?: number | null, currentQuarterSecondsRemaining?: number | null, playedStatus?: MsfGamePlayedStatus | null } | null, teams_games_homeToteams: { __typename?: 'Team', id: string, teamid: number, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', id: string, abbrev?: string | null, teamid: number } }>, picks: Array<{ __typename?: 'Pick', id: string, gid: number, pickid: number, member_id?: number | null, winner?: number | null, correct?: number | null, score?: number | null }>, messages: Array<{ __typename?: 'LeagueMessage', id: string, message_id: string, league_id: number, member_id: number, content: string, createdAt: any }> }, league?: { __typename?: 'League', id: string, league_id: number, late_policy?: LatePolicy | null } | null };
 
 export type ProfileQueryVariables = Exact<{
   user_id: Scalars['Int'];
@@ -8697,6 +8697,13 @@ export type LeagueMostRecentlyStartedGameQueryVariables = Exact<{
 
 
 export type LeagueMostRecentlyStartedGameQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, mostRecentlyStartedGame?: { __typename?: 'Game', id: string, gid: number, week: number, season: number, ts: any, teams_games_homeToteams: { __typename?: 'Team', id: string, abbrev?: string | null }, teams_games_awayToteams: { __typename?: 'Team', id: string, abbrev?: string | null } } | null } | null };
+
+export type DeleteMessageMutationVariables = Exact<{
+  messageId: Scalars['String'];
+}>;
+
+
+export type DeleteMessageMutation = { __typename?: 'Mutation', deleteOneLeagueMessage?: { __typename?: 'LeagueMessage', message_id: string } | null };
 
 export const SuperbowlTeamFragmentDoc = gql`
     fragment SuperbowlTeam on Team {
@@ -9332,6 +9339,7 @@ export const PicksByWeekDocument = gql`
     }
     messages {
       id
+      message_id
       league_id
       member_id
       content
@@ -10319,3 +10327,36 @@ export function useLeagueMostRecentlyStartedGameLazyQuery(baseOptions?: Apollo.L
 export type LeagueMostRecentlyStartedGameQueryHookResult = ReturnType<typeof useLeagueMostRecentlyStartedGameQuery>;
 export type LeagueMostRecentlyStartedGameLazyQueryHookResult = ReturnType<typeof useLeagueMostRecentlyStartedGameLazyQuery>;
 export type LeagueMostRecentlyStartedGameQueryResult = Apollo.QueryResult<LeagueMostRecentlyStartedGameQuery, LeagueMostRecentlyStartedGameQueryVariables>;
+export const DeleteMessageDocument = gql`
+    mutation DeleteMessage($messageId: String!) {
+  deleteOneLeagueMessage(where: {message_id: $messageId}) {
+    message_id
+  }
+}
+    `;
+export type DeleteMessageMutationFn = Apollo.MutationFunction<DeleteMessageMutation, DeleteMessageMutationVariables>;
+
+/**
+ * __useDeleteMessageMutation__
+ *
+ * To run a mutation, you first call `useDeleteMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteMessageMutation, { data, loading, error }] = useDeleteMessageMutation({
+ *   variables: {
+ *      messageId: // value for 'messageId'
+ *   },
+ * });
+ */
+export function useDeleteMessageMutation(baseOptions?: Apollo.MutationHookOptions<DeleteMessageMutation, DeleteMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteMessageMutation, DeleteMessageMutationVariables>(DeleteMessageDocument, options);
+      }
+export type DeleteMessageMutationHookResult = ReturnType<typeof useDeleteMessageMutation>;
+export type DeleteMessageMutationResult = Apollo.MutationResult<DeleteMessageMutation>;
+export type DeleteMessageMutationOptions = Apollo.BaseMutationOptions<DeleteMessageMutation, DeleteMessageMutationVariables>;

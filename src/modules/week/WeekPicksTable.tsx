@@ -230,11 +230,24 @@ const PicksTable: React.FC<PicksTableProps> = ({
               >
                 <Td py={1} left={0} position={'sticky'} zIndex={1} bgColor={'white'} pl={2} pr={2}>
                   {isMobile ? (
-                    <Flex direction="column" gap="2px">
-                      <UserTag user_id={member.people.uid} username={member.people.username} />
-                      <strong style={{display: 'block', textAlign: 'center'}}>
-                        {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
-                      </strong>
+                    <Flex direction="row" gap="2px">
+                      <Flex direction="column" gap="2px">
+                        <UserTag user_id={member.people.uid} username={member.people.username} />
+                        <strong style={{display: 'block', textAlign: 'center'}}>
+                          {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
+                        </strong>
+                      </Flex>
+                      <Flex alignItems="center" justify="center">
+                        {hasMessages && (
+                          <Tooltip label="Click to see this person's week message">
+                            <ChatIcon
+                              color="gray.400"
+                              cursor="pointer"
+                              onClick={toggleMessagesDrawer}
+                            />
+                          </Tooltip>
+                        )}
+                      </Flex>
                     </Flex>
                   ) : (
                     <Flex direction="column">

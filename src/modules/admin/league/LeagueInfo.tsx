@@ -96,7 +96,7 @@ export function LeagueInfo({leagueId}: LeagueInfoProps) {
       <GridItem colSpan={1}>
         <Flex direction="column" w="100%" gap="12px" layerStyle="funtime-z2">
           <Typography.H4>Missing Picks by Week</Typography.H4>
-          <TableContainer>
+          <TableContainer maxHeight="500px" overflowY="auto">
             <Table size="sm">
               <Thead>
                 <Tr>

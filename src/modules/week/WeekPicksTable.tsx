@@ -264,11 +264,13 @@ const PicksTable: React.FC<PicksTableProps> = ({
                         </strong>
                         {hasMessages && (
                           <Tooltip label="Click to see this person's week message">
-                            <ChatIcon
-                              color="gray.400"
-                              cursor="pointer"
-                              onClick={toggleMessagesDrawer}
-                            />
+                            <IconButton aria-label="See week chat">
+                              <ChatIcon
+                                color="gray.400"
+                                cursor="pointer"
+                                onClick={toggleMessagesDrawer}
+                              />
+                            </IconButton>
                           </Tooltip>
                         )}
                       </Flex>

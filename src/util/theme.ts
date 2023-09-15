@@ -63,6 +63,11 @@ export const themeVars = {
         focusBorderColor: 'primary',
       },
     },
+    Textarea: {
+      defaultProps: {
+        focusBorderColor: 'primary',
+      },
+    },
     Select: {
       defaultProps: {
         focusBorderColor: 'primary',

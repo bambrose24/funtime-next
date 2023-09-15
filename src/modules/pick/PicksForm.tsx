@@ -1,6 +1,5 @@
 import {Form, Formik, FormikErrors} from 'formik';
 import {GamePick, GamesByWeekQuery, useMakePicksMutation} from '../../generated/graphql';
-import * as Yup from 'yup';
 import {
   Alert,
   AlertDescription,
@@ -9,6 +8,7 @@ import {
   Button,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Grid,
   GridItem,
@@ -21,6 +21,7 @@ import {
   ModalOverlay,
   Radio,
   Select,
+  Textarea,
   Tooltip,
   VStack,
 } from '@chakra-ui/react';
@@ -48,6 +49,8 @@ interface GameEntry {
   random: boolean;
   winner: number | undefined;
 }
+
+const MAX_MESSAGE_LENGTH = 300;
 
 export function PicksForm({
   week,
@@ -165,7 +168,6 @@ export function PicksForm({
 
                         const away = game.teams_games_awayToteams.abbrev;
                         const home = game.teams_games_homeToteams.abbrev;
-                        const choseAway = p.winner === game.teams_games_awayToteams.teamid;
                         const score = p.score;
                         return (
                           <Grid
@@ -213,6 +215,7 @@ export function PicksForm({
           ),
           scoreGameId: tiebreakerGame.gid,
           score: existingScore?.toString() ?? '',
+          message: '',
         }}
         validateOnMount={true}
         validate={async values => {
@@ -230,6 +233,12 @@ export function PicksForm({
             Number(values.score) > 200
           ) {
             errors['score'] = 'Please choose a valid score between 1 and 200';
+          }
+
+          if (values.message && values.message.length > MAX_MESSAGE_LENGTH) {
+            errors[
+              'message'
+            ] = `The maximum length for messages is ${MAX_MESSAGE_LENGTH} characters. Please shorten your message`;
           }
           return errors;
         }}
@@ -249,7 +258,12 @@ export function PicksForm({
             })
             .filter(Defined);
           await submitPicks({
-            variables: {picks, leagueId, overrideMemberId: isImpersonating ? memberId : null},
+            variables: {
+              picks,
+              leagueId,
+              overrideMemberId: isImpersonating ? memberId : null,
+              ...(values.message && values.message.length > 0 ? {message: values.message} : {}),
+            },
           });
           setModalPicks(picks);
           onSuccess().then(() => {
@@ -315,7 +329,7 @@ export function PicksForm({
                   g => g.gameId === game.gid
                 );
                 const isGameEnabled = isImpersonating || !game.started;
-                // const isGameEnabled = Math.random() < 0.5;
+
                 return (
                   <Box
                     key={game.gid}
@@ -541,6 +555,28 @@ export function PicksForm({
                   <Typography.Subtitle2 color="red">{formik.errors.score}</Typography.Subtitle2>
                 )}
               </FormControl>
+
+              {/* This whole thing needs to be optimized for this to be pleasant */}
+              {/* <FormControl isInvalid={Boolean(formik.errors.message)}>
+                <FormLabel>Message (will be visible when picks release)</FormLabel>
+                <Textarea
+                  id="message"
+                  placeholder="Predictions? Smack talk? The floor is yours."
+                  name="message"
+                  height="40px"
+                  bgColor="gray.100"
+                  value={formik.values.message}
+                  onChange={formik.handleChange}
+                  onBlur={formik.handleBlur}
+                />
+                {!formik.errors.message && (
+                  <Typography.Subtitle2>
+                    {formik.values.message.length} / {MAX_MESSAGE_LENGTH}
+                  </Typography.Subtitle2>
+                )}
+                <FormErrorMessage>{formik.errors.message}</FormErrorMessage>
+              </FormControl> */}
+
               <Button
                 type="submit"
                 width="full"

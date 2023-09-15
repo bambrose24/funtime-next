@@ -197,7 +197,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
             <Header mt={2} mb={4} w="100%">
               Week {week}, {season}
             </Header>
-            <Flex gap="8px" alignItems="center">
+            <Flex gap="8px" direction="column" alignItems="center">
               <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
                 <FormLabel>Week</FormLabel>
                 <Select value={week} onChange={event => setWeekState(parseInt(event.target.value))}>
@@ -210,7 +210,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
                   })}
                 </Select>
               </FormControl>
-              <Button variant="solid" onClick={toggleShowMessages}>
+              <Button w="100%" variant="solid" onClick={toggleShowMessages}>
                 Chat
               </Button>
             </Flex>

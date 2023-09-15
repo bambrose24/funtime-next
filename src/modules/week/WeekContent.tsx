@@ -83,6 +83,10 @@ export function WeekContent({leagueId}: WeekContentProps) {
 
   const [showMessages, setShowMessages] = useState(false);
 
+  const toggleShowMessages = () => {
+    setShowMessages(prev => !prev);
+  };
+
   const {
     data: mostRecentStartedGame,
     loading: mostRecentStartedGameLoading,
@@ -189,18 +193,23 @@ export function WeekContent({leagueId}: WeekContentProps) {
             <Header mt={2} mb={4} w="100%">
               Week {week}, {season}
             </Header>
-            <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
-              <FormLabel>Week</FormLabel>
-              <Select value={week} onChange={event => setWeekState(parseInt(event.target.value))}>
-                {availableWeeks.map(week => {
-                  return (
-                    <option key={week} value={week.toString()}>
-                      {week}
-                    </option>
-                  );
-                })}
-              </Select>
-            </FormControl>
+            <Flex gap="8px" alignItems="center">
+              <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
+                <FormLabel>Week</FormLabel>
+                <Select value={week} onChange={event => setWeekState(parseInt(event.target.value))}>
+                  {availableWeeks.map(week => {
+                    return (
+                      <option key={week} value={week.toString()}>
+                        {week}
+                      </option>
+                    );
+                  })}
+                </Select>
+              </FormControl>
+              <Button variant="solid" onClick={toggleShowMessages}>
+                Chat
+              </Button>
+            </Flex>
           </HStack>
         </Flex>
         <div

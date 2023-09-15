@@ -55,7 +55,7 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
         )}
       </Flex>
       <TableContainer pt="12px" overflowX="auto">
-        <Table variant="simple" size="sm">
+        <Table variant="simple" size="sm" w="100%">
           <Thead>
             <Tr>
               <Th />
@@ -69,7 +69,7 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
           <Tbody>
             {data.league?.memberpeople.map(({member, user}, index) => {
               const pickedWeeks = new Set(member.picks.map(p => p.week));
-              const didPickNextWeek = nextWeek ? pickedWeeks.has(nextWeek) : true;
+              // const didPickNextWeek = nextWeek ? pickedWeeks.has(nextWeek) : true;
               return (
                 <Tr
                   key={member.membership_id}
@@ -101,7 +101,9 @@ export function ManagePlayers({leagueId}: ManagePlayers) {
                     </Flex>
                   </Td>
                   <Td>
-                    <Typography.Subtitle1>{!didPickNextWeek ? 'Yes' : 'No'}</Typography.Subtitle1>
+                    <Typography.Subtitle1>
+                      {!member.hasPickedNextGame ? 'Yes' : 'No'}
+                    </Typography.Subtitle1>
                   </Td>
                   <Td>
                     <Link href={`/league/${leagueId}/admin/${member.membership_id}/emails`}>

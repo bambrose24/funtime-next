@@ -11,6 +11,7 @@ import {
   useBreakpointValue,
   Tooltip,
   Icon,
+  IconButton,
 } from '@chakra-ui/react';
 import {
   AllTeamsQuery,
@@ -239,13 +240,13 @@ const PicksTable: React.FC<PicksTableProps> = ({
                       </Flex>
                       <Flex alignItems="center" justify="center">
                         {hasMessages && (
-                          <Tooltip label="Click to see this person's week message">
+                          <IconButton aria-label="See week chat">
                             <ChatIcon
                               color="gray.400"
                               cursor="pointer"
                               onClick={toggleMessagesDrawer}
                             />
-                          </Tooltip>
+                          </IconButton>
                         )}
                       </Flex>
                     </Flex>
@@ -263,11 +264,13 @@ const PicksTable: React.FC<PicksTableProps> = ({
                         </strong>
                         {hasMessages && (
                           <Tooltip label="Click to see this person's week message">
-                            <ChatIcon
-                              color="gray.400"
-                              cursor="pointer"
-                              onClick={toggleMessagesDrawer}
-                            />
+                            <IconButton aria-label="See week chat">
+                              <ChatIcon
+                                color="gray.400"
+                                cursor="pointer"
+                                onClick={toggleMessagesDrawer}
+                              />
+                            </IconButton>
                           </Tooltip>
                         )}
                       </Flex>

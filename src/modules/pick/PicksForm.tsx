@@ -557,7 +557,7 @@ export function PicksForm({
               </FormControl>
 
               {/* This whole thing needs to be optimized for this to be pleasant */}
-              {/* <FormControl isInvalid={Boolean(formik.errors.message)}>
+              <FormControl isInvalid={Boolean(formik.errors.message)}>
                 <FormLabel>Message (will be visible when picks release)</FormLabel>
                 <Textarea
                   id="message"
@@ -575,7 +575,7 @@ export function PicksForm({
                   </Typography.Subtitle2>
                 )}
                 <FormErrorMessage>{formik.errors.message}</FormErrorMessage>
-              </FormControl> */}
+              </FormControl>
 
               <Button
                 type="submit"

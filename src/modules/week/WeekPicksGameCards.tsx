@@ -38,7 +38,7 @@ export const WeekPicksGameCards: React.FC<Props> = ({
 
   return (
     <Flex justify="center">
-      <HStack spacing="12px" my="12px" overflow="auto" paddingBottom="20px">
+      <HStack spacing="12px" overflow="auto">
         {gamesSorted.map(g => {
           const allowSimulation =
             g.started ||

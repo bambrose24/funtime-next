@@ -216,22 +216,14 @@ export function WeekContent({leagueId}: WeekContentProps) {
             </Flex>
           </HStack>
         </Flex>
-        <div
-          style={{
-            top: 0,
-            position: 'sticky',
-            zIndex: 2,
-            backgroundColor: '#EDF2F7',
-            paddingTop: '16px',
-          }}
-        >
+        <Box top={0} position="sticky" zIndex={2} backgroundColor="#EDF2F7" py="16px">
           <WeekPicksGameCards
             picksData={picks}
             teams={teams}
             pickTeam={pickTeam}
             simulatedPicks={simulatedPicks}
           />
-        </div>
+        </Box>
         {currentWinners?.length !== undefined &&
           currentWinners.length > 0 &&
           Object.keys(simulatedPicks).length === 0 && (

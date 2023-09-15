@@ -75,7 +75,7 @@ export function WeekMessages({data, refetchMessages}: WeekMessagesProps) {
                     setDeletingMessage(undefined);
                   }}
                 >
-                  <CloseIcon />
+                  <CloseIcon width="12px" height="12px" />
                 </IconButton>
               )}
             </Flex>

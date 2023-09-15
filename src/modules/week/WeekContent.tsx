@@ -5,6 +5,14 @@ import {
   AlertIcon,
   AlertTitle,
   Box,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
   Flex,
   FormControl,
   FormLabel,
@@ -26,6 +34,7 @@ import {useState} from 'react';
 import UserTag from '../profile/UserTag';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';
+import {WeekMessages} from './WeekMessages';
 import {WeekPicksGameCards} from './WeekPicksGameCards';
 import {WeekPicksTable} from './WeekPicksTable';
 
@@ -68,6 +77,8 @@ export function WeekContent({leagueId}: WeekContentProps) {
   });
 
   const [weekState, setWeekState] = useState<number | undefined>(weekParam);
+
+  const [showMessages, setShowMessages] = useState(false);
 
   const {
     data: mostRecentStartedGame,
@@ -163,82 +174,104 @@ export function WeekContent({leagueId}: WeekContentProps) {
   const areMultipleWinners = currentWinners && currentWinners.length > 1;
 
   return (
-    <Box mx="12px">
-      <Flex w="100%" justify="center" px={{base: '4px', lg: '24px'}}>
-        <HStack
-          spacing="24px"
-          justify="space-between"
-          w="100%"
-          px={{base: '4px', md: '24px'}}
-          layerStyle="funtime-z1"
+    <>
+      <Box mx="12px">
+        <Flex w="100%" justify="center" px={{base: '4px', lg: '24px'}}>
+          <HStack
+            spacing="24px"
+            justify="space-between"
+            w="100%"
+            px={{base: '4px', md: '24px'}}
+            layerStyle="funtime-z1"
+          >
+            <Header mt={2} mb={4} w="100%">
+              Week {week}, {season}
+            </Header>
+            <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
+              <FormLabel>Week</FormLabel>
+              <Select value={week} onChange={event => setWeekState(parseInt(event.target.value))}>
+                {availableWeeks.map(week => {
+                  return (
+                    <option key={week} value={week.toString()}>
+                      {week}
+                    </option>
+                  );
+                })}
+              </Select>
+            </FormControl>
+          </HStack>
+        </Flex>
+        <div
+          style={{
+            top: 0,
+            position: 'sticky',
+            zIndex: 2,
+            backgroundColor: '#EDF2F7',
+            paddingTop: '16px',
+          }}
         >
-          <Header mt={2} mb={4} w="100%">
-            Week {week}, {season}
-          </Header>
-          <FormControl w="150px" p="8px" bg="white" borderRadius="4px">
-            <FormLabel>Week</FormLabel>
-            <Select value={week} onChange={event => setWeekState(parseInt(event.target.value))}>
-              {availableWeeks.map(week => {
-                return (
-                  <option key={week} value={week.toString()}>
-                    {week}
-                  </option>
-                );
-              })}
-            </Select>
-          </FormControl>
-        </HStack>
-      </Flex>
-      <div
-        style={{
-          top: 0,
-          position: 'sticky',
-          zIndex: 2,
-          backgroundColor: '#EDF2F7',
-          paddingTop: '16px',
+          <WeekPicksGameCards
+            picksData={picks}
+            teams={teams}
+            pickTeam={pickTeam}
+            simulatedPicks={simulatedPicks}
+          />
+        </div>
+        {currentWinners?.length !== undefined &&
+          currentWinners.length > 0 &&
+          Object.keys(simulatedPicks).length === 0 && (
+            <Box px={{base: '2px', lg: '24px'}} py="16px">
+              <Alert status="success">
+                <AlertIcon />
+                <AlertTitle>
+                  {areMultipleWinners
+                    ? `Congrats to the week ${week} winners!`
+                    : `Congrats to the week ${week} winner!`}
+                </AlertTitle>
+                <AlertDescription>
+                  <HStack>
+                    {currentWinners.map(winner => {
+                      return (
+                        <UserTag
+                          key={winner.member.people.uid}
+                          user_id={winner.member.people.uid}
+                          username={winner.member.people.username}
+                        />
+                      );
+                    })}
+                  </HStack>
+                </AlertDescription>
+              </Alert>
+            </Box>
+          )}
+        <WeekPicksTable
+          teams={teams}
+          people={people}
+          picksData={picks}
+          simulatedPicks={simulatedPicks}
+          toggleMessagesDrawer={() => {
+            setShowMessages(prev => !prev);
+          }}
+        />
+      </Box>
+      <Drawer
+        isOpen={showMessages}
+        placement="right"
+        onClose={() => {
+          setShowMessages(false);
         }}
       >
-        <WeekPicksGameCards
-          picksData={picks}
-          teams={teams}
-          pickTeam={pickTeam}
-          simulatedPicks={simulatedPicks}
-        />
-      </div>
-      {currentWinners?.length !== undefined &&
-        currentWinners.length > 0 &&
-        Object.keys(simulatedPicks).length === 0 && (
-          <Box px={{base: '2px', lg: '24px'}} py="16px">
-            <Alert status="success">
-              <AlertIcon />
-              <AlertTitle>
-                {areMultipleWinners
-                  ? `Congrats to the week ${week} winners!`
-                  : `Congrats to the week ${week} winner!`}
-              </AlertTitle>
-              <AlertDescription>
-                <HStack>
-                  {currentWinners.map(winner => {
-                    return (
-                      <UserTag
-                        key={winner.member.people.uid}
-                        user_id={winner.member.people.uid}
-                        username={winner.member.people.username}
-                      />
-                    );
-                  })}
-                </HStack>
-              </AlertDescription>
-            </Alert>
-          </Box>
-        )}
-      <WeekPicksTable
-        teams={teams}
-        people={people}
-        picksData={picks}
-        simulatedPicks={simulatedPicks}
-      />
-    </Box>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Week {week} Messages</DrawerHeader>
+
+          <DrawerBody>
+            <WeekMessages data={picksData} />
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+    </>
   );
 }
 

@@ -10,6 +10,7 @@ import {
   Td,
   useBreakpointValue,
   Tooltip,
+  Icon,
 } from '@chakra-ui/react';
 import {
   AllTeamsQuery,
@@ -23,12 +24,14 @@ import moment from 'moment';
 import {useLeaguePageMemberViewer} from '@src/hooks/useLeaguePageMemberViewer';
 import {showUnstartedLatePolicies} from '@src/util/constants';
 import {Typography} from '../Typography';
+import {ChatIcon} from '@chakra-ui/icons';
 
 type WeekPicksTableProps = {
   teams: AllTeamsQuery;
   people: FindLeagueMembersQuery;
   picksData: PicksByWeekQuery;
   simulatedPicks: Record<number, number>;
+  toggleMessagesDrawer: () => void;
 };
 
 export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
@@ -36,6 +39,7 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
   people,
   picksData,
   simulatedPicks,
+  toggleMessagesDrawer,
 }) => {
   const teamIdToTeam = teams.teams.reduce((prev, curr) => {
     prev[curr.teamid] = curr;
@@ -115,6 +119,7 @@ export const WeekPicksTable: React.FC<WeekPicksTableProps> = ({
           memberIdToCorrect={memberIdToCorrect}
           teamIdToTeam={teamIdToTeam}
           simulatedPicks={simulatedPicks}
+          toggleMessagesDrawer={toggleMessagesDrawer}
         />
       </Box>
     </Flex>
@@ -129,6 +134,7 @@ type PicksTableProps = {
   rankedMemberIds: Array<number>;
   teamIdToTeam: Record<number, AllTeamsQuery['teams'][number]>;
   simulatedPicks: Record<number, number>;
+  toggleMessagesDrawer: () => void;
 };
 
 type PicksTableMessage = PicksByWeekQuery['picksByWeek']['messages'][number];
@@ -141,6 +147,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
   rankedMemberIds,
   teamIdToTeam,
   simulatedPicks,
+  toggleMessagesDrawer,
 }) => {
   const league = picksData?.league;
   const games = picksData?.picksByWeek?.games;
@@ -160,7 +167,6 @@ const PicksTable: React.FC<PicksTableProps> = ({
     });
     return map;
   }, [picksData]);
-  console.log('memberIdToMessages', memberIdToMessages, picksData);
 
   function selectRow(userRowId: number) {
     userRowId === selectedRow ? setSelectedRow(undefined) : setSelectedRow(userRowId);
@@ -198,6 +204,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
             }, new Map<number, typeof memberPicks[number]>());
 
             const memberMessages = memberIdToMessages.get(memberId);
+            const hasMessages = memberMessages && memberMessages.length > 0;
 
             const scoreTotal = memberPicks.find(p => p.score && p.score > 0)?.score;
 
@@ -228,7 +235,6 @@ const PicksTable: React.FC<PicksTableProps> = ({
                       <strong style={{display: 'block', textAlign: 'center'}}>
                         {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
                       </strong>
-                      {Messages}
                     </Flex>
                   ) : (
                     <Flex direction="column">
@@ -242,8 +248,16 @@ const PicksTable: React.FC<PicksTableProps> = ({
                         <strong>
                           {memberIdToCorrect[memberId.toString()]} ({scoreTotal})
                         </strong>
+                        {hasMessages && (
+                          <Tooltip label="Click to see this person's week message">
+                            <ChatIcon
+                              color="gray.400"
+                              cursor="pointer"
+                              onClick={toggleMessagesDrawer}
+                            />
+                          </Tooltip>
+                        )}
                       </Flex>
-                      {Messages}
                     </Flex>
                   )}
                 </Td>

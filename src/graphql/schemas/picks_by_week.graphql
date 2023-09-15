@@ -53,6 +53,7 @@ query PicksByWeek($league_id: Int!, $week: Int) {
   }
   league(where: {league_id: $league_id}) {
     id
+    league_id
     late_policy
   }
 }

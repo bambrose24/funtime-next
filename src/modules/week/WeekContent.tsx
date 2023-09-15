@@ -177,13 +177,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
     <>
       <Box mx="12px">
         <Flex w="100%" justify="center" px={{base: '4px', lg: '24px'}}>
-          <HStack
-            spacing="24px"
-            justify="space-between"
-            w="100%"
-            px={{base: '4px', md: '24px'}}
-            layerStyle="funtime-z1"
-          >
+          <HStack spacing="24px" justify="space-between" w="100%" px={{base: '4px', md: '24px'}}>
             <Header mt={2} mb={4} w="100%">
               Week {week}, {season}
             </Header>
@@ -265,7 +259,6 @@ export function WeekContent({leagueId}: WeekContentProps) {
         <DrawerContent>
           <DrawerCloseButton />
           <DrawerHeader>Week {week} Messages</DrawerHeader>
-
           <DrawerBody>
             <WeekMessages data={picksData} />
           </DrawerBody>

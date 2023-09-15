@@ -185,6 +185,10 @@ export function WeekContent({leagueId}: WeekContentProps) {
   const currentWinners = winners.findManyWeekWinners.filter(winners => winners.week === week);
   const areMultipleWinners = currentWinners && currentWinners.length > 1;
 
+  const refetchMessages = async () => {
+    await refetchPicksByWeek();
+  };
+
   return (
     <>
       <Box mx="12px">
@@ -278,7 +282,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
           <DrawerCloseButton />
           <DrawerHeader>Week {week} Messages</DrawerHeader>
           <DrawerBody>
-            <WeekMessages data={picksData} />
+            <WeekMessages data={picksData} refetchMessages={refetchMessages} />
           </DrawerBody>
           <DrawerFooter borderTop="1px" borderColor="gray.100">
             <CreateMessage
@@ -286,9 +290,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
               leagueId={leagueId}
               memberId={leagueViewer?.me?.leagueMember?.membership_id ?? 0}
               messageType={MessageType.WeekComment}
-              onComplete={async () => {
-                await refetchPicksByWeek();
-              }}
+              onComplete={refetchMessages}
             />
           </DrawerFooter>
         </DrawerContent>

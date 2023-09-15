@@ -15,7 +15,7 @@ import {gql} from '@apollo/client';
 
 const _DeleteMessageMutation = gql`
   mutation DeleteMessage($messageId: String!) {
-    deleteOneLeagueMessage(where: {message_id: $messageId}) {
+    updateOneLeagueMessage(where: {message_id: $messageId}, data: {status: {set: DELETED}}) {
       message_id
     }
   }
@@ -26,7 +26,7 @@ type WeekMessagesProps = {data: PicksByWeekQuery; refetchMessages: () => Promise
 export function WeekMessages({data, refetchMessages}: WeekMessagesProps) {
   const leagueId = data?.league?.league_id;
 
-  const {data: people, loading: peopleLoading} = useFindLeagueMembersQuery({
+  const {data: people} = useFindLeagueMembersQuery({
     variables: {
       league_id: leagueId ?? 0,
     },

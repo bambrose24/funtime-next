@@ -1584,6 +1584,8 @@ export type League = {
   nextLeague?: Maybe<League>;
   people: User;
   pick_policy?: Maybe<PickPolicy>;
+  /** A more efficient way to query for a league's picks if you need it */
+  picks: Array<Pick>;
   priorLeague?: Maybe<League>;
   prior_league_id?: Maybe<Scalars['Int']>;
   /** A more efficient way to query for a member and the underlying person at the same time */
@@ -1636,6 +1638,11 @@ export type LeagueLeaguemembersArgs = {
   skip?: InputMaybe<Scalars['Int']>;
   take?: InputMaybe<Scalars['Int']>;
   where?: InputMaybe<LeagueMemberWhereInput>;
+};
+
+
+export type LeaguePicksArgs = {
+  where?: InputMaybe<PickWhereInput>;
 };
 
 export type LeagueAvgAggregate = {

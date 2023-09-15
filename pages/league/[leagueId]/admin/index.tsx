@@ -7,7 +7,7 @@ import {FuntimePage} from '@src/FuntimePage';
 import {MemberRole, useLeagueAdminQuery} from '@src/generated/graphql';
 import {useRouter} from 'next/router';
 import {useTabsConfig} from '@src/hooks/useTabsConfig';
-import {DownloadLeaguePlayersButton} from '@src/modules/admin/league/DownloadLeaguePlayers';
+import {LeagueInfo} from '@src/modules/admin/league/LeagueInfo';
 
 const _LeagueAdminQuery = gql`
   query LeagueAdmin($leagueId: Int!) {
@@ -84,24 +84,24 @@ export default function LeagueAdminPage() {
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
-        <Flex overflow="scroll">
-          <Flex direction="column" w="100%" layerStyle="funtime-card" maxW="3xl">
+        <Flex overflow="auto">
+          <Flex direction="column" layerStyle="funtime-z1" w={{base: '100%', xl: '6xl'}}>
             <Flex>
               <TabsHeader title={data.league?.name || ''} subtitle={'Admin Page'} />
             </Flex>
             <Tabs variant="soft-rounded">
               <TabList>
-                {/* <Tab>
-                <TabName>League Info</TabName>
-              </Tab> */}
+                <Tab>
+                  <TabName>League Info</TabName>
+                </Tab>
                 <Tab>
                   <TabName>Manage Players</TabName>
                 </Tab>
               </TabList>
               <TabPanels>
-                {/* <TabPanel>
-                <LeagueInfo leagueId={leagueId} />
-              </TabPanel> */}
+                <TabPanel>
+                  <LeagueInfo leagueId={leagueId} />
+                </TabPanel>
                 <TabPanel px={0}>
                   <ManagePlayers leagueId={leagueId} />
                 </TabPanel>

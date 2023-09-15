@@ -9,12 +9,7 @@ export function LoginPage() {
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
-        <Flex
-          direction="column"
-          w={{base: '80vw', md: '400px'}}
-          layerStyle="funtime-card"
-          gap="20px"
-        >
+        <Flex direction="column" w={{base: '80vw', md: '400px'}} layerStyle="funtime-z1" gap="20px">
           <LoginBanner />
           <Auth initialState={loginBanner === 'registration' ? 'signup' : undefined} />
         </Flex>

@@ -46,7 +46,7 @@ export default function MemberEmailsPage() {
   return (
     <FuntimePage>
       <Flex w="100%" justify="center">
-        <Flex w="100%" direction="column" gap="20px" layerStyle="funtime-card">
+        <Flex w="100%" direction="column" gap="20px" layerStyle="funtime-z1">
           <Typography.H1>{member?.leagueMember?.people?.username} - Emails</Typography.H1>
           <MemberEmailsTable memberId={memberId} />
         </Flex>

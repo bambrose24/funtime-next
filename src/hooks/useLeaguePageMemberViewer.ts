@@ -9,6 +9,7 @@ const _LeaguePageMemberView = gql`
       leagueMember(league_id: $leagueId) {
         id
         membership_id
+        league_id
       }
     }
   }

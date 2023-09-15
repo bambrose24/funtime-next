@@ -8621,7 +8621,7 @@ export type LeaguePageMemberViewerQueryVariables = Exact<{
 }>;
 
 
-export type LeaguePageMemberViewerQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null } | null };
+export type LeaguePageMemberViewerQuery = { __typename?: 'Query', me?: { __typename?: 'User', id: string, leagueMember?: { __typename?: 'LeagueMember', id: string, membership_id: number, league_id: number } | null } | null };
 
 export type DownloadLeaguePlayersQueryVariables = Exact<{
   leagueId: Scalars['Int'];
@@ -8683,6 +8683,13 @@ export type LeagueRegistrationQueryVariables = Exact<{
 
 
 export type LeagueRegistrationQuery = { __typename?: 'Query', league?: { __typename?: 'League', id: string, share_code?: string | null, name: string, status: LeagueStatus, reminder_policy?: ReminderPolicy | null, late_policy?: LatePolicy | null, pick_policy?: PickPolicy | null, scoring_type?: ScoringType | null, superbowl_competition?: boolean | null, viewer?: { __typename?: 'LeagueMember', id: string, membership_id: number } | null, _count?: { __typename?: 'LeagueCount', leaguemembers: number } | null, rules: Array<{ __typename?: 'LeagueRuleWithExplanation', id: string, name: string, description: string }>, priorLeague?: { __typename?: 'League', id: string, leaguemembers: Array<{ __typename?: 'LeagueMember', id: string, people: { __typename?: 'User', id: string, username: string, email: string, uid: number } }> } | null } | null, teams: Array<{ __typename?: 'Team', id: string, abbrev?: string | null, conference?: string | null, teamid: number, loc: string, name: string }> };
+
+export type CreateMessageMutationVariables = Exact<{
+  data: LeagueMessageCreateInput;
+}>;
+
+
+export type CreateMessageMutation = { __typename?: 'Mutation', createOneLeagueMessage: { __typename?: 'LeagueMessage', id: string, league_id: number, member_id: number, content: string, createdAt: any } };
 
 export type LeagueMostRecentlyStartedGameQueryVariables = Exact<{
   league_id: Scalars['Int'];
@@ -9704,6 +9711,7 @@ export const LeaguePageMemberViewerDocument = gql`
     leagueMember(league_id: $leagueId) {
       id
       membership_id
+      league_id
     }
   }
 }
@@ -10224,6 +10232,43 @@ export function useLeagueRegistrationLazyQuery(baseOptions?: Apollo.LazyQueryHoo
 export type LeagueRegistrationQueryHookResult = ReturnType<typeof useLeagueRegistrationQuery>;
 export type LeagueRegistrationLazyQueryHookResult = ReturnType<typeof useLeagueRegistrationLazyQuery>;
 export type LeagueRegistrationQueryResult = Apollo.QueryResult<LeagueRegistrationQuery, LeagueRegistrationQueryVariables>;
+export const CreateMessageDocument = gql`
+    mutation CreateMessage($data: LeagueMessageCreateInput!) {
+  createOneLeagueMessage(data: $data) {
+    id
+    league_id
+    member_id
+    content
+    createdAt
+  }
+}
+    `;
+export type CreateMessageMutationFn = Apollo.MutationFunction<CreateMessageMutation, CreateMessageMutationVariables>;
+
+/**
+ * __useCreateMessageMutation__
+ *
+ * To run a mutation, you first call `useCreateMessageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMessageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMessageMutation, { data, loading, error }] = useCreateMessageMutation({
+ *   variables: {
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateMessageMutation(baseOptions?: Apollo.MutationHookOptions<CreateMessageMutation, CreateMessageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateMessageMutation, CreateMessageMutationVariables>(CreateMessageDocument, options);
+      }
+export type CreateMessageMutationHookResult = ReturnType<typeof useCreateMessageMutation>;
+export type CreateMessageMutationResult = Apollo.MutationResult<CreateMessageMutation>;
+export type CreateMessageMutationOptions = Apollo.BaseMutationOptions<CreateMessageMutation, CreateMessageMutationVariables>;
 export const LeagueMostRecentlyStartedGameDocument = gql`
     query LeagueMostRecentlyStartedGame($league_id: Int!) {
   league(where: {league_id: $league_id}) {

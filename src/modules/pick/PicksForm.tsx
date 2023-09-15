@@ -30,6 +30,7 @@ import {TeamLogo} from '../shared/TeamLogo';
 import moment from 'moment-timezone';
 import {useMemo, useState} from 'react';
 import {Defined} from '@src/util/types';
+import {MAX_MESSAGE_LENGTH} from '@src/util/constants';
 
 interface PicksFormProps {
   week: number;
@@ -49,8 +50,6 @@ interface GameEntry {
   random: boolean;
   winner: number | undefined;
 }
-
-const MAX_MESSAGE_LENGTH = 300;
 
 export function PicksForm({
   week,

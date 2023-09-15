@@ -6,3 +6,5 @@ export const showUnstartedLatePolicies: LatePolicy[] = [
   LatePolicy.AllowLateAndLockAfterStart,
   LatePolicy.CloseAtFirstGameStart,
 ];
+
+export const MAX_MESSAGE_LENGTH = 300;

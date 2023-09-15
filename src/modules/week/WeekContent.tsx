@@ -21,12 +21,14 @@ import {
   useBreakpointValue,
 } from '@chakra-ui/react';
 import {
+  MessageType,
   useAllTeamsQuery,
   useFindLeagueMembersQuery,
   useLeagueMostRecentlyStartedGameQuery,
   usePicksByWeekQuery,
   useWinnersQuery,
 } from '@src/generated/graphql';
+import {useLeaguePageMemberViewer} from '@src/hooks/useLeaguePageMemberViewer';
 import {env} from '@src/util/config';
 import _ from 'lodash';
 import {useRouter} from 'next/router';
@@ -34,6 +36,7 @@ import {useState} from 'react';
 import UserTag from '../profile/UserTag';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';
+import {CreateMessage} from './CreateMessage';
 import {WeekMessages} from './WeekMessages';
 import {WeekPicksGameCards} from './WeekPicksGameCards';
 import {WeekPicksTable} from './WeekPicksTable';
@@ -89,17 +92,21 @@ export function WeekContent({leagueId}: WeekContentProps) {
     },
   });
 
-  const {data: picksData, loading: picksLoading} = usePicksByWeekQuery({
-    variables: {
-      league_id: leagueId,
-      // this is where you'd set the "week" from a dropdown
-      ...(weekState ? {week: weekState} : {}),
-      // TODO just have this be derived api-side from the user's Role in the league
-      ...(env !== 'production' || overrideParam ? {override: true} : {}),
-    },
-    fetchPolicy: 'cache-and-network',
-    pollInterval: 1000 * 60 * 1, // every 1 minute
-  });
+  const {data: leagueViewer, loading: leagueViewerLoading} = useLeaguePageMemberViewer();
+
+  const {data: picksData, loading: picksLoading, refetch: refetchPicksByWeek} = usePicksByWeekQuery(
+    {
+      variables: {
+        league_id: leagueId,
+        // this is where you'd set the "week" from a dropdown
+        ...(weekState ? {week: weekState} : {}),
+        // TODO just have this be derived api-side from the user's Role in the league
+        ...(env !== 'production' || overrideParam ? {override: true} : {}),
+      },
+      fetchPolicy: 'cache-and-network',
+      pollInterval: 1000 * 60 * 1, // every 1 minute
+    }
+  );
 
   const availableWeeksSet = new Set(
     [
@@ -122,11 +129,12 @@ export function WeekContent({leagueId}: WeekContentProps) {
   const Header = useBreakpointValue({base: Typography.H2, lg: Typography.H1}) || Typography.H1;
 
   if (
-    peopleLoading ||
-    teamsLoading ||
-    winnersLoading ||
-    picksLoading ||
-    mostRecentStartedGameLoading
+    (peopleLoading && !people) ||
+    (teamsLoading && !teams) ||
+    (winnersLoading && !winners) ||
+    (picksLoading && !picksData) ||
+    (mostRecentStartedGameLoading && !mostRecentStartedGame) ||
+    (leagueViewerLoading && !leagueViewer)
   ) {
     return <FuntimeLoading />;
   }
@@ -249,6 +257,7 @@ export function WeekContent({leagueId}: WeekContentProps) {
         />
       </Box>
       <Drawer
+        size="xl"
         isOpen={showMessages}
         placement="right"
         onClose={() => {
@@ -262,6 +271,17 @@ export function WeekContent({leagueId}: WeekContentProps) {
           <DrawerBody>
             <WeekMessages data={picksData} />
           </DrawerBody>
+          <DrawerFooter borderTop="1px" borderColor="gray.100">
+            <CreateMessage
+              week={week}
+              leagueId={leagueId}
+              memberId={leagueViewer?.me?.leagueMember?.membership_id ?? 0}
+              messageType={MessageType.WeekComment}
+              onComplete={async () => {
+                await refetchPicksByWeek();
+              }}
+            />
+          </DrawerFooter>
         </DrawerContent>
       </Drawer>
     </>

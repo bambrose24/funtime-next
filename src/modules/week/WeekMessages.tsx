@@ -1,4 +1,4 @@
-import {Flex} from '@chakra-ui/react';
+import {Box, Flex} from '@chakra-ui/react';
 import {
   FindLeagueMembersQuery,
   PicksByWeekQuery,
@@ -36,7 +36,9 @@ export function WeekMessages({data}: {data: PicksByWeekQuery}) {
         }
         return (
           <Flex key={m.id} layerStyle="funtime-z2" direction="column" gap="4px">
-            <UserTag user_id={member.people.uid} username={member.people.username} />
+            <Box>
+              <UserTag user_id={member.people.uid} username={member.people.username} />
+            </Box>
             <Typography.Body2 wordBreak="break-word">{m.content}</Typography.Body2>
             <Typography.Subtitle2>
               {moment(m.createdAt)

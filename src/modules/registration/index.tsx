@@ -133,7 +133,7 @@ export function LeagueRegistration({leagueCode}: RegistrationFormProps) {
         <AlreadyExistingUserModal leagueName={league.name} />
       )}
       <Flex w="100%" justify="center">
-        <Flex maxW="xl" justify="center" layerStyle="funtime-card">
+        <Flex maxW="xl" justify="center" layerStyle="funtime-z1">
           <Stack dir="column" gap="16px" divider={<Divider />} direction="column" w="100%">
             <Typography.H1 textAlign="center">Register for {league.name}</Typography.H1>
             <Flex direction="column">

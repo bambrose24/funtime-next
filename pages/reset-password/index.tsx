@@ -39,12 +39,7 @@ export default function ResetPassword() {
   return (
     <FuntimePage>
       <Flex justify="center" w="100%">
-        <Flex
-          direction="column"
-          w={{base: '80vw', md: '400px'}}
-          layerStyle="funtime-card"
-          gap="20px"
-        >
+        <Flex direction="column" w={{base: '80vw', md: '400px'}} layerStyle="funtime-z1" gap="20px">
           <Typography.H1>Reset Your Password</Typography.H1>
           <Typography.Body1>Use the form below to finish resetting your password.</Typography.Body1>
           <Formik<ResetPasswordForm>

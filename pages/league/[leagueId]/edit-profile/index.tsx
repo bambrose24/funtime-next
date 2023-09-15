@@ -105,7 +105,7 @@ export default function EditProfilePage() {
   return (
     <FuntimePage>
       <Flex w="100%" justify="center">
-        <Flex w={{base: '100%', md: 'xl'}} direction="column" layerStyle="funtime-card">
+        <Flex w={{base: '100%', md: 'xl'}} direction="column" layerStyle="funtime-z1">
           <Typography.H2>Edit Profile for {data.me.leagueMember?.leagues.name}</Typography.H2>
           <Box pt="32px" />
           <Stack direction="column" divider={<Divider />} spacing="20px">

@@ -16,10 +16,18 @@ const activeLabelStyles = {
 
 export const themeVars = {
   layerStyles: {
-    'funtime-card': {
+    'funtime-z1': {
       bg: 'white',
       borderRadius: '4px',
       px: '20px', // TODO do we want these here?
+      py: '12px',
+    },
+    'funtime-z2': {
+      bg: 'white',
+      border: '1px solid',
+      borderColor: 'gray.200',
+      borderRadius: '4px',
+      px: '20px',
       py: '12px',
     },
   },

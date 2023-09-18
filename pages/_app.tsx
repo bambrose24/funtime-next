@@ -4,12 +4,13 @@ import {ReactNode} from 'react';
 
 import theme from '@src/util/theme';
 import {Session} from '@supabase/auth-helpers-nextjs';
-import {SessionContextProvider} from '@supabase/auth-helpers-react';
+import {SessionContextProvider, useUser} from '@supabase/auth-helpers-react';
 import {supabase} from '@src/user/supabase';
 import {getApolloClient} from '@src/graphql';
 import {ApolloProvider} from '@apollo/client';
 import LogRocket from 'logrocket';
 import {AnalyticsProvider} from '@src/analytics/AnalyticsProvider';
+import { env } from '@src/util/config';
 
 const Providers: React.FC<{children: ReactNode}> = ({children}) => {
   return (
@@ -25,8 +26,11 @@ const Providers: React.FC<{children: ReactNode}> = ({children}) => {
 };
 
 function MyApp({Component, pageProps}: AppProps<{initialSession: Session}>) {
+  const user = useUser();
   if (typeof window !== 'undefined') {
-    LogRocket.init('5gvyus/funtime');
+    if (env === 'production' && process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' && user && user.email !== 'bambrose24@gmail.com') {
+      LogRocket.init('5gvyus/funtime');
+    }
   }
 
   return (

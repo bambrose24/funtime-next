@@ -82,6 +82,8 @@ export function PicksForm({
     return new Set(gamesNeededToPick.map(g => g.gid));
   }, [gamesNeededToPick]);
 
+  console.log('needed games', {neededGameIds, gamesNeededToPick});
+
   const tiebreakerGame = games.find(g => g.is_tiebreaker);
 
   if (!tiebreakerGame) {

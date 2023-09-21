@@ -221,7 +221,7 @@ export function PicksForm({
         validateOnMount={true}
         validate={async values => {
           const errors: FormikErrors<any> = {};
-          const chosenGameIds = values.games.map(g => g.gameId);
+          const chosenGameIds = values.games.filter(g => g.winner !== undefined).map(g => g.gameId);
           Array.from(neededGameIds).forEach(gid => {
             if (!chosenGameIds.includes(gid)) {
               errors['games'] = 'Please choose all the required games';

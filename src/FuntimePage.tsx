@@ -38,10 +38,6 @@ function FuntimePage({children, requiresAuth, meta}: Props) {
 
   const bodyHeight = useFullHeightWithoutNav();
 
-  if (needsToLogIn || authIsLoading) {
-    return <FuntimeLoading />;
-  }
-
   return (
     <>
       <Head>
@@ -52,7 +48,7 @@ function FuntimePage({children, requiresAuth, meta}: Props) {
       <Box bgColor="gray.100" w="100%" minH="100vh">
         <Nav />
         <Box minHeight={bodyHeight} py={4} w="100%" px="8px">
-          {children}
+          {needsToLogIn || authIsLoading ? <FuntimeLoading /> : children}
         </Box>
       </Box>
     </>

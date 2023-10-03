@@ -19,7 +19,7 @@ import {
   LatePolicy,
   PicksByWeekQuery,
 } from '@src/generated/graphql';
-import {useMemo, useState} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import UserTag from '@src/modules/profile/UserTag';
 import moment from 'moment';
 import {useLeaguePageMemberViewer} from '@src/hooks/useLeaguePageMemberViewer';
@@ -156,6 +156,12 @@ const PicksTable: React.FC<PicksTableProps> = ({
   const {data: leagueViewer} = useLeaguePageMemberViewer();
   const [selectedRow, setSelectedRow] = useState<number | undefined>(undefined);
 
+  useEffect(() => {
+    if (leagueViewer?.me?.leagueMember?.membership_id) {
+      setSelectedRow(leagueViewer.me.leagueMember.membership_id);
+    }
+  }, [leagueViewer, setSelectedRow]);
+
   const memberIdToMessages = useMemo(() => {
     const map = new Map<number, PicksTableMessage[]>();
     picksData?.picksByWeek?.messages?.forEach(m => {
@@ -209,14 +215,6 @@ const PicksTable: React.FC<PicksTableProps> = ({
 
             const scoreTotal = memberPicks.find(p => p.score && p.score > 0)?.score;
 
-            const Messages = (isSelectedRow && memberMessages && memberMessages.length > 0 && (
-              <Flex direction="column" gap="4px">
-                {memberMessages?.map((m, i) => {
-                  return <Typography.Subtitle2 key={i}>{m.content}</Typography.Subtitle2>;
-                })}
-              </Flex>
-            )) || <></>;
-
             const member = memberIdToMember[memberId!];
             return (
               <Tr
@@ -225,7 +223,7 @@ const PicksTable: React.FC<PicksTableProps> = ({
                 _hover={{bgColor: 'gray.100'}}
                 onClick={() => selectRow(memberId)}
                 borderY={memberId === selectedRow ? '2px solid white' : ''}
-                bgColor={memberId === selectedRow ? 'white' : ''}
+                bgColor={memberId === selectedRow ? 'gray.50' : ''}
                 boxShadow={memberId === selectedRow ? '2px 2px 10px gray' : ''}
                 role="group"
               >

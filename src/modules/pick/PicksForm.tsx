@@ -114,7 +114,7 @@ export function PicksForm({
               <>
                 <Typography.H4>Congrats, {username}!</Typography.H4>
                 <Typography.H4 mt={8} mb="8px">
-                  Your picks are in for Week {week}, {season}. You should have receieved an email
+                  Your picks are in for Week {week}, {season}. You should have received an email
                   with your picks, but if not, here is the summary. You can come back to this page
                   and alter your picks at any time.
                 </Typography.H4>

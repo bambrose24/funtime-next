@@ -1,5 +1,5 @@
 import {useUser} from '@supabase/auth-helpers-react';
-import {Analytics} from '@vercel/analytics/react';
+// import {Analytics} from '@vercel/analytics/react';
 import LogRocket from 'logrocket';
 import {ReactNode, useEffect} from 'react';
 
@@ -15,7 +15,8 @@ export function AnalyticsProvider({children}: {children: ReactNode}) {
   return (
     <>
       {children}
-      <Analytics />
+      {/* Removing because I hit the quota so fast and want other sites on my project to use analytics */}
+      {/* <Analytics /> */}
     </>
   );
 }

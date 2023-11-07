@@ -1,10 +1,4 @@
-import {
-  extendTheme,
-  ThemeConfig,
-  ThemeOverride,
-  ThemingProps,
-  withDefaultColorScheme,
-} from '@chakra-ui/react';
+import {extendTheme, ThemeConfig, withDefaultColorScheme} from '@chakra-ui/react';
 
 const themeConfig: ThemeConfig = {
   initialColorMode: 'light',

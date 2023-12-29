@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Divider,
   Drawer,
   DrawerContent,
   DrawerHeader,
@@ -18,10 +19,12 @@ import {useRouter} from 'next/router';
 import {useState} from 'react';
 import {Typography} from '../Typography';
 import {navOptions, useSelectedNavOption} from './types';
-import {useSession, useSupabaseClient} from '@supabase/auth-helpers-react';
+import {useSession, useSupabaseClient, useUser} from '@supabase/auth-helpers-react';
 import Link from 'next/link';
 import {useNavHeight} from '@src/hooks/useNavHeight';
 import {ProfileMenu} from './ProfileMenu';
+import {LeagueStatus, useHomeQuery} from '@src/generated/graphql';
+import {LeagueMenu} from '../shared/LeagueMenu';
 
 export const DesktopNav: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -70,6 +73,13 @@ type DesktopNavDrawerProps = {isOpen: boolean; onClose: () => void};
 
 function DesktopNavDrawer({isOpen, onClose}: DesktopNavDrawerProps) {
   const selectedNavOption = useSelectedNavOption();
+  const user = useUser();
+  const {data} = useHomeQuery({
+    skip: !user?.email,
+  });
+
+  const inProgressLeagues =
+    data?.me?.leaguemembers.filter(l => l.leagues.status === LeagueStatus.InProgress) ?? [];
   return (
     <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay />
@@ -94,14 +104,13 @@ function DesktopNavDrawer({isOpen, onClose}: DesktopNavDrawerProps) {
             />
           </Flex>
         </DrawerHeader>
-        <Box mx={5}>
+        <Flex px="20px" pt="12px" direction="column" gap="12px">
           {navOptions.map(({href, name, display}) => {
             const selected = name === selectedNavOption;
             return (
               <Link href={href} key={name}>
                 <Box
                   role={'group'}
-                  m={2}
                   p={4}
                   rounded="lg"
                   transition={'all .3s ease'}
@@ -151,7 +160,28 @@ function DesktopNavDrawer({isOpen, onClose}: DesktopNavDrawerProps) {
               </Link>
             );
           })}
-        </Box>
+
+          {inProgressLeagues.length === 0 ? null : (
+            <>
+              <Divider />
+              <Typography.H4>Active Leagues</Typography.H4>
+              <Flex direction="column" gap="12px" py="4px">
+                {inProgressLeagues?.map(member => {
+                  return (
+                    <LeagueMenu
+                      key={member.id}
+                      member={member}
+                      menuButtonLabel={member.leagues.name}
+                      buttonProps={{
+                        w: '100%',
+                      }}
+                    />
+                  );
+                })}
+              </Flex>
+            </>
+          )}
+        </Flex>
       </DrawerContent>
     </Drawer>
   );

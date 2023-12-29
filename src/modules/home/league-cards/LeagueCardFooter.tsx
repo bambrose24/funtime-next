@@ -1,25 +1,13 @@
-import {ChevronDownIcon} from '@chakra-ui/icons';
-import {
-  Alert,
-  AlertDescription,
-  AlertProps,
-  Button,
-  Flex,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-} from '@chakra-ui/react';
-import {HomeQuery, LeagueStatus, MemberRole} from '@src/generated/graphql';
+import {Alert, AlertDescription, AlertProps, Flex} from '@chakra-ui/react';
+import {HomeQuery} from '@src/generated/graphql';
+import {LeagueMenu} from '@src/modules/shared/LeagueMenu';
 import moment from 'moment';
-import {useRouter} from 'next/router';
 
 export type LeagueCardFooterProps = {
   member: NonNullable<HomeQuery['me']>['leaguemembers'][number];
 };
 
 export function LeagueCardFooter({member}: LeagueCardFooterProps) {
-  const router = useRouter();
   const nextGame = member.nextGame;
 
   const needsToMakePicks = nextGame && !member.hasPickedNextGame;
@@ -45,54 +33,7 @@ export function LeagueCardFooter({member}: LeagueCardFooterProps) {
         </Alert>
       )}
       <Flex w="100%" justify="end">
-        <Menu>
-          <MenuButton as={Button} variant="outline" rightIcon={<ChevronDownIcon />}>
-            League
-          </MenuButton>
-          <MenuList>
-            {member.role === MemberRole.Admin && (
-              <MenuItem
-                onClick={() => {
-                  router.push(`/league/${member.leagues.league_id}/admin`);
-                }}
-              >
-                Manage League (admin only)
-              </MenuItem>
-            )}
-            <MenuItem
-              onClick={() => {
-                router.push(`/league/${member.leagues.league_id}/standings`);
-              }}
-            >
-              Standings
-            </MenuItem>
-            <MenuItem
-              onClick={() => {
-                router.push(`/league/${member.leagues.league_id}/edit-profile`);
-              }}
-            >
-              Edit Profile
-            </MenuItem>
-            {member.leagues.status !== LeagueStatus.NotStarted && (
-              <MenuItem
-                onClick={() => {
-                  router.push(`/league/${member.leagues.league_id}/week`);
-                }}
-              >
-                Weekly Picks
-              </MenuItem>
-            )}
-            {member.leagues.status !== LeagueStatus.Done && (
-              <MenuItem
-                onClick={() => {
-                  router.push(`/league/${member.leagues.league_id}/pick`);
-                }}
-              >
-                Make Picks
-              </MenuItem>
-            )}
-          </MenuList>
-        </Menu>
+        <LeagueMenu member={member} menuButtonLabel="League" />
       </Flex>
     </Flex>
   );

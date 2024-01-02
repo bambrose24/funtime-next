@@ -25,6 +25,7 @@ import {Typography} from '../Typography';
 export function WeeklyWinners({leagueId}: {leagueId: number}) {
   const {data, error} = useWinnersQuery({
     variables: {league_id: leagueId},
+    pollInterval: 1000 * 60 * 3, // every 5 minutes
   });
   if (error) {
     return <Typography.H3>There was an error loading winners for the year.</Typography.H3>;

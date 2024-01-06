@@ -24,8 +24,8 @@ export const WeekPicksGameCards: React.FC<Props> = ({
 }) => {
   const gamesSorted = useMemo(() => {
     return _(picksData.picksByWeek.games)
-      .sortBy('ts')
       .sortBy('gid')
+      .sortBy('ts')
       .value();
   }, [picksData]);
 

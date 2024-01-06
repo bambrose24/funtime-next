@@ -33,7 +33,9 @@ export function PicksContent({leagueId, memberId}: Props) {
       ...(typeof overrideParam === 'string' && overrideParam === 'true' ? {override: true} : {}),
     },
   });
-  const {loading: leagueLoading, data: leagueData} = useLeagueQuery({variables: {leagueId}});
+  const {loading: leagueLoading, data: leagueData} = useLeagueQuery({
+    variables: {leagueId},
+  });
 
   const existingWinners = useMemo(() => {
     const s = new Set(
@@ -68,7 +70,7 @@ export function PicksContent({leagueId, memberId}: Props) {
     !(weekForPicks.weekForPicks.games.length > 0)
   ) {
     // TODO show a "the season is over" page
-    return <FuntimeSeasonOver />;
+    return <FuntimeSeasonOver leagueId={leagueId} />;
   }
   const week = weekForPicks.weekForPicks.games[0].week;
   const season = weekForPicks.weekForPicks.games[0].season;

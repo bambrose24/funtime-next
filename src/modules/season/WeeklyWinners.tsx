@@ -1,8 +1,4 @@
 import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  Box,
   Flex,
   HStack,
   Stat,
@@ -15,9 +11,7 @@ import {
   Tr,
 } from '@chakra-ui/react';
 import {useWinnersQuery} from '@src/generated/graphql';
-import {LEAGUE_ID} from '@src/util/config';
 import _ from 'lodash';
-import React from 'react';
 import UserTag from '../profile/UserTag';
 import {FuntimeLoading} from '../shared/FuntimeLoading';
 import {Typography} from '../Typography';

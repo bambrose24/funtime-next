@@ -19,15 +19,6 @@ export default function Home() {
               <AlertDescription>
                 <Flex direction="column" w="100%" alignItems="start" gap="20px">
                   <Typography.H4>
-                    Want to play in 2023?{' '}
-                    <Link
-                      href="/register/jA1SH2cR3BqjnD3bE1Bdr"
-                      style={{textDecoration: 'underline'}}
-                    >
-                      Register for 2023
-                    </Link>
-                  </Typography.H4>
-                  <Typography.H4>
                     Already registered?{' '}
                     <Link href="/login" style={{textDecoration: 'underline'}}>
                       Login

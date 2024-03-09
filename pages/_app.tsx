@@ -10,7 +10,8 @@ import {getApolloClient} from '@src/graphql';
 import {ApolloProvider} from '@apollo/client';
 import LogRocket from 'logrocket';
 import {AnalyticsProvider} from '@src/analytics/AnalyticsProvider';
-import { env } from '@src/util/config';
+import {env} from '@src/util/config';
+
 
 const Providers: React.FC<{children: ReactNode}> = ({children}) => {
   return (
@@ -28,7 +29,12 @@ const Providers: React.FC<{children: ReactNode}> = ({children}) => {
 function MyApp({Component, pageProps}: AppProps<{initialSession: Session}>) {
   const user = useUser();
   if (typeof window !== 'undefined') {
-    if (env === 'production' && process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' && user && user.email !== 'bambrose24@gmail.com') {
+    if (
+      env === 'production' &&
+      process.env.NEXT_PUBLIC_VERCEL_ENV === 'production' &&
+      user &&
+      user.email !== 'bambrose24@gmail.com'
+    ) {
       LogRocket.init('5gvyus/funtime');
     }
   }

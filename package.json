@@ -43,6 +43,7 @@
     "moment-timezone": "^0.5.34",
     "next": "^13.1.6",
     "npm": "^8.19.3",
+    "posthog-js": "^1.112.0",
     "react": "^18.2.0",
     "react-csv": "^2.2.2",
     "react-dom": "^18.2.0",
